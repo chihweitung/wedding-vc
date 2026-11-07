@@ -1,0 +1,8 @@
+# Local helper scripts & raw Google Takeout exports
+wedding-upload/
+parse_google_timeline.py
+Timeline.json
+Records.json
+footprints_extracted.json
+.DS_Store
+.ssh_deploy/

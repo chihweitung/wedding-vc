@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW" data-theme="light" data-lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.instagram.com https://www.google.com https://photos.google.com; img-src 'self' data: https://images.unsplash.com https://lh3.googleusercontent.com https://*.googleusercontent.com https://photos.google.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'self';"
+  />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>Tom &amp; Eunice 婚宴倒數 — 2026.11.29 12:30</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=20261109d" />
+</head>
+<body>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Subtle Botanical Corner Accents -->
+  <div class="botanical-bg" aria-hidden="true">
+    <svg class="leaf-corner leaf-top-left" viewBox="0 0 200 200" fill="none">
+      <path d="M10 190 C40 120, 90 60, 180 15" stroke="currentColor" stroke-width="1.2" opacity="0.35" />
+      <path d="M45 140 C30 110, 45 85, 75 95 C60 115, 50 130, 45 140 Z" fill="currentColor" opacity="0.18" />
+      <path d="M75 105 C65 75, 85 50, 115 65 C95 80, 85 95, 75 105 Z" fill="currentColor" opacity="0.18" />
+      <path d="M110 70 C105 45, 125 25, 155 40 C135 55, 120 65, 110 70 Z" fill="currentColor" opacity="0.18" />
+      <path d="M60 130 C90 135, 110 115, 95 95 C80 105, 70 120, 60 130 Z" fill="currentColor" opacity="0.14" />
+      <path d="M95 90 C125 95, 145 75, 130 55 C115 65, 105 80, 95 90 Z" fill="currentColor" opacity="0.14" />
+    </svg>
+    <svg class="leaf-corner leaf-bottom-right" viewBox="0 0 200 200" fill="none">
+      <path d="M10 190 C40 120, 90 60, 180 15" stroke="currentColor" stroke-width="1.2" opacity="0.35" />
+      <path d="M45 140 C30 110, 45 85, 75 95 C60 115, 50 130, 45 140 Z" fill="currentColor" opacity="0.18" />
+      <path d="M75 105 C65 75, 85 50, 115 65 C95 80, 85 95, 75 105 Z" fill="currentColor" opacity="0.18" />
+      <path d="M110 70 C105 45, 125 25, 155 40 C135 55, 120 65, 110 70 Z" fill="currentColor" opacity="0.18" />
+      <path d="M60 130 C90 135, 110 115, 95 95 C80 105, 70 120, 60 130 Z" fill="currentColor" opacity="0.14" />
+      <path d="M95 90 C125 95, 145 75, 130 55 C115 65, 105 80, 95 90 Z" fill="currentColor" opacity="0.14" />
+    </svg>
+  </div>
+
+  <div class="page-shell">
+    <!-- Top Header Bar -->
+    <header class="top-bar">
+      <div class="timezone-pill">
+        <span class="status-dot" id="live-dot"></span>
+        <span>Tom &amp; Eunice · 2026.11.29</span>
+      </div>
+
+      <div class="actions-group">
+        <button type="button" class="icon-btn lang-btn" id="lang-btn" title="Switch Language / 切換中英文" aria-label="Switch Language">
+          <span id="lang-btn-label">EN</span>
+        </button>
+        <button type="button" class="icon-btn" id="theme-btn" title="切換主題 / Toggle Theme" aria-label="Toggle Theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <button type="button" class="icon-btn" id="fullscreen-btn" title="全螢幕顯示 / Fullscreen" aria-label="Fullscreen">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Countdown Stage -->
+    <main class="main-stage">
+      <div class="title-wrapper">
+        <div class="eyebrow-group">
+          <span class="botanical-line"></span>
+          <p class="eyebrow" id="countdown-state-label">WEDDING CELEBRATION · 婚宴倒數</p>
+          <span class="botanical-line"></span>
+        </div>
+
+        <div class="couple-names" aria-label="Tom & Eunice">
+          <span>Tom</span>
+          <span class="ampersand">&amp;</span>
+          <span>Eunice</span>
+        </div>
+
+        <h1 class="event-title" id="event-title">我們結婚了 · 誠摯邀請您共襄盛舉</h1>
+
+        <p class="target-subtitle" id="target-subtitle">
+          2026 年 11 月 29 日（星期日）中午 12:30 · 台灣時間 (UTC+8)
+        </p>
+      </div>
+
+      <!-- 1. Countdown Stage Container (Active before target time) -->
+      <div class="countdown-stage-wrap" id="countdown-stage-wrap">
+        <section class="countdown-grid" id="countdown-grid" aria-label="Countdown Timer">
+          <div class="time-card">
+            <div class="time-value-wrap">
+              <span class="time-value" id="val-days">00</span>
+            </div>
+            <span class="time-label" id="label-days">DAYS · 天</span>
+          </div>
+
+          <div class="time-sep" aria-hidden="true">:</div>
+
+          <div class="time-card">
+            <div class="time-value-wrap">
+              <span class="time-value" id="val-hours">00</span>
+            </div>
+            <span class="time-label" id="label-hours">HOURS · 時</span>
+          </div>
+
+          <div class="time-sep" aria-hidden="true">:</div>
+
+          <div class="time-card">
+            <div class="time-value-wrap">
+              <span class="time-value" id="val-minutes">00</span>
+            </div>
+            <span class="time-label" id="label-minutes">MINUTES · 分</span>
+          </div>
+
+          <div class="time-sep" aria-hidden="true">:</div>
+
+          <div class="time-card seconds-card">
+            <div class="time-value-wrap">
+              <span class="time-value" id="val-seconds">00</span>
+            </div>
+            <span class="time-label" id="label-seconds">SECONDS · 秒</span>
+          </div>
+        </section>
+
+        <!-- Secondary Summary Metrics -->
+        <section class="metrics-strip" id="metrics-strip" aria-label="Countdown Summary">
+          <div class="metric-item">
+            <span class="metric-label" id="metric-label-hours">距離幸福時刻還有</span>
+            <span class="metric-val"><span id="total-hours">0</span> <span id="unit-hours">小時</span></span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-label" id="metric-label-minutes">或是</span>
+            <span class="metric-val"><span id="total-minutes">0</span> <span id="unit-minutes">分鐘</span></span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-label" id="metric-label-seconds">倒數秒數</span>
+            <span class="metric-val"><span id="total-seconds">0</span> <span id="unit-seconds">秒</span></span>
+          </div>
+        </section>
+
+        <!-- Pre-Countdown Quick Access: Seating Chart & Banquet Menu Only (Other sections unlock after countdown) -->
+        <section class="countdown-quick-links" id="countdown-quick-links" aria-label="Wedding Venue Quick Info">
+          <button type="button" class="countdown-quick-btn" id="countdown-seating-btn">
+            <span class="countdown-quick-icon" aria-hidden="true">🪑</span>
+            <span class="countdown-quick-text">
+              <strong id="countdown-seating-title">婚宴座位表</strong>
+              <small id="countdown-seating-sub">查詢桌次與座位平面圖 →</small>
+            </span>
+          </button>
+          <button type="button" class="countdown-quick-btn" id="countdown-menu-btn">
+            <span class="countdown-quick-icon" aria-hidden="true">🍽️</span>
+            <span class="countdown-quick-text">
+              <strong id="countdown-menu-title">婚宴餐點</strong>
+              <small id="countdown-menu-sub">查看百匯自助餐與特調菜單 →</small>
+            </span>
+          </button>
+        </section>
+      </div>
+
+      <!-- 2. Time-Up Hub: Wedding Celebration Hub (Shown when countdown reaches 00:00:00) -->
+      <section class="timeup-hub hidden" id="timeup-hub" aria-label="Wedding Interactive Hub">
+        <!-- Main Choice Cards Grid (Initial Hub View) -->
+        <div class="choice-cards-grid" id="choice-cards-grid">
+          <!-- Card 1: Seating Chart (Top Left) -->
+          <button type="button" class="choice-card" id="choose-seating-card">
+            <div class="choice-icon-wrap">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+                <line x1="9" y1="10" x2="9" y2="20"></line>
+                <line x1="15" y1="10" x2="15" y2="20"></line>
+              </svg>
+            </div>
+            <span class="choice-eyebrow" id="seating-card-eyebrow">SEATING CHART · TABLE DIRECTORY</span>
+            <h2 class="choice-title" id="seating-card-title">婚宴座位表</h2>
+            <p class="choice-desc" id="seating-card-desc">快速搜尋您的姓名或親友分類，查看美軍俱樂部宴會廳座位配置圖</p>
+            <span class="choice-cta" id="seating-card-cta">查詢桌次與座位圖 →</span>
+          </button>
+
+          <!-- Card 2: Wedding Banquet Menu (Top Right) -->
+          <button type="button" class="choice-card" id="choose-menu-card">
+            <div class="choice-icon-wrap">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+                <path d="M7 2v20"></path>
+                <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+              </svg>
+            </div>
+            <span class="choice-eyebrow" id="menu-card-eyebrow">WEDDING BANQUET · BUFFET MENU</span>
+            <h2 class="choice-title" id="menu-card-title">婚宴餐點</h2>
+            <p class="choice-desc" id="menu-card-desc">瀏覽美軍俱樂部豐盛百匯自助餐、現切牛排與 Bartender 特調飲品菜單</p>
+            <span class="choice-cta" id="menu-card-cta">查看婚宴菜單 →</span>
+          </button>
+
+          <!-- Card 3: Wedding Video -->
+          <button type="button" class="choice-card" id="choose-video-card">
+            <div class="choice-icon-wrap">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+            <span class="choice-eyebrow" id="video-card-eyebrow">OUR WEDDING FILM</span>
+            <h2 class="choice-title" id="video-card-title">新人影片</h2>
+            <p class="choice-desc" id="video-card-desc">觀賞 Tom &amp; Eunice 的專屬婚禮影片，一起見證我們的幸福故事</p>
+            <span class="choice-cta" id="video-card-cta">點擊觀賞影片 →</span>
+          </button>
+
+          <!-- Card 4: Past Photos Gallery -->
+          <button type="button" class="choice-card" id="choose-gallery-card">
+            <div class="choice-icon-wrap">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            </div>
+            <span class="choice-eyebrow" id="gallery-card-eyebrow">OUR MEMORIES · 2014–2026</span>
+            <h2 class="choice-title" id="gallery-card-title">新人過去照片</h2>
+            <p class="choice-desc" id="gallery-card-desc">回顧 Tom &amp; Eunice 從相識、相戀到步入禮堂的珍貴歲月寫真</p>
+            <span class="choice-cta" id="gallery-card-cta">瀏覽回憶相簿 →</span>
+          </button>
+
+          <!-- Card 5: Love Footprint & Map Timeline -->
+          <button type="button" class="choice-card" id="choose-footprints-card">
+            <div class="choice-icon-wrap">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <span class="choice-eyebrow" id="footprints-card-eyebrow">LOVE FOOTPRINTS · GOOGLE MAPS TIMELINE</span>
+            <h2 class="choice-title" id="footprints-card-title">新人交往軌跡</h2>
+            <p class="choice-desc" id="footprints-card-desc">探索 Tom &amp; Eunice 的 Google Maps 戀愛足跡與跨國旅行地圖紀錄</p>
+            <span class="choice-cta" id="footprints-card-cta">探索交往軌跡地圖 →</span>
+          </button>
+
+          <!-- Card 6: Couple Quiz -->
+          <button type="button" class="choice-card" id="choose-quiz-card">
+            <div class="choice-icon-wrap">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </div>
+            <span class="choice-eyebrow" id="quiz-card-eyebrow">COUPLE QUIZ · WARM-UP + 10 Qs</span>
+            <h2 class="choice-title" id="quiz-card-title">了解新人</h2>
+            <p class="choice-desc" id="quiz-card-desc">挑戰暖身題與 10 道關於新人的趣味問答，看看您對新郎還是新娘最熟悉！</p>
+            <span class="choice-cta" id="quiz-card-cta">開始挑戰問答 →</span>
+          </button>
+
+          <!-- Card 7: Share Photos (Google Photos) - Last -->
+          <button type="button" class="choice-card choice-card-wide" id="choose-share-photos-card">
+            <div class="choice-icon-wrap">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+            </div>
+            <span class="choice-eyebrow" id="share-photos-card-eyebrow">GOOGLE PHOTOS · SHARED ALBUM</span>
+            <h2 class="choice-title" id="share-photos-card-title">分享新人照片</h2>
+            <p class="choice-desc" id="share-photos-card-desc">打開婚宴專屬 Google Photos 共享相簿，上傳您拍下的美好瞬間！</p>
+            <span class="choice-cta" id="share-photos-card-cta">前往共享相簿 →</span>
+          </button>
+        </div>
+
+        <!-- Mode Switcher Bar (Shown once user enters any panel) -->
+        <div class="hub-nav-bar hidden" id="hub-nav-bar">
+          <button type="button" class="hub-tab-btn" id="tab-back-hub">
+            ← 返回主選單
+          </button>
+          <div class="hub-tabs-group">
+            <button type="button" class="hub-tab-pill" id="tab-seating-btn">🪑 座位表</button>
+            <button type="button" class="hub-tab-pill" id="tab-menu-btn">🍽️ 婚宴餐點</button>
+            <button type="button" class="hub-tab-pill" id="tab-video-btn">🎬 新人影片</button>
+            <button type="button" class="hub-tab-pill" id="tab-gallery-btn">🎞️ 過去照片</button>
+            <button type="button" class="hub-tab-pill" id="tab-footprints-btn">🗺️ 交往軌跡</button>
+            <button type="button" class="hub-tab-pill" id="tab-quiz-btn">🌿 了解新人</button>
+            <button type="button" class="hub-tab-pill" id="tab-share-photos-btn">📸 分享照片</button>
+          </div>
+        </div>
+
+        <!-- Panel 1: Embedded Media Container (YouTube / Instagram Hero Stage) -->
+        <div class="media-section hidden" id="media-section" aria-label="Wedding Video Stage">
+          <div class="media-card" id="media-card">
+            <div class="media-card-header">
+              <span class="media-badge" id="media-badge">OUR WEDDING FILM · 新人影片</span>
+            </div>
+            <div class="media-frame-wrap" id="media-frame-wrap">
+              <!-- iframe dynamically injected here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Couple Quiz (Warm-up + 10 Questions) -->
+        <div class="quiz-section hidden" id="quiz-section" aria-label="Couple Quiz">
+          <!-- Active Question Card -->
+          <div class="quiz-card" id="quiz-question-view">
+            <div class="quiz-header">
+              <span class="quiz-progress-text" id="quiz-progress-text">WARM-UP · 暖身題</span>
+              <span class="quiz-score-badge" id="quiz-score-badge">目前得分：0</span>
+            </div>
+            <div class="quiz-progress-bar">
+              <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+            </div>
+
+            <h3 class="quiz-question-title" id="quiz-question-title">問題載入中...</h3>
+            <pre class="quiz-code-block hidden" id="quiz-code-block"><code id="quiz-code-content"></code></pre>
+
+            <div class="quiz-options-list" id="quiz-options-list">
+              <!-- Option buttons dynamically injected here -->
+            </div>
+
+            <!-- Answer Explanation Box -->
+            <div class="quiz-explanation-box hidden" id="quiz-explanation-box">
+              <div class="quiz-result-headline" id="quiz-result-headline"></div>
+              <p class="quiz-explanation-text" id="quiz-explanation-text"></p>
+              <div class="quiz-next-wrap">
+                <button type="button" class="primary-btn" id="quiz-next-btn">下一題 →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Final Quiz Summary Card -->
+          <div class="quiz-card quiz-summary-view hidden" id="quiz-summary-view">
+            <span class="choice-eyebrow" id="quiz-completed-eyebrow">QUIZ COMPLETED · 答題完成</span>
+            <h3 class="quiz-summary-title" id="quiz-summary-title">感謝您的熱情參與！</h3>
+            <div class="quiz-final-score" id="quiz-final-score">11 / 11</div>
+            <div class="quiz-familiarity-badge" id="quiz-familiarity-badge"></div>
+            <p class="quiz-summary-rank" id="quiz-summary-rank"></p>
+
+            <div class="easter-watermark-wrap">
+              <div class="easter-watermark-hint" id="easter-watermark-hint"></div>
+              <div class="easter-watermark" id="easter-base64-code"></div>
+            </div>
+
+            <div class="quiz-summary-actions">
+              <button type="button" class="secondary-btn" id="quiz-restart-btn">重新挑戰一次</button>
+              <button type="button" class="primary-btn" id="quiz-to-video-btn">🎬 前往觀賞新人影片</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 3: Share Wedding Photos (Google Photos Shared Album) -->
+        <div class="feature-section hidden" id="share-photos-section" aria-label="Share Wedding Photos">
+          <div class="quiz-card feature-card-center">
+            <div class="choice-icon-wrap">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+            </div>
+            <span class="choice-eyebrow" id="share-panel-eyebrow">GOOGLE PHOTOS SHARED ALBUM</span>
+            <h3 class="quiz-summary-title" id="share-panel-title">分享您鏡頭下的 Tom &amp; Eunice</h3>
+            <p class="quiz-summary-rank" id="share-panel-desc">
+              誠摯邀請您將今天在婚宴現場拍下的照片與影片上傳至我們的 Google Photos 共享相簿，與我們一起珍藏這一天！
+            </p>
+            <div class="share-album-steps">
+              <div class="step-pill" id="share-step-1">1. 點擊下方按鈕開啟 Google Photos 相簿</div>
+              <div class="step-pill" id="share-step-2">2. 點選「新增相片」即可直接上傳分享</div>
+            </div>
+            <div class="quiz-summary-actions">
+              <a
+                href="https://photos.google.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="primary-btn link-btn"
+                id="google-photos-share-link"
+              >
+                📸 開啟 Google Photos 婚禮共享相簿 ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 4: Past Photos Gallery (2014 - 2026) -->
+        <div class="feature-section hidden" id="gallery-section" aria-label="Past Photos Gallery">
+          <div class="quiz-card feature-card-wide">
+            <div class="section-top-row">
+              <div>
+                <span class="choice-eyebrow" id="gallery-panel-eyebrow">OUR MEMORIES · 2014–2026</span>
+                <h3 class="quiz-summary-title" id="gallery-panel-title">新人過去照片 · 歲月寫真</h3>
+              </div>
+              <a
+                href="https://photos.google.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="secondary-btn sm-btn link-btn"
+                id="google-photos-memories-link"
+              >
+                開啟完整 Google 相簿 ↗
+              </a>
+            </div>
+
+            <div class="era-filter-bar" id="gallery-era-bar">
+              <!-- Era filter pills dynamically rendered -->
+            </div>
+
+            <div class="memory-gallery-grid" id="memory-gallery-grid">
+              <!-- Memory photo cards dynamically rendered -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 5: Love Footprints & Google Maps Timeline -->
+        <div class="feature-section hidden" id="footprints-section" aria-label="Love Footprints Timeline">
+          <div class="quiz-card feature-card-wide">
+            <div class="section-top-row">
+              <div>
+                <span class="choice-eyebrow" id="footprints-panel-eyebrow">GOOGLE MAPS TIMELINE</span>
+                <h3 class="quiz-summary-title" id="footprints-panel-title">Tom &amp; Eunice 交往軌跡</h3>
+              </div>
+              <div class="footprint-stats" id="footprint-stats">
+                <!-- Stats badge -->
+              </div>
+            </div>
+
+            <!-- Couple Residential Journey Summary Strip -->
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+              <span id="footprint-track-tom" style="font-size:0.86rem; font-weight:600; padding:6px 14px; border-radius:999px; background:rgba(56,189,248,0.12); color:#0369a1; border:1px solid rgba(56,189,248,0.38);">
+                🤵‍♂️ Tom Tung · 台北 ➔ 新竹 ➔ 柏林 ➔ 新北 ➔ 台北
+              </span>
+              <span id="footprint-track-eunice" style="font-size:0.86rem; font-weight:600; padding:6px 14px; border-radius:999px; background:rgba(244,114,182,0.12); color:#be185d; border:1px solid rgba(244,114,182,0.38);">
+                👰‍♀️ Eunice Hsiao · 高雄 ➔ 諾丁漢 ➔ 高雄 ➔ 新北 ➔ 台北
+              </span>
+            </div>
+
+            <!-- Interactive Timeline Video Player (Canvas + Controls + Video Export) -->
+            <div class="footprint-video-player" id="footprint-map-stage">
+              <div class="timeline-canvas-wrap">
+                <canvas
+                  id="timeline-video-canvas"
+                  width="1280"
+                  height="720"
+                  aria-label="2014-2026 Love Footprints Timeline Video"
+                ></canvas>
+              </div>
+              <div class="timeline-video-controls">
+                <button type="button" class="primary-btn sm-btn" id="timeline-play-btn">
+                  ▶ 播放交往軌跡影片
+                </button>
+                <button type="button" class="secondary-btn sm-btn" id="timeline-prev-btn" title="上一站">
+                  ⏮ 上一站
+                </button>
+                <button type="button" class="secondary-btn sm-btn" id="timeline-next-btn" title="下一站">
+                  ⏭ 下一站
+                </button>
+                <button type="button" class="secondary-btn sm-btn" id="timeline-speed-btn" title="調整播放速度">
+                  ⏱️ 1.0x
+                </button>
+                <button type="button" class="secondary-btn sm-btn" id="timeline-replay-btn">
+                  ↺ 重播
+                </button>
+                <div class="timeline-scrubber-wrap">
+                  <div class="timeline-scrubber-fill" id="timeline-scrubber-fill"></div>
+                </div>
+                <button type="button" class="secondary-btn sm-btn" id="timeline-export-btn">
+                  🎥 匯出下載影片 (.webm)
+                </button>
+              </div>
+            </div>
+
+            <!-- Year Filter Pills (2014 - 2026) -->
+            <div class="era-filter-bar" id="footprint-year-bar">
+              <!-- Year buttons dynamically rendered -->
+            </div>
+
+            <!-- Timeline Places List -->
+            <div class="timeline-list" id="footprint-timeline-list">
+              <!-- Timeline cards with Google Maps links dynamically rendered -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 6: Wedding Seating Chart -->
+        <div class="feature-section hidden" id="seating-section" aria-label="Wedding Seating Chart">
+          <div class="quiz-card feature-card-wide">
+            <div class="section-top-row">
+              <div>
+                <span class="choice-eyebrow" id="seating-panel-eyebrow">SEATING CHART · BRICK YARD 33 1/3</span>
+                <h3 class="quiz-summary-title" id="seating-panel-title">美軍俱樂部 · 婚宴座位表</h3>
+              </div>
+              <a
+                href="https://photos.google.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="secondary-btn sm-btn link-btn hidden"
+                id="seating-external-link"
+              >
+                開啟完整座位圖 ↗
+              </a>
+            </div>
+
+            <div class="seating-search-bar">
+              <input
+                type="search"
+                id="seating-search-input"
+                class="seating-search-input"
+                placeholder="🔍 輸入您的姓名、桌名或親友分類（例如：大學、Google、主桌）快速查詢..."
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="embedded-photo-stage hidden" id="seating-photo-stage"></div>
+
+            <div class="seating-tables-grid" id="seating-tables-grid">
+              <!-- Table cards dynamically rendered -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 7: Wedding Banquet Menu -->
+        <div class="feature-section hidden" id="banquet-menu-section" aria-label="Wedding Banquet Menu">
+          <div class="quiz-card feature-card-wide">
+            <div class="section-top-row">
+              <div>
+                <span class="choice-eyebrow" id="menu-panel-eyebrow">WEDDING BANQUET MENU · 2026.11.29</span>
+                <h3 class="quiz-summary-title" id="menu-panel-title">Tom &amp; Eunice 婚宴佳餚菜單</h3>
+              </div>
+              <a
+                href="https://photos.google.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="secondary-btn sm-btn link-btn hidden"
+                id="menu-external-link"
+              >
+                開啟完整菜單相片 ↗
+              </a>
+            </div>
+
+            <p class="banquet-menu-note" id="banquet-menu-note"></p>
+
+            <div class="embedded-photo-stage hidden" id="menu-photo-stage"></div>
+
+            <div class="banquet-courses-list" id="banquet-courses-list">
+              <!-- Course items dynamically rendered -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Status Bar -->
+    <footer class="bottom-bar">
+      <div class="clock-readout">
+        <span class="clock-caption" id="clock-caption">目前台灣時間：</span>
+        <span class="clock-time" id="current-tw-time">--</span>
+      </div>
+      <div class="footer-hint">
+        <button type="button" class="text-btn" id="celebrate-btn">灑落花瓣祝福</button>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js?v=20261109d"></script>
+</body>
+</html>

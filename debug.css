@@ -1,0 +1,233 @@
+body.debug-locked .page-shell,
+.debug-auth-gate.hidden,
+.debug-toolbar.hidden,
+.debug-auth-error.hidden {
+  display: none !important;
+}
+
+.debug-auth-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(18, 28, 21, 0.78);
+  backdrop-filter: blur(16px);
+}
+
+.debug-auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 26px;
+  border-radius: 24px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-highlight);
+  box-shadow: 0 22px 54px rgba(15, 28, 19, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: center;
+}
+
+.debug-auth-badge {
+  align-self: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--surface-pill);
+  border: 1px solid var(--border-highlight);
+  color: var(--accent);
+}
+
+.debug-auth-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.debug-auth-desc {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.debug-field-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  text-align: left;
+}
+
+.debug-field-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.debug-field-input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-subtle);
+  color: var(--text-primary);
+  font-family: 'Inter', 'Noto Sans TC', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.debug-field-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(61, 107, 76, 0.16);
+}
+
+.debug-auth-error {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid var(--danger);
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+
+.debug-auth-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.debug-submit-btn,
+.debug-back-link {
+  width: 100%;
+  justify-content: center;
+}
+
+.debug-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(24, 38, 29, 0.95);
+  color: #f1f7f3;
+  border-bottom: 1px solid rgba(132, 181, 147, 0.32);
+  backdrop-filter: blur(12px);
+  padding: max(8px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) 8px max(14px, env(safe-area-inset-left));
+}
+
+.debug-toolbar-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.debug-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.debug-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  min-width: 0;
+}
+
+.debug-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: #52b788;
+  color: #0f1913;
+  padding: 2px 7px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.debug-desc {
+  color: #d8e6dc;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', 'Noto Sans TC', monospace;
+  font-size: 0.74rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.debug-collapse-btn {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px solid rgba(132, 181, 147, 0.4);
+  background: rgba(82, 183, 136, 0.16);
+  color: #d8e6dc;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.debug-btn-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.debug-toolbar.is-collapsed .debug-btn-group {
+  display: none;
+}
+
+.debug-btn {
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1f7f3;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.debug-btn.primary {
+  background: #52b788;
+  color: #0f1913;
+  border-color: #52b788;
+  font-weight: 600;
+}
+
+.debug-btn.accent {
+  background: #e6ccb2;
+  color: #1f3024;
+  border-color: #e6ccb2;
+  font-weight: 600;
+}
+
+.debug-btn:hover {
+  opacity: 0.92;
+}
+
+@media (max-width: 680px) {
+  .debug-btn-group {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+}
