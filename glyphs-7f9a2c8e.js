@@ -690,7 +690,6 @@
   let lumosActive = false;
   let snitchCaughtCount = 0;
   let hasCastMarauder = false;
-  let hasCastCelebrate = false;
   let lastFeedbackKey = null;
   let pointerX = window.innerWidth * 0.5;
   let pointerY = window.innerHeight * 0.38;
@@ -919,7 +918,6 @@
   if (btnSpellCelebrate) {
     btnSpellCelebrate.addEventListener('click', (e) => {
       const rect = e.currentTarget.getBoundingClientRect();
-      hasCastCelebrate = true;
       const houseColors = ['#ffd700', '#ef4444', '#10b981', '#3b82f6', '#f59e0b', '#fef08a', '#ec4899'];
       spawnSpellBurst(rect.left + rect.width / 2, rect.top, houseColors, 85);
       spawnSpellBurst(window.innerWidth * 0.22, window.innerHeight * 0.28, houseColors, 60);
@@ -998,7 +996,11 @@
     };
 
     btnSnitch.addEventListener('pointerdown', handleCatchSnitch);
-    btnSnitch.addEventListener('click', handleCatchSnitch);
+    btnSnitch.addEventListener('click', (e) => {
+      // 避免平板／手機長按 (>180ms) 在 pointerdown 與放開時 click 重複計算兩次；僅保留鍵盤觸發 (e.detail === 0) 或無 PointerEvent 環境
+      if (typeof window.PointerEvent !== 'undefined' && e.detail !== 0) return;
+      handleCatchSnitch(e);
+    });
   }
 
   if (btnCopySpell && elSecretCodeText) {

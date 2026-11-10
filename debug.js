@@ -349,10 +349,17 @@
   // ============================================================================
   // 驗證通過後動態建構 Debug 控制列與綁定模擬行為（100% 無 innerHTML / eval）
   // ============================================================================
+  let activeViewportResizeHandler = null;
+
   function mountDebugToolbar(config) {
     const toolbar = document.getElementById('debug-toolbar');
     const authGate = document.getElementById('debug-auth-gate');
     if (!toolbar) return;
+
+    if (activeViewportResizeHandler) {
+      window.removeEventListener('resize', activeViewportResizeHandler);
+      activeViewportResizeHandler = null;
+    }
 
     isAuthenticated = true;
     offsetMs = (REAL_TARGET_TIMESTAMP + (config.simInitOffset || -5500)) - realDateNow();
@@ -384,7 +391,8 @@
     function updateViewportLabel() {
       viewportInfo.textContent = `畫面 ${window.innerWidth}×${window.innerHeight}px`;
     }
-    window.addEventListener('resize', updateViewportLabel);
+    activeViewportResizeHandler = updateViewportLabel;
+    window.addEventListener('resize', activeViewportResizeHandler);
     updateViewportLabel();
 
     titleGroup.append(tag, viewportInfo);
@@ -487,9 +495,11 @@
         setTimeout(() => {
           const quizCard = document.getElementById('choose-quiz-card');
           if (quizCard) quizCard.click();
-          for (let i = 0; i < 11; i++) {
+          for (let i = 0; i < 20; i++) {
             const codeBlock = document.getElementById('quiz-code-block');
+            const summaryView = document.getElementById('quiz-summary-view');
             if (codeBlock && !codeBlock.classList.contains('hidden')) break;
+            if (summaryView && !summaryView.classList.contains('hidden')) break;
             const firstOpt = document.querySelector('#quiz-options-list .quiz-option-btn');
             if (firstOpt) firstOpt.click();
             const nextBtn = document.getElementById('quiz-next-btn');
@@ -542,7 +552,9 @@
           window.__DBG_FORCE_WATERMARK = true;
           const quizCard = document.getElementById('choose-quiz-card');
           if (quizCard) quizCard.click();
-          for (let i = 0; i < 11; i++) {
+          for (let i = 0; i < 20; i++) {
+            const summaryView = document.getElementById('quiz-summary-view');
+            if (summaryView && !summaryView.classList.contains('hidden')) break;
             const firstOpt = document.querySelector('#quiz-options-list .quiz-option-btn');
             if (firstOpt) firstOpt.click();
             const nextBtn = document.getElementById('quiz-next-btn');
@@ -565,14 +577,14 @@
         } catch (_e) {
           // ignore storage errors
         }
+        if (activeViewportResizeHandler) {
+          window.removeEventListener('resize', activeViewportResizeHandler);
+          activeViewportResizeHandler = null;
+        }
         isAuthenticated = false;
         offsetMs = 0;
         toolbar.replaceChildren();
         toolbar.classList.add('hidden');
-        ['dbg-secret-choice-card', 'dbg-secret-tab-link', 'dbg-secret-summary-link'].forEach((id) => {
-          const el = document.getElementById(id);
-          if (el) el.remove();
-        });
         document.body.classList.add('debug-locked');
         if (authGate) {
           authGate.classList.remove('hidden');
@@ -587,21 +599,6 @@
     const passInput = document.getElementById('debug-pass-input');
     const errorEl = document.getElementById('debug-auth-error');
     const submitBtn = document.getElementById('debug-auth-submit');
-
-    // 若同一個瀏覽器分頁 Session 已驗證過，自動使用暫存衍生金鑰解密
-    try {
-      const savedDkHex = sessionStorage.getItem(SESSION_KEY_STORAGE);
-      if (savedDkHex && savedDkHex.length === 128) {
-        const config = tryDecryptDebugConfig(hexToBytes(savedDkHex));
-        if (config) {
-          mountDebugToolbar(config);
-          return;
-        }
-        sessionStorage.removeItem(SESSION_KEY_STORAGE);
-      }
-    } catch (_e) {
-      // ignore sessionStorage error
-    }
 
     function handleUnlockAttempt(e) {
       if (e && typeof e.preventDefault === 'function') {
@@ -677,6 +674,21 @@
         }
       });
     });
+
+    // 若同一個瀏覽器分頁 Session 已驗證過，自動使用暫存衍生金鑰解密
+    try {
+      const savedDkHex = sessionStorage.getItem(SESSION_KEY_STORAGE);
+      if (savedDkHex && savedDkHex.length === 128) {
+        const config = tryDecryptDebugConfig(hexToBytes(savedDkHex));
+        if (config) {
+          mountDebugToolbar(config);
+          return;
+        }
+        sessionStorage.removeItem(SESSION_KEY_STORAGE);
+      }
+    } catch (_e) {
+      // ignore sessionStorage error
+    }
   }
 
   if (document.readyState === 'loading') {

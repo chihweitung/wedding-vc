@@ -7,16 +7,17 @@
     http-equiv="Content-Security-Policy"
     content="default-src 'self'; script-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.instagram.com https://www.google.com https://photos.google.com; img-src 'self' data: https://images.unsplash.com https://lh3.googleusercontent.com https://*.googleusercontent.com https://photos.google.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'self';"
   />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="referrer" content="no-referrer" />
   <meta name="robots" content="noindex, nofollow, noarchive" />
   <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Tom &amp; Eunice · 開發測試驗證 Debug Mode</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261109e" />
-  <link rel="stylesheet" href="debug.css?v=20261109e" />
+  <link rel="stylesheet" href="style.css?v=20261111a" />
+  <link rel="stylesheet" href="debug.css?v=20261111a" />
 </head>
 <body class="debug-locked">
   <canvas id="confetti-canvas" aria-hidden="true"></canvas>
@@ -468,11 +469,11 @@
             </div>
 
             <!-- Couple Residential Journey Summary Strip -->
-            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
-              <span id="footprint-track-tom" style="font-size:0.86rem; font-weight:600; padding:6px 14px; border-radius:999px; background:rgba(56,189,248,0.12); color:#0369a1; border:1px solid rgba(56,189,248,0.38);">
+            <div class="footprint-journey-strip">
+              <span id="footprint-track-tom" class="footprint-role-pill is-tom">
                 🤵‍♂️ Tom Tung · 台北 ➔ 新竹 ➔ 柏林 ➔ 新北 ➔ 台北
               </span>
-              <span id="footprint-track-eunice" style="font-size:0.86rem; font-weight:600; padding:6px 14px; border-radius:999px; background:rgba(244,114,182,0.12); color:#be185d; border:1px solid rgba(244,114,182,0.38);">
+              <span id="footprint-track-eunice" class="footprint-role-pill is-eunice">
                 👰‍♀️ Eunice Hsiao · 高雄 ➔ 諾丁漢 ➔ 高雄 ➔ 新北 ➔ 台北
               </span>
             </div>
@@ -506,7 +507,7 @@
                   <div class="timeline-scrubber-fill" id="timeline-scrubber-fill"></div>
                 </div>
                 <button type="button" class="secondary-btn sm-btn" id="timeline-export-btn">
-                  🎥 匯出下載影片 (.webm)
+                  🎥 匯出下載影片
                 </button>
               </div>
             </div>
@@ -592,7 +593,7 @@
     </footer>
   </div>
 
-  <script src="debug.js?v=20261109e"></script>
-  <script src="script.js?v=20261109e"></script>
+  <script src="debug.js?v=20261111a"></script>
+  <script src="script.js?v=20261111a"></script>
 </body>
 </html>

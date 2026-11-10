@@ -147,7 +147,7 @@
       timelinePrevBtn: '⏮ 上一站',
       timelineNextBtn: '⏭ 下一站',
       timelineReplayBtn: '↺ 重播',
-      timelineExportBtn: '🎥 匯出下載影片 (.webm)',
+      timelineExportBtn: '🎥 匯出下載影片',
       timelineExportingBtn: '⏳ 正在錄製生成影片中...',
       mediaBadgeYoutube: 'OUR WEDDING FILM · 新人影片',
       mediaBadgeShorts: 'YOUTUBE SHORTS · 新人影片',
@@ -253,7 +253,7 @@
       timelinePrevBtn: '⏮ Prev',
       timelineNextBtn: '⏭ Next',
       timelineReplayBtn: '↺ Replay',
-      timelineExportBtn: '🎥 Download Video (.webm)',
+      timelineExportBtn: '🎥 Download Video',
       timelineExportingBtn: '⏳ Recording Video...',
       mediaBadgeYoutube: 'OUR WEDDING FILM',
       mediaBadgeShorts: 'YOUTUBE SHORTS · WEDDING FILM',
@@ -2181,6 +2181,7 @@
     }
     try {
       const parsed = new URL(trimmed, window.location.origin);
+      if (parsed.username || parsed.password) return '';
       if (parsed.protocol === 'https:' || parsed.protocol === 'http:') {
         return parsed.href;
       }
@@ -2465,7 +2466,7 @@
       const iframe = document.createElement('iframe');
       iframe.src = info.embedUrl;
       iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-      iframe.sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups';
+      iframe.sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
       iframe.allowFullscreen = true;
       iframe.loading = 'lazy';
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
@@ -3460,48 +3461,41 @@
       highlightedIds.add(selectedSeatingZoneId);
     }
 
+    const matchesFacility = (keywords, exactSingleChars = []) => {
+      if (!query) return false;
+      if (exactSingleChars.includes(query)) return true;
+      return keywords.some(
+        (kw) =>
+          query.includes(kw) ||
+          (query.length >= 3 && kw.startsWith(query)) ||
+          (query.length >= 2 && /[\u4e00-\u9fff]/.test(kw) && kw.includes(query))
+      );
+    };
+
     if (
-      query &&
-      ['廁所', '洗手間', '化妝室', '男廁', '女廁', 'restroom', 'toilet', 'wc'].some((kw) =>
-        kw.includes(query) || query.includes(kw)
+      matchesFacility(
+        ['廁所', '洗手間', '化妝室', '男廁', '女廁', 'restroom', 'toilet', 'wc'],
+        ['廁']
       )
     ) {
       highlightedIds.add(RESTROOM_ZONE_ID);
     }
 
-    if (
-      query &&
-      ['吧台', '吧檯', '飲料', '調酒', '酒水', 'bar'].some((kw) =>
-        kw.includes(query) || query.includes(kw)
-      )
-    ) {
+    if (matchesFacility(['吧台', '吧檯', '飲料', '調酒', '酒水', 'bar'], ['吧', '酒'])) {
       highlightedIds.add(BAR_ZONE_ID);
     }
 
-    if (
-      query &&
-      ['餐點', '餐點區', '取餐', '自助餐', 'buffet', 'food'].some((kw) =>
-        kw.includes(query) || query.includes(kw)
-      )
-    ) {
+    if (matchesFacility(['餐點', '餐點區', '取餐', '自助餐', 'buffet', 'food'])) {
       highlightedIds.add(BUFFET_ZONE_ID);
     }
 
     if (
-      query &&
-      ['接待桌', '接待', '簽到', '收禮', '迎賓', '禮金', 'reception', 'checkin', 'desk'].some((kw) =>
-        kw.includes(query) || query.includes(kw)
-      )
+      matchesFacility(['接待桌', '接待', '簽到', '收禮', '迎賓', '禮金', 'reception', 'checkin', 'desk'])
     ) {
       highlightedIds.add(RECEPTION_ZONE_ID);
     }
 
-    if (
-      query &&
-      ['廚房', '備餐', 'kitchen'].some((kw) =>
-        kw.includes(query) || query.includes(kw)
-      )
-    ) {
+    if (matchesFacility(['廚房', '備餐', 'kitchen'], ['廚'])) {
       highlightedIds.add(KITCHEN_ZONE_ID);
     }
 
@@ -3526,16 +3520,7 @@
         highlightedIds.add(table.id);
       }
 
-      if (
-        query &&
-        !matchesTableTitle &&
-        !hasMatchingGuest &&
-        !highlightedIds.has(RESTROOM_ZONE_ID) &&
-        !highlightedIds.has(BAR_ZONE_ID) &&
-        !highlightedIds.has(BUFFET_ZONE_ID) &&
-        !highlightedIds.has(RECEPTION_ZONE_ID) &&
-        !highlightedIds.has(KITCHEN_ZONE_ID)
-      ) {
+      if (query && !matchesTableTitle && !hasMatchingGuest) {
         return;
       }
 
@@ -3639,6 +3624,24 @@
     });
 
     renderSeatingFloorPlan(highlightedIds);
+    if (query && tableCards.length === 0) {
+      const emptyBox = document.createElement('div');
+      emptyBox.className = 'seating-empty-state';
+      const rawInput = elSeatingSearchInput ? elSeatingSearchInput.value.trim() : query;
+      if (highlightedIds.size > 0) {
+        emptyBox.textContent =
+          currentLang === 'en'
+            ? '📍 Facility location highlighted on the floor plan above.'
+            : '📍 已於上方平面圖為您標示設施位置。';
+      } else {
+        emptyBox.textContent =
+          currentLang === 'en'
+            ? `No guest or table found matching "${rawInput}". Please check the spelling or ask our reception staff.`
+            : `找不到符合「${rawInput}」的賓客或桌次，請確認姓名拼寫或洽詢現場接待人員。`;
+      }
+      elSeatingTablesGrid.replaceChildren(emptyBox);
+      return;
+    }
     elSeatingTablesGrid.replaceChildren(...tableCards);
   }
 
@@ -3753,30 +3756,14 @@
 
       if (item.tom && item.eunice) {
         const pairRow = document.createElement('div');
-        pairRow.style.display = 'flex';
-        pairRow.style.flexWrap = 'wrap';
-        pairRow.style.gap = '8px';
-        pairRow.style.marginTop = '6px';
-        pairRow.style.marginBottom = '4px';
+        pairRow.className = 'footprint-pair-row';
 
         const tomTag = document.createElement('span');
-        tomTag.style.fontSize = '0.78rem';
-        tomTag.style.fontWeight = '600';
-        tomTag.style.padding = '2px 10px';
-        tomTag.style.borderRadius = '999px';
-        tomTag.style.background = 'rgba(56, 189, 248, 0.14)';
-        tomTag.style.color = '#0369a1';
-        tomTag.style.border = '1px solid rgba(56, 189, 248, 0.4)';
+        tomTag.className = 'footprint-role-pill is-tom';
         tomTag.textContent = `🤵‍♂️ Tom · ${item.tom.city[currentLang]}`;
 
         const euniceTag = document.createElement('span');
-        euniceTag.style.fontSize = '0.78rem';
-        euniceTag.style.fontWeight = '600';
-        euniceTag.style.padding = '2px 10px';
-        euniceTag.style.borderRadius = '999px';
-        euniceTag.style.background = 'rgba(244, 114, 182, 0.14)';
-        euniceTag.style.color = '#be185d';
-        euniceTag.style.border = '1px solid rgba(244, 114, 182, 0.4)';
+        euniceTag.className = 'footprint-role-pill is-eunice';
         euniceTag.textContent = `👰‍♀️ Eunice · ${item.eunice.city[currentLang]}`;
 
         pairRow.append(tomTag, euniceTag);
@@ -4870,28 +4857,7 @@
       btnTimelineExport.textContent = dict.timelineExportingBtn;
     }
 
-    const stream = elTimelineVideoCanvas.captureStream(60);
-    const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9')
-      ? 'video/webm;codecs=vp9'
-      : 'video/webm';
-    const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 6000000 });
-    const chunks = [];
-
-    recorder.ondataavailable = (e) => {
-      if (e.data && e.data.size > 0) chunks.push(e.data);
-    };
-
-    recorder.onstop = () => {
-      const blob = new Blob(chunks, { type: mimeType });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Tom-Eunice-Timeline-2014-2026.webm';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 5000);
-
+    const resetExportState = () => {
       timelineRecording = false;
       if (btnTimelineExport) {
         btnTimelineExport.disabled = false;
@@ -4899,7 +4865,61 @@
       }
     };
 
-    recorder.start();
+    let recorder;
+    let selectedMime = '';
+    try {
+      const stream = elTimelineVideoCanvas.captureStream(60);
+      const mimeCandidates = [
+        'video/webm;codecs=vp9',
+        'video/webm;codecs=vp8',
+        'video/webm',
+        'video/mp4',
+      ];
+      if (typeof MediaRecorder.isTypeSupported === 'function') {
+        selectedMime = mimeCandidates.find((m) => MediaRecorder.isTypeSupported(m)) || '';
+      }
+      const recOptions = selectedMime
+        ? { mimeType: selectedMime, videoBitsPerSecond: 6000000 }
+        : { videoBitsPerSecond: 6000000 };
+      recorder = new MediaRecorder(stream, recOptions);
+    } catch (_err) {
+      resetExportState();
+      replayTimeline();
+      return;
+    }
+
+    const chunks = [];
+
+    recorder.ondataavailable = (e) => {
+      if (e.data && e.data.size > 0) chunks.push(e.data);
+    };
+
+    recorder.onerror = () => {
+      resetExportState();
+    };
+
+    recorder.onstop = () => {
+      const actualType = recorder.mimeType || selectedMime || 'video/webm';
+      const ext = actualType.includes('mp4') ? 'mp4' : 'webm';
+      const blob = new Blob(chunks, { type: actualType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Tom-Eunice-Timeline-2014-2026.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+      resetExportState();
+    };
+
+    try {
+      recorder.start();
+    } catch (_err) {
+      resetExportState();
+      replayTimeline();
+      return;
+    }
     replayTimeline();
 
     const checkFinished = setInterval(() => {
@@ -4946,6 +4966,9 @@
       seekFromPointer(ev);
     });
     window.addEventListener('pointerup', () => {
+      isScrubbing = false;
+    });
+    window.addEventListener('pointercancel', () => {
       isScrubbing = false;
     });
   }
@@ -5696,13 +5719,18 @@
 
   function enterTimeUpState() {
     if (isTimeUp) return;
+    const activelyViewingPreUnlockedPanel =
+      (elSeatingSection && !elSeatingSection.classList.contains('hidden')) ||
+      (elBanquetMenuSection && !elBanquetMenuSection.classList.contains('hidden'));
     isTimeUp = true;
     document.body.classList.add('is-time-up');
     if (elCountdownStageWrap) elCountdownStageWrap.classList.remove('hidden');
     elTimeupHub.classList.remove('hidden');
     elStateLabel.textContent = t().eyebrowTimeUp;
     syncHubNavPermissions();
-    showHubView('menu');
+    if (!activelyViewingPreUnlockedPanel) {
+      showHubView('menu');
+    }
     launchConfetti();
   }
 
@@ -5710,11 +5738,8 @@
     if (!isTimeUp) return;
     isTimeUp = false;
     document.body.classList.remove('is-time-up');
-    if (elCountdownStageWrap) elCountdownStageWrap.classList.remove('hidden');
-    elTimeupHub.classList.add('hidden');
-    clearVideoIframe();
     elStateLabel.textContent = t().eyebrowCountdown;
-    syncHubNavPermissions();
+    showHubView('countdown');
   }
 
   function updateCountdown() {
@@ -5882,7 +5907,7 @@
     !document.getElementById('debug-auth-gate')
   ) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js?v=20261109e').catch(() => {});
+      navigator.serviceWorker.register('./sw.js?v=20261111a').catch(() => {});
     });
   }
 })();
