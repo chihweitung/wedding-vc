@@ -1,6 +1,24 @@
 (() => {
   'use strict';
 
+  // Polyfill CanvasRenderingContext2D.prototype.roundRect for older iPadOS / iOS Safari (< 15.4)
+  if (
+    typeof CanvasRenderingContext2D !== 'undefined' &&
+    typeof CanvasRenderingContext2D.prototype.roundRect !== 'function'
+  ) {
+    CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, radii) {
+      const rawR = Array.isArray(radii) ? Number(radii[0]) || 0 : Number(radii) || 0;
+      const r = Math.max(0, Math.min(rawR, Math.min(w, h) / 2));
+      this.moveTo(x + r, y);
+      this.arcTo(x + w, y, x + w, y + h, r);
+      this.arcTo(x + w, y + h, x, y + h, r);
+      this.arcTo(x, y + h, x, y, r);
+      this.arcTo(x, y, x + w, y, r);
+      this.closePath();
+      return this;
+    };
+  }
+
   // ============================================================================
   // 1. 基本設定：目標時間、新人影片網址、雙語介面字典、以及「暖身題 + 10 題問答」題目庫
   // ============================================================================
@@ -5864,7 +5882,7 @@
     !document.getElementById('debug-auth-gate')
   ) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js?v=20261109d').catch(() => {});
+      navigator.serviceWorker.register('./sw.js?v=20261109e').catch(() => {});
     });
   }
 })();

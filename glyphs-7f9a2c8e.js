@@ -1,6 +1,24 @@
 (() => {
   'use strict';
 
+  // Polyfill CanvasRenderingContext2D.prototype.roundRect for older iPadOS / iOS Safari (< 15.4)
+  if (
+    typeof CanvasRenderingContext2D !== 'undefined' &&
+    typeof CanvasRenderingContext2D.prototype.roundRect !== 'function'
+  ) {
+    CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, radii) {
+      const rawR = Array.isArray(radii) ? Number(radii[0]) || 0 : Number(radii) || 0;
+      const r = Math.max(0, Math.min(rawR, Math.min(w, h) / 2));
+      this.moveTo(x + r, y);
+      this.arcTo(x + w, y, x + w, y + h, r);
+      this.arcTo(x + w, y + h, x, y + h, r);
+      this.arcTo(x, y + h, x, y, r);
+      this.arcTo(x, y, x + w, y, r);
+      this.closePath();
+      return this;
+    };
+  }
+
   const params = new URLSearchParams(window.location.search);
   const kParam = (params.get('k') || '').trim();
   if (!kParam) {
@@ -1013,15 +1031,6 @@
     fxCanvas.height = ch;
   }
 
-  window.addEventListener('resize', () => {
-    cw = canvas.width = window.innerWidth;
-    ch = canvas.height = window.innerHeight;
-    if (fxCanvas) {
-      fxCanvas.width = cw;
-      fxCanvas.height = ch;
-    }
-  });
-
   const stars = Array.from({ length: 75 }, () => ({
     x: Math.random() * cw,
     y: Math.random() * ch,
@@ -1040,6 +1049,29 @@
     bobSpeed: Math.random() * 0.02 + 0.012,
     flickerPhase: Math.random() * Math.PI * 2,
   }));
+
+  window.addEventListener('resize', () => {
+    const prevW = cw || window.innerWidth || 1;
+    const prevH = ch || window.innerHeight || 1;
+    cw = canvas.width = window.innerWidth;
+    ch = canvas.height = window.innerHeight;
+    if (fxCanvas) {
+      fxCanvas.width = cw;
+      fxCanvas.height = ch;
+    }
+    const scaleX = cw / prevW;
+    const scaleY = ch / prevH;
+    stars.forEach((s) => {
+      s.x = Math.max(0, Math.min(cw, s.x * scaleX));
+      s.y = Math.max(0, Math.min(ch, s.y * scaleY));
+    });
+    candles.forEach((c) => {
+      c.x = Math.max(12, Math.min(cw - 12, c.x * scaleX));
+      c.y = Math.max(24, Math.min(ch * 0.72, c.y * scaleY));
+    });
+    snitchState.x = Math.max(16, Math.min(Math.max(56, cw - 108), snitchState.x * scaleX));
+    snitchState.y = Math.max(68, Math.min(Math.max(108, ch - 90), snitchState.y * scaleY));
+  });
 
   const sparks = [];
 
