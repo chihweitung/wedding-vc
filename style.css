@@ -2893,7 +2893,9 @@ body.is-time-up .countdown-stage-wrap {
    Harry Potter Secret Easter Egg Theme
    ========================================================================== */
 body.hp-secret-theme {
-  background: radial-gradient(circle at 50% 18%, #1d1532 0%, #100e1c 52%, #08070f 100%);
+  background:
+    radial-gradient(ellipse 75% 42% at 50% 8%, rgba(168, 32, 38, 0.24) 0%, rgba(180, 83, 9, 0.12) 45%, transparent 78%),
+    radial-gradient(circle at 50% 24%, #22162e 0%, #120d1d 55%, #09070f 100%);
   color: #f6e8c8;
   min-height: 100vh;
   min-height: 100dvh;
@@ -3022,6 +3024,31 @@ body.hp-lumos-on .hp-lumos-overlay {
   transform: translateY(-1px);
 }
 
+.hp-bgm-btn[aria-pressed="true"] {
+  background: linear-gradient(135deg, rgba(136, 19, 25, 0.88), rgba(146, 64, 14, 0.85));
+  border-color: #fde047;
+  color: #fffbeb;
+  box-shadow: 0 0 18px rgba(248, 113, 113, 0.32), 0 0 12px rgba(250, 204, 21, 0.35);
+}
+
+.hp-chime-svg {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.hp-bgm-btn[aria-pressed="true"] .hp-chime-svg {
+  animation: hpChimeShimmer 2.8s infinite ease-in-out;
+}
+
+@keyframes hpChimeShimmer {
+  0%, 100% {
+    transform: scale(1) rotate(-4deg);
+  }
+  50% {
+    transform: scale(1.14) rotate(6deg);
+  }
+}
+
 .hp-crest-wrap {
   display: flex;
   justify-content: center;
@@ -3070,22 +3097,30 @@ body.hp-lumos-on .hp-lumos-overlay {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 14px;
   margin: 4px 0;
 }
 
-.hp-lightning-bolt {
-  font-size: 0.78em;
-  filter: drop-shadow(0 0 14px #facc15);
-  animation: hpPulseBolt 2.4s infinite ease-in-out;
+.hp-emblem-knot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.55)) drop-shadow(0 0 16px rgba(220, 38, 38, 0.4));
+  animation: hpPulseBolt 3.2s infinite ease-in-out;
+}
+
+.hp-emblem-knot-svg {
+  width: clamp(32px, 5vw, 46px);
+  height: clamp(35px, 5.4vw, 50px);
+  display: block;
 }
 
 @keyframes hpPulseBolt {
   0%, 100% {
-    transform: scale(1) rotate(-4deg);
+    transform: scale(1) rotate(-2deg);
   }
   50% {
-    transform: scale(1.14) rotate(4deg);
+    transform: scale(1.09) rotate(2deg);
   }
 }
 
@@ -3101,7 +3136,7 @@ body.hp-lumos-on .hp-lumos-overlay {
 .hp-subtitle {
   font-family: 'Noto Serif TC', serif;
   font-size: 0.92rem;
-  color: rgba(246, 232, 200, 0.8);
+  color: rgba(246, 232, 200, 0.82);
   margin-top: 4px;
 }
 
@@ -3113,7 +3148,7 @@ body.hp-lumos-on .hp-lumos-overlay {
   margin: 6px auto 12px;
   padding: 7px 18px;
   border-radius: 999px;
-  background: rgba(34, 25, 16, 0.82);
+  background: rgba(34, 22, 16, 0.84);
   border: 1px solid rgba(245, 208, 97, 0.55);
   color: #fef08a;
   font-family: 'Noto Serif TC', serif;
@@ -3130,8 +3165,13 @@ body.hp-lumos-on .hp-lumos-overlay {
 }
 
 .hp-snitch-score-icon {
-  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
   line-height: 1;
+}
+
+.hp-snitch-mini-svg {
+  display: block;
 }
 
 .hp-snitch-btn.hp-snitch-flying {
@@ -3183,24 +3223,25 @@ body.hp-lumos-on .hp-lumos-overlay {
   }
 }
 
-/* Aged Hogwarts Parchment Card */
+/* Aged Hogwarts Parchment × Xuan Wedding Scroll Card */
 .hp-parchment-card {
   position: relative;
   width: 100%;
   max-width: 760px;
   margin: 8px auto 0;
-  padding: 40px 34px 32px;
-  border-radius: 22px;
+  padding: 42px 36px 30px;
+  border-radius: 18px;
   background:
-    radial-gradient(circle at 20% 20%, rgba(255, 250, 235, 0.55), transparent 55%),
-    radial-gradient(circle at 80% 85%, rgba(180, 130, 70, 0.22), transparent 50%),
-    linear-gradient(165deg, #f6ead1 0%, #edd9b4 52%, #e2c796 100%);
+    radial-gradient(circle at 18% 15%, rgba(255, 250, 238, 0.68), transparent 55%),
+    radial-gradient(circle at 84% 86%, rgba(168, 56, 42, 0.1), transparent 52%),
+    linear-gradient(168deg, #f8eed8 0%, #efdec0 52%, #e5cca0 100%);
   color: #2c1d11;
-  border: 2px solid #854d0e;
+  border: 1.5px solid #92400e;
   box-shadow:
-    0 22px 55px rgba(0, 0, 0, 0.65),
-    inset 0 0 0 5px rgba(116, 0, 1, 0.16),
-    inset 0 0 36px rgba(133, 77, 14, 0.24);
+    0 24px 58px rgba(0, 0, 0, 0.68),
+    inset 0 0 0 5px rgba(248, 238, 216, 0.8),
+    inset 0 0 0 6.5px rgba(153, 27, 27, 0.34),
+    inset 0 0 38px rgba(146, 64, 14, 0.22);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -3209,38 +3250,51 @@ body.hp-lumos-on .hp-lumos-overlay {
   transition: box-shadow 0.35s ease, transform 0.35s ease;
 }
 
+.hp-parchment-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+
 body.hp-lumos-on .hp-parchment-card,
 .hp-parchment-card.is-enchanted {
   box-shadow:
-    0 22px 65px rgba(234, 179, 8, 0.35),
-    inset 0 0 0 5px rgba(116, 0, 1, 0.24),
+    0 24px 66px rgba(234, 179, 8, 0.32),
+    inset 0 0 0 5px rgba(254, 249, 235, 0.85),
+    inset 0 0 0 6.5px rgba(185, 28, 28, 0.48),
     inset 0 0 42px rgba(234, 179, 8, 0.22);
 }
 
-/* Crimson Hogwarts Wax Seal */
+/* Cinnabar-Crimson & Gold Wedding Wax Seal (朱砂合巹火漆印) */
 .hp-wax-seal {
   position: absolute;
-  top: -26px;
+  top: -28px;
   left: 50%;
   transform: translateX(-50%);
-  width: 58px;
-  height: 58px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #b91c1c 0%, #7f1d1d 60%, #450a0a 100%);
-  border: 2px solid #d4af37;
+  background: radial-gradient(circle at 35% 28%, #dc2626 0%, #991b1b 56%, #500707 100%);
+  border: 2px solid #e5c158;
   box-shadow:
-    0 6px 16px rgba(0, 0, 0, 0.48),
-    inset 0 2px 6px rgba(255, 255, 255, 0.25);
+    0 7px 18px rgba(0, 0, 0, 0.5),
+    0 0 16px rgba(185, 28, 28, 0.35),
+    inset 0 2px 6px rgba(255, 240, 220, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .hp-wax-seal-inner {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  border: 1px dashed rgba(253, 230, 138, 0.65);
+  border: 1px solid rgba(253, 230, 138, 0.68);
+  box-shadow: inset 0 0 0 2px rgba(127, 29, 29, 0.55);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3250,16 +3304,17 @@ body.hp-lumos-on .hp-parchment-card,
 
 .hp-wax-monogram {
   font-family: 'Cinzel Decorative', serif;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 900;
-  color: #fde68a;
+  color: #fef3c7;
 }
 
 .hp-wax-year {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.56rem;
-  font-weight: 600;
-  color: rgba(253, 230, 138, 0.85);
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(253, 230, 138, 0.9);
 }
 
 .hp-parchment-header {
@@ -3274,7 +3329,7 @@ body.hp-lumos-on .hp-parchment-card,
   font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.14em;
-  color: #740001;
+  color: #7f1d1d;
 }
 
 .hp-parchment-title {
@@ -3284,7 +3339,7 @@ body.hp-lumos-on .hp-parchment-card,
   color: #231409;
 }
 
-/* Marauder's Map Footsteps Strip */
+/* Marauder's Map × Jianghu Ink Bootsteps Ribbon */
 .hp-marauder-ribbon {
   width: 100%;
   display: flex;
@@ -3292,39 +3347,59 @@ body.hp-lumos-on .hp-parchment-card,
   justify-content: space-between;
   gap: 10px;
   padding: 12px 16px;
-  border-radius: 14px;
-  background: rgba(120, 72, 24, 0.1);
-  border: 1px dashed rgba(116, 0, 1, 0.35);
+  border-radius: 12px;
+  background: rgba(127, 29, 29, 0.06);
+  border: 1px dashed rgba(127, 29, 29, 0.36);
   font-family: 'Noto Serif TC', serif;
   font-size: 0.82rem;
-  color: #4a2c11;
+  color: #4a2611;
 }
 
 .hp-footprint-track {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   font-weight: 600;
 }
 
 .hp-footprints-icons {
-  display: inline-block;
-  letter-spacing: 2px;
-  opacity: 0.65;
+  display: inline-flex;
+  align-items: center;
+  color: #6b2b18;
+  opacity: 0.58;
   transition: transform 0.5s ease, opacity 0.4s ease;
+}
+
+.hp-bootsteps-svg {
+  display: block;
+}
+
+.hp-bootsteps-svg .boot-step {
+  opacity: 0.72;
 }
 
 .hp-marauder-ribbon.is-marching .hp-footprints-icons {
   opacity: 1;
-  animation: marauderStepsWalk 1.1s infinite alternate ease-in-out;
 }
 
-@keyframes marauderStepsWalk {
-  0% {
-    transform: translateX(-4px) scale(0.96);
+.hp-marauder-ribbon.is-marching .boot-step.step-1 {
+  animation: marauderInkStep 1.5s infinite ease-in-out 0s;
+}
+
+.hp-marauder-ribbon.is-marching .boot-step.step-2 {
+  animation: marauderInkStep 1.5s infinite ease-in-out 0.35s;
+}
+
+.hp-marauder-ribbon.is-marching .boot-step.step-3 {
+  animation: marauderInkStep 1.5s infinite ease-in-out 0.7s;
+}
+
+@keyframes marauderInkStep {
+  0%, 100% {
+    opacity: 0.25;
   }
-  100% {
-    transform: translateX(4px) scale(1.08);
+  50% {
+    opacity: 1;
   }
 }
 
@@ -3516,6 +3591,15 @@ body.hp-lumos-on .hp-parchment-card,
 .hp-copy-spell-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 0 18px rgba(251, 191, 36, 0.55);
+}
+
+.hp-vow-signature {
+  margin-top: 2px;
+  font-family: 'Great Vibes', 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-size: 1.18rem;
+  color: #7f1d1d;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
 }
 
 .hp-footer-motto {
@@ -3716,16 +3800,17 @@ body.hp-lumos-on .hp-parchment-card,
 
 .hp-riddle-cipher-box {
   margin: 14px 0;
-  padding: 12px 16px;
+  padding: 12px 18px;
   border-radius: 10px;
-  background: linear-gradient(90deg, rgba(120, 53, 15, 0.35), rgba(212, 175, 55, 0.18), rgba(120, 53, 15, 0.35));
+  background: linear-gradient(90deg, rgba(127, 29, 29, 0.36), rgba(212, 175, 55, 0.18), rgba(127, 29, 29, 0.36));
   border-left: 3px solid #fbbf24;
   border-right: 3px solid #fbbf24;
   text-align: center;
-  font-family: 'JetBrains Mono', 'Noto Serif TC', monospace;
-  font-size: 1.06rem;
+  font-family: 'Cinzel', 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.14rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: #fde047;
   text-shadow: 0 0 12px rgba(250, 204, 21, 0.45);
   user-select: all;

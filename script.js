@@ -65,8 +65,8 @@
       langBtnTitle: '切換為英文 / Switch to English',
       themeBtnTitle: '切換日夜色調',
       fullscreenBtnTitle: '全螢幕檢視',
-      bgmPlayTitle: '播放 33⅓ 黑膠輕音樂',
-      bgmPauseTitle: '暫停背景音樂',
+      bgmPlayTitle: '播放 33⅓ 黑膠圓舞曲 ·《藍色多瑙河》',
+      bgmPauseTitle: '暫停 33⅓ 黑膠圓舞曲 ·《藍色多瑙河》',
       eyebrowCountdown: '2014 — 2026 · 婚禮邀請',
       eyebrowTimeUp: '2026.11.29 · 謝謝今天來見我們的你',
       eventTitle: '走過十二年四季，想邀請你來參與我們最重要的一天',
@@ -180,8 +180,8 @@
       langBtnTitle: 'Switch to Traditional Chinese / 切換中文',
       themeBtnTitle: 'Toggle Light / Dark Palette',
       fullscreenBtnTitle: 'Toggle Fullscreen',
-      bgmPlayTitle: 'Play 33⅓ RPM Gentle Vinyl Melody',
-      bgmPauseTitle: 'Pause Background Music',
+      bgmPlayTitle: 'Play 33⅓ RPM Vinyl Waltz · The Blue Danube',
+      bgmPauseTitle: 'Pause 33⅓ RPM Vinyl Waltz · The Blue Danube',
       eyebrowCountdown: '2014 — 2026 · Wedding Invitation',
       eyebrowTimeUp: 'Nov 29, 2026 · So Happy You Are Here With Us',
       eventTitle: 'Twelve years of seasons together — we’d love for you to celebrate this day with us',
@@ -5918,23 +5918,58 @@
     requestAnimationFrame(tick);
   }
 
-  // Gentle 33⅓ RPM Vinyl Felt-Piano / Music-Box BGM (Muted by default, Web Audio API)
+  // Gentle 33⅓ RPM Vinyl Felt-Piano & Music-Box Waltz — Johann Strauss II "The Blue Danube" (Op. 314)
   let bgmAudioCtx = null;
   let bgmMasterGain = null;
   let bgmNoteTarget = null;
   let bgmLoopTimer = null;
   let bgmBarIndex = 0;
 
-  // Warm Canon-inspired D-major wedding progression (MIDI notes: [bass, inner, fifth, melody1, melody2])
-  const BGM_CHORD_BARS = [
-    [50, 57, 62, 66, 69], // Dmaj
-    [49, 57, 61, 64, 69], // A/C#
-    [47, 54, 59, 62, 66], // Bm7
-    [42, 54, 57, 61, 66], // F#m7
-    [43, 50, 55, 59, 67], // Gmaj7
-    [42, 50, 57, 62, 66], // D/F#
-    [40, 47, 55, 59, 64], // Em7
-    [45, 52, 57, 62, 61], // Asus4 -> A
+  // 32-bar intimate 3/4 Viennese Waltz in D Major (honoring Tom & Eunice's Vienna honeymoon)
+  // Each bar: { bass, chord: [n1, n2], notes: [[beat, midi, durBeats, gain, isChime?], ...] }
+  const BLUE_DANUBE_BARS = [
+    // Waltz 1A — Phrase 1 (D major rising arpeggio + crystalline answer)
+    { bass: 50, chord: [57, 66], notes: [[0, 62, 1.1, 0.052], [1, 66, 1.1, 0.054], [2, 69, 2.2, 0.058]] },
+    { bass: 50, chord: [57, 66], notes: [[1, 81, 0.85, 0.036, true], [2, 81, 0.95, 0.034, true]] },
+    { bass: 54, chord: [57, 62], notes: [[1, 78, 0.85, 0.036, true], [2, 78, 0.95, 0.034, true]] },
+    { bass: 50, chord: [57, 66], notes: [[0, 62, 2.1, 0.05], [2, 62, 0.95, 0.046]] },
+
+    // Phrase 2 (D -> A7)
+    { bass: 50, chord: [57, 66], notes: [[0, 62, 1.1, 0.052], [1, 66, 1.1, 0.054], [2, 69, 2.2, 0.058]] },
+    { bass: 52, chord: [57, 61], notes: [[1, 81, 0.85, 0.036, true], [2, 81, 0.95, 0.034, true]] },
+    { bass: 45, chord: [55, 61], notes: [[1, 79, 0.85, 0.036, true], [2, 79, 0.95, 0.034, true]] },
+    { bass: 52, chord: [55, 61], notes: [[0, 61, 2.1, 0.048], [2, 61, 0.95, 0.045]] },
+
+    // Phrase 3 (A7 soaring to B)
+    { bass: 45, chord: [55, 61], notes: [[0, 61, 1.1, 0.05], [1, 64, 1.1, 0.053], [2, 71, 2.2, 0.058]] },
+    { bass: 52, chord: [55, 61], notes: [[1, 83, 0.85, 0.036, true], [2, 83, 0.95, 0.034, true]] },
+    { bass: 45, chord: [55, 61], notes: [[1, 79, 0.85, 0.036, true], [2, 79, 0.95, 0.034, true]] },
+    { bass: 52, chord: [55, 61], notes: [[0, 64, 2.1, 0.048], [2, 61, 0.95, 0.045]] },
+
+    // Phrase 4 (A7 resolving warmly to D)
+    { bass: 45, chord: [55, 61], notes: [[0, 61, 1.1, 0.05], [1, 64, 1.1, 0.053], [2, 71, 1.15, 0.056]] },
+    { bass: 50, chord: [57, 66], notes: [[0, 69, 2.3, 0.058], [1, 81, 0.85, 0.035, true], [2, 81, 0.95, 0.033, true]] },
+    { bass: 45, chord: [57, 62], notes: [[1, 78, 0.85, 0.035, true], [2, 78, 0.95, 0.033, true]] },
+    { bass: 50, chord: [57, 66], notes: [[0, 62, 2.0, 0.052], [2, 74, 1.0, 0.048]] },
+
+    // Waltz 1B — Lyrical Viennese melody
+    { bass: 50, chord: [57, 66], notes: [[0, 74, 2.1, 0.056], [2, 76, 1.0, 0.05]] },
+    { bass: 49, chord: [57, 66], notes: [[0, 78, 2.1, 0.058], [2, 81, 1.05, 0.054]] },
+    { bass: 43, chord: [55, 59], notes: [[0, 81, 2.9, 0.06], [1, 74, 1.5, 0.028, true]] },
+    { bass: 43, chord: [55, 59], notes: [[0, 79, 2.0, 0.055], [2, 76, 1.0, 0.05]] },
+    { bass: 42, chord: [57, 62], notes: [[0, 78, 2.8, 0.058]] },
+    { bass: 50, chord: [57, 62], notes: [[0, 74, 2.0, 0.054], [2, 71, 1.0, 0.048]] },
+    { bass: 40, chord: [55, 59], notes: [[0, 69, 2.0, 0.052], [2, 67, 1.0, 0.048]] },
+    { bass: 45, chord: [55, 61], notes: [[0, 64, 2.0, 0.05], [2, 69, 1.0, 0.048]] },
+
+    { bass: 50, chord: [57, 66], notes: [[0, 74, 2.1, 0.056], [2, 76, 1.0, 0.05]] },
+    { bass: 48, chord: [57, 66], notes: [[0, 78, 2.1, 0.058], [2, 81, 1.05, 0.055]] },
+    { bass: 47, chord: [55, 59], notes: [[0, 83, 2.1, 0.06], [2, 79, 1.0, 0.052]] },
+    { bass: 40, chord: [55, 59], notes: [[0, 76, 2.8, 0.056]] },
+    { bass: 45, chord: [57, 62], notes: [[0, 74, 1.05, 0.054], [1, 78, 1.05, 0.056], [2, 76, 1.05, 0.052]] },
+    { bass: 45, chord: [55, 61], notes: [[0, 74, 2.0, 0.054], [2, 73, 1.0, 0.05]] },
+    { bass: 50, chord: [57, 66], notes: [[0, 74, 2.9, 0.06], [1, 86, 1.6, 0.026, true]] },
+    { bass: 50, chord: [57, 66], notes: [[1, 69, 1.1, 0.04], [2, 62, 1.0, 0.044]] },
   ];
 
   function midiToHz(midi) {
@@ -5953,20 +5988,20 @@
 
       const toneFilter = bgmAudioCtx.createBiquadFilter();
       toneFilter.type = 'lowpass';
-      toneFilter.frequency.setValueAtTime(1180, bgmAudioCtx.currentTime);
+      toneFilter.frequency.setValueAtTime(1480, bgmAudioCtx.currentTime);
       toneFilter.Q.setValueAtTime(0.55, bgmAudioCtx.currentTime);
       toneFilter.connect(master);
 
-      // Subtle warm room echo so notes bloom softly like a felt piano
+      // Warm Viennese salon echo so felt-piano & music-box notes bloom gently
       const delay = bgmAudioCtx.createDelay(1.0);
-      delay.delayTime.setValueAtTime(0.31, bgmAudioCtx.currentTime);
+      delay.delayTime.setValueAtTime(0.29, bgmAudioCtx.currentTime);
       const echoFilter = bgmAudioCtx.createBiquadFilter();
       echoFilter.type = 'lowpass';
-      echoFilter.frequency.setValueAtTime(820, bgmAudioCtx.currentTime);
+      echoFilter.frequency.setValueAtTime(920, bgmAudioCtx.currentTime);
       const feedback = bgmAudioCtx.createGain();
-      feedback.gain.setValueAtTime(0.18, bgmAudioCtx.currentTime);
+      feedback.gain.setValueAtTime(0.19, bgmAudioCtx.currentTime);
       const wet = bgmAudioCtx.createGain();
-      wet.gain.setValueAtTime(0.22, bgmAudioCtx.currentTime);
+      wet.gain.setValueAtTime(0.24, bgmAudioCtx.currentTime);
 
       toneFilter.connect(delay);
       delay.connect(echoFilter);
@@ -5981,13 +6016,13 @@
     return bgmAudioCtx;
   }
 
-  function scheduleFeltPianoNote(ctx, midi, startTime, durationSec, peakGain) {
+  function scheduleFeltPianoNote(ctx, midi, startTime, durationSec, peakGain, isChime = false) {
     if (!bgmNoteTarget) return;
     const freq = midiToHz(midi);
     const env = ctx.createGain();
     env.gain.setValueAtTime(0.0001, startTime);
-    env.gain.linearRampToValueAtTime(peakGain, startTime + 0.026);
-    env.gain.exponentialRampToValueAtTime(peakGain * 0.36, startTime + 0.42);
+    env.gain.linearRampToValueAtTime(peakGain, startTime + (isChime ? 0.012 : 0.024));
+    env.gain.exponentialRampToValueAtTime(peakGain * 0.34, startTime + (isChime ? 0.28 : 0.38));
     env.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec);
     env.connect(bgmNoteTarget);
 
@@ -5996,11 +6031,11 @@
     oscMain.frequency.setValueAtTime(freq, startTime);
 
     const oscWarm = ctx.createOscillator();
-    oscWarm.type = 'triangle';
-    oscWarm.frequency.setValueAtTime(freq * 2, startTime);
+    oscWarm.type = isChime ? 'sine' : 'triangle';
+    oscWarm.frequency.setValueAtTime(freq * (isChime ? 3 : 2), startTime);
     const warmGain = ctx.createGain();
-    warmGain.gain.setValueAtTime(0.12, startTime);
-    warmGain.gain.exponentialRampToValueAtTime(0.015, startTime + 0.35);
+    warmGain.gain.setValueAtTime(isChime ? 0.08 : 0.13, startTime);
+    warmGain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.32);
 
     oscMain.connect(env);
     oscWarm.connect(warmGain);
@@ -6014,27 +6049,31 @@
 
   function scheduleNextBgmBar() {
     if (!bgmPlaying || !bgmAudioCtx) return;
-    const now = bgmAudioCtx.currentTime + 0.05;
-    const chord = BGM_CHORD_BARS[bgmBarIndex % BGM_CHORD_BARS.length];
-    bgmBarIndex = (bgmBarIndex + 1) % BGM_CHORD_BARS.length;
+    const beatSec = 0.43; // Unhurried, tender Viennese 3/4 waltz (~140 quarter BPM = ~46 bars/min)
+    const barStart = bgmAudioCtx.currentTime + 0.05;
+    const bar = BLUE_DANUBE_BARS[bgmBarIndex % BLUE_DANUBE_BARS.length];
+    bgmBarIndex = (bgmBarIndex + 1) % BLUE_DANUBE_BARS.length;
 
-    const stepSec = 0.56; // Gentle ~53 BPM half-pulse arpeggio
-    const pattern = [
-      { note: chord[0], offset: 0, dur: 2.9, gain: 0.048 },
-      { note: chord[1], offset: stepSec * 1, dur: 2.4, gain: 0.036 },
-      { note: chord[2], offset: stepSec * 2, dur: 2.2, gain: 0.038 },
-      { note: chord[4], offset: stepSec * 3, dur: 2.6, gain: 0.046 },
-      { note: chord[3], offset: stepSec * 4.5, dur: 2.3, gain: 0.042 },
-      { note: chord[2] + 12, offset: stepSec * 6, dur: 2.1, gain: 0.026 },
-    ];
+    // Soft waltz accompaniment: warm bass on beat 1, feather-light brushed dyads on beats 2 & 3
+    // (subtle -12ms Viennese lilt on beat 2 so it sways gently rather than marching mechanically)
+    scheduleFeltPianoNote(bgmAudioCtx, bar.bass, barStart, beatSec * 2.5, 0.036, false);
+    if (bar.chord && bar.chord.length) {
+      bar.chord.forEach((cMidi, idx) => {
+        const strum = idx * 0.012;
+        scheduleFeltPianoNote(bgmAudioCtx, cMidi, barStart + beatSec - 0.012 + strum, beatSec * 0.82, 0.018, false);
+        scheduleFeltPianoNote(bgmAudioCtx, cMidi, barStart + beatSec * 2 + strum, beatSec * 0.78, 0.015, false);
+      });
+    }
 
-    pattern.forEach((item) => {
-      const rubato = (Math.random() - 0.5) * 0.018;
-      const tStart = Math.max(bgmAudioCtx.currentTime + 0.02, now + item.offset + rubato);
-      scheduleFeltPianoNote(bgmAudioCtx, item.note, tStart, item.dur, item.gain);
+    // Expressive melody & music-box upper echoes
+    bar.notes.forEach((n) => {
+      const [beatOffset, midi, durBeats, gain, isChime] = n;
+      const rubato = (Math.random() - 0.5) * 0.012;
+      const tStart = Math.max(bgmAudioCtx.currentTime + 0.02, barStart + beatOffset * beatSec + rubato);
+      scheduleFeltPianoNote(bgmAudioCtx, midi, tStart, Math.max(0.35, durBeats * beatSec), gain, Boolean(isChime));
     });
 
-    bgmLoopTimer = window.setTimeout(scheduleNextBgmBar, Math.round(stepSec * 7.5 * 1000));
+    bgmLoopTimer = window.setTimeout(scheduleNextBgmBar, Math.round(beatSec * 3 * 1000));
   }
 
   function pauseVinylBgm() {
@@ -6318,7 +6357,7 @@
     !document.getElementById('debug-auth-gate')
   ) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js?v=20261111c').catch(() => {});
+      navigator.serviceWorker.register('./sw.js?v=20261111d').catch(() => {});
     });
   }
 })();
