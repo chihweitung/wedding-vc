@@ -941,7 +941,7 @@
       },
       color: '#65a30d',
       fillColor: 'rgba(101, 163, 13, 0.20)',
-      debugStats: { headcount: 72, veg: 0, stroller: 0, childSeat: 0 },
+      debugStats: { headcount: 74, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎爸媽朋友區', en: "Groom's Parents' Friends" },
       zone: { zh: '主廳上方 · 新郎爸媽朋友（共 6 長桌）', en: "Main Hall North · Groom's Parents' Friends (6 Long Tables)" },
       guests: [
@@ -993,6 +993,7 @@
         { zh: '劉園德等二人', en: '劉園德 (2)' },
         { zh: '梁志遠等二人', en: '梁志遠 (2)' },
         { zh: '康裕傑等二人', en: '康裕傑 (2)' },
+        { zh: '高增堯&張淑貞等二人', en: '高增堯 & 張淑貞 (2)' },
       ],
     },
     {
@@ -6604,7 +6605,7 @@
     !document.getElementById('debug-auth-gate')
   ) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js?v=20261111f').catch(() => {});
+      navigator.serviceWorker.register('./sw.js?v=20261111g').catch(() => {});
     });
   }
 })();

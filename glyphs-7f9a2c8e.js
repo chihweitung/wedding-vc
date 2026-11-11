@@ -705,17 +705,19 @@
   let chamberMasterGain = null;
   let chamberFilterNode = null;
   let hedwigBusGain = null;
+  let lumosBusGain = null;
   let riddleBusGain = null;
   let chamberNoiseBuffer = null;
   let isChamberBgmPlaying = false;
   let userExplicitlyMutedBgm = false;
-  let chamberMusicMode = 'hedwig'; // 'hedwig' | 'riddle'
+  let chamberMusicMode = 'hedwig'; // 'hedwig' | 'lumos' | 'riddle'
   let isRiddleModalOpen = false;
   let chamberSchedulerTimer = null;
   let chamberWatchdogTimer = null;
   let chamberWakeRetryTimers = [];
   let chamberNextBarTime = 0;
   let chamberBarIndex = 0;
+  let lumosBarIndex = 0;
   let riddleBarIndex = 0;
   let chamberWasStandby = false;
   let chamberNeedsRebuild = false;
@@ -1109,6 +1111,195 @@
     },
   ];
 
+  // =========================================================================
+  // 「路摸思 (Lumos)」專屬星輝空靈配樂 — 《星輝引路・夜明珠泛音》
+  // 調式：G Lydian × 宮調五聲星輝 (G - A - B - C# - D - E - F#)，4/4 飄逸微光律動
+  // 編制：古琴清亮泛音 (Harmonic Qin) + 玉磬星鈴 (Jade Star-Bell) + 清風暖竹笛 (Warm Dizi) + 夜明珠暖韻
+  // =========================================================================
+  const LUMOS_BEAT_SEC = 0.52;
+  const LUMOS_BARS = [
+    {
+      // Bar 1 (Gmaj7 — 夜明珠初亮・星輝灑落羊皮紙): B5 -> D6 -> A5
+      pad: [196.0, 293.66],
+      harmonics: [
+        [0, 392.0, 1.4],
+        [0.5, 493.88, 1.3],
+        [1.0, 587.33, 1.3],
+        [1.5, 739.99, 1.4],
+        [2.0, 880.0, 1.4],
+        [2.5, 739.99, 1.2],
+        [3.0, 587.33, 1.2],
+        [3.5, 493.88, 1.1],
+      ],
+      dizi: [
+        [0.5, 987.77, 1.4],
+        [2.0, 1174.66, 1.0],
+        [3.0, 880.0, 1.0],
+      ],
+      bells: [
+        [0, 1479.98, 1.6],
+        [2.5, 1174.66, 1.4],
+      ],
+    },
+    {
+      // Bar 2 (Cmaj7#11/G — Lydian 奇幻微光升騰): F#5 -> G5 -> B5
+      pad: [196.0, 261.63],
+      harmonics: [
+        [0, 261.63, 1.4],
+        [0.5, 392.0, 1.3],
+        [1.0, 493.88, 1.3],
+        [1.5, 587.33, 1.3],
+        [2.0, 739.99, 1.5],
+        [2.5, 783.99, 1.3],
+        [3.0, 739.99, 1.2],
+        [3.5, 587.33, 1.1],
+      ],
+      dizi: [
+        [0.25, 739.99, 1.2],
+        [1.5, 783.99, 1.0],
+        [2.5, 987.77, 1.4],
+      ],
+      bells: [
+        [1.0, 1479.98, 1.5],
+        [3.0, 1567.98, 1.4],
+      ],
+    },
+    {
+      // Bar 3 (Em9 — 月華映照藏寶密語): E5 -> F#5 -> G5 -> A5
+      pad: [164.81, 246.94],
+      harmonics: [
+        [0, 329.63, 1.4],
+        [0.5, 493.88, 1.3],
+        [1.0, 587.33, 1.3],
+        [1.5, 739.99, 1.3],
+        [2.0, 783.99, 1.4],
+        [2.5, 987.77, 1.3],
+        [3.0, 783.99, 1.2],
+        [3.5, 739.99, 1.1],
+      ],
+      dizi: [
+        [0, 659.25, 1.0],
+        [1.0, 739.99, 1.0],
+        [2.0, 783.99, 1.0],
+        [3.0, 880.0, 1.0],
+      ],
+      bells: [[2.0, 1975.53, 1.6]],
+    },
+    {
+      // Bar 4 (D6/9 — 溫潤金芒凝定): F#5 悠長餘韻 + 星鈴雙音
+      pad: [146.83, 220.0],
+      harmonics: [
+        [0, 293.66, 1.5],
+        [0.5, 440.0, 1.3],
+        [1.0, 493.88, 1.3],
+        [1.5, 659.25, 1.3],
+        [2.0, 739.99, 1.5],
+        [2.5, 880.0, 1.3],
+        [3.0, 739.99, 1.2],
+        [3.5, 659.25, 1.1],
+      ],
+      dizi: [[0, 739.99, 2.8]],
+      bells: [
+        [2.0, 1760.0, 1.4],
+        [3.0, 1479.98, 1.5],
+      ],
+    },
+    {
+      // Bar 5 (Bm9 — 星塵穿堂・C#5 仙氣點睛): D6 -> C#6 -> B5 -> A5
+      pad: [123.47, 185.0],
+      harmonics: [
+        [0, 246.94, 1.4],
+        [0.5, 369.99, 1.3],
+        [1.0, 440.0, 1.3],
+        [1.5, 554.37, 1.4],
+        [2.0, 587.33, 1.4],
+        [2.5, 739.99, 1.3],
+        [3.0, 587.33, 1.2],
+        [3.5, 440.0, 1.1],
+      ],
+      dizi: [
+        [0, 1174.66, 1.0],
+        [1.0, 1108.73, 1.0],
+        [2.0, 987.77, 1.0],
+        [3.0, 880.0, 1.0],
+      ],
+      bells: [
+        [0, 1174.66, 1.4],
+        [1.5, 1108.73, 1.5],
+      ],
+    },
+    {
+      // Bar 6 (Cmaj7#11 — 隱形墨水浮現微光): G5 -> F#5 -> D5 -> E5
+      pad: [130.81, 196.0],
+      harmonics: [
+        [0, 261.63, 1.4],
+        [0.5, 392.0, 1.3],
+        [1.0, 493.88, 1.3],
+        [1.5, 587.33, 1.3],
+        [2.0, 739.99, 1.4],
+        [2.5, 880.0, 1.3],
+        [3.0, 783.99, 1.2],
+        [3.5, 587.33, 1.1],
+      ],
+      dizi: [
+        [0, 783.99, 1.2],
+        [1.25, 739.99, 0.9],
+        [2.25, 587.33, 0.8],
+        [3.0, 659.25, 1.0],
+      ],
+      bells: [[2.0, 1479.98, 1.6]],
+    },
+    {
+      // Bar 7 (Am9 — 清風拂過星圖): E5 -> G5 -> B5
+      pad: [110.0, 164.81],
+      harmonics: [
+        [0, 220.0, 1.4],
+        [0.5, 329.63, 1.3],
+        [1.0, 392.0, 1.3],
+        [1.5, 493.88, 1.3],
+        [2.0, 523.25, 1.4],
+        [2.5, 659.25, 1.3],
+        [3.0, 783.99, 1.2],
+        [3.5, 987.77, 1.2],
+      ],
+      dizi: [
+        [0.25, 659.25, 1.2],
+        [1.5, 783.99, 1.1],
+        [2.75, 987.77, 1.2],
+      ],
+      bells: [
+        [0, 1318.51, 1.4],
+        [3.0, 1975.53, 1.4],
+      ],
+    },
+    {
+      // Bar 8 (Dmaj9sus4 — 幸福星河迴旋重返 Gmaj7): A5 長音 + 星鈴上行琶音
+      pad: [146.83, 220.0],
+      harmonics: [
+        [0, 293.66, 1.5],
+        [0.5, 440.0, 1.3],
+        [1.0, 587.33, 1.3],
+        [1.5, 659.25, 1.3],
+        [2.0, 739.99, 1.4],
+        [2.5, 783.99, 1.3],
+        [3.0, 880.0, 1.3],
+        [3.5, 987.77, 1.3],
+      ],
+      dizi: [[0, 880.0, 3.0]],
+      bells: [
+        [1.5, 1174.66, 1.2],
+        [2.5, 1479.98, 1.3],
+        [3.25, 1760.0, 1.5],
+      ],
+    },
+  ];
+
+  function resolveChamberMusicMode() {
+    if (isRiddleModalOpen) return 'riddle';
+    if (lumosActive) return 'lumos';
+    return 'hedwig';
+  }
+
   function setIosPlaybackSession() {
     try {
       if (navigator.audioSession && navigator.audioSession.type !== 'playback') {
@@ -1145,6 +1336,7 @@
     chamberMasterGain = null;
     chamberFilterNode = null;
     hedwigBusGain = null;
+    lumosBusGain = null;
     riddleBusGain = null;
     chamberNoiseBuffer = null;
     chamberLastCtxTime = -1;
@@ -1160,22 +1352,26 @@
   }
 
   function syncModeBusGains(immediate = false) {
-    if (!chamberAudioCtx || !hedwigBusGain || !riddleBusGain) return;
+    if (!chamberAudioCtx || !hedwigBusGain || !lumosBusGain || !riddleBusGain) return;
     const now = chamberAudioCtx.currentTime;
-    const wantRiddle = chamberMusicMode === 'riddle';
-    const targetHedwig = wantRiddle ? 0.0001 : 1.0;
-    const targetRiddle = wantRiddle ? 1.0 : 0.0001;
+    const targetHedwig = chamberMusicMode === 'hedwig' ? 1.0 : 0.0001;
+    const targetLumos = chamberMusicMode === 'lumos' ? 1.0 : 0.0001;
+    const targetRiddle = chamberMusicMode === 'riddle' ? 1.0 : 0.0001;
     try {
       hedwigBusGain.gain.cancelScheduledValues(now);
+      lumosBusGain.gain.cancelScheduledValues(now);
       riddleBusGain.gain.cancelScheduledValues(now);
       if (immediate) {
         hedwigBusGain.gain.setValueAtTime(targetHedwig, now);
+        lumosBusGain.gain.setValueAtTime(targetLumos, now);
         riddleBusGain.gain.setValueAtTime(targetRiddle, now);
       } else if (typeof hedwigBusGain.gain.setTargetAtTime === 'function') {
-        hedwigBusGain.gain.setTargetAtTime(targetHedwig, now, 0.07);
-        riddleBusGain.gain.setTargetAtTime(targetRiddle, now, 0.07);
+        hedwigBusGain.gain.setTargetAtTime(targetHedwig, now, 0.08);
+        lumosBusGain.gain.setTargetAtTime(targetLumos, now, 0.08);
+        riddleBusGain.gain.setTargetAtTime(targetRiddle, now, 0.08);
       } else {
         hedwigBusGain.gain.setValueAtTime(targetHedwig, now);
+        lumosBusGain.gain.setValueAtTime(targetLumos, now);
         riddleBusGain.gain.setValueAtTime(targetRiddle, now);
       }
     } catch (_e) {
@@ -1205,9 +1401,11 @@
     chamberFilterNode.Q.setValueAtTime(0.6, chamberAudioCtx.currentTime);
 
     hedwigBusGain = chamberAudioCtx.createGain();
+    lumosBusGain = chamberAudioCtx.createGain();
     riddleBusGain = chamberAudioCtx.createGain();
     syncModeBusGains(true);
     hedwigBusGain.connect(chamberFilterNode);
+    lumosBusGain.connect(chamberFilterNode);
     riddleBusGain.connect(chamberFilterNode);
 
     // Pre-build soft bamboo-breath & nail-pluck noise buffer
@@ -1633,6 +1831,193 @@
     osc2.stop(startTime + tail + 0.04);
   }
 
+  // --- 「路摸思 (Lumos)」專屬星輝音色組 (Starlight Pearl & Ethereal Harmonics Voices) ---
+
+  // 點亮魔杖／夜明珠瞬間：星輝泛音上行流光
+  function scheduleLumosWandSparkle(startTime) {
+    if (!chamberAudioCtx || !chamberFilterNode) return;
+    const targetBus = lumosBusGain || chamberFilterNode;
+    const sparkleNotes = [587.33, 739.99, 987.77, 1174.66, 1479.98];
+    sparkleNotes.forEach((f, idx) => {
+      const t = startTime + idx * 0.048;
+      const osc = chamberAudioCtx.createOscillator();
+      const oscShimmer = chamberAudioCtx.createOscillator();
+      const env = chamberAudioCtx.createGain();
+      const shimGain = chamberAudioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(f, t);
+      oscShimmer.type = 'sine';
+      oscShimmer.frequency.setValueAtTime(f * 2, t);
+      shimGain.gain.setValueAtTime(0.22, t);
+      env.gain.setValueAtTime(0.0001, t);
+      env.gain.linearRampToValueAtTime(0.032 - idx * 0.003, t + 0.012);
+      env.gain.exponentialRampToValueAtTime(0.0001, t + 1.05);
+      osc.connect(env);
+      oscShimmer.connect(shimGain);
+      shimGain.connect(env);
+      env.connect(targetBus);
+      osc.start(t);
+      oscShimmer.start(t);
+      osc.stop(t + 1.1);
+      oscShimmer.stop(t + 1.1);
+    });
+  }
+
+  // 夜明珠暖韻 (Warm Silk & Sheng-like fifth halo)
+  function scheduleLumosWarmPad(freqs, startTime, durationSec) {
+    if (!chamberAudioCtx || !chamberFilterNode || !Array.isArray(freqs)) return;
+    const targetBus = lumosBusGain || chamberFilterNode;
+    freqs.forEach((f, idx) => {
+      const osc = chamberAudioCtx.createOscillator();
+      const env = chamberAudioCtx.createGain();
+      osc.type = idx === 0 ? 'sine' : 'triangle';
+      osc.frequency.setValueAtTime(f, startTime);
+      env.gain.setValueAtTime(0.0001, startTime);
+      env.gain.linearRampToValueAtTime(idx === 0 ? 0.034 : 0.02, startTime + 0.36);
+      env.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec + 0.25);
+      osc.connect(env);
+      env.connect(targetBus);
+      osc.start(startTime);
+      osc.stop(startTime + durationSec + 0.3);
+    });
+  }
+
+  // 古琴清亮泛音 (Crystalline Guqin 7th/9th-hui harmonic pluck)
+  function scheduleLumosHarmonicQin(freq, startTime, durationSec) {
+    if (!chamberAudioCtx || !chamberFilterNode) return;
+    const targetBus = lumosBusGain || chamberFilterNode;
+    const oscFund = chamberAudioCtx.createOscillator();
+    const oscHarm = chamberAudioCtx.createOscillator();
+    const env = chamberAudioCtx.createGain();
+    const harmGain = chamberAudioCtx.createGain();
+
+    oscFund.type = 'sine';
+    oscFund.frequency.setValueAtTime(freq, startTime);
+    oscHarm.type = 'triangle';
+    oscHarm.frequency.setValueAtTime(freq * 2, startTime);
+    harmGain.gain.setValueAtTime(0.28, startTime);
+    harmGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.32);
+
+    const tail = Math.max(durationSec * 1.25, 0.72);
+    env.gain.setValueAtTime(0.0001, startTime);
+    env.gain.linearRampToValueAtTime(0.044, startTime + 0.01);
+    env.gain.exponentialRampToValueAtTime(0.0001, startTime + tail);
+
+    oscFund.connect(env);
+    oscHarm.connect(harmGain);
+    harmGain.connect(env);
+    env.connect(targetBus);
+
+    oscFund.start(startTime);
+    oscHarm.start(startTime);
+    oscFund.stop(startTime + tail + 0.05);
+    oscHarm.stop(startTime + tail + 0.05);
+  }
+
+  // 玉磬星鈴 (Sparkling high-register Jade Star-Chime)
+  function scheduleLumosStarBell(freq, startTime, durationSec) {
+    if (!chamberAudioCtx || !chamberFilterNode) return;
+    const targetBus = lumosBusGain || chamberFilterNode;
+    const osc1 = chamberAudioCtx.createOscillator();
+    const osc2 = chamberAudioCtx.createOscillator();
+    const env = chamberAudioCtx.createGain();
+    const g2 = chamberAudioCtx.createGain();
+
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(freq, startTime);
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(freq * 2.998, startTime);
+    g2.gain.setValueAtTime(0.14, startTime);
+
+    const tail = Math.max(durationSec * 1.35, 0.9);
+    env.gain.setValueAtTime(0.0001, startTime);
+    env.gain.linearRampToValueAtTime(0.028, startTime + 0.008);
+    env.gain.exponentialRampToValueAtTime(0.0001, startTime + tail);
+
+    osc1.connect(env);
+    osc2.connect(g2);
+    g2.connect(env);
+    env.connect(targetBus);
+
+    osc1.start(startTime);
+    osc2.start(startTime);
+    osc1.stop(startTime + tail + 0.05);
+    osc2.stop(startTime + tail + 0.05);
+  }
+
+  // 清風暖竹笛 (Warm lyrical Bamboo Dizi melody)
+  function scheduleLumosBambooDizi(freq, startTime, durationSec) {
+    if (!chamberAudioCtx || !chamberFilterNode) return;
+    const targetBus = lumosBusGain || chamberFilterNode;
+    const oscMain = chamberAudioCtx.createOscillator();
+    const oscSoftOct = chamberAudioCtx.createOscillator();
+    const lp = chamberAudioCtx.createBiquadFilter();
+    const env = chamberAudioCtx.createGain();
+    const octGain = chamberAudioCtx.createGain();
+
+    oscMain.type = 'triangle';
+    oscSoftOct.type = 'sine';
+    oscMain.frequency.setValueAtTime(freq * 0.994, startTime);
+    if (typeof oscMain.frequency.exponentialRampToValueAtTime === 'function') {
+      oscMain.frequency.exponentialRampToValueAtTime(freq, startTime + 0.045);
+    }
+    oscSoftOct.frequency.setValueAtTime(freq * 2, startTime);
+    octGain.gain.setValueAtTime(0.18, startTime);
+
+    lp.type = 'lowpass';
+    lp.frequency.setValueAtTime(Math.min(3600, freq * 3.1), startTime);
+    lp.Q.setValueAtTime(0.9, startTime);
+
+    if (durationSec >= 0.48) {
+      const vib = chamberAudioCtx.createOscillator();
+      const vibGain = chamberAudioCtx.createGain();
+      vib.type = 'sine';
+      vib.frequency.setValueAtTime(4.9, startTime);
+      vibGain.gain.setValueAtTime(0.0001, startTime);
+      vibGain.gain.linearRampToValueAtTime(freq * 0.0065, startTime + 0.22);
+      vib.connect(vibGain);
+      vibGain.connect(oscMain.frequency);
+      vibGain.connect(oscSoftOct.frequency);
+      vib.start(startTime);
+      vib.stop(startTime + durationSec + 0.12);
+    }
+
+    const attack = Math.min(0.11, durationSec * 0.25);
+    env.gain.setValueAtTime(0.0001, startTime);
+    env.gain.linearRampToValueAtTime(0.046, startTime + attack);
+    env.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec + 0.12);
+
+    if (chamberNoiseBuffer && typeof chamberAudioCtx.createBufferSource === 'function') {
+      const breathSrc = chamberAudioCtx.createBufferSource();
+      const breathBp = chamberAudioCtx.createBiquadFilter();
+      const breathGain = chamberAudioCtx.createGain();
+      breathSrc.buffer = chamberNoiseBuffer;
+      breathSrc.loop = true;
+      breathBp.type = 'bandpass';
+      breathBp.frequency.setValueAtTime(Math.min(3400, freq * 1.9), startTime);
+      breathBp.Q.setValueAtTime(6.0, startTime);
+      breathGain.gain.setValueAtTime(0.0001, startTime);
+      breathGain.gain.linearRampToValueAtTime(0.009, startTime + attack);
+      breathGain.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec + 0.06);
+      breathSrc.connect(breathBp);
+      breathBp.connect(breathGain);
+      breathGain.connect(targetBus);
+      breathSrc.start(startTime);
+      breathSrc.stop(startTime + durationSec + 0.08);
+    }
+
+    oscMain.connect(lp);
+    oscSoftOct.connect(octGain);
+    octGain.connect(lp);
+    lp.connect(env);
+    env.connect(targetBus);
+
+    oscMain.start(startTime);
+    oscSoftOct.start(startTime);
+    oscMain.stop(startTime + durationSec + 0.14);
+    oscSoftOct.stop(startTime + durationSec + 0.14);
+  }
+
   function scheduleChamberBars() {
     if (
       !isChamberBgmPlaying ||
@@ -1689,6 +2074,41 @@
         });
         chamberNextBarTime += riddleBarDuration;
         riddleBarIndex = (riddleBarIndex + 1) % RIDDLE_BARS.length;
+      }
+      return;
+    }
+
+    if (chamberMusicMode === 'lumos') {
+      const lumosBarDuration = LUMOS_BEAT_SEC * 4;
+      while (chamberNextBarTime < chamberAudioCtx.currentTime + 0.9) {
+        const bar = LUMOS_BARS[lumosBarIndex % LUMOS_BARS.length];
+        const barStart = chamberNextBarTime;
+        if (bar.pad && bar.pad.length) {
+          scheduleLumosWarmPad(bar.pad, barStart, lumosBarDuration * 0.96);
+        }
+        (bar.harmonics || []).forEach(([beatOffset, freq, durBeats]) => {
+          scheduleLumosHarmonicQin(
+            freq,
+            barStart + beatOffset * LUMOS_BEAT_SEC,
+            durBeats * LUMOS_BEAT_SEC
+          );
+        });
+        (bar.dizi || []).forEach(([beatOffset, freq, durBeats]) => {
+          scheduleLumosBambooDizi(
+            freq,
+            barStart + beatOffset * LUMOS_BEAT_SEC,
+            durBeats * LUMOS_BEAT_SEC
+          );
+        });
+        (bar.bells || []).forEach(([beatOffset, freq, durBeats]) => {
+          scheduleLumosStarBell(
+            freq,
+            barStart + beatOffset * LUMOS_BEAT_SEC,
+            durBeats * LUMOS_BEAT_SEC
+          );
+        });
+        chamberNextBarTime += lumosBarDuration;
+        lumosBarIndex = (lumosBarIndex + 1) % LUMOS_BARS.length;
       }
       return;
     }
@@ -1839,13 +2259,17 @@
         return;
       }
       ensureChamberMasterAudible();
+      syncModeBusGains(false);
       const now = chamberAudioCtx.currentTime;
       if (!chamberSchedulerTimer) {
-        if (playIntroPickup && chamberBarIndex === 0) {
+        if (playIntroPickup && chamberMusicMode === 'hedwig' && chamberBarIndex === 0) {
           const pickupStart = now + 0.08;
           scheduleGuzhengNote(493.88, pickupStart, CHAMBER_BEAT_SEC * 0.98, true, false);
           scheduleJadeFanYin(493.88, pickupStart, CHAMBER_BEAT_SEC * 0.85);
           chamberNextBarTime = pickupStart + CHAMBER_BEAT_SEC;
+        } else if (playIntroPickup && chamberMusicMode === 'lumos') {
+          scheduleLumosWandSparkle(now + 0.03);
+          chamberNextBarTime = now + 0.16;
         } else {
           chamberNextBarTime = now + 0.08;
         }
@@ -1944,16 +2368,94 @@
       return;
     }
     userExplicitlyMutedBgm = false;
+    chamberMusicMode = resolveChamberMusicMode();
     isChamberBgmPlaying = true;
     syncChamberBgmUi();
-    const shouldPlayHedwigPickup = chamberMusicMode === 'hedwig';
+    const shouldPlayPickup = chamberMusicMode === 'hedwig' || chamberMusicMode === 'lumos';
     if (chamberWasStandby || chamberNeedsRebuild || (chamberAudioCtx && chamberAudioCtx.state !== 'running')) {
-      rebuildAndWakeChamberOnGesture(shouldPlayHedwigPickup);
+      rebuildAndWakeChamberOnGesture(shouldPlayPickup);
     } else {
       const ctxAudio = ensureChamberAudio();
       if (!ctxAudio) return;
       primeChamberSilentUnlock(ctxAudio);
-      wakeChamberBgm(shouldPlayHedwigPickup);
+      wakeChamberBgm(shouldPlayPickup);
+    }
+  }
+
+  function syncLumosChamberMusic() {
+    // 《殘卷異聞錄》開啟期間維持懸疑配樂優先，完全不受路摸思開關影響
+    if (isRiddleModalOpen) {
+      return;
+    }
+
+    chamberMusicMode = resolveChamberMusicMode();
+    if (lumosActive) {
+      lumosBarIndex = 0;
+    }
+
+    // 尊重使用者主動按掉「琴簫」的靜音設定
+    if (userExplicitlyMutedBgm) {
+      syncModeBusGains(true);
+      return;
+    }
+
+    if (lumosActive) {
+      const ctxAudio = ensureChamberAudio();
+      if (!ctxAudio) return;
+      primeChamberSilentUnlock(ctxAudio);
+      syncModeBusGains(false);
+
+      if (!isChamberBgmPlaying) {
+        isChamberBgmPlaying = true;
+        syncChamberBgmUi();
+      }
+
+      const triggerLumosStart = () => {
+        if (
+          isRiddleModalOpen ||
+          !lumosActive ||
+          !isChamberBgmPlaying ||
+          !chamberAudioCtx ||
+          chamberAudioCtx.state !== 'running'
+        ) {
+          return;
+        }
+        ensureChamberMasterAudible();
+        syncModeBusGains(false);
+        const now = chamberAudioCtx.currentTime;
+        scheduleLumosWandSparkle(now + 0.02);
+        chamberNextBarTime = now + 0.15;
+        scheduleChamberBars();
+        if (!chamberSchedulerTimer) {
+          chamberSchedulerTimer = setInterval(scheduleChamberBars, 240);
+        }
+        startChamberWatchdog();
+      };
+
+      if (ctxAudio.state === 'running') {
+        triggerLumosStart();
+      } else if (typeof ctxAudio.resume === 'function') {
+        ctxAudio.resume().then(triggerLumosStart).catch(() => {});
+      }
+      return;
+    }
+
+    // 關閉路摸思（且殘卷未開）→ 平滑淡回《巫師江湖・海德薇變奏》
+    syncModeBusGains(false);
+    if (isChamberBgmPlaying) {
+      if (chamberAudioCtx && chamberAudioCtx.state === 'running') {
+        const now = chamberAudioCtx.currentTime;
+        if (chamberBarIndex === 0) {
+          scheduleGuzhengNote(493.88, now + 0.1, CHAMBER_BEAT_SEC * 0.98, true, false);
+          scheduleJadeFanYin(493.88, now + 0.1, CHAMBER_BEAT_SEC * 0.85);
+          chamberNextBarTime = now + 0.1 + CHAMBER_BEAT_SEC;
+        } else {
+          chamberNextBarTime = now + 0.14;
+        }
+        scheduleChamberBars();
+      } else {
+        wakeChamberBgm(chamberBarIndex === 0);
+      }
     }
   }
 
@@ -2003,13 +2505,16 @@
   function exitRiddleSuspenseMusic() {
     if (!isRiddleModalOpen) return;
     isRiddleModalOpen = false;
-    chamberMusicMode = 'hedwig';
+    chamberMusicMode = resolveChamberMusicMode();
     syncModeBusGains(false);
 
     if (isChamberBgmPlaying) {
       if (chamberAudioCtx && chamberAudioCtx.state === 'running') {
         const now = chamberAudioCtx.currentTime;
-        if (chamberBarIndex === 0) {
+        if (chamberMusicMode === 'lumos') {
+          scheduleLumosWandSparkle(now + 0.03);
+          chamberNextBarTime = now + 0.16;
+        } else if (chamberBarIndex === 0) {
           scheduleGuzhengNote(493.88, now + 0.12, CHAMBER_BEAT_SEC * 0.98, true, false);
           scheduleJadeFanYin(493.88, now + 0.12, CHAMBER_BEAT_SEC * 0.85);
           chamberNextBarTime = now + 0.12 + CHAMBER_BEAT_SEC;
@@ -2018,7 +2523,7 @@
         }
         scheduleChamberBars();
       } else {
-        wakeChamberBgm(chamberBarIndex === 0);
+        wakeChamberBgm(chamberMusicMode === 'lumos' || chamberBarIndex === 0);
       }
     }
   }
@@ -2241,6 +2746,7 @@
       btnSpellLumos.textContent = lumosActive ? dict.lumosOnBtn : dict.spellLumos;
     }
     syncRiddleLumosVisibility();
+    syncLumosChamberMusic();
     if (lumosActive) {
       pulseInvisibleInk();
       showSpellFeedback('feedbackLumosOn');
