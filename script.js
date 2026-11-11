@@ -5923,7 +5923,13 @@
   let bgmMasterGain = null;
   let bgmNoteTarget = null;
   let bgmLoopTimer = null;
+  let bgmWatchdogTimer = null;
+  let bgmWakeRetryTimers = [];
   let bgmBarIndex = 0;
+  let bgmWasStandby = false;
+  let bgmNeedsRebuild = false;
+  let bgmLastCtxTime = -1;
+  let bgmFrozenTicks = 0;
 
   // 32-bar intimate 3/4 Viennese Waltz in D Major (honoring Tom & Eunice's Vienna honeymoon)
   // Each bar: { bass, chord: [n1, n2], notes: [[beat, midi, durBeats, gain, isChime?], ...] }
@@ -5976,19 +5982,68 @@
     return 440 * Math.pow(2, (midi - 69) / 12);
   }
 
+  function setIosVinylPlaybackSession() {
+    try {
+      if (navigator.audioSession && navigator.audioSession.type !== 'playback') {
+        navigator.audioSession.type = 'playback';
+      }
+    } catch (_e) {
+      // ignore unsupported audioSession API
+    }
+  }
+
+  function primeVinylSilentUnlock(ctx) {
+    if (!ctx) return;
+    setIosVinylPlaybackSession();
+    try {
+      if (typeof ctx.createBuffer === 'function' && typeof ctx.createBufferSource === 'function') {
+        const silentBuf = ctx.createBuffer(1, 1, ctx.sampleRate || 22050);
+        const src = ctx.createBufferSource();
+        src.buffer = silentBuf;
+        src.connect(ctx.destination);
+        src.start(0);
+      }
+    } catch (_e) {
+      // ignore unlock buffer errors
+    }
+  }
+
+  function destroyBgmAudioGraph() {
+    if (bgmLoopTimer) {
+      clearTimeout(bgmLoopTimer);
+      bgmLoopTimer = null;
+    }
+    const oldCtx = bgmAudioCtx;
+    bgmAudioCtx = null;
+    bgmMasterGain = null;
+    bgmNoteTarget = null;
+    bgmLastCtxTime = -1;
+    bgmFrozenTicks = 0;
+    if (oldCtx && typeof oldCtx.close === 'function') {
+      try {
+        const p = oldCtx.close();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      } catch (_e) {
+        // ignore close errors
+      }
+    }
+  }
+
   function ensureBgmAudioGraph() {
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     if (!AudioCtx) return null;
-    if (bgmAudioCtx && bgmAudioCtx.state === 'closed') {
-      bgmAudioCtx = null;
-      bgmMasterGain = null;
-      bgmNoteTarget = null;
+    if (bgmAudioCtx && (bgmAudioCtx.state === 'closed' || bgmNeedsRebuild)) {
+      destroyBgmAudioGraph();
+      bgmNeedsRebuild = false;
     }
     if (!bgmAudioCtx) {
+      setIosVinylPlaybackSession();
       bgmAudioCtx = new AudioCtx();
+      bgmLastCtxTime = bgmAudioCtx.currentTime;
+      bgmFrozenTicks = 0;
 
       const master = bgmAudioCtx.createGain();
-      master.gain.setValueAtTime(0.0001, bgmAudioCtx.currentTime);
+      master.gain.setValueAtTime(0.62, bgmAudioCtx.currentTime);
       master.connect(bgmAudioCtx.destination);
 
       const toneFilter = bgmAudioCtx.createBiquadFilter();
@@ -6018,20 +6073,17 @@
       bgmMasterGain = master;
       bgmNoteTarget = toneFilter;
 
-      if (typeof bgmAudioCtx.addEventListener === 'function') {
-        bgmAudioCtx.addEventListener('statechange', () => {
-          if (!bgmAudioCtx) return;
-          if (bgmAudioCtx.state !== 'running') {
+      const boundCtx = bgmAudioCtx;
+      if (typeof boundCtx.addEventListener === 'function') {
+        boundCtx.addEventListener('statechange', () => {
+          if (bgmAudioCtx !== boundCtx) return;
+          if (boundCtx.state !== 'running') {
             if (bgmLoopTimer) {
               clearTimeout(bgmLoopTimer);
               bgmLoopTimer = null;
             }
-          } else if (bgmPlaying && !document.hidden && !bgmLoopTimer) {
-            if (bgmMasterGain) {
-              bgmMasterGain.gain.cancelScheduledValues(bgmAudioCtx.currentTime);
-              bgmMasterGain.gain.setTargetAtTime(0.62, bgmAudioCtx.currentTime, 0.18);
-            }
-            scheduleNextBgmBar();
+          } else if (bgmPlaying && !document.hidden) {
+            wakeVinylBgm();
           }
         });
       }
@@ -6075,6 +6127,12 @@
       bgmLoopTimer = null;
       return;
     }
+    if (bgmWasStandby && bgmLastCtxTime >= 0 && bgmAudioCtx.currentTime > bgmLastCtxTime + 0.03) {
+      bgmWasStandby = false;
+      bgmNeedsRebuild = false;
+      bgmFrozenTicks = 0;
+    }
+    bgmLastCtxTime = bgmAudioCtx.currentTime;
     const beatSec = 0.43; // Unhurried, tender Viennese 3/4 waltz (~140 quarter BPM = ~46 bars/min)
     const barStart = bgmAudioCtx.currentTime + 0.05;
     const bar = BLUE_DANUBE_BARS[bgmBarIndex % BLUE_DANUBE_BARS.length];
@@ -6102,21 +6160,76 @@
     bgmLoopTimer = window.setTimeout(scheduleNextBgmBar, Math.round(beatSec * 3 * 1000));
   }
 
+  function clearBgmWakeRetries() {
+    while (bgmWakeRetryTimers.length > 0) {
+      clearTimeout(bgmWakeRetryTimers.pop());
+    }
+  }
+
+  function ensureBgmMasterAudible() {
+    if (!bgmAudioCtx || !bgmMasterGain) return;
+    try {
+      const now = bgmAudioCtx.currentTime;
+      bgmMasterGain.gain.cancelScheduledValues(now);
+      if (typeof bgmMasterGain.gain.setTargetAtTime === 'function') {
+        bgmMasterGain.gain.setTargetAtTime(0.62, now, 0.08);
+      } else {
+        bgmMasterGain.gain.setValueAtTime(0.62, now);
+      }
+    } catch (_e) {
+      // ignore gain transition errors
+    }
+  }
+
+  // Never call bgmAudioCtx.suspend() on standby so iOS/macOS Safari can auto-resume AVAudioSession on wake!
   function suspendVinylBgmForStandby() {
+    bgmWasStandby = true;
+    clearBgmWakeRetries();
     if (bgmLoopTimer) {
       clearTimeout(bgmLoopTimer);
       bgmLoopTimer = null;
     }
-    if (bgmAudioCtx && bgmMasterGain) {
-      try {
-        bgmMasterGain.gain.cancelScheduledValues(bgmAudioCtx.currentTime);
-        bgmMasterGain.gain.setValueAtTime(0.0001, bgmAudioCtx.currentTime);
-      } catch (_e) {
-        // ignore standby gain errors
+  }
+
+  function startBgmWatchdog() {
+    if (bgmWatchdogTimer) return;
+    bgmWatchdogTimer = setInterval(() => {
+      if (!bgmPlaying || document.hidden) return;
+      if (!bgmAudioCtx || bgmAudioCtx.state === 'closed') {
+        wakeVinylBgm();
+        return;
       }
-      if (bgmAudioCtx.state === 'running' && typeof bgmAudioCtx.suspend === 'function') {
-        bgmAudioCtx.suspend().catch(() => {});
+      if (bgmAudioCtx.state !== 'running') {
+        if (typeof bgmAudioCtx.resume === 'function') {
+          bgmAudioCtx.resume().then(wakeVinylBgm).catch(() => {});
+        }
+        return;
       }
+      const curT = bgmAudioCtx.currentTime;
+      if (bgmLastCtxTime >= 0 && curT <= bgmLastCtxTime + 0.01) {
+        bgmFrozenTicks += 1;
+        if (bgmFrozenTicks >= 2) {
+          bgmNeedsRebuild = true;
+          destroyBgmAudioGraph();
+          wakeVinylBgm();
+        }
+      } else {
+        bgmLastCtxTime = curT;
+        bgmFrozenTicks = 0;
+        bgmWasStandby = false;
+        bgmNeedsRebuild = false;
+        ensureBgmMasterAudible();
+        if (!bgmLoopTimer) {
+          scheduleNextBgmBar();
+        }
+      }
+    }, 900);
+  }
+
+  function stopBgmWatchdog() {
+    if (bgmWatchdogTimer) {
+      clearInterval(bgmWatchdogTimer);
+      bgmWatchdogTimer = null;
     }
   }
 
@@ -6124,15 +6237,13 @@
     if (!bgmPlaying || document.hidden) return;
     const ctx = ensureBgmAudioGraph();
     if (!ctx) return;
+    startBgmWatchdog();
 
     const startRunningLoop = () => {
       if (!bgmPlaying || document.hidden || !bgmAudioCtx || bgmAudioCtx.state !== 'running') {
         return;
       }
-      if (bgmMasterGain) {
-        bgmMasterGain.gain.cancelScheduledValues(bgmAudioCtx.currentTime);
-        bgmMasterGain.gain.setTargetAtTime(0.62, bgmAudioCtx.currentTime, 0.18);
-      }
+      ensureBgmMasterAudible();
       if (!bgmLoopTimer) {
         scheduleNextBgmBar();
       }
@@ -6141,14 +6252,57 @@
     if (ctx.state === 'running') {
       startRunningLoop();
     } else if (typeof ctx.resume === 'function') {
-      // Covers 'suspended' AND iOS/macOS Safari 'interrupted' after standby/lock screen
       ctx.resume().then(startRunningLoop).catch(() => {});
     }
+  }
+
+  function scheduleStaggeredBgmWake() {
+    if (!bgmPlaying || document.hidden) return;
+    clearBgmWakeRetries();
+    wakeVinylBgm();
+    [260, 750, 1500].forEach((ms) => {
+      bgmWakeRetryTimers.push(
+        setTimeout(() => {
+          if (bgmPlaying && !document.hidden) wakeVinylBgm();
+        }, ms)
+      );
+    });
+  }
+
+  function isVinylAudioHealthy() {
+    return Boolean(
+      bgmAudioCtx &&
+        bgmAudioCtx.state === 'running' &&
+        !bgmNeedsRebuild &&
+        bgmFrozenTicks === 0 &&
+        !bgmWasStandby
+    );
+  }
+
+  function rebuildAndWakeVinylOnGesture() {
+    if (!bgmPlaying || document.hidden) return;
+    if (
+      !bgmAudioCtx ||
+      bgmAudioCtx.state !== 'running' ||
+      bgmNeedsRebuild ||
+      bgmFrozenTicks > 0 ||
+      bgmWasStandby
+    ) {
+      destroyBgmAudioGraph();
+      bgmNeedsRebuild = false;
+      bgmWasStandby = false;
+      const freshCtx = ensureBgmAudioGraph();
+      if (freshCtx) primeVinylSilentUnlock(freshCtx);
+    }
+    wakeVinylBgm();
   }
 
   function pauseVinylBgm() {
     if (!bgmPlaying) return;
     bgmPlaying = false;
+    bgmWasStandby = false;
+    clearBgmWakeRetries();
+    stopBgmWatchdog();
     if (bgmLoopTimer) {
       clearTimeout(bgmLoopTimer);
       bgmLoopTimer = null;
@@ -6166,19 +6320,23 @@
 
   function toggleVinylBgm() {
     if (bgmPlaying) {
-      // If mobile OS standby interrupted AudioContext, tapping 33⅓ wakes it right up
-      if (bgmAudioCtx && bgmAudioCtx.state !== 'running') {
-        wakeVinylBgm();
+      if (!isVinylAudioHealthy()) {
+        rebuildAndWakeVinylOnGesture();
         return;
       }
       pauseVinylBgm();
       return;
     }
-    const ctx = ensureBgmAudioGraph();
-    if (!ctx) return;
     bgmPlaying = true;
     syncBgmButtonA11y();
-    wakeVinylBgm();
+    if (bgmWasStandby || bgmNeedsRebuild || (bgmAudioCtx && bgmAudioCtx.state !== 'running')) {
+      rebuildAndWakeVinylOnGesture();
+    } else {
+      const ctx = ensureBgmAudioGraph();
+      if (!ctx) return;
+      primeVinylSilentUnlock(ctx);
+      wakeVinylBgm();
+    }
   }
 
   // Event Listeners
@@ -6190,28 +6348,28 @@
     if (document.hidden) {
       if (bgmPlaying) suspendVinylBgmForStandby();
     } else if (bgmPlaying) {
-      wakeVinylBgm();
+      scheduleStaggeredBgmWake();
     }
   });
 
   window.addEventListener('pageshow', () => {
-    if (!document.hidden && bgmPlaying) wakeVinylBgm();
+    if (!document.hidden && bgmPlaying) scheduleStaggeredBgmWake();
   });
 
   window.addEventListener('focus', () => {
-    if (!document.hidden && bgmPlaying) wakeVinylBgm();
+    if (!document.hidden && bgmPlaying) scheduleStaggeredBgmWake();
   });
 
-  // iOS Safari standby unlock fallback: resume interrupted AudioContext on first touch/key after screen wake
   const unlockBgmAfterStandby = (e) => {
-    if (!bgmPlaying || document.hidden || !bgmAudioCtx || bgmAudioCtx.state === 'running') return;
+    if (!bgmPlaying || document.hidden || isVinylAudioHealthy()) return;
     if (btnBgm && e && e.target && typeof e.target.closest === 'function' && e.target.closest('#bgm-toggle-btn')) {
       return;
     }
-    wakeVinylBgm();
+    rebuildAndWakeVinylOnGesture();
   };
   window.addEventListener('touchend', unlockBgmAfterStandby, { passive: true });
-  window.addEventListener('pointerdown', unlockBgmAfterStandby, { passive: true });
+  window.addEventListener('click', unlockBgmAfterStandby, { passive: true });
+  window.addEventListener('mouseup', unlockBgmAfterStandby, { passive: true });
   window.addEventListener('keydown', unlockBgmAfterStandby, { passive: true });
 
   btnLang.addEventListener('click', () => {
@@ -6446,7 +6604,7 @@
     !document.getElementById('debug-auth-gate')
   ) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js?v=20261111e').catch(() => {});
+      navigator.serviceWorker.register('./sw.js?v=20261111f').catch(() => {});
     });
   }
 })();

@@ -704,11 +704,23 @@
   let chamberAudioCtx = null;
   let chamberMasterGain = null;
   let chamberFilterNode = null;
+  let hedwigBusGain = null;
+  let riddleBusGain = null;
   let chamberNoiseBuffer = null;
   let isChamberBgmPlaying = false;
+  let userExplicitlyMutedBgm = false;
+  let chamberMusicMode = 'hedwig'; // 'hedwig' | 'riddle'
+  let isRiddleModalOpen = false;
   let chamberSchedulerTimer = null;
+  let chamberWatchdogTimer = null;
+  let chamberWakeRetryTimers = [];
   let chamberNextBarTime = 0;
   let chamberBarIndex = 0;
+  let riddleBarIndex = 0;
+  let chamberWasStandby = false;
+  let chamberNeedsRebuild = false;
+  let chamberLastCtxTime = -1;
+  let chamberFrozenTicks = 0;
 
   // 3/8 (3-beat) mysterious waltz lilt (~140 eighth-notes/min)
   const CHAMBER_BEAT_SEC = 0.43;
@@ -979,25 +991,224 @@
     },
   ];
 
+  // =========================================================================
+  // Forbidden Scroll Suspense BGM — 《禁書殘卷・夜探藏經閣》
+  // Played exclusively while #hp-riddle-modal (《殘卷異聞錄》) is open!
+  // 4/4 creeping night-infiltration pulse: 古琴沉按暗撥 + 琵琶寒弦半音 + 幽咽洞簫 + 寒玉三全音泛音
+  // =========================================================================
+  const RIDDLE_BEAT_SEC = 0.5;
+  const RIDDLE_BARS = [
+    {
+      // Bar 1 (Cm(maj7) creeping minor-2nd shadow): C5 - Db5 - C5 - B4
+      pulses: [
+        [0, 65.41, 1.3],
+        [1.5, 98.0, 0.9],
+        [2.5, 103.83, 0.9],
+        [3.5, 98.0, 0.8],
+      ],
+      pipa: [
+        [0.5, 523.25, 0.65],
+        [1.0, 554.37, 0.65],
+        [2.0, 523.25, 0.85],
+        [3.0, 493.88, 0.95],
+      ],
+      chimes: [[0.5, 523.25, 1.2]],
+    },
+    {
+      // Bar 2 (Cm/F# tritone dread + 洞簫半音幽咽 G4 -> Ab4)
+      pulses: [
+        [0, 65.41, 1.4],
+        [1.5, 92.5, 1.1],
+        [3.0, 98.0, 0.95],
+      ],
+      xiao: [[0.25, 392.0, 415.3, 2.5]],
+      chimes: [[3.0, 739.99, 1.4]],
+    },
+    {
+      // Bar 3 (Abm6/C chromatic descent): Eb5 - D5 - Db5 - C5
+      pulses: [
+        [0, 65.41, 1.3],
+        [1.5, 103.83, 0.9],
+        [2.5, 123.47, 0.9],
+        [3.5, 98.0, 0.8],
+      ],
+      pipa: [
+        [0, 622.25, 0.75],
+        [1.0, 587.33, 0.65],
+        [1.75, 554.37, 0.65],
+        [2.75, 523.25, 1.1],
+      ],
+      chimes: [[2.75, 1046.5, 1.2]],
+    },
+    {
+      // Bar 4 (G7b9 unresolved cliffhanger + 洞簫低嘆 F#4 -> G4)
+      pulses: [
+        [0, 98.0, 1.4],
+        [1.5, 138.59, 1.0],
+        [3.0, 87.31, 0.95],
+      ],
+      xiao: [[0.2, 369.99, 392.0, 2.4]],
+      chimes: [[2.5, 830.61, 1.5]],
+    },
+    {
+      // Bar 5 (Dbmaj7#11/C — deeper into the book cipher): G5 - Ab5 - F#5 - E5
+      pulses: [
+        [0, 65.41, 1.3],
+        [1.5, 69.3, 1.0],
+        [2.5, 103.83, 0.9],
+        [3.5, 92.5, 0.8],
+      ],
+      pipa: [
+        [0.25, 783.99, 0.65],
+        [1.0, 830.61, 0.65],
+        [1.75, 739.99, 0.75],
+        [2.75, 659.25, 1.1],
+      ],
+      chimes: [[1.0, 830.61, 1.3]],
+    },
+    {
+      // Bar 6 (Edim7/C ancient mechanism): 洞簫下行滑音 Eb5 -> D5
+      pulses: [
+        [0, 65.41, 1.4],
+        [1.5, 77.78, 0.9],
+        [2.5, 92.5, 0.9],
+        [3.5, 110.0, 0.8],
+      ],
+      xiao: [[0, 622.25, 587.33, 2.7]],
+      chimes: [[3.0, 987.77, 1.3]],
+    },
+    {
+      // Bar 7 (Fm(maj7)/C — flickering candlelight over secret numbers)
+      pulses: [
+        [0, 65.41, 1.3],
+        [1.5, 87.31, 0.9],
+        [2.5, 103.83, 0.9],
+        [3.5, 164.81, 0.8],
+      ],
+      pipa: [
+        [0, 698.46, 0.8],
+        [1.0, 622.25, 0.8],
+        [2.0, 554.37, 0.8],
+        [3.0, 523.25, 0.95],
+      ],
+      chimes: [[0, 698.46, 1.2]],
+    },
+    {
+      // Bar 8 (G7alt dark turnaround back to Bar 1)
+      pulses: [
+        [0, 49.0, 1.5],
+        [1.5, 73.42, 0.95],
+        [2.5, 103.83, 0.9],
+        [3.5, 123.47, 0.8],
+      ],
+      xiao: [[0.2, 246.94, 261.63, 2.2]],
+      chimes: [
+        [2.5, 739.99, 0.9],
+        [3.25, 783.99, 0.9],
+      ],
+    },
+  ];
+
+  function setIosPlaybackSession() {
+    try {
+      if (navigator.audioSession && navigator.audioSession.type !== 'playback') {
+        navigator.audioSession.type = 'playback';
+      }
+    } catch (_e) {
+      // ignore unsupported audioSession API
+    }
+  }
+
+  function primeChamberSilentUnlock(ctx) {
+    if (!ctx) return;
+    setIosPlaybackSession();
+    try {
+      if (typeof ctx.createBuffer === 'function' && typeof ctx.createBufferSource === 'function') {
+        const silentBuf = ctx.createBuffer(1, 1, ctx.sampleRate || 22050);
+        const src = ctx.createBufferSource();
+        src.buffer = silentBuf;
+        src.connect(ctx.destination);
+        src.start(0);
+      }
+    } catch (_e) {
+      // ignore unlock buffer errors
+    }
+  }
+
+  function destroyChamberAudio() {
+    if (chamberSchedulerTimer) {
+      clearInterval(chamberSchedulerTimer);
+      chamberSchedulerTimer = null;
+    }
+    const oldCtx = chamberAudioCtx;
+    chamberAudioCtx = null;
+    chamberMasterGain = null;
+    chamberFilterNode = null;
+    hedwigBusGain = null;
+    riddleBusGain = null;
+    chamberNoiseBuffer = null;
+    chamberLastCtxTime = -1;
+    chamberFrozenTicks = 0;
+    if (oldCtx && typeof oldCtx.close === 'function') {
+      try {
+        const p = oldCtx.close();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      } catch (_e) {
+        // ignore close errors
+      }
+    }
+  }
+
+  function syncModeBusGains(immediate = false) {
+    if (!chamberAudioCtx || !hedwigBusGain || !riddleBusGain) return;
+    const now = chamberAudioCtx.currentTime;
+    const wantRiddle = chamberMusicMode === 'riddle';
+    const targetHedwig = wantRiddle ? 0.0001 : 1.0;
+    const targetRiddle = wantRiddle ? 1.0 : 0.0001;
+    try {
+      hedwigBusGain.gain.cancelScheduledValues(now);
+      riddleBusGain.gain.cancelScheduledValues(now);
+      if (immediate) {
+        hedwigBusGain.gain.setValueAtTime(targetHedwig, now);
+        riddleBusGain.gain.setValueAtTime(targetRiddle, now);
+      } else if (typeof hedwigBusGain.gain.setTargetAtTime === 'function') {
+        hedwigBusGain.gain.setTargetAtTime(targetHedwig, now, 0.07);
+        riddleBusGain.gain.setTargetAtTime(targetRiddle, now, 0.07);
+      } else {
+        hedwigBusGain.gain.setValueAtTime(targetHedwig, now);
+        riddleBusGain.gain.setValueAtTime(targetRiddle, now);
+      }
+    } catch (_e) {
+      // ignore bus crossfade errors
+    }
+  }
+
   function ensureChamberAudio() {
-    if (chamberAudioCtx && chamberAudioCtx.state === 'closed') {
-      chamberAudioCtx = null;
-      chamberMasterGain = null;
-      chamberFilterNode = null;
-      chamberNoiseBuffer = null;
+    if (chamberAudioCtx && (chamberAudioCtx.state === 'closed' || chamberNeedsRebuild)) {
+      destroyChamberAudio();
+      chamberNeedsRebuild = false;
     }
     if (chamberAudioCtx) return chamberAudioCtx;
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     if (!AudioCtx) return null;
+    setIosPlaybackSession();
     chamberAudioCtx = new AudioCtx();
+    chamberLastCtxTime = chamberAudioCtx.currentTime;
+    chamberFrozenTicks = 0;
 
     chamberMasterGain = chamberAudioCtx.createGain();
-    chamberMasterGain.gain.setValueAtTime(0.0001, chamberAudioCtx.currentTime);
+    chamberMasterGain.gain.setValueAtTime(0.82, chamberAudioCtx.currentTime);
 
     chamberFilterNode = chamberAudioCtx.createBiquadFilter();
     chamberFilterNode.type = 'lowpass';
     chamberFilterNode.frequency.setValueAtTime(3400, chamberAudioCtx.currentTime);
     chamberFilterNode.Q.setValueAtTime(0.6, chamberAudioCtx.currentTime);
+
+    hedwigBusGain = chamberAudioCtx.createGain();
+    riddleBusGain = chamberAudioCtx.createGain();
+    syncModeBusGains(true);
+    hedwigBusGain.connect(chamberFilterNode);
+    riddleBusGain.connect(chamberFilterNode);
 
     // Pre-build soft bamboo-breath & nail-pluck noise buffer
     if (
@@ -1036,16 +1247,17 @@
     wetGain.connect(chamberMasterGain);
     chamberMasterGain.connect(chamberAudioCtx.destination);
 
-    if (typeof chamberAudioCtx.addEventListener === 'function') {
-      chamberAudioCtx.addEventListener('statechange', () => {
-        if (!chamberAudioCtx) return;
-        if (chamberAudioCtx.state !== 'running') {
+    const boundCtx = chamberAudioCtx;
+    if (typeof boundCtx.addEventListener === 'function') {
+      boundCtx.addEventListener('statechange', () => {
+        if (chamberAudioCtx !== boundCtx) return;
+        if (boundCtx.state !== 'running') {
           if (chamberSchedulerTimer) {
             clearInterval(chamberSchedulerTimer);
             chamberSchedulerTimer = null;
           }
-        } else if (isChamberBgmPlaying && !document.hidden && !chamberSchedulerTimer) {
-          wakeChamberBgm();
+        } else if (isChamberBgmPlaying && !document.hidden) {
+          wakeChamberBgm(false);
         }
       });
     }
@@ -1119,7 +1331,7 @@
       pickGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.022);
       pickSrc.connect(pickFilter);
       pickFilter.connect(pickGain);
-      pickGain.connect(chamberFilterNode);
+      pickGain.connect(hedwigBusGain || chamberFilterNode);
       pickSrc.start(startTime);
       pickSrc.stop(startTime + 0.028);
     }
@@ -1128,7 +1340,7 @@
     oscWood.connect(woodGain);
     woodGain.connect(stringFilter);
     stringFilter.connect(env);
-    env.connect(chamberFilterNode);
+    env.connect(hedwigBusGain || chamberFilterNode);
 
     oscString.start(startTime);
     oscWood.start(startTime);
@@ -1192,7 +1404,7 @@
       breathGain.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec + 0.05);
       breathSrc.connect(breathFilter);
       breathFilter.connect(breathGain);
-      breathGain.connect(chamberFilterNode);
+      breathGain.connect(hedwigBusGain || chamberFilterNode);
       breathSrc.start(startTime);
       breathSrc.stop(startTime + durationSec + 0.07);
     }
@@ -1200,7 +1412,7 @@
     oscBore.connect(env);
     oscOct.connect(octGain);
     octGain.connect(env);
-    env.connect(chamberFilterNode);
+    env.connect(hedwigBusGain || chamberFilterNode);
 
     oscBore.start(startTime);
     oscOct.start(startTime);
@@ -1231,12 +1443,194 @@
     oscHarm.connect(env);
     oscJade.connect(jadeGain);
     jadeGain.connect(env);
-    env.connect(chamberFilterNode);
+    env.connect(hedwigBusGain || chamberFilterNode);
 
     oscHarm.start(startTime);
     oscJade.start(startTime);
     oscHarm.stop(startTime + tail + 0.04);
     oscJade.stop(startTime + tail + 0.04);
+  }
+
+  // --- 《殘卷異聞錄》專屬懸疑音色組 (Forbidden Scroll Suspense Voices) ---
+
+  // 開啟殘卷瞬間：藏經閣青銅暗磬與古琴低頻沉鳴
+  function scheduleScrollOpenGong(startTime) {
+    if (!chamberAudioCtx || !chamberFilterNode) return;
+    const targetBus = riddleBusGain || chamberFilterNode;
+    const freqs = [65.41, 98.0, 103.83, 207.65];
+    const gains = [0.09, 0.055, 0.038, 0.022];
+    freqs.forEach((f, idx) => {
+      const osc = chamberAudioCtx.createOscillator();
+      const env = chamberAudioCtx.createGain();
+      osc.type = idx === 0 ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(f, startTime);
+      env.gain.setValueAtTime(0.0001, startTime);
+      env.gain.linearRampToValueAtTime(gains[idx], startTime + 0.05);
+      env.gain.exponentialRampToValueAtTime(0.0001, startTime + 2.3);
+      osc.connect(env);
+      env.connect(targetBus);
+      osc.start(startTime);
+      osc.stop(startTime + 2.35);
+    });
+  }
+
+  // 古琴沉按暗撥 (Creeping night-stalking muted bass pizzicato)
+  function scheduleSuspensePulse(freq, startTime, durationSec) {
+    if (!chamberAudioCtx || !chamberFilterNode) return;
+    const targetBus = riddleBusGain || chamberFilterNode;
+    const oscSub = chamberAudioCtx.createOscillator();
+    const oscStr = chamberAudioCtx.createOscillator();
+    const lp = chamberAudioCtx.createBiquadFilter();
+    const env = chamberAudioCtx.createGain();
+
+    oscSub.type = 'triangle';
+    oscStr.type = 'sawtooth';
+    oscSub.frequency.setValueAtTime(freq, startTime);
+    oscStr.frequency.setValueAtTime(freq * 2, startTime);
+
+    lp.type = 'lowpass';
+    lp.frequency.setValueAtTime(460, startTime);
+    if (typeof lp.frequency.exponentialRampToValueAtTime === 'function') {
+      lp.frequency.exponentialRampToValueAtTime(160, startTime + 0.28);
+    }
+    lp.Q.setValueAtTime(2.1, startTime);
+
+    const strGain = chamberAudioCtx.createGain();
+    strGain.gain.setValueAtTime(0.28, startTime);
+
+    env.gain.setValueAtTime(0.0001, startTime);
+    env.gain.linearRampToValueAtTime(0.085, startTime + 0.014);
+    env.gain.exponentialRampToValueAtTime(0.0001, startTime + Math.max(0.32, durationSec));
+
+    oscSub.connect(lp);
+    oscStr.connect(strGain);
+    strGain.connect(lp);
+    lp.connect(env);
+    env.connect(targetBus);
+
+    oscSub.start(startTime);
+    oscStr.start(startTime);
+    oscSub.stop(startTime + durationSec + 0.06);
+    oscStr.stop(startTime + durationSec + 0.06);
+  }
+
+  // 琵琶／古箏寒弦冷撥 (Sharp metallic chromatic mystery pluck)
+  function scheduleSuspensePipa(freq, startTime, durationSec) {
+    if (!chamberAudioCtx || !chamberFilterNode) return;
+    const targetBus = riddleBusGain || chamberFilterNode;
+    const osc = chamberAudioCtx.createOscillator();
+    const bp = chamberAudioCtx.createBiquadFilter();
+    const env = chamberAudioCtx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(freq * 1.012, startTime);
+    if (typeof osc.frequency.exponentialRampToValueAtTime === 'function') {
+      osc.frequency.exponentialRampToValueAtTime(freq, startTime + 0.018);
+    }
+
+    bp.type = 'lowpass';
+    bp.frequency.setValueAtTime(Math.min(4200, freq * 5.2), startTime);
+    if (typeof bp.frequency.exponentialRampToValueAtTime === 'function') {
+      bp.frequency.exponentialRampToValueAtTime(Math.max(420, freq * 1.3), startTime + 0.19);
+    }
+    bp.Q.setValueAtTime(1.8, startTime);
+
+    const tail = Math.max(durationSec * 1.15, 0.48);
+    env.gain.setValueAtTime(0.0001, startTime);
+    env.gain.linearRampToValueAtTime(0.056, startTime + 0.007);
+    env.gain.exponentialRampToValueAtTime(0.0001, startTime + tail);
+
+    osc.connect(bp);
+    bp.connect(env);
+    env.connect(targetBus);
+
+    osc.start(startTime);
+    osc.stop(startTime + tail + 0.04);
+  }
+
+  // 幽咽洞簫半音滑音 (Eerie ghostly bamboo flute half-step bend)
+  function scheduleSuspenseGhostXiao(freqFrom, freqTo, startTime, durationSec) {
+    if (!chamberAudioCtx || !chamberFilterNode) return;
+    const targetBus = riddleBusGain || chamberFilterNode;
+    const osc = chamberAudioCtx.createOscillator();
+    const env = chamberAudioCtx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freqFrom, startTime);
+    if (typeof osc.frequency.exponentialRampToValueAtTime === 'function') {
+      osc.frequency.exponentialRampToValueAtTime(freqTo, startTime + durationSec * 0.65);
+    }
+
+    const vib = chamberAudioCtx.createOscillator();
+    const vibGain = chamberAudioCtx.createGain();
+    vib.type = 'sine';
+    vib.frequency.setValueAtTime(3.7, startTime);
+    vibGain.gain.setValueAtTime(0.0001, startTime);
+    vibGain.gain.linearRampToValueAtTime(freqTo * 0.008, startTime + 0.25);
+    vib.connect(vibGain);
+    vibGain.connect(osc.frequency);
+
+    env.gain.setValueAtTime(0.0001, startTime);
+    env.gain.linearRampToValueAtTime(0.044, startTime + 0.18);
+    env.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec + 0.12);
+
+    if (chamberNoiseBuffer && typeof chamberAudioCtx.createBufferSource === 'function') {
+      const breathSrc = chamberAudioCtx.createBufferSource();
+      const breathBp = chamberAudioCtx.createBiquadFilter();
+      const breathGain = chamberAudioCtx.createGain();
+      breathSrc.buffer = chamberNoiseBuffer;
+      breathSrc.loop = true;
+      breathBp.type = 'bandpass';
+      breathBp.frequency.setValueAtTime(freqTo * 2.2, startTime);
+      breathBp.Q.setValueAtTime(4.5, startTime);
+      breathGain.gain.setValueAtTime(0.0001, startTime);
+      breathGain.gain.linearRampToValueAtTime(0.018, startTime + 0.16);
+      breathGain.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec + 0.08);
+      breathSrc.connect(breathBp);
+      breathBp.connect(breathGain);
+      breathGain.connect(targetBus);
+      breathSrc.start(startTime);
+      breathSrc.stop(startTime + durationSec + 0.1);
+    }
+
+    osc.connect(env);
+    env.connect(targetBus);
+
+    osc.start(startTime);
+    vib.start(startTime);
+    osc.stop(startTime + durationSec + 0.14);
+    vib.stop(startTime + durationSec + 0.14);
+  }
+
+  // 寒玉三全音編磬 (Icy tritone & minor-9th crystal glint)
+  function scheduleSuspenseColdChime(freq, startTime, durationSec) {
+    if (!chamberAudioCtx || !chamberFilterNode) return;
+    const targetBus = riddleBusGain || chamberFilterNode;
+    const osc1 = chamberAudioCtx.createOscillator();
+    const osc2 = chamberAudioCtx.createOscillator();
+    const env = chamberAudioCtx.createGain();
+    const g2 = chamberAudioCtx.createGain();
+
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(freq, startTime);
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(freq * 2.756, startTime);
+    g2.gain.setValueAtTime(0.18, startTime);
+
+    const tail = Math.max(durationSec * 1.3, 0.85);
+    env.gain.setValueAtTime(0.0001, startTime);
+    env.gain.linearRampToValueAtTime(0.036, startTime + 0.01);
+    env.gain.exponentialRampToValueAtTime(0.0001, startTime + tail);
+
+    osc1.connect(env);
+    osc2.connect(g2);
+    g2.connect(env);
+    env.connect(targetBus);
+
+    osc1.start(startTime);
+    osc2.start(startTime);
+    osc1.stop(startTime + tail + 0.04);
+    osc2.stop(startTime + tail + 0.04);
   }
 
   function scheduleChamberBars() {
@@ -1248,11 +1642,58 @@
     ) {
       return;
     }
-    const barDuration = CHAMBER_BEAT_SEC * 3;
+    if (chamberWasStandby && chamberLastCtxTime >= 0 && chamberAudioCtx.currentTime > chamberLastCtxTime + 0.03) {
+      chamberWasStandby = false;
+      chamberNeedsRebuild = false;
+      chamberFrozenTicks = 0;
+    }
+    chamberLastCtxTime = chamberAudioCtx.currentTime;
     // Prevent stale past timestamps from scheduling multiple bars at once after standby wake
     if (chamberNextBarTime < chamberAudioCtx.currentTime + 0.02) {
       chamberNextBarTime = chamberAudioCtx.currentTime + 0.08;
     }
+
+    if (chamberMusicMode === 'riddle') {
+      const riddleBarDuration = RIDDLE_BEAT_SEC * 4;
+      while (chamberNextBarTime < chamberAudioCtx.currentTime + 0.9) {
+        const bar = RIDDLE_BARS[riddleBarIndex % RIDDLE_BARS.length];
+        const barStart = chamberNextBarTime;
+        (bar.pulses || []).forEach(([beatOffset, freq, durBeats]) => {
+          scheduleSuspensePulse(
+            freq,
+            barStart + beatOffset * RIDDLE_BEAT_SEC,
+            durBeats * RIDDLE_BEAT_SEC
+          );
+        });
+        (bar.pipa || []).forEach(([beatOffset, freq, durBeats]) => {
+          scheduleSuspensePipa(
+            freq,
+            barStart + beatOffset * RIDDLE_BEAT_SEC,
+            durBeats * RIDDLE_BEAT_SEC
+          );
+        });
+        (bar.xiao || []).forEach(([beatOffset, freqFrom, freqTo, durBeats]) => {
+          scheduleSuspenseGhostXiao(
+            freqFrom,
+            freqTo,
+            barStart + beatOffset * RIDDLE_BEAT_SEC,
+            durBeats * RIDDLE_BEAT_SEC
+          );
+        });
+        (bar.chimes || []).forEach(([beatOffset, freq, durBeats]) => {
+          scheduleSuspenseColdChime(
+            freq,
+            barStart + beatOffset * RIDDLE_BEAT_SEC,
+            durBeats * RIDDLE_BEAT_SEC
+          );
+        });
+        chamberNextBarTime += riddleBarDuration;
+        riddleBarIndex = (riddleBarIndex + 1) % RIDDLE_BARS.length;
+      }
+      return;
+    }
+
+    const barDuration = CHAMBER_BEAT_SEC * 3;
     while (chamberNextBarTime < chamberAudioCtx.currentTime + 0.9) {
       const bar = CHAMBER_BARS[chamberBarIndex % CHAMBER_BARS.length];
       const barStart = chamberNextBarTime;
@@ -1303,22 +1744,82 @@
     }
   }
 
+  function clearChamberWakeRetries() {
+    while (chamberWakeRetryTimers.length > 0) {
+      clearTimeout(chamberWakeRetryTimers.pop());
+    }
+  }
+
+  function ensureChamberMasterAudible() {
+    if (!chamberAudioCtx || !chamberMasterGain) return;
+    try {
+      const now = chamberAudioCtx.currentTime;
+      chamberMasterGain.gain.cancelScheduledValues(now);
+      if (typeof chamberMasterGain.gain.setTargetAtTime === 'function') {
+        chamberMasterGain.gain.setTargetAtTime(0.82, now, 0.08);
+      } else {
+        chamberMasterGain.gain.setValueAtTime(0.82, now);
+      }
+    } catch (_e) {
+      // ignore audio param transition errors
+    }
+  }
+
+  // IMPORTANT: Never call chamberAudioCtx.suspend() on standby!
+  // Calling suspend() from JS sets WebKit's script-suspended flag, which blocks iOS/macOS Safari
+  // from auto-resuming AVAudioSession when unlocking the screen. Stopping only the bar scheduler
+  // lets existing notes decay naturally in <0.5s while allowing instant hands-free OS wake!
   function suspendChamberBgmForStandby() {
+    chamberWasStandby = true;
+    clearChamberWakeRetries();
     if (chamberSchedulerTimer) {
       clearInterval(chamberSchedulerTimer);
       chamberSchedulerTimer = null;
     }
-    if (chamberAudioCtx && chamberMasterGain) {
-      try {
-        const now = chamberAudioCtx.currentTime;
-        chamberMasterGain.gain.cancelScheduledValues(now);
-        chamberMasterGain.gain.setValueAtTime(0.0001, now);
-      } catch (_e) {
-        // ignore standby gain errors
+  }
+
+  function startChamberWatchdog() {
+    if (chamberWatchdogTimer) return;
+    chamberWatchdogTimer = setInterval(() => {
+      if (!isChamberBgmPlaying || document.hidden) return;
+      if (!chamberAudioCtx || chamberAudioCtx.state === 'closed') {
+        wakeChamberBgm(false);
+        return;
       }
-      if (chamberAudioCtx.state === 'running' && typeof chamberAudioCtx.suspend === 'function') {
-        chamberAudioCtx.suspend().catch(() => {});
+      if (chamberAudioCtx.state !== 'running') {
+        if (typeof chamberAudioCtx.resume === 'function') {
+          chamberAudioCtx.resume().then(() => wakeChamberBgm(false)).catch(() => {});
+        }
+        return;
       }
+      const curT = chamberAudioCtx.currentTime;
+      if (chamberLastCtxTime >= 0 && curT <= chamberLastCtxTime + 0.01) {
+        chamberFrozenTicks += 1;
+        // Detect WebKit Zombie AudioContext (reports 'running' after standby, but currentTime is frozen)
+        if (chamberFrozenTicks >= 2) {
+          chamberNeedsRebuild = true;
+          destroyChamberAudio();
+          wakeChamberBgm(false);
+        }
+      } else {
+        chamberLastCtxTime = curT;
+        chamberFrozenTicks = 0;
+        chamberWasStandby = false;
+        chamberNeedsRebuild = false;
+        ensureChamberMasterAudible();
+        if (!chamberSchedulerTimer) {
+          chamberNextBarTime = curT + 0.08;
+          scheduleChamberBars();
+          chamberSchedulerTimer = setInterval(scheduleChamberBars, 240);
+        }
+      }
+    }, 900);
+  }
+
+  function stopChamberWatchdog() {
+    if (chamberWatchdogTimer) {
+      clearInterval(chamberWatchdogTimer);
+      chamberWatchdogTimer = null;
     }
   }
 
@@ -1326,6 +1827,7 @@
     if (!isChamberBgmPlaying || document.hidden) return;
     const ctxAudio = ensureChamberAudio();
     if (!ctxAudio) return;
+    startChamberWatchdog();
 
     const startRunningChamber = () => {
       if (
@@ -1336,11 +1838,8 @@
       ) {
         return;
       }
+      ensureChamberMasterAudible();
       const now = chamberAudioCtx.currentTime;
-      chamberMasterGain.gain.cancelScheduledValues(now);
-      chamberMasterGain.gain.setValueAtTime(0.0001, now);
-      chamberMasterGain.gain.linearRampToValueAtTime(0.82, now + 0.42);
-
       if (!chamberSchedulerTimer) {
         if (playIntroPickup && chamberBarIndex === 0) {
           const pickupStart = now + 0.08;
@@ -1352,19 +1851,70 @@
         }
         scheduleChamberBars();
         chamberSchedulerTimer = setInterval(scheduleChamberBars, 240);
+      } else {
+        scheduleChamberBars();
       }
     };
 
     if (ctxAudio.state === 'running') {
       startRunningChamber();
     } else if (typeof ctxAudio.resume === 'function') {
-      // Covers 'suspended' AND iOS/macOS Safari 'interrupted' state after standby
       ctxAudio.resume().then(startRunningChamber).catch(() => {});
     }
   }
 
+  function scheduleStaggeredChamberWake() {
+    if (!isChamberBgmPlaying || document.hidden) return;
+    clearChamberWakeRetries();
+    wakeChamberBgm(false);
+    // Cover iOS FaceID / Lock Screen animation delay (AVAudioSession releases 250–1200ms after visibilitychange)
+    [260, 750, 1500].forEach((ms) => {
+      chamberWakeRetryTimers.push(
+        setTimeout(() => {
+          if (isChamberBgmPlaying && !document.hidden) {
+            wakeChamberBgm(false);
+          }
+        }, ms)
+      );
+    });
+  }
+
+  function isChamberAudioHealthy() {
+    return Boolean(
+      chamberAudioCtx &&
+        chamberAudioCtx.state === 'running' &&
+        !chamberNeedsRebuild &&
+        chamberFrozenTicks === 0 &&
+        !chamberWasStandby
+    );
+  }
+
+  function rebuildAndWakeChamberOnGesture(playIntroPickup = false) {
+    if (!isChamberBgmPlaying || document.hidden) return;
+    if (
+      !chamberAudioCtx ||
+      chamberAudioCtx.state !== 'running' ||
+      chamberNeedsRebuild ||
+      chamberFrozenTicks > 0 ||
+      chamberWasStandby
+    ) {
+      // Fresh AudioContext + 1-frame silent buffer inside a real user gesture guarantees audio on all iOS versions
+      destroyChamberAudio();
+      chamberNeedsRebuild = false;
+      chamberWasStandby = false;
+      const freshCtx = ensureChamberAudio();
+      if (freshCtx) {
+        primeChamberSilentUnlock(freshCtx);
+      }
+    }
+    wakeChamberBgm(playIntroPickup);
+  }
+
   function pauseChamberBgm() {
     isChamberBgmPlaying = false;
+    chamberWasStandby = false;
+    clearChamberWakeRetries();
+    stopChamberWatchdog();
     if (chamberSchedulerTimer) {
       clearInterval(chamberSchedulerTimer);
       chamberSchedulerTimer = null;
@@ -1374,7 +1924,7 @@
         const now = chamberAudioCtx.currentTime;
         chamberMasterGain.gain.cancelScheduledValues(now);
         chamberMasterGain.gain.setValueAtTime(Math.max(0.0001, chamberMasterGain.gain.value), now);
-        chamberMasterGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+        chamberMasterGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
       } catch (_e) {
         // ignore audio context transition errors
       }
@@ -1384,19 +1934,93 @@
 
   function toggleChamberBgm() {
     if (isChamberBgmPlaying) {
-      // If mobile OS standby interrupted AudioContext, tapping 琴簫 wakes it right up
-      if (chamberAudioCtx && chamberAudioCtx.state !== 'running') {
-        wakeChamberBgm(false);
+      // If standby left AudioContext interrupted or zombie-frozen, tapping 琴簫 rebuilds & plays right away!
+      if (!isChamberAudioHealthy()) {
+        rebuildAndWakeChamberOnGesture(false);
         return;
       }
+      userExplicitlyMutedBgm = true;
       pauseChamberBgm();
       return;
     }
-    const ctxAudio = ensureChamberAudio();
-    if (!ctxAudio) return;
+    userExplicitlyMutedBgm = false;
     isChamberBgmPlaying = true;
     syncChamberBgmUi();
-    wakeChamberBgm(true);
+    const shouldPlayHedwigPickup = chamberMusicMode === 'hedwig';
+    if (chamberWasStandby || chamberNeedsRebuild || (chamberAudioCtx && chamberAudioCtx.state !== 'running')) {
+      rebuildAndWakeChamberOnGesture(shouldPlayHedwigPickup);
+    } else {
+      const ctxAudio = ensureChamberAudio();
+      if (!ctxAudio) return;
+      primeChamberSilentUnlock(ctxAudio);
+      wakeChamberBgm(shouldPlayHedwigPickup);
+    }
+  }
+
+  function enterRiddleSuspenseMusic() {
+    isRiddleModalOpen = true;
+    chamberMusicMode = 'riddle';
+    riddleBarIndex = 0;
+
+    // Respect explicit user mute if they turned 琴簫 off intentionally
+    if (userExplicitlyMutedBgm) {
+      syncModeBusGains(true);
+      return;
+    }
+
+    const ctxAudio = ensureChamberAudio();
+    if (!ctxAudio) return;
+    syncModeBusGains(false);
+
+    if (!isChamberBgmPlaying) {
+      isChamberBgmPlaying = true;
+      syncChamberBgmUi();
+    }
+
+    const triggerSuspenseStart = () => {
+      if (!isRiddleModalOpen || !isChamberBgmPlaying || !chamberAudioCtx || chamberAudioCtx.state !== 'running') {
+        return;
+      }
+      ensureChamberMasterAudible();
+      syncModeBusGains(false);
+      const now = chamberAudioCtx.currentTime;
+      scheduleScrollOpenGong(now + 0.02);
+      chamberNextBarTime = now + 0.14;
+      scheduleChamberBars();
+      if (!chamberSchedulerTimer) {
+        chamberSchedulerTimer = setInterval(scheduleChamberBars, 240);
+      }
+      startChamberWatchdog();
+    };
+
+    if (ctxAudio.state === 'running') {
+      triggerSuspenseStart();
+    } else if (typeof ctxAudio.resume === 'function') {
+      ctxAudio.resume().then(triggerSuspenseStart).catch(() => {});
+    }
+  }
+
+  function exitRiddleSuspenseMusic() {
+    if (!isRiddleModalOpen) return;
+    isRiddleModalOpen = false;
+    chamberMusicMode = 'hedwig';
+    syncModeBusGains(false);
+
+    if (isChamberBgmPlaying) {
+      if (chamberAudioCtx && chamberAudioCtx.state === 'running') {
+        const now = chamberAudioCtx.currentTime;
+        if (chamberBarIndex === 0) {
+          scheduleGuzhengNote(493.88, now + 0.12, CHAMBER_BEAT_SEC * 0.98, true, false);
+          scheduleJadeFanYin(493.88, now + 0.12, CHAMBER_BEAT_SEC * 0.85);
+          chamberNextBarTime = now + 0.12 + CHAMBER_BEAT_SEC;
+        } else {
+          chamberNextBarTime = now + 0.16;
+        }
+        scheduleChamberBars();
+      } else {
+        wakeChamberBgm(chamberBarIndex === 0);
+      }
+    }
   }
 
   if (btnHpBgm) {
@@ -1407,26 +2031,22 @@
     if (document.hidden) {
       if (isChamberBgmPlaying) suspendChamberBgmForStandby();
     } else if (isChamberBgmPlaying) {
-      wakeChamberBgm(false);
+      scheduleStaggeredChamberWake();
     }
   });
 
   window.addEventListener('pageshow', () => {
-    if (!document.hidden && isChamberBgmPlaying) wakeChamberBgm(false);
+    if (!document.hidden && isChamberBgmPlaying) scheduleStaggeredChamberWake();
   });
 
   window.addEventListener('focus', () => {
-    if (!document.hidden && isChamberBgmPlaying) wakeChamberBgm(false);
+    if (!document.hidden && isChamberBgmPlaying) scheduleStaggeredChamberWake();
   });
 
-  // iOS Safari standby unlock fallback: resume interrupted AudioContext on first touch/key after screen wake
+  // True WebKit user-activation events ('touchend', 'click', 'mouseup', 'keydown'):
+  // If iOS blocked background resume after deep lock-screen standby, first touch rebuilds a fresh AudioContext!
   const unlockChamberAfterStandby = (e) => {
-    if (
-      !isChamberBgmPlaying ||
-      document.hidden ||
-      !chamberAudioCtx ||
-      chamberAudioCtx.state === 'running'
-    ) {
+    if (!isChamberBgmPlaying || document.hidden || isChamberAudioHealthy()) {
       return;
     }
     if (
@@ -1438,10 +2058,11 @@
     ) {
       return;
     }
-    wakeChamberBgm(false);
+    rebuildAndWakeChamberOnGesture(false);
   };
   window.addEventListener('touchend', unlockChamberAfterStandby, { passive: true });
-  window.addEventListener('pointerdown', unlockChamberAfterStandby, { passive: true });
+  window.addEventListener('click', unlockChamberAfterStandby, { passive: true });
+  window.addEventListener('mouseup', unlockChamberAfterStandby, { passive: true });
   window.addEventListener('keydown', unlockChamberAfterStandby, { passive: true });
 
   function syncRiddleLumosVisibility() {
@@ -1461,6 +2082,7 @@
     if (elRiddleModal) {
       elRiddleModal.classList.remove('hidden');
     }
+    enterRiddleSuspenseMusic();
     showSpellFeedback('feedbackRiddleUnlocked');
     spawnSpellBurst(
       window.innerWidth * 0.5,
@@ -1474,6 +2096,7 @@
     if (elRiddleModal) {
       elRiddleModal.classList.add('hidden');
     }
+    exitRiddleSuspenseMusic();
     if (elSpellFeedback) {
       elSpellFeedback.classList.add('hidden');
       elSpellFeedback.classList.remove('is-popping');
@@ -1697,6 +2320,15 @@
 
       if (hasCastMarauder) {
         hasCastMarauder = false;
+        // Synchronously unlock AudioContext inside this click gesture so iOS Safari allows
+        // the suspenseful scroll music to start smoothly 360ms later in openRiddleModal()!
+        const ctxPrewarm = ensureChamberAudio();
+        if (ctxPrewarm) {
+          primeChamberSilentUnlock(ctxPrewarm);
+          if (ctxPrewarm.state !== 'running' && typeof ctxPrewarm.resume === 'function') {
+            ctxPrewarm.resume().catch(() => {});
+          }
+        }
         setTimeout(openRiddleModal, 360);
       }
     });
