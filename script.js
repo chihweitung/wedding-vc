@@ -5979,6 +5979,11 @@
   function ensureBgmAudioGraph() {
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     if (!AudioCtx) return null;
+    if (bgmAudioCtx && bgmAudioCtx.state === 'closed') {
+      bgmAudioCtx = null;
+      bgmMasterGain = null;
+      bgmNoteTarget = null;
+    }
     if (!bgmAudioCtx) {
       bgmAudioCtx = new AudioCtx();
 
@@ -6012,6 +6017,24 @@
 
       bgmMasterGain = master;
       bgmNoteTarget = toneFilter;
+
+      if (typeof bgmAudioCtx.addEventListener === 'function') {
+        bgmAudioCtx.addEventListener('statechange', () => {
+          if (!bgmAudioCtx) return;
+          if (bgmAudioCtx.state !== 'running') {
+            if (bgmLoopTimer) {
+              clearTimeout(bgmLoopTimer);
+              bgmLoopTimer = null;
+            }
+          } else if (bgmPlaying && !document.hidden && !bgmLoopTimer) {
+            if (bgmMasterGain) {
+              bgmMasterGain.gain.cancelScheduledValues(bgmAudioCtx.currentTime);
+              bgmMasterGain.gain.setTargetAtTime(0.62, bgmAudioCtx.currentTime, 0.18);
+            }
+            scheduleNextBgmBar();
+          }
+        });
+      }
     }
     return bgmAudioCtx;
   }
@@ -6048,7 +6071,10 @@
   }
 
   function scheduleNextBgmBar() {
-    if (!bgmPlaying || !bgmAudioCtx) return;
+    if (!bgmPlaying || !bgmAudioCtx || document.hidden || bgmAudioCtx.state !== 'running') {
+      bgmLoopTimer = null;
+      return;
+    }
     const beatSec = 0.43; // Unhurried, tender Viennese 3/4 waltz (~140 quarter BPM = ~46 bars/min)
     const barStart = bgmAudioCtx.currentTime + 0.05;
     const bar = BLUE_DANUBE_BARS[bgmBarIndex % BLUE_DANUBE_BARS.length];
@@ -6076,6 +6102,50 @@
     bgmLoopTimer = window.setTimeout(scheduleNextBgmBar, Math.round(beatSec * 3 * 1000));
   }
 
+  function suspendVinylBgmForStandby() {
+    if (bgmLoopTimer) {
+      clearTimeout(bgmLoopTimer);
+      bgmLoopTimer = null;
+    }
+    if (bgmAudioCtx && bgmMasterGain) {
+      try {
+        bgmMasterGain.gain.cancelScheduledValues(bgmAudioCtx.currentTime);
+        bgmMasterGain.gain.setValueAtTime(0.0001, bgmAudioCtx.currentTime);
+      } catch (_e) {
+        // ignore standby gain errors
+      }
+      if (bgmAudioCtx.state === 'running' && typeof bgmAudioCtx.suspend === 'function') {
+        bgmAudioCtx.suspend().catch(() => {});
+      }
+    }
+  }
+
+  function wakeVinylBgm() {
+    if (!bgmPlaying || document.hidden) return;
+    const ctx = ensureBgmAudioGraph();
+    if (!ctx) return;
+
+    const startRunningLoop = () => {
+      if (!bgmPlaying || document.hidden || !bgmAudioCtx || bgmAudioCtx.state !== 'running') {
+        return;
+      }
+      if (bgmMasterGain) {
+        bgmMasterGain.gain.cancelScheduledValues(bgmAudioCtx.currentTime);
+        bgmMasterGain.gain.setTargetAtTime(0.62, bgmAudioCtx.currentTime, 0.18);
+      }
+      if (!bgmLoopTimer) {
+        scheduleNextBgmBar();
+      }
+    };
+
+    if (ctx.state === 'running') {
+      startRunningLoop();
+    } else if (typeof ctx.resume === 'function') {
+      // Covers 'suspended' AND iOS/macOS Safari 'interrupted' after standby/lock screen
+      ctx.resume().then(startRunningLoop).catch(() => {});
+    }
+  }
+
   function pauseVinylBgm() {
     if (!bgmPlaying) return;
     bgmPlaying = false;
@@ -6096,22 +6166,19 @@
 
   function toggleVinylBgm() {
     if (bgmPlaying) {
+      // If mobile OS standby interrupted AudioContext, tapping 33⅓ wakes it right up
+      if (bgmAudioCtx && bgmAudioCtx.state !== 'running') {
+        wakeVinylBgm();
+        return;
+      }
       pauseVinylBgm();
       return;
     }
     const ctx = ensureBgmAudioGraph();
     if (!ctx) return;
-    if (ctx.state === 'suspended') {
-      ctx.resume().catch(() => {});
-    }
     bgmPlaying = true;
     syncBgmButtonA11y();
-    if (bgmMasterGain) {
-      bgmMasterGain.gain.cancelScheduledValues(ctx.currentTime);
-      bgmMasterGain.gain.setTargetAtTime(0.62, ctx.currentTime, 0.18);
-    }
-    if (bgmLoopTimer) clearTimeout(bgmLoopTimer);
-    scheduleNextBgmBar();
+    wakeVinylBgm();
   }
 
   // Event Listeners
@@ -6120,10 +6187,32 @@
   }
 
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden && bgmPlaying) {
-      pauseVinylBgm();
+    if (document.hidden) {
+      if (bgmPlaying) suspendVinylBgmForStandby();
+    } else if (bgmPlaying) {
+      wakeVinylBgm();
     }
   });
+
+  window.addEventListener('pageshow', () => {
+    if (!document.hidden && bgmPlaying) wakeVinylBgm();
+  });
+
+  window.addEventListener('focus', () => {
+    if (!document.hidden && bgmPlaying) wakeVinylBgm();
+  });
+
+  // iOS Safari standby unlock fallback: resume interrupted AudioContext on first touch/key after screen wake
+  const unlockBgmAfterStandby = (e) => {
+    if (!bgmPlaying || document.hidden || !bgmAudioCtx || bgmAudioCtx.state === 'running') return;
+    if (btnBgm && e && e.target && typeof e.target.closest === 'function' && e.target.closest('#bgm-toggle-btn')) {
+      return;
+    }
+    wakeVinylBgm();
+  };
+  window.addEventListener('touchend', unlockBgmAfterStandby, { passive: true });
+  window.addEventListener('pointerdown', unlockBgmAfterStandby, { passive: true });
+  window.addEventListener('keydown', unlockBgmAfterStandby, { passive: true });
 
   btnLang.addEventListener('click', () => {
     currentLang = currentLang === 'zh' ? 'en' : 'zh';
@@ -6357,7 +6446,7 @@
     !document.getElementById('debug-auth-gate')
   ) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js?v=20261111d').catch(() => {});
+      navigator.serviceWorker.register('./sw.js?v=20261111e').catch(() => {});
     });
   }
 })();
