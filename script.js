@@ -57,219 +57,237 @@
   const WEDDING_MENU_IMAGE_URL = '';
   const WEDDING_MENU_LINK_URL = '';
 
-  // 雙語介面文字設定 (繁體中文 / English)
+  // 雙語介面文字設定 (繁體中文 / English · 清新溫柔喜帖第一人稱口吻)
   const I18N = {
     zh: {
-      pageTitle: 'Tom & Eunice 婚宴倒數 — 2026.11.29 12:30',
+      pageTitle: 'Tom & Eunice · 2026.11.29 婚禮邀請',
       langBtnLabel: 'EN',
-      eyebrowCountdown: 'WEDDING CELEBRATION · 婚宴倒數',
-      eyebrowTimeUp: 'HAPPY WEDDING · 幸福時刻已來臨',
-      eventTitle: '我們結婚了 · 誠摯邀請您共襄盛舉',
-      targetSubtitle: '2026 年 11 月 29 日（星期日）中午 12:30 · 台灣時間 (UTC+8)',
-      labelDays: 'DAYS · 天',
-      labelHours: 'HOURS · 時',
-      labelMinutes: 'MINUTES · 分',
-      labelSeconds: 'SECONDS · 秒',
-      metricHoursLabel: '距離幸福時刻還有',
-      unitHours: '小時',
-      metricMinutesLabel: '或是',
-      unitMinutes: '分鐘',
-      metricSecondsLabel: '倒數秒數',
-      unitSeconds: '秒',
-      videoCardEyebrow: 'OUR WEDDING FILM',
-      videoCardTitle: '新人影片',
-      videoCardDesc: '觀賞 Tom & Eunice 的專屬婚禮影片，一起見證我們的幸福故事',
-      videoCardCta: '點擊觀賞影片 →',
-      quizCardEyebrow: 'COUPLE QUIZ · 暖身題 + 10 題問答',
-      quizCardTitle: '了解新人',
-      quizCardDesc: '挑戰暖身題與 10 道關於新人的趣味問答，看看您對新郎還是新娘最熟悉！',
-      quizCardCta: '開始挑戰問答 →',
-      shareCardEyebrow: 'GOOGLE PHOTOS · SHARED ALBUM',
-      shareCardTitle: '分享新人照片',
-      shareCardDesc: '打開婚宴專屬 Google Photos 共享相簿，上傳您拍下的美好瞬間！',
-      shareCardCta: '前往共享相簿 →',
-      galleryCardEyebrow: 'OUR MEMORIES · 2014–2026',
-      galleryCardTitle: '新人過去照片',
-      galleryCardDesc: '回顧 Tom & Eunice 從相識、相戀到步入禮堂的珍貴歲月寫真',
-      galleryCardCta: '瀏覽回憶相簿 →',
-      footprintsCardEyebrow: 'LOVE FOOTPRINTS · GOOGLE MAPS TIMELINE',
-      footprintsCardTitle: '新人交往軌跡',
-      footprintsCardDesc: '探索 Tom & Eunice 的 Google Maps 戀愛足跡與跨國旅行地圖紀錄',
-      footprintsCardCta: '探索交往軌跡地圖 →',
-      seatingCardEyebrow: 'SEATING CHART · TABLE DIRECTORY',
+      langBtnTitle: '切換為英文 / Switch to English',
+      themeBtnTitle: '切換日夜色調',
+      fullscreenBtnTitle: '全螢幕檢視',
+      bgmPlayTitle: '播放 33⅓ 黑膠輕音樂',
+      bgmPauseTitle: '暫停背景音樂',
+      eyebrowCountdown: '2014 — 2026 · 婚禮邀請',
+      eyebrowTimeUp: '2026.11.29 · 謝謝今天來見我們的你',
+      eventTitle: '走過十二年四季，想邀請你來參與我們最重要的一天',
+      targetSubtitle: '2026 年 11 月 29 日（日）中午 12:30 · 陽明山美軍俱樂部 Brick Yard 33 1/3',
+      labelDays: '天',
+      labelHours: '時',
+      labelMinutes: '分',
+      labelSeconds: '秒',
+      loveNoteParts: {
+        prefix: '從 2014.02.28 的台北走到今天，我們已經並肩走過 ',
+        mid: ' 個日子、跨越最遠 ',
+        km: '13,877',
+        suffix: ' 公里的時差——這一次，想在陽明山的紅磚與微風裡，和最重要的你好好聚一聚。',
+      },
+      loveSignature: 'With love, Tom & Eunice · 33⅓ RPM',
+      videoCardEyebrow: 'Our Wedding Film',
+      videoCardTitle: '我們的影片',
+      videoCardDesc: '把十二年來的日常、旅行與笑聲剪進這支影片裡，想和你一起看。',
+      videoCardCta: '播放我們的影片',
+      quizCardEyebrow: '11 Little Stories',
+      quizCardTitle: '關於我們的小默契',
+      quizCardDesc: '十一個藏在生活裡的小故事，猜猜看你對新郎還是新娘比較熟？',
+      quizCardCta: '來玩小默契問答',
+      shareCardEyebrow: 'Through Your Lens',
+      shareCardTitle: '幫我們留下今天',
+      shareCardDesc: '如果你今天拍到了喜歡的照片或可愛瞬間，歡迎傳進相簿和我們一起收藏。',
+      shareCardCta: '打開共享相簿',
+      galleryCardEyebrow: '2014 — 2026',
+      galleryCardTitle: '我們的舊照片',
+      galleryCardDesc: '從校園草原散步、跨洲遠距到決定成家，翻翻這些年留下的合照。',
+      galleryCardCta: '翻閱舊照片',
+      footprintsCardEyebrow: 'Across the Miles',
+      footprintsCardTitle: '十二年足跡地圖',
+      footprintsCardDesc: '把我們住過的城市與 9,100 公里的思念，畫成一張會動的地圖。',
+      footprintsCardCta: '看看我們的地圖',
+      seatingCardEyebrow: 'Table & Floor Plan',
       seatingCardTitle: '婚宴座位表',
-      seatingCardDesc: '快速搜尋您的姓名或親友分類，查看美軍俱樂部宴會廳座位配置圖',
-      seatingCardCta: '查詢桌次與座位圖 →',
-      menuCardEyebrow: 'WEDDING BANQUET · BUFFET MENU',
-      menuCardTitle: '婚宴餐點',
-      menuCardDesc: '瀏覽美軍俱樂部豐盛百匯自助餐、現切牛排與 Bartender 特調飲品菜單',
-      menuCardCta: '查看婚宴菜單 →',
+      seatingCardDesc: '輸入你的名字或親友群組，看看今天坐在美軍俱樂部的哪一區。',
+      seatingCardCta: '查詢桌次與座位圖',
+      menuCardEyebrow: 'Banquet & Cocktails',
+      menuCardTitle: '婚宴佳餚與調酒',
+      menuCardDesc: '先偷看一下今天的現切爐烤牛排、百匯料理，還有 Bartender 現調特調。',
+      menuCardCta: '看看今天的菜單',
       tabBackHub: '← 返回主選單',
-      tabBackCountdown: '← 返回倒數計時',
-      tabVideo: '🎬 新人影片',
-      tabQuiz: '🌿 了解新人',
-      tabSeating: '🪑 座位表',
-      tabMenu: '🍽️ 婚宴餐點',
-      tabShare: '📸 分享照片',
-      tabGallery: '🎞️ 過去照片',
-      tabFootprints: '🗺️ 交往軌跡',
-      seatingPanelEyebrow: 'SEATING CHART · BRICK YARD 33 1/3',
+      tabBackCountdown: '← 返回喜帖首頁',
+      tabVideo: '我們的影片',
+      tabQuiz: '小默契問答',
+      tabSeating: '座位表',
+      tabMenu: '婚宴菜單',
+      tabShare: '分享照片',
+      tabGallery: '舊照片',
+      tabFootprints: '十二年足跡',
+      seatingPanelEyebrow: 'Brick Yard 33 1/3 · Floor Plan',
       seatingPanelTitle: '美軍俱樂部 · 婚宴座位表',
       seatingExternalBtn: '開啟完整座位圖 ↗',
-      seatingSearchPlaceholder: '🔍 輸入您的姓名或親友分類（例如：新娘大學、新郎交大、MOZ、同事、親戚）快速查詢...',
-      menuPanelEyebrow: 'BRICK YARD 33 1/3 · WEDDING BUFFET MENU',
-      menuPanelTitle: '美軍俱樂部 · 婚宴百匯自助餐菜單',
+      seatingSearchPlaceholder: '輸入名字或親友分類（例如：北藝、交大、謀智、瑪黑、Google、親戚）...',
+      menuPanelEyebrow: 'Brick Yard 33 1/3 · Banquet & Bar',
+      menuPanelTitle: '美軍俱樂部 · 百匯佳餚與特調菜單',
       menuExternalBtn: '開啟完整菜單相片 ↗',
-      menuNoteText: '🍸 迎賓禮遇：現場設有「戶外雞尾酒點心吧」與「Bartender 現調調酒（每人一杯）」，自助百匯區提供現切爐烤曼哈頓牛排、豐富海陸主菜與精緻法式甜點（標註素食／蛋奶素／含酒精），敬請盡情享用！',
-      viewGooglePhotoBtn: '📸 在 Google Photos 查看相片 ↗',
-      sharePanelEyebrow: 'GOOGLE PHOTOS SHARED ALBUM',
-      sharePanelTitle: '分享您鏡頭下的 Tom & Eunice',
-      sharePanelDesc: '誠摯邀請您將今天在婚宴現場拍下的照片與影片上傳至我們的 Google Photos 共享相簿，與我們一起珍藏這一天！',
-      shareStep1: '1. 點擊下方按鈕開啟 Google Photos 相簿',
-      shareStep2: '2. 點選「新增相片」即可直接上傳分享',
-      shareLinkBtn: '📸 開啟 Google Photos 婚禮共享相簿 ↗',
-      galleryPanelEyebrow: 'OUR MEMORIES · 2014–2026',
-      galleryPanelTitle: '新人過去照片 · 歲月寫真',
-      galleryAlbumLinkBtn: '開啟完整 Google 相簿 ↗',
+      menuNoteText: '迎賓小提醒：戶外備有「雞尾酒點心吧」，吧台也為每位賓客準備了一杯「Bartender 現調調酒」；自助百匯區提供現切爐烤曼哈頓牛排、海陸熱饌與法式甜點（皆已標註素食／蛋奶素／含酒精），請慢慢享用！',
+      viewGooglePhotoBtn: '在 Google Photos 查看相片 ↗',
+      sharePanelEyebrow: 'Shared Wedding Album',
+      sharePanelTitle: '你鏡頭下的 Tom & Eunice',
+      sharePanelDesc: '今天在現場拍下的照片或小短片，都很歡迎傳進這本 Google Photos 相簿，讓我們也能看見你眼裡的這一天。',
+      shareStep1: '1. 點選下方按鈕打開 Google Photos 共享相簿',
+      shareStep2: '2. 按一下「新增相片」就能直接上傳分享',
+      shareLinkBtn: '打開婚禮 Google Photos 相簿 ↗',
+      galleryPanelEyebrow: '2014 — 2026 · Through the Years',
+      galleryPanelTitle: '我們的舊照片',
+      galleryAlbumLinkBtn: '打開完整 Google 相簿 ↗',
       eraAll: '全部年份 (2014–2026)',
-      era2014: '2014–2017 青春相識',
-      era2018: '2018–2021 遠距與成長',
-      era2022: '2022–2026 攜手成家',
-      footprintsPanelEyebrow: 'GOOGLE MAPS TIMELINE',
-      footprintsPanelTitle: 'Tom & Eunice 交往軌跡',
-      footprintStatsText: '🤵‍♂️ Tom (藍線) · 👰‍♀️ Eunice (粉線) · 🌍 最遠相距 13,877 km (奧蘭多 ↔ 高雄) · 遠距 9,100 km (住柏林 ↔ 高雄)',
-      footprintTrackTom: '🤵‍♂️ Tom Tung · 台北 ➔ 新竹 ➔ 柏林 ➔ 新北 ➔ 台北',
-      footprintTrackEunice: '👰‍♀️ Eunice Hsiao · 高雄 ➔ 諾丁漢 ➔ 高雄 ➔ 新北 ➔ 台北',
+      era2014: '2014–2017 初識與校園',
+      era2018: '2018–2021 跨洲遠距離',
+      era2022: '2022–2026 回到同一座城市',
+      footprintsPanelEyebrow: '2014 — 2026 · Across the Miles',
+      footprintsPanelTitle: '十二年相戀足跡',
+      footprintStatsText: '🤵‍♂️ Tom（藍線）· 👰‍♀️ Eunice（粉線）· 最遠相隔 13,877 km（奧蘭多 ↔ 高雄）· 跨洲遠距 9,100 km（柏林 ↔ 高雄）',
+      footprintTrackTom: '🤵‍♂️ Tom Tung · 台北 ➔ 新竹 ➔ 柏林 ➔ 板橋 ➔ 台北',
+      footprintTrackEunice: '👰‍♀️ Eunice Hsiao · 高雄 ➔ 諾丁漢 ➔ 高雄 ➔ 板橋 ➔ 台北',
       yearAll: '全部足跡',
       openMapBtn: '在 Google Maps 查看地點 ↗',
-      timelinePlayBtn: '▶ 播放交往軌跡影片',
+      timelinePlayBtn: '▶ 播放足跡動畫',
       timelinePauseBtn: '⏸ 暫停播放',
       timelinePrevBtn: '⏮ 上一站',
       timelineNextBtn: '⏭ 下一站',
+      timelinePrevTitle: '上一站',
+      timelineNextTitle: '下一站',
+      timelineSpeedTitle: '調整播放速度',
       timelineReplayBtn: '↺ 重播',
-      timelineExportBtn: '🎥 匯出下載影片',
-      timelineExportingBtn: '⏳ 正在錄製生成影片中...',
-      mediaBadgeYoutube: 'OUR WEDDING FILM · 新人影片',
-      mediaBadgeShorts: 'YOUTUBE SHORTS · 新人影片',
-      mediaBadgeIgReel: 'INSTAGRAM REEL · 新人影片',
-      mediaBadgeIg: 'INSTAGRAM · 新人影片',
-      scoreBadge: (score, total) => `目前得分：${score} / ${total}`,
-      correctHeadline: (label, text) => `✨ 答對了！正確答案就是 (${label}) ${text}`,
-      wrongHeadline: (label, text) => `💡 差一點點！正確答案是 (${label}) ${text}`,
+      timelineExportBtn: '下載紀念影片',
+      timelineExportingBtn: '正在錄製影片中...',
+      mediaBadgeYoutube: 'Our Wedding Film · 我們的影片',
+      mediaBadgeShorts: 'YouTube Shorts · 我們的影片',
+      mediaBadgeIgReel: 'Instagram Reel · 我們的影片',
+      mediaBadgeIg: 'Instagram · 我們的影片',
+      scoreBadge: (score, total) => `目前默契：${score} / ${total}`,
+      correctHeadline: (label, text) => `答對了 · 正確答案是 (${label}) ${text}`,
+      wrongHeadline: (label, text) => `差一點點 · 正確答案是 (${label}) ${text}`,
       nextBtn: '下一題 →',
-      finishBtn: '查看最終成績 🎉',
-      quizCompletedEyebrow: 'QUIZ COMPLETED · 答題完成',
-      quizSummaryTitle: '感謝您的熱情參與！',
-      restartBtn: '重新挑戰一次',
-      toVideoBtn: '🎬 前往觀賞新人影片',
-      clockCaption: '目前台灣時間：',
-      celebrateBtn: '灑落花瓣祝福',
+      finishBtn: '看看最後結果',
+      quizCompletedEyebrow: 'Thank You for Playing',
+      quizSummaryTitle: '謝謝你陪我們玩到最後！',
+      restartBtn: '再玩一次',
+      toVideoBtn: '去看我們的影片',
+      clockCaption: '陽明山美軍俱樂部 · 台灣時間',
+      celebrateBtn: '🌸 輕灑花瓣祝福',
     },
     en: {
-      pageTitle: 'Tom & Eunice Wedding Countdown — Nov 29, 2026 12:30 PM',
+      pageTitle: 'Tom & Eunice · Nov 29, 2026 Wedding Invitation',
       langBtnLabel: '中文',
-      eyebrowCountdown: 'WEDDING CELEBRATION · COUNTDOWN',
-      eyebrowTimeUp: 'HAPPY WEDDING · THE MOMENT HAS ARRIVED',
-      eventTitle: 'We Are Getting Married · Join Us in Celebrating',
-      targetSubtitle: 'Sunday, November 29, 2026 at 12:30 PM · Taipei Time (UTC+8)',
-      labelDays: 'DAYS',
-      labelHours: 'HOURS',
-      labelMinutes: 'MINUTES',
-      labelSeconds: 'SECONDS',
-      metricHoursLabel: 'Time Remaining',
-      unitHours: 'hrs',
-      metricMinutesLabel: 'or',
-      unitMinutes: 'mins',
-      metricSecondsLabel: 'Total',
-      unitSeconds: 'secs',
-      videoCardEyebrow: 'OUR WEDDING FILM',
-      videoCardTitle: 'Wedding Film',
-      videoCardDesc: 'Watch Tom & Eunice’s wedding video and celebrate our journey together.',
-      videoCardCta: 'Watch Our Film →',
-      quizCardEyebrow: 'COUPLE QUIZ · WARM-UP + 10 QUESTIONS',
-      quizCardTitle: 'Get to Know Us',
-      quizCardDesc: 'Take a warm-up & 10 fun questions about Tom & Eunice to see who you know best!',
-      quizCardCta: 'Start the Quiz →',
-      shareCardEyebrow: 'GOOGLE PHOTOS · SHARED ALBUM',
-      shareCardTitle: 'Share Wedding Photos',
-      shareCardDesc: 'Open our shared Google Photos album and upload the moments you captured today!',
-      shareCardCta: 'Open Shared Album →',
-      galleryCardEyebrow: 'OUR MEMORIES · 2014–2026',
-      galleryCardTitle: 'Our Past Photos',
-      galleryCardDesc: 'Look back on Tom & Eunice’s favorite photos from 2014 to our wedding day.',
-      galleryCardCta: 'Browse Photo Memories →',
-      footprintsCardEyebrow: 'LOVE FOOTPRINTS · GOOGLE MAPS TIMELINE',
-      footprintsCardTitle: 'Love Footprints',
-      footprintsCardDesc: 'Explore our Google Maps timeline and travel footprints together.',
-      footprintsCardCta: 'Explore Timeline Map →',
-      seatingCardEyebrow: 'SEATING CHART · TABLE DIRECTORY',
+      langBtnTitle: 'Switch to Traditional Chinese / 切換中文',
+      themeBtnTitle: 'Toggle Light / Dark Palette',
+      fullscreenBtnTitle: 'Toggle Fullscreen',
+      bgmPlayTitle: 'Play 33⅓ RPM Gentle Vinyl Melody',
+      bgmPauseTitle: 'Pause Background Music',
+      eyebrowCountdown: '2014 — 2026 · Wedding Invitation',
+      eyebrowTimeUp: 'Nov 29, 2026 · So Happy You Are Here With Us',
+      eventTitle: 'Twelve years of seasons together — we’d love for you to celebrate this day with us',
+      targetSubtitle: 'Sunday, November 29, 2026 · 12:30 PM · Brick Yard 33 1/3, Yangmingshan, Taipei',
+      labelDays: 'Days',
+      labelHours: 'Hours',
+      labelMinutes: 'Mins',
+      labelSeconds: 'Secs',
+      loveNoteParts: {
+        prefix: 'Since February 28, 2014 in Taipei, we have walked through ',
+        mid: ' days side by side and bridged ',
+        km: '13,877',
+        suffix: ' km across time zones — now, we can’t wait to gather with you among the red bricks and mountain breeze of Yangmingshan.',
+      },
+      loveSignature: 'With love, Tom & Eunice · 33⅓ RPM',
+      videoCardEyebrow: 'Our Wedding Film',
+      videoCardTitle: 'Our Film',
+      videoCardDesc: 'Twelve years of everyday moments, travels, and laughter gathered into one film for you.',
+      videoCardCta: 'Watch Our Film',
+      quizCardEyebrow: '11 Little Stories',
+      quizCardTitle: 'How Well Do You Know Us?',
+      quizCardDesc: 'Eleven little stories from our life together — see whose side you know best.',
+      quizCardCta: 'Play the Quiz',
+      shareCardEyebrow: 'Through Your Lens',
+      shareCardTitle: 'Capture Today With Us',
+      shareCardDesc: 'Snapped a favorite photo or candid moment today? Drop it into our shared album so we can treasure it too.',
+      shareCardCta: 'Open Shared Album',
+      galleryCardEyebrow: '2014 — 2026',
+      galleryCardTitle: 'Our Old Photos',
+      galleryCardDesc: 'From campus walks and long-distance flights to coming home to the same city.',
+      galleryCardCta: 'Browse Photos',
+      footprintsCardEyebrow: 'Across the Miles',
+      footprintsCardTitle: 'Twelve Years on the Map',
+      footprintsCardDesc: 'Every city we lived in and every flight that closed the 9,100 km between us.',
+      footprintsCardCta: 'Explore Our Map',
+      seatingCardEyebrow: 'Table & Floor Plan',
       seatingCardTitle: 'Seating Chart',
-      seatingCardDesc: 'Search your name or group to find your seating zone at Brick Yard 33 1/3.',
-      seatingCardCta: 'Find Your Seat →',
-      menuCardEyebrow: 'WEDDING BANQUET · BUFFET MENU',
-      menuCardTitle: 'Wedding Menu',
-      menuCardDesc: 'Explore the Brick Yard 33 1/3 wedding buffet, carving station & Bartender cocktails.',
-      menuCardCta: 'View Buffet Menu →',
+      seatingCardDesc: 'Look up your name or group to find your table zone at Brick Yard 33 1/3.',
+      seatingCardCta: 'Find Your Seat',
+      menuCardEyebrow: 'Banquet & Cocktails',
+      menuCardTitle: 'Menu & Cocktails',
+      menuCardDesc: 'A peek at today’s carved roast steak, buffet stations, and Bartender cocktails.',
+      menuCardCta: 'View Buffet Menu',
       tabBackHub: '← Back to Menu',
-      tabBackCountdown: '← Back to Countdown',
-      tabVideo: '🎬 Wedding Film',
-      tabQuiz: '🌿 Couple Quiz',
-      tabSeating: '🪑 Seating',
-      tabMenu: '🍽️ Menu',
-      tabShare: '📸 Share Photos',
-      tabGallery: '🎞️ Past Photos',
-      tabFootprints: '🗺️ Footprints',
-      seatingPanelEyebrow: 'SEATING CHART · BRICK YARD 33 1/3',
+      tabBackCountdown: '← Back to Invitation',
+      tabVideo: 'Our Film',
+      tabQuiz: 'Couple Quiz',
+      tabSeating: 'Seating',
+      tabMenu: 'Menu',
+      tabShare: 'Share Photos',
+      tabGallery: 'Old Photos',
+      tabFootprints: 'Our Map',
+      seatingPanelEyebrow: 'Brick Yard 33 1/3 · Floor Plan',
       seatingPanelTitle: 'Brick Yard 33 1/3 · Seating Chart',
       seatingExternalBtn: 'Open Full Floor Plan ↗',
-      seatingSearchPlaceholder: '🔍 Search by guest name, table zone, or group (e.g., NCTU, MOZ, College, Colleagues)...',
-      menuPanelEyebrow: 'BRICK YARD 33 1/3 · WEDDING BUFFET MENU',
-      menuPanelTitle: 'Brick Yard 33 1/3 · Wedding Buffet Menu',
+      seatingSearchPlaceholder: 'Search your name or group (e.g., TNUA, NCTU, Mozilla, Marais, Google)...',
+      menuPanelEyebrow: 'Brick Yard 33 1/3 · Banquet & Bar',
+      menuPanelTitle: 'Brick Yard 33 1/3 · Banquet & Cocktail Menu',
       menuExternalBtn: 'Open Full Menu Photo ↗',
-      menuNoteText: '🍸 Welcome Perks: Enjoy our complimentary Outdoor Cocktail & Canapé Bar plus 1 Bartender Handcrafted Cocktail per guest, alongside our full carving & buffet stations!',
-      viewGooglePhotoBtn: '📸 View on Google Photos ↗',
-      sharePanelEyebrow: 'GOOGLE PHOTOS SHARED ALBUM',
-      sharePanelTitle: 'Share Tom & Eunice Through Your Lens',
-      sharePanelDesc: 'We warmly invite you to upload the photos and videos you captured at our wedding today to our Google Photos Shared Album!',
-      shareStep1: '1. Click the button below to open Google Photos',
-      shareStep2: '2. Tap "Add photos" to share your shots with us',
-      shareLinkBtn: '📸 Open Wedding Google Photos Album ↗',
-      galleryPanelEyebrow: 'OUR MEMORIES · 2014–2026',
-      galleryPanelTitle: 'Past Photos · 2014–2026 Memories',
+      menuNoteText: 'Welcome Treats: Enjoy our Outdoor Cocktail & Canapé Bar plus one handcrafted Bartender cocktail per guest, alongside carved Manhattan steak, hot entrées & French patisserie (vegetarian, ovo-lacto vegetarian & alcohol-containing dishes are labeled).',
+      viewGooglePhotoBtn: 'View on Google Photos ↗',
+      sharePanelEyebrow: 'Shared Wedding Album',
+      sharePanelTitle: 'Tom & Eunice Through Your Lens',
+      sharePanelDesc: 'We would love to see today through your eyes — feel free to upload any photos or clips you captured to our shared Google Photos album.',
+      shareStep1: '1. Tap the button below to open our Google Photos album',
+      shareStep2: '2. Select "Add photos" to share your favorite shots',
+      shareLinkBtn: 'Open Shared Google Photos Album ↗',
+      galleryPanelEyebrow: '2014 — 2026 · Through the Years',
+      galleryPanelTitle: 'Our Old Photos',
       galleryAlbumLinkBtn: 'Open Full Google Photos Album ↗',
       eraAll: 'All Years (2014–2026)',
-      era2014: '2014–2017 First Chapters',
-      era2018: '2018–2021 Across the Miles',
-      era2022: '2022–2026 Forever Begins',
-      footprintsPanelEyebrow: 'GOOGLE MAPS TIMELINE',
-      footprintsPanelTitle: 'Tom & Eunice Love Footprints',
-      footprintStatsText: '🤵‍♂️ Tom (Blue Line) · 👰‍♀️ Eunice (Pink Line) · 🌍 Max Distance: 13,877 km (Orlando ↔ Kaohsiung) & 9,100 km (Berlin ↔ Kaohsiung)',
-      footprintTrackTom: '🤵‍♂️ Tom Tung · Taipei ➔ Hsinchu ➔ Berlin ➔ New Taipei ➔ Taipei',
-      footprintTrackEunice: '👰‍♀️ Eunice Hsiao · Kaohsiung ➔ Nottingham ➔ Kaohsiung ➔ New Taipei ➔ Taipei',
-      yearAll: 'All Footprints',
+      era2014: '2014–2017 Campus Days',
+      era2018: '2018–2021 Across Time Zones',
+      era2022: '2022–2026 Same City Again',
+      footprintsPanelEyebrow: '2014 — 2026 · Across the Miles',
+      footprintsPanelTitle: 'Twelve Years on the Map',
+      footprintStatsText: '🤵‍♂️ Tom (Blue) · 👰‍♀️ Eunice (Rose) · Furthest Apart: 13,877 km (Orlando ↔ Kaohsiung) · Long-Distance Home: 9,100 km (Berlin ↔ Kaohsiung)',
+      footprintTrackTom: '🤵‍♂️ Tom Tung · Taipei ➔ Hsinchu ➔ Berlin ➔ Banqiao ➔ Taipei',
+      footprintTrackEunice: '👰‍♀️ Eunice Hsiao · Kaohsiung ➔ Nottingham ➔ Kaohsiung ➔ Banqiao ➔ Taipei',
+      yearAll: 'All Stops',
       openMapBtn: 'View on Google Maps ↗',
-      timelinePlayBtn: '▶ Play Timeline Video',
+      timelinePlayBtn: '▶ Play Journey',
       timelinePauseBtn: '⏸ Pause',
       timelinePrevBtn: '⏮ Prev',
       timelineNextBtn: '⏭ Next',
+      timelinePrevTitle: 'Previous Stop',
+      timelineNextTitle: 'Next Stop',
+      timelineSpeedTitle: 'Playback Speed',
       timelineReplayBtn: '↺ Replay',
-      timelineExportBtn: '🎥 Download Video',
-      timelineExportingBtn: '⏳ Recording Video...',
-      mediaBadgeYoutube: 'OUR WEDDING FILM',
-      mediaBadgeShorts: 'YOUTUBE SHORTS · WEDDING FILM',
-      mediaBadgeIgReel: 'INSTAGRAM REEL · WEDDING FILM',
-      mediaBadgeIg: 'INSTAGRAM · WEDDING FILM',
+      timelineExportBtn: 'Save Keepsake Video',
+      timelineExportingBtn: 'Recording Video...',
+      mediaBadgeYoutube: 'Our Wedding Film',
+      mediaBadgeShorts: 'YouTube Shorts · Our Film',
+      mediaBadgeIgReel: 'Instagram Reel · Our Film',
+      mediaBadgeIg: 'Instagram · Our Film',
       scoreBadge: (score, total) => `Score: ${score} / ${total}`,
-      correctHeadline: (label, text) => `✨ Correct! The answer is (${label}) ${text}`,
-      wrongHeadline: (label, text) => `💡 Close! The correct answer is (${label}) ${text}`,
-      nextBtn: 'Next Question →',
-      finishBtn: 'See Final Score 🎉',
-      quizCompletedEyebrow: 'QUIZ COMPLETED',
-      quizSummaryTitle: 'Thank You for Playing!',
+      correctHeadline: (label, text) => `Spot on · The answer is (${label}) ${text}`,
+      wrongHeadline: (label, text) => `So close · The answer is (${label}) ${text}`,
+      nextBtn: 'Next Story →',
+      finishBtn: 'See Final Result',
+      quizCompletedEyebrow: 'Thank You for Playing',
+      quizSummaryTitle: 'Thank You for Playing Along!',
       restartBtn: 'Play Again',
-      toVideoBtn: '🎬 Watch Wedding Film',
-      clockCaption: 'Current Taiwan Time:',
-      celebrateBtn: 'Shower Petals',
+      toVideoBtn: 'Watch Our Film',
+      clockCaption: 'Brick Yard 33 1/3 · Taipei Time',
+      celebrateBtn: '🌸 Shower With Petals',
     },
   };
 
@@ -296,7 +314,7 @@
       answerIndex: 1,
       optionExplanations: {
         zh: [
-          '差一點點！少了 5 畫，是不是把草字頭或玉字旁算少筆畫啦？其實 Tom「董智瑋」（13+12+13=38 畫）加上 Eunice「蕭睦宸」（16+13+10=39 畫），兩人合起來總共是「77 畫」（七七事變／Lucky Double Seven）喔！',
+          '差一點點！少了 5 畫，是不是把草字頭或玉字旁算少筆畫啦？其實 Tom「董智瑋」（13+12+13=38 畫）加上 Eunice「蕭睦宸」（16+13+10=39 畫），兩人合起來總共是「77 畫」（幸運雙七／Lucky Double Seven）喔！',
           '算數大師是你！連這麼多筆畫都算得一字不差！Tom「董智瑋」：董(13)+智(12)+瑋(13)=38 畫；Eunice「蕭睦宸」：蕭(16)+睦(13)+宸(10)=39 畫，兩人合起來剛好是超幸運的「77 畫」喔！',
           '68 畫太省筆墨啦！「董」跟「蕭」兩個大姓氏光草字頭筆畫就超豐富！實際上 Tom「董智瑋」（38 畫）加上 Eunice「蕭睦宸」（39 畫），兩人合起來總共是「77 畫」喔！',
           '82 畫超過啦！看來手寫的時候多幫我們加了幾筆愛心！實際上 Tom「董智瑋」（13+12+13=38 畫）加上 Eunice「蕭睦宸」（16+13+10=39 畫），合起來總共是「77 畫」喔！',
@@ -724,12 +742,12 @@
       emoji: '💌',
       imageUrl: '',
       title: {
-        zh: 'Dcard 上的初次相遇',
-        en: 'First Meeting on Dcard',
+        zh: 'Dcard 午夜抽卡的相遇',
+        en: 'Midnight Match on Dcard',
       },
       caption: {
-        zh: '2014 年，從 Dcard 牽起的奇妙緣分，開啟了我們長達 12 年的故事篇章。',
-        en: 'In 2014, a serendipitous match on Dcard started our 12-year love story.',
+        zh: '2014 年的一封站內信、情人節在台北的第一次見面，沒想到一聊就走過了十二個四季。',
+        en: 'One message in 2014 and our very first Valentine’s Day meet-up in Taipei — somehow that conversation lasted twelve years.',
       },
     },
     {
@@ -738,12 +756,12 @@
       emoji: '🐮',
       imageUrl: '',
       title: {
-        zh: '關渡與北藝大鷺鷥草原散步',
-        en: 'Walks on the TNUA Campus Lawn',
+        zh: '關渡與北藝大鷺鷥草原的午後',
+        en: 'Afternoons on the TNUA Campus Lawn',
       },
       caption: {
-        zh: '在北藝大校園裡看校牛「小麗」、「奧米加咆哮獸」與「犇爺」，度過無數悠閒午後。',
-        en: 'Countless sunny afternoons visiting the famous TNUA campus cows together.',
+        zh: '在北藝大草原上看著校牛「小麗」、「奧米加咆哮獸」與「犇爺」慢慢吃草，是學生時代最柔軟的記憶。',
+        en: 'Slow sunny afternoons watching TNUA’s campus cows — Xiaoli, OmniShoutmon, and Master Ben — graze across the hillside.',
       },
     },
     {
@@ -752,12 +770,12 @@
       emoji: '🎓',
       imageUrl: '',
       title: {
-        zh: '學生時代的畢業與小旅行',
-        en: 'Graduation & Island Road Trips',
+        zh: '畢業季與南北往返的車票',
+        en: 'Graduation & Train Tickets North and South',
       },
       caption: {
-        zh: '一起走遍台灣南北角落，在每個城市留下屬於我們的青春合照。',
-        en: 'Exploring cities and coastlines across Taiwan, capturing our youth.',
+        zh: '一張張往返台北、新竹與高雄的車票，載著我們走過北海岸、台中與好多看海的週末。',
+        en: 'Stacks of train tickets between Taipei, Hsinchu, and Kaohsiung, plus coastal drives whenever we could steal a weekend together.',
       },
     },
     {
@@ -766,40 +784,40 @@
       emoji: '🇬🇧',
       imageUrl: '',
       title: {
-        zh: '德國柏林工作 ＆ 英國諾丁漢留學',
-        en: 'Living in Berlin & UK Study Abroad in Nottingham',
+        zh: '柏林工作 ＆ 諾丁漢留學的時差歲月',
+        en: 'Berlin & Nottingham Across Time Zones',
       },
       caption: {
-        zh: 'Tom 住在德國柏林工作、Eunice 赴羅賓漢傳奇城市英國諾丁漢留學，從 9,100 公里跨洲遠距離到同在歐洲相聚。',
-        en: 'From 9,100 km apart between Berlin and Kaohsiung to reuniting across Europe while Eunice studied in Nottingham.',
+        zh: '從柏林與高雄相隔 9,100 公里的視訊日常，到 Eunice 飛往英國諾丁漢讀書，我們終於能在巴黎與布拉格的冬天見面。',
+        en: 'From 9,100 km apart between Berlin and Kaohsiung to Eunice studying in Robin Hood’s Nottingham — meeting halfway in Paris and snowy Prague.',
       },
     },
     {
       era: '2018-2021',
-      yearLabel: '2020–2021 · REUNION IN TAIWAN',
+      yearLabel: '2020–2021 · BACK IN ONE TIME ZONE',
       emoji: '🏡',
       imageUrl: '',
       title: {
-        zh: '重聚台灣與日常小確幸',
-        en: 'Reunited in Taiwan · Everyday Joy',
+        zh: '回到同一個時區的板橋日常',
+        en: 'Finally in the Same Time Zone Again',
       },
       caption: {
-        zh: '結束遠距離後回到同一個時區，一起探索沒有「臭菜」的美味料理與日常風景！',
-        en: 'Back in the same time zone, sharing everyday meals and adventures.',
+        zh: '結束遠距離搬進板橋的小家，每天最開心的事就是一起覓食——當然，絕對不加「臭菜」（香菜）！',
+        en: 'Ending long distance and settling into our home in Banqiao, hunting for good food together — strictly free of cilantro (“stinky greens”)!',
       },
     },
     {
       era: '2022-2026',
-      yearLabel: '2022–2024 · CAREER & TRAVELS',
+      yearLabel: '2022–2024 · GOOGLE BMC & TRAVELS',
       emoji: '✈️',
       imageUrl: '',
       title: {
-        zh: 'Google BMC Team 與世界旅行',
-        en: 'Career Milestones & World Travels',
+        zh: 'Google BMC Team 與一起看過的世界',
+        en: 'Google BMC Team & Journeys Together',
       },
       caption: {
-        zh: '在工作與生活中並肩成長，解鎖更多跨國旅行與難忘風景。',
-        en: 'Growing together in our careers and unlocking new travel destinations.',
+        zh: '搬到台北忠孝復興後，平日各自在工作裡忙碌打拚，休假就收起行李，一起去陌生的城市散步。',
+        en: 'Life around Zhongxiao Fuxing with Tom in the Google BMC Team and Eunice at work — trading busy weekdays for quiet getaways abroad.',
       },
     },
     {
@@ -808,12 +826,12 @@
       emoji: '💍',
       imageUrl: '',
       title: {
-        zh: '求婚成功 · 邁向人生下一站',
-        en: 'She Said Yes · Engaged!',
+        zh: '說好要一起走下半輩子',
+        en: 'She Said Yes',
       },
       caption: {
-        zh: '從兩個人到決定攜手一生，拍下屬於我們的婚紗寫真。',
-        en: 'From two hearts to one future—celebrating our engagement and pre-wedding shoot.',
+        zh: '把十二年的默契收進戒指裡，換上白紗與西裝，拍下屬於我們兩個人的紀念。',
+        en: 'Twelve years of quiet understanding slipped onto one ring, dressed up for our pre-wedding portraits.',
       },
     },
     {
@@ -822,26 +840,26 @@
       emoji: '🏔️',
       imageUrl: '',
       title: {
-        zh: '2026 年 9 月 · 奧地利浪漫蜜月之旅',
-        en: 'Sep 2026 · Romantic Honeymoon in Austria',
+        zh: '2026 年秋初 · 奧地利湖區與維也納蜜月',
+        en: 'Sep 2026 · Honeymoon in Vienna & the Austrian Lakes',
       },
       caption: {
-        zh: '2026 年 9 月兩人攜手飛往奧地利維也納與阿爾卑斯山湖區小鎮，珍藏最浪漫的蜜月回憶。',
-        en: 'Exploring Vienna and the Austrian Alpine lakes together in September 2026.',
+        zh: '在維也納的琴聲與阿爾卑斯山湖區的晨霧裡散步，把最安靜浪漫的風景留給彼此。',
+        en: 'Morning mist over Hallstatt’s Alpine lakes and evening music in Vienna on our autumn honeymoon.',
       },
     },
     {
       era: '2022-2026',
-      yearLabel: '2026.11.29 · WEDDING DAY',
+      yearLabel: '2026.11.29 · BRICK YARD 33 1/3',
       emoji: '🥂',
       imageUrl: '',
       title: {
-        zh: '2026.11.29 我們結婚了！',
-        en: '2026.11.29 Our Wedding Celebration',
+        zh: '2026.11.29 · 陽明山與你相見',
+        en: '2026.11.29 · Celebrating With You in Yangmingshan',
       },
       caption: {
-        zh: '在所有摯愛親友的見證下，正式步入禮堂！',
-        en: 'Tying the knot surrounded by our dearest family and friends!',
+        zh: '謝謝你今天特地來到陽明山，陪我們把這十二年的故事寫下最溫暖的一頁。',
+        en: 'Thank you for coming up the mountain today to share a meal, a toast, and this chapter with us.',
       },
     },
   ];
@@ -900,7 +918,7 @@
       fillColor: 'rgba(225, 29, 72, 0.22)',
       debugStats: { headcount: 11, veg: 0, stroller: 0, childSeat: 2 },
       name: { zh: '新娘親戚區', en: "Bride's Relatives" },
-      zone: { zh: '主廳中左側 · 新娘親戚（主桌左側）', en: 'Main Hall Center-Left · Bride Relatives' },
+      zone: { zh: '主廳中左側 · 新娘親戚（主桌左側）', en: "Main Hall Center-Left · Bride's Relatives" },
       guests: [
         { zh: '傅宥錡', en: '傅宥錡' },
         { zh: '傅裕耀等三人', en: '傅裕耀 (3)' },
@@ -919,7 +937,7 @@
         fontSize: 40,
         lineStep: 44,
         zh: ['新郎爸媽朋友'],
-        en: ['Parents Friends'],
+        en: ["Parents' Friends"],
       },
       color: '#65a30d',
       fillColor: 'rgba(101, 163, 13, 0.20)',
@@ -1029,7 +1047,7 @@
       zone: { zh: '主廳右側 · 徐家親戚', en: 'Main Hall Right · Hsu Family Relatives' },
       guests: [
         { zh: '徐玲明等六人', en: '徐玲明 (6)' },
-        { zh: '徐和志、許嵐音等二人', en: '徐和志、許嵐音 (2)' },
+        { zh: '徐和志、許嵐音等二人', en: '徐和志 & 許嵐音 (2)' },
         { zh: '徐平志', en: '徐平志' },
         { zh: '林哲正等二人', en: '林哲正 (2)' },
         { zh: '徐慧明', en: '徐慧明' },
@@ -1117,7 +1135,7 @@
         { zh: '雷廷萱', en: '雷廷萱' },
         { zh: '戴嘉謙', en: '戴嘉謙' },
         { zh: '黃采逸等二人', en: '黃采逸 (2)' },
-        { zh: 'Yalan chang', en: 'Yalan chang' },
+        { zh: 'Yalan Chang', en: 'Yalan Chang' },
       ],
     },
     {
@@ -1143,7 +1161,7 @@
         { zh: '余汶杰', en: '余汶杰' },
         { zh: '陳泰元', en: '陳泰元' },
         { zh: '金耘瑞等二人', en: '金耘瑞 (2)' },
-        { zh: '張世瑤Anny', en: '張世瑤Anny' },
+        { zh: '張世瑤 Anny', en: '張世瑤 Anny' },
         { zh: '蔡青樺 Iris', en: '蔡青樺 Iris' },
         { zh: '沈育琪', en: '沈育琪' },
       ],
@@ -1151,15 +1169,22 @@
     {
       id: 'zone-groom-colleagues',
       box: { x: 1340, y: 1608, w: 200, h: 756 },
+      basePatch: {
+        mask: { x: 1402, y: 1861, w: 88, h: 248, fill: '#bdbb9e' },
+        tables: [
+          { x: 1413, y: 1839, w: 65, h: 101, fill: '#cacdb2', stroke: '#46492e', strokeWidth: 4 },
+          { x: 1413, y: 2027, w: 65, h: 102, fill: '#cacdb2', stroke: '#46492e', strokeWidth: 4 },
+        ],
+      },
       mapLabel: {
-        cx: 1442,
-        cy: 1985,
-        bw: 68,
-        bh: 194,
-        fontSize: 29,
-        lineStep: 29,
-        zh: ['G', 'o', 'o', 'g', 'l', 'e'],
-        en: ['G', 'o', 'o', 'g', 'l', 'e'],
+        cx: 1444,
+        cy: 1984,
+        bw: 158,
+        bh: 62,
+        fontSize: 35,
+        lineStep: 40,
+        zh: ['Google'],
+        en: ['Google'],
       },
       color: '#ea580c',
       fillColor: 'rgba(234, 88, 12, 0.22)',
@@ -1201,13 +1226,13 @@
       color: '#ca8a04',
       fillColor: 'rgba(234, 179, 8, 0.24)',
       debugStats: { headcount: 11, veg: 0, stroller: 1, childSeat: 1, detail: '林煜峯：嬰兒車1、兒童椅1' },
-      name: { zh: '新郎交大區（交大）', en: "Groom's NCTU" },
+      name: { zh: '新郎交大區（交大）', en: "Groom's College (NCTU)" },
       zone: { zh: '外廳右列上方區 · 交大', en: 'Lower Hall Right Col · Upper (NCTU)' },
       guests: [
         { zh: 'Allan Sun', en: 'Allan Sun' },
         { zh: '葉峻宇', en: '葉峻宇' },
         { zh: '林煜峯等四人', en: '林煜峯 (4)' },
-        { zh: 'Kj liu等二人', en: 'Kj liu (2)' },
+        { zh: 'KJ Liu 等二人', en: 'KJ Liu (2)' },
         { zh: '張家瑋', en: '張家瑋' },
         { zh: '褚祐任等二人', en: '褚祐任 (2)' },
       ],
@@ -1261,10 +1286,10 @@
     },
     {
       courseNo: 'STATION 02 · PASTA, RISOTTO & RICE',
-      title: { zh: '🍝 經典主食 · 義大利麵、燉飯與蒲燒油飯', en: '🍝 Signature Mains: Pasta, Risotto & Rice' },
+      title: { zh: '🍝 經典主食 · 義大利麵、燉飯與蒲燒油飯', en: '🍝 Signature Mains: Pasta, Risotto & Sticky Rice' },
       desc: {
         zh: '• 匈牙利松阪豬肉醬義大利麵\n• 羅勒松子雞肉義大利麵\n• 蒲燒鯛魚油飯\n• 普羅旺斯海鮮燉飯\n• 托斯卡尼松露蕈菇燉飯（蛋奶素）',
-        en: '• Hungarian Pork Jowl Pasta\n• Basil Pine Nut Chicken Pasta\n• Kabayaki Sea Bream Oil Rice\n• Provence Seafood Risotto\n• Tuscan Truffle Mushroom Risotto (Ovo-Lacto Veg)',
+        en: '• Hungarian Pork Jowl Pasta\n• Basil Pine Nut Chicken Pasta\n• Kabayaki Sea Bream Savory Sticky Rice (Taiwanese Youfan)\n• Provence Seafood Risotto\n• Tuscan Truffle Mushroom Risotto (Ovo-Lacto Veg)',
       },
       tag: { zh: '主食精選 (5 品)', en: 'Pasta & Rice (5 Items)' },
     },
@@ -1282,7 +1307,7 @@
       title: { zh: '🍲 暖心煲湯品', en: '🍲 Warm Artisanal Soups' },
       desc: {
         zh: '• 胡椒豬肚雞湯\n• 法式洋蔥湯',
-        en: '• Peppercorn Pork Belly & Chicken Soup\n• Classic French Onion Soup',
+        en: '• White Pepper Pork Tripe & Chicken Soup\n• Classic French Onion Soup',
       },
       tag: { zh: '湯品 (2 品)', en: 'Soups (2 Items)' },
     },
@@ -1291,7 +1316,7 @@
       title: { zh: '🍕 歐陸派對鹹點 ＆ 手工披薩', en: '🍕 Savory Party Bites & Handcrafted Pizza' },
       desc: {
         zh: '• 手工義大利香腸披薩 ／ 愛爾蘭牧羊人派\n• 莫札瑞拉起司牛肉串 ／ 巴薩米克起司鮮蝦\n• 水牛城辣雞蛋堡（微辣） ／ 蘆筍起司火腿捲\n• 軟法菇菇時蔬堡（蛋奶素）',
-        en: "• Handcrafted Italian Sausage Pizza / Irish Shepherd's Pie\n• Mozzarella Beef Skewers / Balsamic Cheese Prawns\n• Buffalo Spicy Chicken Slider (Mild Spicy) / Asparagus Cheese Ham Rolls\n• Soft Baguette Mushroom Veggie Slider (Ovo-Lacto Veg)",
+        en: "• Handcrafted Italian Sausage Pizza / Irish Shepherd's Pie\n• Mozzarella Beef Skewers / Balsamic Cheese Prawns\n• Buffalo Spicy Chicken Slider (Mildly Spicy) / Asparagus Cheese Ham Rolls\n• Soft Baguette Mushroom Veggie Slider (Ovo-Lacto Veg)",
       },
       tag: { zh: '精緻鹹點 (7 品)', en: 'Savory Bites (7 Items)' },
     },
@@ -1331,10 +1356,10 @@
         zh: '2014.01–02 · 新竹交大 ↔ 台北北藝大（過年彰化屏東 ＆ 高雄）',
         en: 'Jan–Feb 2014 · Hsinchu NCTU ↔ Taipei TNUA (Lunar New Year in Changhua/Pingtung & Kaohsiung)',
       },
-      distanceLabel: '245 km · 過年南北走春',
+      distanceLabel: { zh: '245 km · 過年南北兩端聊著天', en: '245 km · Chatting Across Lunar New Year' },
       desc: {
-        zh: 'Tom 在新竹交大讀書（週末回台北、過年去彰化屏東）；Eunice 在台北讀書、2月回高雄過年。',
-        en: 'Tom studied at NCTU in Hsinchu (Lunar New Year in Changhua & Pingtung) while Eunice spent Lunar New Year in Kaohsiung.',
+        zh: '還沒見面的那個冬天，Tom 在新竹交大與南部走春，Eunice 回高雄過年，手機訊息已經悄悄連起兩端。',
+        en: 'Before meeting in person, messages traveled back and forth while Tom spent Lunar New Year down south and Eunice was home in Kaohsiung.',
       },
       mapQuery: 'Taipei,Taiwan',
     },
@@ -1346,13 +1371,13 @@
       lat: 25.047,
       lng: 121.517,
       place: {
-        zh: '2014.02.14 第一次見面 ＆ 2014.02.28 正式交往 💕（台北）',
-        en: 'Feb 14, 2014 First Meet & Feb 28, 2014 Officially Together 💕 (Taipei)',
+        zh: '2014.02.14 第一次見面 ＆ 2014.02.28 正式在一起（台北）',
+        en: 'Feb 14, 2014 First Meet & Feb 28, 2014 Officially Together (Taipei)',
       },
-      distanceLabel: '0 km · 正式交往起點 💕',
+      distanceLabel: { zh: '0 km · 我們的故事起點 💕', en: '0 km · Where Our Story Began 💕' },
       desc: {
-        zh: '2/14 情人節在台北第一次見面，2/28 正式開始交往！兩人距離第一次歸零！',
-        en: 'First met in Taipei on Valentine’s Day (2/14) and officially became a couple on 2/28!',
+        zh: '2/14 情人節在台北第一次見面，兩週後的 2/28 決定牽起彼此的手——距離第一次變成零。',
+        en: 'Met for the first time in Taipei on Valentine’s Day (2/14) and officially became us on 2/28 — distance dropped to zero for the first time.',
       },
       mapQuery: 'Taipei,Taiwan',
     },
@@ -1364,13 +1389,13 @@
       lat: 25.291,
       lng: 121.568,
       place: {
-        zh: '2014.04 · 新北北海岸（兩人同遊看海 💕）',
-        en: 'Apr 2014 · North Coast, New Taipei (Trip Together 💕)',
+        zh: '2014.04 · 新北北海岸看海吹風',
+        en: 'Apr 2014 · Watching the Sea Along Taiwan’s North Coast',
       },
-      distanceLabel: '0 km · 北海岸同遊 💕',
+      distanceLabel: { zh: '0 km · 北海岸看海 💕', en: '0 km · Coastal Breeze Together 💕' },
       desc: {
-        zh: '4 月兩人一起去北海岸看海吹風，在蔚藍海岸線留下甜蜜足跡。',
-        en: 'A romantic April coastal trip together along Taiwan’s North Coast.',
+        zh: '剛交往的春天，兩個人一起跑到北海岸聽浪吹風，把整個下午都浪費在海邊。',
+        en: 'Our first spring together, spending a slow afternoon by the ocean along Taiwan’s North Coast.',
       },
       mapQuery: 'Baishawan+North+Coast+Taiwan',
     },
@@ -1382,13 +1407,13 @@
       lat: 43.061,
       lng: 141.354,
       place: {
-        zh: '2014.06 · Eunice 畢業回高雄 ＆ 6月底飛日本北海道旅行',
-        en: 'Jun 2014 · Eunice Graduated to Kaohsiung & Late-June Hokkaido Trip',
+        zh: '2014.06 · Eunice 大學畢業 ＆ 初夏北海道之旅',
+        en: 'Jun 2014 · Eunice’s Graduation & Early-Summer Hokkaido Trip',
       },
-      distanceLabel: '2,680 km · 新竹 ↔ 北海道',
+      distanceLabel: { zh: '2,680 km · 新竹 ↔ 北海道', en: '2,680 km · Hsinchu ↔ Hokkaido' },
       desc: {
-        zh: '6 月 Eunice 大學畢業回高雄，6 月底飛往日本北海道旅行，之後回高雄；Tom 在新竹與台北。',
-        en: 'Eunice graduated in June, moved back to Kaohsiung, and traveled to Hokkaido, Japan at the end of June.',
+        zh: 'Eunice 畢業搬回高雄、6 月底飛往北海道旅行；Tom 在新竹交大收著從北國寄回來的風景。',
+        en: 'Eunice graduated, moved back to Kaohsiung, and flew to Hokkaido in late June, sending northern summer snapshots back to Tom in Hsinchu.',
       },
       mapQuery: 'Sapporo,Hokkaido,Japan',
     },
@@ -1400,13 +1425,13 @@
       lat: 24.147,
       lng: 120.673,
       place: {
-        zh: '2014.07 · Eunice 去新竹找 Tom ＆ 一起去台中旅行 💕',
-        en: 'Jul 2014 · Eunice Visited Tom in Hsinchu & Trip Together to Taichung 💕',
+        zh: '2014.07 · 新竹重逢 ＆ 盛夏台中小旅行',
+        en: 'Jul 2014 · Hsinchu Reunion & Summer Trip to Taichung',
       },
-      distanceLabel: '0 km · 新竹＆台中相聚 💕',
+      distanceLabel: { zh: '0 km · 新竹＆台中相聚 💕', en: '0 km · Together in Hsinchu & Taichung 💕' },
       desc: {
-        zh: '7 月 Eunice 從高雄去新竹找 Tom，兩人還一起去台中玩，之後 Eunice 回高雄。',
-        en: 'In July, Eunice visited Tom in Hsinchu and they took a trip together to Taichung.',
+        zh: '盛夏 Eunice 北上新竹找 Tom，兩個人再一起搭車去台中散步覓食。',
+        en: 'Eunice came up from Kaohsiung to visit Tom in Hsinchu, followed by a sunny summer trip together to Taichung.',
       },
       mapQuery: 'Taichung,Taiwan',
     },
@@ -1418,13 +1443,13 @@
       lat: 35.676,
       lng: 139.65,
       place: {
-        zh: '2015.02 · Tom 回台北工作（過年彰化屏東）· Eunice 2月日本東京之旅',
-        en: 'Feb 2015 · Tom Working in Taipei · Eunice’s Tokyo Trip',
+        zh: '2015.02 · Tom 回台北工作 · Eunice 冬日東京行',
+        en: 'Feb 2015 · Tom Working in Taipei · Eunice’s Winter Trip to Tokyo',
       },
-      distanceLabel: '2,100 km · 台北 ↔ 東京',
+      distanceLabel: { zh: '2,100 km · 台北 ↔ 東京', en: '2,100 km · Taipei ↔ Tokyo' },
       desc: {
-        zh: '2015 年 Tom 回台北工作（過年去彰化屏東）；Eunice 2 月飛往日本東京旅行，之後回高雄。',
-        en: 'Tom returned to Taipei for work while Eunice visited Tokyo in February before returning to Kaohsiung.',
+        zh: 'Tom 回到台北展開職場生活，Eunice 在二月飛往東京旅行，隔海分享街頭的冬日空氣。',
+        en: 'Tom began working in Taipei while Eunice traveled to Tokyo in February, sharing winter street scenes from afar.',
       },
       mapQuery: 'Tokyo,Japan',
     },
@@ -1436,13 +1461,13 @@
       lat: 24.147,
       lng: 120.673,
       place: {
-        zh: '2015.10 · 台中相聚（Tom 新訓結束 💕）',
-        en: 'Oct 2015 · Reunion in Taichung (Tom Completed Basic Training 💕)',
+        zh: '2015.10 · Tom 新訓結訓，在台中好好見上一面',
+        en: 'Oct 2015 · Reunion in Taichung After Basic Training',
       },
-      distanceLabel: '0 km · 台中相聚 💕',
+      distanceLabel: { zh: '0 km · 台中結訓重逢 💕', en: '0 km · Taichung Reunion 💕' },
       desc: {
-        zh: '10 月 Tom 新訓結束，Eunice 特地前往台中相聚慶祝，之後回高雄。',
-        en: 'Eunice traveled to Taichung in October to celebrate Tom finishing basic training.',
+        zh: '十月 Tom 剛結束新訓，Eunice 特地趕到台中會合，吃一頓好久不見的大餐。',
+        en: 'As soon as Tom finished basic training in October, Eunice met him halfway in Taichung to celebrate.',
       },
       mapQuery: 'Taichung,Taiwan',
     },
@@ -1454,13 +1479,13 @@
       lat: 37.422,
       lng: 237.916,
       place: {
-        zh: '2015.11 · Tom 美國加州 MTV 出差 ↔ Eunice 日本東京旅行',
-        en: 'Nov 2015 · Tom in Mountain View (MTV) ↔ Eunice in Tokyo',
+        zh: '2015.11 · 太平洋兩端：加州 Mountain View ↔ 日本東京',
+        en: 'Nov 2015 · Across the Pacific: Mountain View ↔ Tokyo',
       },
-      distanceLabel: '8,321 km · 飛越太平洋兩端',
+      distanceLabel: { zh: '8,321 km · 飛越太平洋兩端', en: '8,321 km · Opposite Sides of the Pacific' },
       desc: {
-        zh: '11 月 Tom 飛越太平洋前往美國矽谷 Mountain View 出差後回台北；Eunice 飛往日本東京玩後回高雄。',
-        en: 'In November, Tom flew across the Pacific to Mountain View (MTV) on business while Eunice traveled to Tokyo.',
+        zh: '十一月一個飛往美國矽谷出差、一個在東京旅行，隔著整片太平洋互道早安與晚安。',
+        en: 'One in Silicon Valley on business, the other strolling through autumn Tokyo — trading good mornings and goodnights across the Pacific.',
       },
       mapQuery: 'Mountain+View,CA,USA',
     },
@@ -1478,13 +1503,13 @@
       lat: 28.385,
       lng: 278.437,
       place: {
-        zh: '2015.12 · Tom 先飛美西再轉美東奧蘭多迪士尼出差 ↔ Eunice 高雄（最遠距離 🌍）',
-        en: 'Dec 2015 · Tom Flew via US West Coast to Orlando Disney ↔ Eunice in Kaohsiung (Max Distance 🌍)',
+        zh: '2015.12 · 奧蘭多 ↔ 高雄（十二年來最遠的 13,877 公里）',
+        en: 'Dec 2015 · Orlando ↔ Kaohsiung (Our Furthest 13,877 km Apart)',
       },
-      distanceLabel: '13,877 km · 全紀錄最遠距離 🌍',
+      distanceLabel: { zh: '13,877 km · 十二年最遠距離 🌍', en: '13,877 km · Furthest Distance Apart 🌍' },
       desc: {
-        zh: '12 月 Tom 從台灣飛越太平洋至美西、再轉往美東佛州奧蘭多迪士尼出差（之後回台北），與高雄的 Eunice 相隔 13,877 公里（12 年最遠距離！）。',
-        en: 'Tom flew across the Pacific from Taiwan via the US West Coast to Orlando, Florida—13,877 km from Eunice in Kaohsiung!',
+        zh: '十二月 Tom 飛越太平洋與北美大陸到佛州奧蘭多出差，和高雄的 Eunice 隔了整整半顆地球。',
+        en: 'Tom flew via the US West Coast all the way to Orlando, Florida — 13,877 km from Eunice in Kaohsiung, half a world apart.',
       },
       mapQuery: 'Walt+Disney+World+Orlando,FL',
     },
@@ -1501,13 +1526,13 @@
       lat: 22.627,
       lng: 120.301,
       place: {
-        zh: '2016.02 · Eunice 日本仙台玩 ＆ 228 紀念日 Tom 南下高雄相聚 💕',
-        en: 'Feb 2016 · Eunice’s Sendai Trip & 2/28 Anniversary Reunion in Kaohsiung 💕',
+        zh: '2016.02 · 仙台冬雪歸來 ＆ 228 兩週年高雄約會',
+        en: 'Feb 2016 · Back From Sendai & Two-Year Anniversary in Kaohsiung',
       },
-      distanceLabel: '0 km · 228 高雄約會 💕',
+      distanceLabel: { zh: '0 km · 兩週年高雄約會 💕', en: '0 km · 2nd Anniversary in Kaohsiung 💕' },
       desc: {
-        zh: '2 月 Eunice 去日本仙台玩後回高雄；228 交往兩週年紀念日 Tom 特地南下高雄找 Eunice！',
-        en: 'After Eunice’s trip to Sendai in February, Tom traveled down to Kaohsiung on 2/28 to celebrate their anniversary!',
+        zh: 'Eunice 二月從日本仙台看雪回來，2/28 兩週年那天 Tom 特地南下高雄一起慶祝。',
+        en: 'Right after Eunice returned from snowy Sendai, Tom headed south to Kaohsiung to celebrate our 2/28 anniversary.',
       },
       mapQuery: 'Kaohsiung,Taiwan',
     },
@@ -1524,13 +1549,13 @@
       lat: 51.507,
       lng: -0.127,
       place: {
-        zh: '2016.06 · Tom 經杜拜飛英國倫敦出差 ↔ Eunice 在高雄',
-        en: 'Jun 2016 · Tom Flew via Dubai to London on Business ↔ Eunice in Kaohsiung',
+        zh: '2016.06 · Tom 經杜拜飛往倫敦出差 ↔ Eunice 在高雄',
+        en: 'Jun 2016 · Tom in London via Dubai ↔ Eunice in Kaohsiung',
       },
-      distanceLabel: '9,820 km · 倫敦 ↔ 高雄',
+      distanceLabel: { zh: '9,820 km · 倫敦 ↔ 高雄', en: '9,820 km · London ↔ Kaohsiung' },
       desc: {
-        zh: '6 月 Tom 經杜拜飛往英國倫敦出差，之後回台北；Eunice 在高雄。',
-        en: 'In June 2016, Tom traveled via Dubai to London on a business trip while Eunice was in Kaohsiung.',
+        zh: '六月 Tom 經杜拜飛往倫敦出差，七小時的時差裡，習慣了睡前與醒來的留言。',
+        en: 'Tom flew via Dubai to London in June — seven hours apart, leaving voice notes for each other’s mornings.',
       },
       mapQuery: 'London,UK',
     },
@@ -1548,13 +1573,13 @@
       lat: 43.653,
       lng: 280.617,
       place: {
-        zh: '2016.07 · Tom 先飛美西再轉加拿大多倫多出差 ＆ 尼加拉大瀑布',
-        en: 'Jul 2016 · Tom Flew via US West Coast to Toronto & Niagara Falls ↔ Eunice in Kaohsiung',
+        zh: '2016.07 · 加拿大多倫多出差 ＆ 尼加拉大瀑布',
+        en: 'Jul 2016 · Toronto & Niagara Falls ↔ Kaohsiung',
       },
-      distanceLabel: '12,376 km · 多倫多 ↔ 高雄',
+      distanceLabel: { zh: '12,376 km · 多倫多 ↔ 高雄', en: '12,376 km · Toronto ↔ Kaohsiung' },
       desc: {
-        zh: '7 月 Tom 從台灣飛越太平洋至美西、再轉往美東／加拿大多倫多出差並順遊尼加拉大瀑布（距高雄 12,376 km），之後回台北。',
-        en: 'Tom flew across the Pacific via the US West Coast to Toronto and Niagara Falls in July (12,376 km from Kaohsiung).',
+        zh: '七月 Tom 飛往加拿大多倫多出差，在尼加拉瀑布的水霧前拍下照片傳回台灣。',
+        en: 'Tom traveled via the US West Coast to Toronto in July, sending mist-soaked photos of Niagara Falls back to Kaohsiung.',
       },
       mapQuery: 'Niagara+Falls,Ontario,Canada',
     },
@@ -1571,13 +1596,13 @@
       lat: 47.606,
       lng: 237.668,
       place: {
-        zh: '2016.09 · Eunice 飛往美國西雅圖旅行 ↔ Tom 在台北',
-        en: 'Sep 2016 · Eunice Traveled to Seattle, USA ↔ Tom in Taipei',
+        zh: '2016.09 · Eunice 的西雅圖初秋旅行 ↔ Tom 在台北',
+        en: 'Sep 2016 · Eunice in Autumn Seattle ↔ Tom in Taipei',
       },
-      distanceLabel: '9,770 km · 西雅圖 ↔ 台北',
+      distanceLabel: { zh: '9,770 km · 西雅圖 ↔ 台北', en: '9,770 km · Seattle ↔ Taipei' },
       desc: {
-        zh: '9 月 Eunice 飛越太平洋前往美國西岸西雅圖旅行，之後回高雄；Tom 在台北。',
-        en: 'Eunice flew across the Pacific to Seattle on the US West Coast in September 2016 before returning to Kaohsiung.',
+        zh: '換成 Eunice 飛越太平洋去西雅圖聞咖啡香，和台北的 Tom 交換日夜顛倒的風景。',
+        en: 'Eunice crossed the Pacific to Seattle in September, trading coffee-scented street corners across inverted time zones.',
       },
       mapQuery: 'Seattle,WA,USA',
     },
@@ -1594,13 +1619,13 @@
       lat: 40.44,
       lng: 280.005,
       place: {
-        zh: '2016.10–11 · Tom 10月先飛美西轉美東匹茲堡出差 ＆ 11月舊金山 SFO 之旅',
-        en: 'Oct–Nov 2016 · Tom Flew via US West Coast to Pittsburgh & Nov San Francisco (SFO) Trip',
+        zh: '2016.10–11 · 美東匹茲堡出差 ＆ 舊金山灣區秋日',
+        en: 'Oct–Nov 2016 · Pittsburgh Business Trip & San Francisco',
       },
-      distanceLabel: '12,730 km · 匹茲堡 ↔ 高雄',
+      distanceLabel: { zh: '12,730 km · 匹茲堡 ↔ 高雄', en: '12,730 km · Pittsburgh ↔ Kaohsiung' },
       desc: {
-        zh: '10 月 Tom 從台灣飛越太平洋至美西再轉飛美東匹茲堡出差後回台北；11 月再去美西舊金山 (SFO) 玩後回台北。',
-        en: 'Tom flew across the Pacific via the US West Coast to Pittsburgh on business in October, and visited San Francisco (SFO) in November.',
+        zh: '十月飛美東匹茲堡、十一月再訪舊金山灣區，飛行哩程越存越多，最想回的還是同一個地方。',
+        en: 'October in Pittsburgh and November by the Golden Gate in San Francisco — counting down the miles until flying home.',
       },
       mapQuery: 'Pittsburgh,PA,USA',
     },
@@ -1617,13 +1642,13 @@
       lat: 25.033,
       lng: 121.565,
       place: {
-        zh: '2016.12 · Eunice 北上台北跟 Tom 約會 💕（同月 Tom 飛成田轉夏威夷出差）',
-        en: 'Dec 2016 · Sweet Date in Taipei 💕 & Tom’s Narita/Hawaii Trip',
+        zh: '2016.12 · 歲末台北約會（Tom 成田與夏威夷出差返台）',
+        en: 'Dec 2016 · Year-End Taipei Date Around Tom’s Hawaii Trip',
       },
-      distanceLabel: '0 km · 12月台北約會 💕',
+      distanceLabel: { zh: '0 km · 歲末台北相聚 💕', en: '0 km · Winter Date in Taipei 💕' },
       desc: {
-        zh: '12 月 Tom 去成田與夏威夷出差返台，Eunice 北上台北跟 Tom 甜蜜約會，之後回高雄。',
-        en: 'Eunice came up to Taipei for a December date with Tom around his Tokyo Narita & Hawaii business trip.',
+        zh: '趁著十二月 Tom 從成田與夏威夷出差回台灣，Eunice 北上台北一起過暖暖的年末。',
+        en: 'As soon as Tom landed back from Narita and Hawaii in December, Eunice came up to Taipei for a cozy year-end date.',
       },
       mapQuery: 'Taipei,Taiwan',
     },
@@ -1635,13 +1660,13 @@
       lat: 35.011,
       lng: 135.768,
       place: {
-        zh: '2017.06 · Tom 飛美國舊金山 SFO 出差 ↔ Eunice 飛日本京都旅行',
-        en: 'Jun 2017 · Tom in San Francisco (SFO) ↔ Eunice in Kyoto, Japan',
+        zh: '2017.06 · 舊金山灣區出差 ↔ 京都古都散步',
+        en: 'Jun 2017 · San Francisco (SFO) ↔ Kyoto, Japan',
       },
-      distanceLabel: '8,602 km · 舊金山 ↔ 京都',
+      distanceLabel: { zh: '8,602 km · 舊金山 ↔ 京都', en: '8,602 km · San Francisco ↔ Kyoto' },
       desc: {
-        zh: '6 月 Tom 飛越太平洋前往美國舊金山 (SFO) 出差後回台北；Eunice 飛往日本京都古都旅行後回高雄。',
-        en: 'In June 2017, Tom flew across the Pacific to San Francisco while Eunice explored Kyoto, Japan.',
+        zh: '六月 Tom 在舊金山灣區出差，Eunice 在京都的古寺與鴨川散步，隔著太平洋分享初夏照片。',
+        en: 'June found Tom in San Francisco and Eunice strolling along Kyoto’s Kamo River, swapping early-summer photos across the ocean.',
       },
       mapQuery: 'Kyoto,Japan',
     },
@@ -1653,13 +1678,13 @@
       lat: 25.033,
       lng: 121.565,
       place: {
-        zh: '2017.09–10 · 9月台北相聚 💕（Tom 遊關西 · Eunice 10月遊北海道）',
-        en: 'Sep–Oct 2017 · Taipei Reunion 💕, Kansai & Hokkaido Trips',
+        zh: '2017.09–10 · 九月台北相聚（關西與北海道的秋日旅行）',
+        en: 'Sep–Oct 2017 · Taipei Reunion Between Kansai & Hokkaido Trips',
       },
-      distanceLabel: '0 km · 9月台北相聚 💕',
+      distanceLabel: { zh: '0 km · 九月台北相聚 💕', en: '0 km · Autumn Reunion in Taipei 💕' },
       desc: {
-        zh: '9 月 Tom 去關西玩、Eunice 去台北相聚；10 月 Eunice 再飛北海道旅行後回高雄。',
-        en: 'Reunited in Taipei in September alongside trips to Kansai and Hokkaido.',
+        zh: '九月在台北好好重逢相聚，前後各自走訪關西與入秋的北海道。',
+        en: 'Reunited in Taipei in September, tucked between autumn travels to Kansai and Hokkaido.',
       },
       mapQuery: 'Taipei,Taiwan',
     },
@@ -1671,13 +1696,13 @@
       lat: 25.033,
       lng: 121.565,
       place: {
-        zh: '2017.11–12 · Eunice 連兩月北上台北跟 Tom 約會 💕（12月初 Tom 飛德州奧斯汀）',
-        en: 'Nov–Dec 2017 · Taipei Dates Together 💕 & Tom’s Austin Trip',
+        zh: '2017.11–12 · 連續兩個月的台北秋冬約會',
+        en: 'Nov–Dec 2017 · Cozy Winter Dates in Taipei',
       },
-      distanceLabel: '0 km · 台北秋冬約會 💕',
+      distanceLabel: { zh: '0 km · 台北秋冬約會 💕', en: '0 km · Cozy Taipei Dates 💕' },
       desc: {
-        zh: '11 月與 12 月 Eunice 都北上台北跟 Tom 約會（12 月初 Tom 還飛了一趟美國德州奧斯汀出差）。',
-        en: 'Eunice visited Taipei in both November and December for dates with Tom.',
+        zh: '十一月與十二月 Eunice 連續北上台北約會，趁著 Tom 飛德州奧斯汀出差前後把相處時間補滿。',
+        en: 'Eunice came up to Taipei in both November and December, making the most of weekends around Tom’s Austin trip.',
       },
       mapQuery: 'Taipei,Taiwan',
     },
@@ -1689,13 +1714,13 @@
       lat: 34.693,
       lng: 135.502,
       place: {
-        zh: '2018.02 · Eunice 日本關西旅行 ↔ Tom 在台北',
-        en: 'Feb 2018 · Eunice in Kansai, Japan ↔ Tom in Taipei',
+        zh: '2018.02 · Eunice 冬日關西小旅行 ↔ Tom 在台北',
+        en: 'Feb 2018 · Eunice in Kansai ↔ Tom in Taipei',
       },
-      distanceLabel: '1,720 km · 台北 ↔ 關西',
+      distanceLabel: { zh: '1,720 km · 台北 ↔ 關西', en: '1,720 km · Taipei ↔ Kansai' },
       desc: {
-        zh: '2018 年 2 月 Eunice 前往日本關西旅行，之後回高雄；Tom 在台北。',
-        en: 'Eunice traveled to Kansai, Japan in February 2018 before returning to Kaohsiung.',
+        zh: '出國長住前的那個冬天，Eunice 走訪日本關西，Tom 在台北準備迎接即將到來的歐洲新篇章。',
+        en: 'In February 2018, Eunice explored Kansai while Tom prepared in Taipei for his upcoming move to Europe.',
       },
       mapQuery: 'Osaka,Japan',
     },
@@ -1707,13 +1732,13 @@
       lat: 52.52,
       lng: 13.405,
       place: {
-        zh: '2018.06–07 · 兩人一起去日本東京 ＆ 德國柏林 💕（Tom 展開柏林工作）',
-        en: 'Jun–Jul 2018 · Together to Tokyo & Berlin, Germany 💕',
+        zh: '2018.06–07 · 一起飛往東京與德國柏林，安頓新生活',
+        en: 'Jun–Jul 2018 · Together to Tokyo & Settling Into Berlin',
       },
-      distanceLabel: '0 km · 東京＆柏林同行 💕',
+      distanceLabel: { zh: '0 km · 東京＆柏林同行 💕', en: '0 km · Side by Side in Berlin 💕' },
       desc: {
-        zh: '7 月 Eunice 跟 Tom 一起去東京與德國柏林，陪伴 Tom 展開柏林工作生活，之後 Eunice 回高雄。',
-        en: 'Traveled together to Tokyo and Berlin in summer 2018 as Tom started working in Berlin.',
+        zh: '盛夏 Eunice 陪著 Tom 一起走過東京、再飛抵德國柏林安頓新家，把陌生的歐洲街角先走熟一遍。',
+        en: 'Traveled together through Tokyo and on to Berlin in summer 2018 so Eunice could help Tom settle into his new city.',
       },
       mapQuery: 'Berlin,Germany',
     },
@@ -1725,13 +1750,13 @@
       lat: 52.52,
       lng: 13.405,
       place: {
-        zh: '2018.11–12 · 柏林 ↔ 高雄 9,100 公里遠距離（11月 Tom 返台 · 12月奧蘭多環球影城）',
+        zh: '2018.11–12 · 柏林 ↔ 高雄 9,100 公里的跨洲日常',
         en: 'Nov–Dec 2018 · 9,100 km Long Distance: Berlin ↔ Kaohsiung',
       },
-      distanceLabel: '9,100 km · 柏林 ↔ 高雄',
+      distanceLabel: { zh: '9,100 km · 柏林 ↔ 高雄', en: '9,100 km · Berlin ↔ Kaohsiung' },
       desc: {
-        zh: '兩人展開德國柏林與台灣高雄 9,100 公里遠距離；11 月 Tom 返台相聚，12 月飛奧蘭多環球影城出差後回柏林。',
-        en: '9,100 km apart between Berlin and Kaohsiung, with a November reunion in Taiwan.',
+        zh: '正式展開柏林與高雄六、七個小時時差的遠距離生活；十一月 Tom 飛回台灣見面，十二月再飛奧蘭多後返德。',
+        en: 'Living 9,100 km and seven time zones apart between Berlin and Kaohsiung, anchored by a sweet November reunion in Taiwan.',
       },
       mapQuery: 'Berlin,Germany',
     },
@@ -1743,13 +1768,13 @@
       lat: 52.367,
       lng: 4.904,
       place: {
-        zh: '2019.01–02 · Tom 走訪阿姆斯特丹與波蘭 ↔ Eunice 在高雄',
-        en: 'Jan–Feb 2019 · Tom in Amsterdam, Poland & Berlin ↔ Eunice in Kaohsiung',
+        zh: '2019.01–02 · 阿姆斯特丹與波蘭冬雪 ↔ 高雄暖陽',
+        en: 'Jan–Feb 2019 · Winter in Amsterdam & Poland ↔ Sunny Kaohsiung',
       },
-      distanceLabel: '9,606 km · 阿姆斯特丹 ↔ 高雄',
+      distanceLabel: { zh: '9,606 km · 阿姆斯特丹 ↔ 高雄', en: '9,606 km · Amsterdam ↔ Kaohsiung' },
       desc: {
-        zh: '1 月 Tom 造訪荷蘭阿姆斯特丹、2 月造訪波蘭後返回柏林住；與高雄的 Eunice 跨越時差天天聯繫。',
-        en: 'Tom visited Amsterdam and Poland from Berlin while keeping in touch across time zones with Eunice in Kaohsiung.',
+        zh: '歐洲冷冽的一、二月，Tom 走訪阿姆斯特丹運河與波蘭返回柏林，每天隔著螢幕和高雄的 Eunice 分享生活。',
+        en: 'Winter canals in Amsterdam and snow in Poland while staying connected every single day with Eunice in warm Kaohsiung.',
       },
       mapQuery: 'Amsterdam,Netherlands',
     },
@@ -1761,13 +1786,13 @@
       lat: 50.116,
       lng: 237.043,
       place: {
-        zh: '2019.06 · 兩人飛越半個地球在加拿大 Whistler ＆ 溫哥華重逢同遊 💕',
-        en: 'Jun 2019 · Reunited in Whistler & Vancouver, Canada 💕',
+        zh: '2019.06 · 各飛半顆地球，在加拿大溫哥華與惠斯勒重逢',
+        en: 'Jun 2019 · Meeting Halfway Across the World in Whistler & Vancouver',
       },
-      distanceLabel: '0 km · 加拿大重逢同遊 💕',
+      distanceLabel: { zh: '0 km · 加拿大重逢同遊 💕', en: '0 km · Reunited in Canada 💕' },
       desc: {
-        zh: '6 月 Tom 從柏林飛越大西洋、Eunice 從台灣飛越太平洋，兩人在加拿大 Whistler 與溫哥華甜蜜會合旅行！之後各自回柏林與高雄。',
-        en: 'Flew from Berlin and Taiwan to meet up in Whistler and Vancouver for an unforgettable June trip together!',
+        zh: '六月一個從柏林飛越大西洋、一個從台灣飛越太平洋，約在加拿大溫哥華與惠斯勒山間重逢擁抱。',
+        en: 'One flew across the Atlantic from Berlin, the other across the Pacific from Taiwan — meeting in the mountains of Whistler and Vancouver.',
       },
       mapQuery: 'Whistler,BC,Canada',
     },
@@ -1789,13 +1814,13 @@
       lat: 52.955,
       lng: -1.158,
       place: {
-        zh: '2019.08–09 · Eunice 9月赴英國諾丁漢讀書 ＆ Tom 8月返台、9月去倫敦與諾丁漢後回柏林住',
-        en: 'Aug–Sep 2019 · Eunice Started Studying in Nottingham, UK & Tom Visited London/Nottingham',
+        zh: '2019.08–09 · Eunice 赴英國諾丁漢留學 · 終於住進同一片歐洲天空下',
+        en: 'Aug–Sep 2019 · Eunice Began Studying in Nottingham — Both in Europe at Last',
       },
-      distanceLabel: '0 km ➔ 920 km（同在歐洲！）',
+      distanceLabel: { zh: '0 km ➔ 920 km · 同在歐洲！', en: '0 km ➔ 920 km · Same Continent at Last!' },
       desc: {
-        zh: '8 月 Tom 先回台灣，9 月去倫敦與諾丁漢後回柏林住；Eunice 9 月去英國諾丁漢讀書，兩人距離從 9,100 公里縮短成歐洲 920 公里！',
-        en: 'Tom visited Taiwan in August and London/Nottingham in September before returning to Berlin, as Eunice began her studies in Nottingham, UK!',
+        zh: '九月 Eunice 前往英國諾丁漢讀書，Tom 特地飛往倫敦與諾丁漢相伴——9,100 公里的距離，終於縮短成一張歐洲短程機票。',
+        en: 'Eunice moved to Nottingham for grad school and Tom visited in September — shrinking 9,100 km into a short hop across Europe.',
       },
       mapQuery: 'Nottingham,UK',
     },
@@ -1807,13 +1832,13 @@
       lat: 48.856,
       lng: 2.352,
       place: {
-        zh: '2019.11 · 兩人從柏林與英國飛往法國巴黎約會 💕',
-        en: 'Nov 2019 · Romantic Rendezvous in Paris, France 💕',
+        zh: '2019.11 · 從柏林與諾丁漢出發，在巴黎街頭會合',
+        en: 'Nov 2019 · Rendezvous in Paris From Berlin & Nottingham',
       },
-      distanceLabel: '0 km · 巴黎浪漫會合 💕',
+      distanceLabel: { zh: '0 km · 巴黎深秋約會 💕', en: '0 km · Autumn Rendezvous in Paris 💕' },
       desc: {
-        zh: '11 月 Tom 從柏林、Eunice 從英國諾丁漢前往法國巴黎相聚同遊，之後各自返回柏林與英國。',
-        en: 'Met up in Paris from Berlin and Nottingham for a romantic November getaway.',
+        zh: '十一月各自從德國與英國飛往法國巴黎，在塞納河畔度過深秋的週末。',
+        en: 'Flying in from Berlin and Nottingham to spend a crisp November weekend together along the Seine in Paris.',
       },
       mapQuery: 'Paris,France',
     },
@@ -1825,13 +1850,13 @@
       lat: 50.075,
       lng: 14.437,
       place: {
-        zh: '2019.12 · Eunice 先去柏林找 Tom，再一起去捷克布拉格過聖誕月 💕',
-        en: 'Dec 2019 · Eunice Visited Berlin & Trip Together to Prague, Czechia 💕',
+        zh: '2019.12 · 柏林相聚 ＆ 捷克布拉格的聖誕市集',
+        en: 'Dec 2019 · Berlin Together & Christmas Markets in Prague',
       },
-      distanceLabel: '0 km · 柏林＆布拉格同遊 💕',
+      distanceLabel: { zh: '0 km · 柏林＆布拉格聖誕月 💕', en: '0 km · December in Berlin & Prague 💕' },
       desc: {
-        zh: '12 月 Eunice 先從英國飛柏林找 Tom，接著兩人一起去捷克布拉格旅行，之後 Eunice 回英國。',
-        en: 'Eunice flew to Berlin in December to visit Tom, and together they traveled to fairytale Prague.',
+        zh: '十二月 Eunice 飛來柏林，兩個人再一起搭車去捷克布拉格逛聖誕市集、喝熱紅酒。',
+        en: 'Eunice flew to Berlin in December and together we wandered through fairytale Christmas lights in Prague.',
       },
       mapQuery: 'Prague,Czechia',
     },
@@ -1843,13 +1868,13 @@
       lat: 52.52,
       lng: 13.405,
       place: {
-        zh: '2020.02 · Eunice 飛往德國柏林找 Tom 相聚 💕（之後返英）',
-        en: 'Feb 2020 · Eunice Visited Tom in Berlin 💕',
+        zh: '2020.02 · 柏林冬末的相聚時光',
+        en: 'Feb 2020 · Late-Winter Days Together in Berlin',
       },
-      distanceLabel: '0 km · 柏林冬日相聚 💕',
+      distanceLabel: { zh: '0 km · 柏林冬日相聚 💕', en: '0 km · Winter Days in Berlin 💕' },
       desc: {
-        zh: '2020 年 1 月 Tom 回台北過年後返柏林；2 月 Eunice 從英國飛去柏林找 Tom 相聚，之後回英國。',
-        en: 'In February 2020, Eunice flew from the UK to Berlin to spend time with Tom.',
+        zh: '2020 年二月 Eunice 從英國飛到柏林相聚，誰也沒想到那是疫情封城前最後一次歐洲重逢。',
+        en: 'Eunice flew from the UK to Berlin in February 2020 — our last quiet European reunion just before the world locked down.',
       },
       mapQuery: 'Berlin,Germany',
     },
@@ -1861,13 +1886,13 @@
       lat: 22.627,
       lng: 120.301,
       place: {
-        zh: '2020.03–04 · 3月英國 COVID Lockdown · 4月 Eunice 平平安安回台灣高雄',
-        en: 'Mar–Apr 2020 · COVID Lockdown in UK & Eunice Returned Safely to Kaohsiung',
+        zh: '2020.03–04 · 歐洲封城時刻 · Eunice 平安飛回高雄',
+        en: 'Mar–Apr 2020 · UK Lockdown & Safe Return to Kaohsiung',
       },
-      distanceLabel: '9,100 km · 疫情下的跨洲守候',
+      distanceLabel: { zh: '9,100 km · 疫情裡的跨洲牽掛', en: '9,100 km · Holding Close Through Lockdown' },
       desc: {
-        zh: '3 月歐洲遇上 COVID-19 封城，4 月 Eunice 平安飛回台灣高雄，與仍在柏林的 Tom 隔海守候。',
-        en: 'Following the March 2020 COVID lockdown in the UK, Eunice returned safely to Kaohsiung in April.',
+        zh: '三月遇上疫情封城，四月 Eunice 平安飛回台灣高雄，與留在柏林的 Tom 隔海彼此牽掛守候。',
+        en: 'When COVID lockdowns hit Europe in March, Eunice flew safely home to Kaohsiung in April while Tom remained in Berlin.',
       },
       mapQuery: 'Kaohsiung,Taiwan',
     },
@@ -1879,13 +1904,13 @@
       lat: 23.859,
       lng: 120.915,
       place: {
-        zh: '2020.10 · Tom 回台灣休息 · 兩人一起去日月潭、台中玩 💕',
-        en: 'Oct 2020 · Tom Returned to Taiwan · Trip Together to Sun Moon Lake & Taichung 💕',
+        zh: '2020.10 · 久違返台重逢 · 日月潭與台中秋日散心',
+        en: 'Oct 2020 · Long-Awaited Reunion at Sun Moon Lake & Taichung',
       },
-      distanceLabel: '0 km · 台灣重逢小旅行 💕',
+      distanceLabel: { zh: '0 km · 台灣重逢小旅行 💕', en: '0 km · Home Again in Taiwan 💕' },
       desc: {
-        zh: '10 月 Tom 回台灣休息，兩人一起去日月潭、台中、嘉義與台北旅行，之後 Eunice 先回高雄。',
-        en: 'Tom returned to Taiwan in October for a break, and together they visited Sun Moon Lake and Taichung!',
+        zh: '十月 Tom 回台灣休假，隔離出關後一起去日月潭、台中與嘉義走走，珍惜久違的面對面時光。',
+        en: 'Tom returned to Taiwan in October, and after quarantine we headed straight to Sun Moon Lake and Taichung together.',
       },
       mapQuery: 'Sun+Moon+Lake,Nantou,Taiwan',
     },
@@ -1897,13 +1922,13 @@
       lat: 25.009,
       lng: 121.459,
       place: {
-        zh: '2020.11 & 2021.04 · 結束遠距離！一起搬到新北板橋定居 💕',
-        en: 'Nov 2020 & Apr 2021 · Long Distance Ended! Settled Together in Banqiao 💕',
+        zh: '2020.11 & 2021.04 · 遠距離正式畫下句點 · 一起定居板橋',
+        en: 'Nov 2020 & Apr 2021 · Long Distance Ended — Home Together in Banqiao',
       },
-      distanceLabel: '0 km · 板橋同居日常 💕',
+      distanceLabel: { zh: '0 km · 板橋小家日常 💕', en: '0 km · Everyday Life in Banqiao 💕' },
       desc: {
-        zh: 'Eunice 於 2020 年 11 月搬到板橋，Tom 於 2021 年 4 月正式返台定居板橋，徹底結束跨國與南北遠距離！',
-        en: 'Eunice moved to Banqiao in Nov 2020 and Tom returned for good in Apr 2021—officially ending their long-distance journey!',
+        zh: 'Eunice 先在十一月搬來板橋，隔年四月 Tom 正式返台定居——多年跨洲與南北奔波，終於變成每天一起吃晚餐。',
+        en: 'Eunice moved to Banqiao in Nov 2020 and Tom returned for good in Apr 2021 — turning airport farewells into everyday dinners.',
       },
       mapQuery: 'Banqiao,New+Taipei,Taiwan',
     },
@@ -1915,13 +1940,13 @@
       lat: 25.041,
       lng: 121.544,
       place: {
-        zh: '2024 · 兩人一起搬到台北忠孝復興 💕',
-        en: '2024 · Moved Together to Zhongxiao Fuxing, Taipei 💕',
+        zh: '2024 · 一起搬進台北忠孝復興的新生活',
+        en: '2024 · Our New Home Around Zhongxiao Fuxing, Taipei',
       },
-      distanceLabel: '0 km · 忠孝復興新家 💕',
+      distanceLabel: { zh: '0 km · 忠孝復興新家 💕', en: '0 km · Home in Taipei 💕' },
       desc: {
-        zh: '2024 年 Eunice 跟 Tom 一起搬到台北東區忠孝復興，展開溫馨的市中心新生活。',
-        en: 'Moved together to Zhongxiao Fuxing in central Taipei in 2024.',
+        zh: '2024 年一起搬到台北忠孝復興，把日子過得踏實而溫暖。',
+        en: 'Moved together to Zhongxiao Fuxing in central Taipei in 2024, building a cozy rhythm side by side.',
       },
       mapQuery: 'MRT+Zhongxiao+Fuxing+Station,Taipei',
     },
@@ -1933,31 +1958,31 @@
       lat: 47.562,
       lng: 13.649,
       place: {
-        zh: '2026.09 · 奧地利浪漫蜜月之旅 (Vienna & Hallstatt, Austria) 💕',
-        en: 'Sep 2026 · Romantic Honeymoon in Austria 💕',
+        zh: '2026.09 · 奧地利維也納與湖區蜜月之旅',
+        en: 'Sep 2026 · Honeymoon in Vienna & Hallstatt, Austria',
       },
-      distanceLabel: '0 km · 歐洲蜜月同行 💕',
+      distanceLabel: { zh: '0 km · 奧地利蜜月同行 💕', en: '0 km · Austria Honeymoon Together 💕' },
       desc: {
-        zh: '2026 年 9 月兩人一起飛往奧地利維也納與阿爾卑斯山湖區小鎮，留下最浪漫的蜜月足跡。',
-        en: 'Side by side across Vienna and the Austrian Alpine lakes on their romantic honeymoon in September 2026.',
+        zh: '九月牽手飛往奧地利維也納與哈修塔特湖區，在阿爾卑斯山的晨霧裡慢下腳步。',
+        en: 'Wandering hand in hand through musical Vienna and the misty Alpine lakes of Hallstatt on our September honeymoon.',
       },
       mapQuery: 'Hallstatt,Austria',
     },
     {
       year: '2026',
       dateTag: '2026.11.29',
-      tom: { lat: 25.047, lng: 121.532, city: { zh: '2026.11.29 婚禮會場', en: '2026.11.29 Wedding' } },
-      eunice: { lat: 25.047, lng: 121.532, city: { zh: '2026.11.29 婚禮會場', en: '2026.11.29 Wedding' } },
+      tom: { lat: 25.047, lng: 121.532, city: { zh: '陽明山美軍俱樂部', en: 'Brick Yard 33 1/3' } },
+      eunice: { lat: 25.047, lng: 121.532, city: { zh: '陽明山美軍俱樂部', en: 'Brick Yard 33 1/3' } },
       lat: 25.047,
       lng: 121.532,
       place: {
-        zh: '2026.11.29 我們結婚了 · 婚宴大喜之日 💍🥂',
-        en: '2026.11.29 Wedding Banquet Celebration 💍🥂',
+        zh: '2026.11.29 · 陽明山美軍俱樂部，我們結婚了 💍🥂',
+        en: '2026.11.29 · Married at Brick Yard 33 1/3, Yangmingshan 💍🥂',
       },
-      distanceLabel: '0 km · 攜手一輩子 ∞ 💕',
+      distanceLabel: { zh: '0 km · 往後餘生都在一起 ∞ 💕', en: '0 km · Side by Side for Life ∞ 💕' },
       desc: {
-        zh: '從 2014 到 2026，走過新竹、高雄、東京、西雅圖、舊金山、諾丁漢、柏林、板橋與忠孝復興，今天正式步入禮堂！',
-        en: 'From 2014 to 2026—after bridging cities, oceans, and time zones—tying the knot today!',
+        zh: '從 2014 到 2026，繞過半顆地球的時差與飛行，今天在陽明山與最珍惜的你們相見！',
+        en: 'From 2014 to 2026 — after every flight, ocean, and time zone, celebrating our wedding day here with you!',
       },
       mapQuery: 'Taipei,Taiwan',
     },
@@ -1980,16 +2005,11 @@
   const elLabelMinutes = document.getElementById('label-minutes');
   const elLabelSeconds = document.getElementById('label-seconds');
 
-  const elMetricLabelHours = document.getElementById('metric-label-hours');
-  const elUnitHours = document.getElementById('unit-hours');
-  const elMetricLabelMinutes = document.getElementById('metric-label-minutes');
-  const elUnitMinutes = document.getElementById('unit-minutes');
-  const elMetricLabelSeconds = document.getElementById('metric-label-seconds');
-  const elUnitSeconds = document.getElementById('unit-seconds');
-
-  const elTotalHours = document.getElementById('total-hours');
-  const elTotalMinutes = document.getElementById('total-minutes');
-  const elTotalSeconds = document.getElementById('total-seconds');
+  const COUPLE_START_TIMESTAMP = new Date('2014-02-28T00:00:00+08:00').getTime();
+  const elLoveStoryBodyCountdown = document.getElementById('love-story-body-countdown');
+  const elLoveStoryBodyHub = document.getElementById('love-story-body-hub');
+  const elLoveSignatureCountdown = document.getElementById('love-signature-countdown');
+  const elLoveSignatureHub = document.getElementById('love-signature-hub');
 
   const elCurrentTwTime = document.getElementById('current-tw-time');
   const elClockCaption = document.getElementById('clock-caption');
@@ -1997,12 +2017,15 @@
   const elEventTitle = document.getElementById('event-title');
   const elTargetSubtitle = document.getElementById('target-subtitle');
 
+  const btnBgm = document.getElementById('bgm-btn');
   const btnLang = document.getElementById('lang-btn');
   const elLangBtnLabel = document.getElementById('lang-btn-label');
   const btnToggleMs = document.getElementById('toggle-ms-btn');
   const btnTheme = document.getElementById('theme-btn');
   const btnFullscreen = document.getElementById('fullscreen-btn');
   const btnCelebrate = document.getElementById('celebrate-btn');
+  let bgmPlaying = false;
+  let lastRenderedTogetherDays = null;
 
   // Time-Up Hub & Pre-Countdown Quick Access Elements
   const elCountdownStageWrap = document.getElementById('countdown-stage-wrap');
@@ -2236,6 +2259,51 @@
     return I18N[currentLang];
   }
 
+  function computeDaysTogether(nowMs) {
+    const elapsed = Math.max(0, nowMs - COUPLE_START_TIMESTAMP);
+    return Math.floor(elapsed / 86400000) + 1;
+  }
+
+  function renderLoveStoryNote(force = false) {
+    const days = computeDaysTogether(Date.now());
+    if (!force && days === lastRenderedTogetherDays) return;
+    lastRenderedTogetherDays = days;
+
+    const dict = t();
+    const parts = dict.loveNoteParts;
+    const daysText = numberFormatter.format(days);
+
+    [elLoveStoryBodyCountdown, elLoveStoryBodyHub].forEach((container) => {
+      if (!container || !parts) return;
+      const daysStrong = document.createElement('strong');
+      daysStrong.className = 'love-days-num';
+      daysStrong.textContent = daysText;
+
+      const kmStrong = document.createElement('strong');
+      kmStrong.textContent = parts.km;
+
+      container.replaceChildren(
+        document.createTextNode(parts.prefix),
+        daysStrong,
+        document.createTextNode(parts.mid),
+        kmStrong,
+        document.createTextNode(parts.suffix)
+      );
+    });
+
+    if (elLoveSignatureCountdown) elLoveSignatureCountdown.textContent = dict.loveSignature;
+    if (elLoveSignatureHub) elLoveSignatureHub.textContent = dict.loveSignature;
+  }
+
+  function syncBgmButtonA11y() {
+    if (!btnBgm) return;
+    const dict = t();
+    const titleStr = bgmPlaying ? dict.bgmPauseTitle : dict.bgmPlayTitle;
+    btnBgm.setAttribute('aria-pressed', String(bgmPlaying));
+    btnBgm.setAttribute('title', titleStr);
+    btnBgm.setAttribute('aria-label', titleStr);
+  }
+
   function applyLanguage() {
     const dict = t();
     document.documentElement.setAttribute('data-lang', currentLang);
@@ -2243,6 +2311,20 @@
     document.title = dict.pageTitle;
 
     elLangBtnLabel.textContent = dict.langBtnLabel;
+    if (btnLang) {
+      btnLang.setAttribute('title', dict.langBtnTitle);
+      btnLang.setAttribute('aria-label', dict.langBtnTitle);
+    }
+    if (btnTheme) {
+      btnTheme.setAttribute('title', dict.themeBtnTitle);
+      btnTheme.setAttribute('aria-label', dict.themeBtnTitle);
+    }
+    if (btnFullscreen) {
+      btnFullscreen.setAttribute('title', dict.fullscreenBtnTitle);
+      btnFullscreen.setAttribute('aria-label', dict.fullscreenBtnTitle);
+    }
+    syncBgmButtonA11y();
+
     elStateLabel.textContent = isTimeUp ? dict.eyebrowTimeUp : dict.eyebrowCountdown;
     elEventTitle.textContent = dict.eventTitle;
     elTargetSubtitle.textContent = dict.targetSubtitle;
@@ -2252,12 +2334,7 @@
     elLabelMinutes.textContent = dict.labelMinutes;
     elLabelSeconds.textContent = dict.labelSeconds;
 
-    elMetricLabelHours.textContent = dict.metricHoursLabel;
-    elUnitHours.textContent = dict.unitHours;
-    elMetricLabelMinutes.textContent = dict.metricMinutesLabel;
-    elUnitMinutes.textContent = dict.unitMinutes;
-    elMetricLabelSeconds.textContent = dict.metricSecondsLabel;
-    elUnitSeconds.textContent = dict.unitSeconds;
+    renderLoveStoryNote(true);
 
     elVideoCardEyebrow.textContent = dict.videoCardEyebrow;
     elVideoCardTitle.textContent = dict.videoCardTitle;
@@ -2333,8 +2410,20 @@
     if (btnTimelinePlay) {
       btnTimelinePlay.textContent = timelinePlaying ? dict.timelinePauseBtn : dict.timelinePlayBtn;
     }
-    if (btnTimelinePrev) btnTimelinePrev.textContent = dict.timelinePrevBtn;
-    if (btnTimelineNext) btnTimelineNext.textContent = dict.timelineNextBtn;
+    if (btnTimelinePrev) {
+      btnTimelinePrev.textContent = dict.timelinePrevBtn;
+      btnTimelinePrev.setAttribute('title', dict.timelinePrevTitle);
+      btnTimelinePrev.setAttribute('aria-label', dict.timelinePrevTitle);
+    }
+    if (btnTimelineNext) {
+      btnTimelineNext.textContent = dict.timelineNextBtn;
+      btnTimelineNext.setAttribute('title', dict.timelineNextTitle);
+      btnTimelineNext.setAttribute('aria-label', dict.timelineNextTitle);
+    }
+    if (btnTimelineSpeed) {
+      btnTimelineSpeed.setAttribute('title', dict.timelineSpeedTitle);
+      btnTimelineSpeed.setAttribute('aria-label', dict.timelineSpeedTitle);
+    }
     if (btnTimelineReplay) btnTimelineReplay.textContent = dict.timelineReplayBtn;
     if (btnTimelineExport && !timelineRecording) {
       btnTimelineExport.textContent = dict.timelineExportBtn;
@@ -2554,6 +2643,7 @@
     if (elBanquetMenuSection) elBanquetMenuSection.classList.toggle('hidden', mode !== 'banquet-menu');
 
     if (mode === 'video') {
+      pauseVinylBgm();
       renderVideoIframe();
     } else {
       clearVideoIframe();
@@ -2973,6 +3063,38 @@
       }
     };
 
+    // 0. 若底圖原標籤為直排且已改為橫向，先無縫還原底圖桌面與底色（避免原直排標籤上下露邊）
+    SEATING_TABLES_DATA.forEach((table) => {
+      if (!table.basePatch) return;
+      const patchGroup = document.createElementNS(svgNS, 'g');
+      patchGroup.setAttribute('class', 'seating-map-base-patch');
+      patchGroup.setAttribute('aria-hidden', 'true');
+      const m = table.basePatch.mask;
+      if (m) {
+        const maskRect = document.createElementNS(svgNS, 'rect');
+        maskRect.setAttribute('x', String(m.x));
+        maskRect.setAttribute('y', String(m.y));
+        maskRect.setAttribute('width', String(m.w));
+        maskRect.setAttribute('height', String(m.h));
+        maskRect.setAttribute('fill', m.fill);
+        patchGroup.append(maskRect);
+      }
+      if (Array.isArray(table.basePatch.tables)) {
+        table.basePatch.tables.forEach((tb) => {
+          const tbRect = document.createElementNS(svgNS, 'rect');
+          tbRect.setAttribute('x', String(tb.x));
+          tbRect.setAttribute('y', String(tb.y));
+          tbRect.setAttribute('width', String(tb.w));
+          tbRect.setAttribute('height', String(tb.h));
+          tbRect.setAttribute('fill', tb.fill);
+          tbRect.setAttribute('stroke', tb.stroke);
+          tbRect.setAttribute('stroke-width', String(tb.strokeWidth || 4));
+          patchGroup.append(tbRect);
+        });
+      }
+      svg.append(patchGroup);
+    });
+
     // 1. 先繪製所有座位區域色塊
     SEATING_TABLES_DATA.forEach((table) => {
       if (!table.box) return;
@@ -3201,10 +3323,10 @@
         cx: 383,
         cy: 619,
         bw: 82,
-        bh: 248,
-        fontSize: 36,
-        lineStep: 48,
-        lines: currentLang === 'en' ? ['🍽️', 'B', 'A', 'R'] : ['🍽️', '取', '餐', '區'],
+        bh: currentLang === 'en' ? 276 : 248,
+        fontSize: currentLang === 'en' ? 32 : 36,
+        lineStep: currentLang === 'en' ? 43 : 48,
+        lines: currentLang === 'en' ? ['🍽️', 'F', 'O', 'O', 'D'] : ['🍽️', '取', '餐', '區'],
       },
       {
         cx: 1563,
@@ -3750,7 +3872,10 @@
 
       const distBadge = document.createElement('span');
       distBadge.className = 'timeline-distance-badge';
-      distBadge.textContent = item.distanceLabel;
+      distBadge.textContent =
+        item.distanceLabel && typeof item.distanceLabel === 'object'
+          ? item.distanceLabel[currentLang]
+          : item.distanceLabel;
 
       header.append(yearBadge, distBadge);
 
@@ -4752,7 +4877,11 @@
     ctx2d.fillStyle = '#3d6b4c';
     ctx2d.font = '700 17px "JetBrains Mono", "Noto Sans TC", monospace';
     ctx2d.textAlign = 'left';
-    const headerLeftText = `${currentItem.dateTag || currentItem.year}  ·  ${currentItem.distanceLabel}`;
+    const distText =
+      currentItem.distanceLabel && typeof currentItem.distanceLabel === 'object'
+        ? currentItem.distanceLabel[currentLang]
+        : currentItem.distanceLabel;
+    const headerLeftText = `${currentItem.dateTag || currentItem.year}  ·  ${distText}`;
     ctx2d.fillText(headerLeftText, cardX + 26, cardY + 34);
 
     ctx2d.font = '700 15.5px "Noto Sans TC", sans-serif';
@@ -5423,17 +5552,18 @@
     if (quizAnswered) {
       const isCorrect = isOptionCorrect(q, lastSelectedOption);
       if (q.isMultiCorrectCpp) {
-        const correctLabels = q.answerIndexes.map((idx) => `(${labels[idx]})`).join('、');
+        const sep = currentLang === 'en' ? ', ' : '、';
+        const correctLabels = q.answerIndexes.map((idx) => `(${labels[idx]})`).join(sep);
         const wrongIdx = [0, 1, 2, 3].find((idx) => !q.answerIndexes.includes(idx));
         const wrongLabel = labels[wrongIdx] || 'D';
         if (currentLang === 'en') {
           elQuizResultHeadline.textContent = isCorrect
-            ? `✨ Correct! ${correctLabels} are all real C++ bugs in this code!`
-            : `💡 It’s a trap! ${correctLabels} are all real bugs—only (${wrongLabel}) is false!`;
+            ? `Spot on · ${correctLabels} are all real C++ bugs in this code (any choice except (${wrongLabel}) scores)!`
+            : `It’s a trap · ${correctLabels} are all real bugs — only (${wrongLabel}) is false!`;
         } else {
           elQuizResultHeadline.textContent = isCorrect
-            ? `✨ 答對了！${correctLabels} 三個都是這段 C++ 程式真正存在的 Bug（只要不選 ${wrongLabel} 都得分）！`
-            : `💡 踩到陷阱啦！${correctLabels} 三個問題都真的存在，只有 (${wrongLabel}) 是錯的喔！`;
+            ? `答對了 · ${correctLabels} 三個都是這段 C++ 程式真正存在的 Bug（只要不選 (${wrongLabel}) 都得分）！`
+            : `踩到陷阱啦 · ${correctLabels} 三個問題都真的存在，只有 (${wrongLabel}) 是錯的喔！`;
         }
       } else {
         const correctLabel = labels[q.answerIndex] || '';
@@ -5747,6 +5877,7 @@
     const diff = REAL_TARGET_TIMESTAMP - now;
 
     elCurrentTwTime.textContent = twFormatter.format(new Date(now));
+    renderLoveStoryNote(false);
 
     if (diff <= 0) {
       elDays.textContent = '00';
@@ -5754,10 +5885,6 @@
       elMinutes.textContent = '00';
       elSeconds.textContent = '00';
       if (elMs) elMs.textContent = '.00';
-
-      elTotalHours.textContent = '0';
-      elTotalMinutes.textContent = '0';
-      elTotalSeconds.textContent = '0';
 
       enterTimeUpState();
       return;
@@ -5784,10 +5911,6 @@
     if (showMs && elMs) {
       elMs.textContent = `.${pad2(centiseconds)}`;
     }
-
-    elTotalHours.textContent = numberFormatter.format(totalHours);
-    elTotalMinutes.textContent = numberFormatter.format(totalMinutes);
-    elTotalSeconds.textContent = numberFormatter.format(totalSeconds);
   }
 
   function tick() {
@@ -5795,7 +5918,174 @@
     requestAnimationFrame(tick);
   }
 
+  // Gentle 33⅓ RPM Vinyl Felt-Piano / Music-Box BGM (Muted by default, Web Audio API)
+  let bgmAudioCtx = null;
+  let bgmMasterGain = null;
+  let bgmNoteTarget = null;
+  let bgmLoopTimer = null;
+  let bgmBarIndex = 0;
+
+  // Warm Canon-inspired D-major wedding progression (MIDI notes: [bass, inner, fifth, melody1, melody2])
+  const BGM_CHORD_BARS = [
+    [50, 57, 62, 66, 69], // Dmaj
+    [49, 57, 61, 64, 69], // A/C#
+    [47, 54, 59, 62, 66], // Bm7
+    [42, 54, 57, 61, 66], // F#m7
+    [43, 50, 55, 59, 67], // Gmaj7
+    [42, 50, 57, 62, 66], // D/F#
+    [40, 47, 55, 59, 64], // Em7
+    [45, 52, 57, 62, 61], // Asus4 -> A
+  ];
+
+  function midiToHz(midi) {
+    return 440 * Math.pow(2, (midi - 69) / 12);
+  }
+
+  function ensureBgmAudioGraph() {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return null;
+    if (!bgmAudioCtx) {
+      bgmAudioCtx = new AudioCtx();
+
+      const master = bgmAudioCtx.createGain();
+      master.gain.setValueAtTime(0.0001, bgmAudioCtx.currentTime);
+      master.connect(bgmAudioCtx.destination);
+
+      const toneFilter = bgmAudioCtx.createBiquadFilter();
+      toneFilter.type = 'lowpass';
+      toneFilter.frequency.setValueAtTime(1180, bgmAudioCtx.currentTime);
+      toneFilter.Q.setValueAtTime(0.55, bgmAudioCtx.currentTime);
+      toneFilter.connect(master);
+
+      // Subtle warm room echo so notes bloom softly like a felt piano
+      const delay = bgmAudioCtx.createDelay(1.0);
+      delay.delayTime.setValueAtTime(0.31, bgmAudioCtx.currentTime);
+      const echoFilter = bgmAudioCtx.createBiquadFilter();
+      echoFilter.type = 'lowpass';
+      echoFilter.frequency.setValueAtTime(820, bgmAudioCtx.currentTime);
+      const feedback = bgmAudioCtx.createGain();
+      feedback.gain.setValueAtTime(0.18, bgmAudioCtx.currentTime);
+      const wet = bgmAudioCtx.createGain();
+      wet.gain.setValueAtTime(0.22, bgmAudioCtx.currentTime);
+
+      toneFilter.connect(delay);
+      delay.connect(echoFilter);
+      echoFilter.connect(wet);
+      wet.connect(master);
+      echoFilter.connect(feedback);
+      feedback.connect(delay);
+
+      bgmMasterGain = master;
+      bgmNoteTarget = toneFilter;
+    }
+    return bgmAudioCtx;
+  }
+
+  function scheduleFeltPianoNote(ctx, midi, startTime, durationSec, peakGain) {
+    if (!bgmNoteTarget) return;
+    const freq = midiToHz(midi);
+    const env = ctx.createGain();
+    env.gain.setValueAtTime(0.0001, startTime);
+    env.gain.linearRampToValueAtTime(peakGain, startTime + 0.026);
+    env.gain.exponentialRampToValueAtTime(peakGain * 0.36, startTime + 0.42);
+    env.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec);
+    env.connect(bgmNoteTarget);
+
+    const oscMain = ctx.createOscillator();
+    oscMain.type = 'sine';
+    oscMain.frequency.setValueAtTime(freq, startTime);
+
+    const oscWarm = ctx.createOscillator();
+    oscWarm.type = 'triangle';
+    oscWarm.frequency.setValueAtTime(freq * 2, startTime);
+    const warmGain = ctx.createGain();
+    warmGain.gain.setValueAtTime(0.12, startTime);
+    warmGain.gain.exponentialRampToValueAtTime(0.015, startTime + 0.35);
+
+    oscMain.connect(env);
+    oscWarm.connect(warmGain);
+    warmGain.connect(env);
+
+    oscMain.start(startTime);
+    oscWarm.start(startTime);
+    oscMain.stop(startTime + durationSec + 0.05);
+    oscWarm.stop(startTime + durationSec + 0.05);
+  }
+
+  function scheduleNextBgmBar() {
+    if (!bgmPlaying || !bgmAudioCtx) return;
+    const now = bgmAudioCtx.currentTime + 0.05;
+    const chord = BGM_CHORD_BARS[bgmBarIndex % BGM_CHORD_BARS.length];
+    bgmBarIndex = (bgmBarIndex + 1) % BGM_CHORD_BARS.length;
+
+    const stepSec = 0.56; // Gentle ~53 BPM half-pulse arpeggio
+    const pattern = [
+      { note: chord[0], offset: 0, dur: 2.9, gain: 0.048 },
+      { note: chord[1], offset: stepSec * 1, dur: 2.4, gain: 0.036 },
+      { note: chord[2], offset: stepSec * 2, dur: 2.2, gain: 0.038 },
+      { note: chord[4], offset: stepSec * 3, dur: 2.6, gain: 0.046 },
+      { note: chord[3], offset: stepSec * 4.5, dur: 2.3, gain: 0.042 },
+      { note: chord[2] + 12, offset: stepSec * 6, dur: 2.1, gain: 0.026 },
+    ];
+
+    pattern.forEach((item) => {
+      const rubato = (Math.random() - 0.5) * 0.018;
+      const tStart = Math.max(bgmAudioCtx.currentTime + 0.02, now + item.offset + rubato);
+      scheduleFeltPianoNote(bgmAudioCtx, item.note, tStart, item.dur, item.gain);
+    });
+
+    bgmLoopTimer = window.setTimeout(scheduleNextBgmBar, Math.round(stepSec * 7.5 * 1000));
+  }
+
+  function pauseVinylBgm() {
+    if (!bgmPlaying) return;
+    bgmPlaying = false;
+    if (bgmLoopTimer) {
+      clearTimeout(bgmLoopTimer);
+      bgmLoopTimer = null;
+    }
+    if (bgmAudioCtx && bgmMasterGain) {
+      try {
+        bgmMasterGain.gain.cancelScheduledValues(bgmAudioCtx.currentTime);
+        bgmMasterGain.gain.setTargetAtTime(0.0001, bgmAudioCtx.currentTime, 0.08);
+      } catch (_e) {
+        // ignore audio context transition errors
+      }
+    }
+    syncBgmButtonA11y();
+  }
+
+  function toggleVinylBgm() {
+    if (bgmPlaying) {
+      pauseVinylBgm();
+      return;
+    }
+    const ctx = ensureBgmAudioGraph();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') {
+      ctx.resume().catch(() => {});
+    }
+    bgmPlaying = true;
+    syncBgmButtonA11y();
+    if (bgmMasterGain) {
+      bgmMasterGain.gain.cancelScheduledValues(ctx.currentTime);
+      bgmMasterGain.gain.setTargetAtTime(0.62, ctx.currentTime, 0.18);
+    }
+    if (bgmLoopTimer) clearTimeout(bgmLoopTimer);
+    scheduleNextBgmBar();
+  }
+
   // Event Listeners
+  if (btnBgm) {
+    btnBgm.addEventListener('click', toggleVinylBgm);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && bgmPlaying) {
+      pauseVinylBgm();
+    }
+  });
+
   btnLang.addEventListener('click', () => {
     currentLang = currentLang === 'zh' ? 'en' : 'zh';
     safeSetStorage(STORAGE_KEY_LANG, currentLang);
@@ -5829,64 +6119,171 @@
     });
   }
 
-  // Wedding Botanical & Petal Celebration Effect
+  // Wedding Botanical Rose-Petal & Sage-Leaf Flutter Effect
   const canvas = document.getElementById('confetti-canvas');
   const ctx = canvas.getContext('2d');
+  const reducedMotionQuery = window.matchMedia
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : { matches: false };
+
+  const PETAL_COLORS = ['#d89aa3', '#e5b8bf', '#efcdd2', '#fff8f0', '#ead6be'];
+  const LEAF_COLORS = ['#7fa389', '#9ab8a1', '#b6cbb9'];
+
   let particles = [];
+  let ambientPetals = [];
   let animatingConfetti = false;
+
+  function createAmbientPetal(initialRandomY) {
+    const isLeaf = Math.random() < 0.24;
+    const palette = isLeaf ? LEAF_COLORS : PETAL_COLORS;
+    return {
+      kind: isLeaf ? 'leaf' : 'petal',
+      x: Math.random() * (canvas.width || window.innerWidth),
+      y: initialRandomY ? Math.random() * (canvas.height || window.innerHeight) : -24 - Math.random() * 40,
+      vx: (Math.random() - 0.35) * 0.35,
+      vy: 0.32 + Math.random() * 0.38,
+      size: 6.5 + Math.random() * 4.5,
+      color: palette[Math.floor(Math.random() * palette.length)],
+      rotation: Math.random() * Math.PI * 2,
+      vRot: (Math.random() - 0.5) * 0.016,
+      tilt: Math.random() * Math.PI * 2,
+      vTilt: 0.014 + Math.random() * 0.016,
+      swayPhase: Math.random() * Math.PI * 2,
+      swaySpeed: 0.012 + Math.random() * 0.012,
+      alpha: 0.2 + Math.random() * 0.16,
+    };
+  }
+
+  function syncAmbientPetals() {
+    if (reducedMotionQuery.matches) {
+      ambientPetals = [];
+      return;
+    }
+    const targetCount = window.innerWidth < 640 ? 5 : 7;
+    while (ambientPetals.length < targetCount) {
+      ambientPetals.push(createAmbientPetal(true));
+    }
+    if (ambientPetals.length > targetCount) {
+      ambientPetals.length = targetCount;
+    }
+  }
 
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    syncAmbientPetals();
   }
 
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
 
-  function launchConfetti() {
-    const colors = ['#4a7356', '#84a98c', '#cad2c5', '#e6ccb2', '#ffffff', '#a3b18a'];
-    for (let i = 0; i < 95; i++) {
-      particles.push({
-        x: window.innerWidth / 2 + (Math.random() - 0.5) * 260,
-        y: window.innerHeight * 0.42,
-        vx: (Math.random() - 0.5) * 14,
-        vy: -Math.random() * 13 - 3,
-        size: Math.random() * 8 + 5,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        rotation: Math.random() * 360,
-        vRot: (Math.random() - 0.5) * 8,
-        alpha: 1,
-      });
+  function drawBotanicalShape(p) {
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, Math.min(1, p.alpha));
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rotation);
+    const flipScale = 0.42 + 0.58 * Math.abs(Math.cos(p.tilt));
+    ctx.scale(1, flipScale);
+    ctx.fillStyle = p.color;
+
+    const s = p.size;
+    ctx.beginPath();
+    if (p.kind === 'leaf') {
+      // Slender eucalyptus / sage leaf
+      ctx.moveTo(-s * 0.95, 0);
+      ctx.quadraticCurveTo(0, -s * 0.48, s * 0.95, 0);
+      ctx.quadraticCurveTo(0, s * 0.48, -s * 0.95, 0);
+      ctx.closePath();
+      ctx.fill();
+    } else {
+      // Soft heart-notched rose petal
+      ctx.moveTo(0, s * 0.78);
+      ctx.bezierCurveTo(-s * 0.82, s * 0.35, -s * 0.88, -s * 0.58, -s * 0.24, -s * 0.78);
+      ctx.quadraticCurveTo(0, -s * 0.52, s * 0.24, -s * 0.78);
+      ctx.bezierCurveTo(s * 0.88, -s * 0.58, s * 0.82, s * 0.35, 0, s * 0.78);
+      ctx.closePath();
+      ctx.fill();
     }
-    if (!animatingConfetti) {
+    ctx.restore();
+  }
+
+  function ensureConfettiLoop() {
+    if (!animatingConfetti && !document.hidden) {
       animatingConfetti = true;
-      renderConfetti();
+      requestAnimationFrame(renderConfetti);
     }
   }
 
-  function renderConfetti() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((p) => {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vy += 0.28;
-      p.vx *= 0.99;
-      p.rotation += p.vRot;
-      p.alpha -= 0.007;
+  function launchConfetti() {
+    const count = reducedMotionQuery.matches ? 32 : 78;
+    for (let i = 0; i < count; i++) {
+      const isLeaf = Math.random() < 0.22;
+      const palette = isLeaf ? LEAF_COLORS : PETAL_COLORS;
+      particles.push({
+        kind: isLeaf ? 'leaf' : 'petal',
+        x: window.innerWidth / 2 + (Math.random() - 0.5) * Math.min(340, window.innerWidth * 0.65),
+        y: window.innerHeight * 0.44 + (Math.random() - 0.5) * 40,
+        vx: (Math.random() - 0.5) * 9.5,
+        vy: -Math.random() * 9.5 - 2.4,
+        size: Math.random() * 6.5 + 6.5,
+        color: palette[Math.floor(Math.random() * palette.length)],
+        rotation: Math.random() * Math.PI * 2,
+        vRot: (Math.random() - 0.5) * 0.09,
+        tilt: Math.random() * Math.PI * 2,
+        vTilt: 0.04 + Math.random() * 0.05,
+        swayPhase: Math.random() * Math.PI * 2,
+        swaySpeed: 0.04 + Math.random() * 0.03,
+        alpha: 0.96,
+      });
+    }
+    ensureConfettiLoop();
+  }
 
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, p.alpha);
-      ctx.translate(p.x, p.y);
-      ctx.rotate((p.rotation * Math.PI) / 180);
-      ctx.fillStyle = p.color;
-      ctx.beginPath();
-      ctx.ellipse(0, 0, p.size * 0.7, p.size * 0.4, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
+  function renderConfetti() {
+    if (document.hidden) {
+      animatingConfetti = false;
+      return;
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Subtle ambient petals drifting gently (skipped when prefers-reduced-motion or HP secret theme)
+    const allowAmbient =
+      !reducedMotionQuery.matches && !document.body.classList.contains('hp-secret-theme');
+    if (allowAmbient) {
+      ambientPetals.forEach((p) => {
+        p.swayPhase += p.swaySpeed;
+        p.x += p.vx + Math.sin(p.swayPhase) * 0.32;
+        p.y += p.vy;
+        p.rotation += p.vRot;
+        p.tilt += p.vTilt;
+
+        if (p.y > canvas.height + 28) {
+          p.y = -24;
+          p.x = Math.random() * canvas.width;
+        }
+        if (p.x < -30) p.x = canvas.width + 25;
+        if (p.x > canvas.width + 30) p.x = -25;
+
+        drawBotanicalShape(p);
+      });
+    }
+
+    particles.forEach((p) => {
+      p.swayPhase += p.swaySpeed;
+      p.x += p.vx + Math.sin(p.swayPhase) * 0.55;
+      p.y += p.vy;
+      p.vy = Math.min(p.vy + 0.16, 2.6); // Soft terminal velocity so petals float down gently
+      p.vx *= 0.985;
+      p.rotation += p.vRot;
+      p.tilt += p.vTilt;
+      p.alpha -= 0.0052;
+
+      drawBotanicalShape(p);
     });
 
     particles = particles.filter((p) => p.alpha > 0 && p.y < canvas.height + 40);
-    if (particles.length > 0) {
+    if (particles.length > 0 || allowAmbient) {
       requestAnimationFrame(renderConfetti);
     } else {
       animatingConfetti = false;
@@ -5894,10 +6291,24 @@
     }
   }
 
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && (particles.length > 0 || !reducedMotionQuery.matches)) {
+      ensureConfettiLoop();
+    }
+  });
+
+  if (reducedMotionQuery.addEventListener) {
+    reducedMotionQuery.addEventListener('change', () => {
+      syncAmbientPetals();
+      ensureConfettiLoop();
+    });
+  }
+
   btnCelebrate.addEventListener('click', launchConfetti);
 
   // Initialize
   initPreferences();
+  ensureConfettiLoop();
   requestAnimationFrame(tick);
 
   // Register Offline Service Worker (Network-First + Zero Easter Egg Spoiler)
@@ -5907,7 +6318,7 @@
     !document.getElementById('debug-auth-gate')
   ) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js?v=20261111a').catch(() => {});
+      navigator.serviceWorker.register('./sw.js?v=20261111c').catch(() => {});
     });
   }
 })();
