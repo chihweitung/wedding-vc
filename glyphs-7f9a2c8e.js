@@ -398,11 +398,26 @@
   }
 
   function encodeUtf8(str) {
-    return new TextEncoder().encode(str);
+    if (typeof TextEncoder !== 'undefined') {
+      return new TextEncoder().encode(str);
+    }
+    const utf8 = unescape(encodeURIComponent(str));
+    const arr = new Uint8Array(utf8.length);
+    for (let i = 0; i < utf8.length; i += 1) {
+      arr[i] = utf8.charCodeAt(i);
+    }
+    return arr;
   }
 
   function decodeUtf8(bytes) {
-    return new TextDecoder().decode(bytes);
+    if (typeof TextDecoder !== 'undefined') {
+      return new TextDecoder('utf-8').decode(bytes);
+    }
+    let bin = '';
+    for (let i = 0; i < bytes.length; i += 1) {
+      bin += String.fromCharCode(bytes[i]);
+    }
+    return decodeURIComponent(escape(bin));
   }
 
   function constantTimeEqual(a, b) {
@@ -1462,6 +1477,19 @@
     return chamberAudioCtx;
   }
 
+  function disconnectNodesOnEnd(sourceNode, nodes) {
+    if (!sourceNode) return;
+    sourceNode.onended = () => {
+      for (let i = 0; i < nodes.length; i += 1) {
+        try {
+          if (nodes[i]) nodes[i].disconnect();
+        } catch (_e) {
+          // ignore audio node cleanup errors
+        }
+      }
+    };
+  }
+
   // 古箏 (Guzheng): 玳瑁義甲撥弦瞬態 + 絲弦桐木共鳴箱動態濾波 + 左手吟揉按音
   function scheduleGuzhengNote(freq, startTime, durationSec, isLead = true, withVibrato = false) {
     if (!chamberAudioCtx || !chamberFilterNode) return;
@@ -1530,6 +1558,7 @@
       pickSrc.connect(pickFilter);
       pickFilter.connect(pickGain);
       pickGain.connect(hedwigBusGain || chamberFilterNode);
+      disconnectNodesOnEnd(pickSrc, [pickFilter, pickGain]);
       pickSrc.start(startTime);
       pickSrc.stop(startTime + 0.028);
     }
@@ -1539,6 +1568,7 @@
     woodGain.connect(stringFilter);
     stringFilter.connect(env);
     env.connect(hedwigBusGain || chamberFilterNode);
+    disconnectNodesOnEnd(oscString, [woodGain, stringFilter, env]);
 
     oscString.start(startTime);
     oscWood.start(startTime);
@@ -1603,6 +1633,7 @@
       breathSrc.connect(breathFilter);
       breathFilter.connect(breathGain);
       breathGain.connect(hedwigBusGain || chamberFilterNode);
+      disconnectNodesOnEnd(breathSrc, [breathFilter, breathGain]);
       breathSrc.start(startTime);
       breathSrc.stop(startTime + durationSec + 0.07);
     }
@@ -1611,6 +1642,7 @@
     oscOct.connect(octGain);
     octGain.connect(env);
     env.connect(hedwigBusGain || chamberFilterNode);
+    disconnectNodesOnEnd(oscBore, [octGain, env]);
 
     oscBore.start(startTime);
     oscOct.start(startTime);
@@ -1642,6 +1674,7 @@
     oscJade.connect(jadeGain);
     jadeGain.connect(env);
     env.connect(hedwigBusGain || chamberFilterNode);
+    disconnectNodesOnEnd(oscHarm, [jadeGain, env]);
 
     oscHarm.start(startTime);
     oscJade.start(startTime);
@@ -1667,6 +1700,7 @@
       env.gain.exponentialRampToValueAtTime(0.0001, startTime + 2.3);
       osc.connect(env);
       env.connect(targetBus);
+      disconnectNodesOnEnd(osc, [env]);
       osc.start(startTime);
       osc.stop(startTime + 2.35);
     });
@@ -1705,6 +1739,7 @@
     strGain.connect(lp);
     lp.connect(env);
     env.connect(targetBus);
+    disconnectNodesOnEnd(oscSub, [strGain, lp, env]);
 
     oscSub.start(startTime);
     oscStr.start(startTime);
@@ -1741,6 +1776,7 @@
     osc.connect(bp);
     bp.connect(env);
     env.connect(targetBus);
+    disconnectNodesOnEnd(osc, [bp, env]);
 
     osc.start(startTime);
     osc.stop(startTime + tail + 0.04);
@@ -1787,12 +1823,14 @@
       breathSrc.connect(breathBp);
       breathBp.connect(breathGain);
       breathGain.connect(targetBus);
+      disconnectNodesOnEnd(breathSrc, [breathBp, breathGain]);
       breathSrc.start(startTime);
       breathSrc.stop(startTime + durationSec + 0.1);
     }
 
     osc.connect(env);
     env.connect(targetBus);
+    disconnectNodesOnEnd(osc, [vibGain, env]);
 
     osc.start(startTime);
     vib.start(startTime);
@@ -1824,6 +1862,7 @@
     osc2.connect(g2);
     g2.connect(env);
     env.connect(targetBus);
+    disconnectNodesOnEnd(osc1, [g2, env]);
 
     osc1.start(startTime);
     osc2.start(startTime);
@@ -1856,6 +1895,7 @@
       oscShimmer.connect(shimGain);
       shimGain.connect(env);
       env.connect(targetBus);
+      disconnectNodesOnEnd(osc, [shimGain, env]);
       osc.start(t);
       oscShimmer.start(t);
       osc.stop(t + 1.1);
@@ -1877,6 +1917,7 @@
       env.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec + 0.25);
       osc.connect(env);
       env.connect(targetBus);
+      disconnectNodesOnEnd(osc, [env]);
       osc.start(startTime);
       osc.stop(startTime + durationSec + 0.3);
     });
@@ -1907,6 +1948,7 @@
     oscHarm.connect(harmGain);
     harmGain.connect(env);
     env.connect(targetBus);
+    disconnectNodesOnEnd(oscFund, [harmGain, env]);
 
     oscFund.start(startTime);
     oscHarm.start(startTime);
@@ -1938,6 +1980,7 @@
     osc2.connect(g2);
     g2.connect(env);
     env.connect(targetBus);
+    disconnectNodesOnEnd(osc1, [g2, env]);
 
     osc1.start(startTime);
     osc2.start(startTime);
@@ -2002,6 +2045,7 @@
       breathSrc.connect(breathBp);
       breathBp.connect(breathGain);
       breathGain.connect(targetBus);
+      disconnectNodesOnEnd(breathSrc, [breathBp, breathGain]);
       breathSrc.start(startTime);
       breathSrc.stop(startTime + durationSec + 0.08);
     }
@@ -2011,6 +2055,7 @@
     octGain.connect(lp);
     lp.connect(env);
     env.connect(targetBus);
+    disconnectNodesOnEnd(oscMain, [octGain, lp, env]);
 
     oscMain.start(startTime);
     oscSoftOct.start(startTime);
@@ -2535,8 +2580,13 @@
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       if (isChamberBgmPlaying) suspendChamberBgmForStandby();
-    } else if (isChamberBgmPlaying) {
-      scheduleStaggeredChamberWake();
+      clearRiddleCipherTimers();
+    } else {
+      if (isChamberBgmPlaying) scheduleStaggeredChamberWake();
+      if (elRiddleModal && !elRiddleModal.classList.contains('hidden')) {
+        renderRiddleCipherSequence(true);
+      }
+      ensureMagicSceneLoop();
     }
   });
 
@@ -2570,6 +2620,131 @@
   window.addEventListener('mouseup', unlockChamberAfterStandby, { passive: true });
   window.addEventListener('keydown', unlockChamberAfterStandby, { passive: true });
 
+  let riddleCipherTimers = [];
+  let riddleOpenDelayTimer = null;
+
+  function clearRiddleCipherTimers() {
+    while (riddleCipherTimers.length > 0) {
+      clearTimeout(riddleCipherTimers.pop());
+    }
+  }
+
+  function clearRiddleOpenDelayTimer() {
+    if (riddleOpenDelayTimer !== null) {
+      clearTimeout(riddleOpenDelayTimer);
+      riddleOpenDelayTimer = null;
+    }
+  }
+
+  function renderRiddleCipherSequence(animate = false) {
+    if (!elRiddleModalCipher) return;
+    clearRiddleCipherTimers();
+    const dict = HP_I18N[currentLang];
+    const rawCipher = String((dict && dict.riddleCipher) || '');
+    elRiddleModalCipher.replaceChildren();
+    if (!rawCipher) return;
+
+    const prefersReduced = Boolean(
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    );
+    const shouldAnimate = Boolean(animate && !prefersReduced && !document.hidden);
+
+    const numGroups = rawCipher.match(/\d+/g) || [];
+    const tokenRegex =
+      numGroups.length === 1 && numGroups[0].length >= 4
+        ? /\d|[^\d\s]+|\s+/g
+        : /\d+|[^\d\s]+|\s+/g;
+    const rawTokens = rawCipher.match(tokenRegex) || [rawCipher];
+
+    const stepBuckets = [];
+    let pendingSeps = [];
+
+    rawTokens.forEach((tok) => {
+      if (/^\s+$/.test(tok)) {
+        elRiddleModalCipher.appendChild(document.createTextNode(tok));
+        return;
+      }
+      const isNum = /^\d+$/.test(tok);
+      const span = document.createElement('span');
+      span.className = `hp-cipher-token ${isNum ? 'is-num' : 'is-sep'}${shouldAnimate ? '' : ' is-visible'}`;
+      span.textContent = tok;
+      elRiddleModalCipher.appendChild(span);
+
+      if (shouldAnimate) {
+        if (isNum) {
+          stepBuckets.push({ seps: pendingSeps, numEl: span });
+          pendingSeps = [];
+        } else {
+          pendingSeps.push(span);
+        }
+      }
+    });
+
+    if (shouldAnimate) {
+      if (pendingSeps.length > 0) {
+        if (stepBuckets.length > 0) {
+          stepBuckets[stepBuckets.length - 1].trailingSeps = pendingSeps;
+        } else {
+          pendingSeps.forEach((el) => el.classList.add('is-visible'));
+        }
+      }
+      if (stepBuckets.length === 0) return;
+
+      const stepInMs = 200;
+      const holdVisibleMs = 1550;
+      const stepOutMs = 135;
+      const cyclePauseMs = 420;
+
+      const scheduleCipherCycle = (initialDelayMs) => {
+        clearRiddleCipherTimers();
+        if (!elRiddleModal || elRiddleModal.classList.contains('hidden') || document.hidden) {
+          return;
+        }
+
+        // Phase 1: Pop numbers in one by one
+        stepBuckets.forEach((bucket, idx) => {
+          const inTimer = window.setTimeout(() => {
+            bucket.seps.forEach((sepEl) => sepEl.classList.add('is-visible'));
+            bucket.numEl.classList.remove('is-popping-out', 'is-popping-in');
+            void bucket.numEl.offsetWidth;
+            bucket.numEl.classList.add('is-visible', 'is-popping-in');
+            if (bucket.trailingSeps) {
+              bucket.trailingSeps.forEach((sepEl) => sepEl.classList.add('is-visible'));
+            }
+          }, initialDelayMs + idx * stepInMs);
+          riddleCipherTimers.push(inTimer);
+        });
+
+        // Phase 2: Hold all numbers visible for reading, then pop numbers out one by one
+        const popOutStartMs = initialDelayMs + (stepBuckets.length - 1) * stepInMs + 460 + holdVisibleMs;
+        stepBuckets.forEach((bucket, idx) => {
+          const outTimer = window.setTimeout(() => {
+            bucket.seps.forEach((sepEl) => sepEl.classList.remove('is-visible'));
+            bucket.numEl.classList.remove('is-visible', 'is-popping-in', 'is-popping-out');
+            void bucket.numEl.offsetWidth;
+            bucket.numEl.classList.add('is-popping-out');
+            if (bucket.trailingSeps) {
+              bucket.trailingSeps.forEach((sepEl) => sepEl.classList.remove('is-visible'));
+            }
+          }, popOutStartMs + idx * stepOutMs);
+          riddleCipherTimers.push(outTimer);
+        });
+
+        // Phase 3: Loop seamlessly while modal remains open
+        const nextCycleDelayMs =
+          popOutStartMs + (stepBuckets.length - 1) * stepOutMs + 380 + cyclePauseMs;
+        const loopTimer = window.setTimeout(() => {
+          if (elRiddleModal && !elRiddleModal.classList.contains('hidden') && !document.hidden) {
+            scheduleCipherCycle(120);
+          }
+        }, nextCycleDelayMs);
+        riddleCipherTimers.push(loopTimer);
+      };
+
+      scheduleCipherCycle(320);
+    }
+  }
+
   function syncRiddleLumosVisibility() {
     if (!elRiddleModalLumos) return;
     const dict = HP_I18N[currentLang];
@@ -2583,10 +2758,12 @@
   }
 
   function openRiddleModal() {
-    syncRiddleLumosVisibility();
+    clearRiddleOpenDelayTimer();
     if (elRiddleModal) {
       elRiddleModal.classList.remove('hidden');
     }
+    syncRiddleLumosVisibility();
+    renderRiddleCipherSequence(true);
     enterRiddleSuspenseMusic();
     showSpellFeedback('feedbackRiddleUnlocked');
     spawnSpellBurst(
@@ -2598,6 +2775,8 @@
   }
 
   function closeRiddleModal() {
+    clearRiddleOpenDelayTimer();
+    clearRiddleCipherTimers();
     if (elRiddleModal) {
       elRiddleModal.classList.add('hidden');
     }
@@ -2703,7 +2882,7 @@
     if (elRiddleModalEyebrow) elRiddleModalEyebrow.textContent = dict.riddleEyebrow;
     if (elRiddleModalTitle) elRiddleModalTitle.textContent = dict.riddleTitle;
     if (elRiddleModalIntro) elRiddleModalIntro.textContent = dict.riddleIntro;
-    if (elRiddleModalCipher) elRiddleModalCipher.textContent = dict.riddleCipher;
+    renderRiddleCipherSequence(Boolean(elRiddleModal && !elRiddleModal.classList.contains('hidden')));
     if (elRiddleModalMid) elRiddleModalMid.textContent = dict.riddleMid;
     syncRiddleLumosVisibility();
     if (btnRiddleClose) btnRiddleClose.textContent = dict.riddleCloseBtn;
@@ -2835,7 +3014,11 @@
             ctxPrewarm.resume().catch(() => {});
           }
         }
-        setTimeout(openRiddleModal, 360);
+        clearRiddleOpenDelayTimer();
+        riddleOpenDelayTimer = window.setTimeout(() => {
+          riddleOpenDelayTimer = null;
+          openRiddleModal();
+        }, 360);
       }
     });
   }
@@ -3049,7 +3232,19 @@
     { passive: true }
   );
 
+  let magicSceneRafId = 0;
+
+  function ensureMagicSceneLoop() {
+    if (!document.hidden && !magicSceneRafId) {
+      magicSceneRafId = requestAnimationFrame(renderMagicScene);
+    }
+  }
+
   function renderMagicScene(nowTs = performance.now()) {
+    if (document.hidden) {
+      magicSceneRafId = 0;
+      return;
+    }
     stepGoldenSnitch(nowTs);
     ctx.clearRect(0, 0, cw, ch);
     if (fxCtx !== ctx) {
@@ -3157,8 +3352,8 @@
       fxCtx.restore();
     }
 
-    requestAnimationFrame(renderMagicScene);
+    magicSceneRafId = requestAnimationFrame(renderMagicScene);
   }
 
-  requestAnimationFrame(renderMagicScene);
+  ensureMagicSceneLoop();
 })();

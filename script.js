@@ -52,8 +52,8 @@
   ];
 
   // 婚宴座位表與菜單的 Google Photos / 圖片連結（若填入圖片網址會直接顯示於頁面頂部，填入分享連結會顯示開啟按鈕）
-  const SEATING_CHART_IMAGE_URL = 'seating-chart.jpg?v=20261109a';
-  const SEATING_CHART_LINK_URL = 'seating-chart.jpg?v=20261109a';
+  const SEATING_CHART_IMAGE_URL = 'seating-chart.jpg?v=20261111n';
+  const SEATING_CHART_LINK_URL = 'seating-chart.jpg?v=20261111n';
   const WEDDING_MENU_IMAGE_URL = '';
   const WEDDING_MENU_LINK_URL = '';
 
@@ -65,8 +65,10 @@
       langBtnTitle: '切換為英文 / Switch to English',
       themeBtnTitle: '切換日夜色調',
       fullscreenBtnTitle: '全螢幕檢視',
-      bgmPlayTitle: '播放 33⅓ 黑膠圓舞曲 ·《藍色多瑙河》',
-      bgmPauseTitle: '暫停 33⅓ 黑膠圓舞曲 ·《藍色多瑙河》',
+      bgmPlayTitle: '播放 33⅓ 日間圓舞曲 · 史特勞斯《藍色多瑙河》',
+      bgmPauseTitle: '暫停 33⅓ 日間圓舞曲 · 史特勞斯《藍色多瑙河》',
+      bgmPlayTitleDark: '播放 33⅓ 夜色慢板 · 莫札特《第 21 號鋼琴協奏曲 Andante》',
+      bgmPauseTitleDark: '暫停 33⅓ 夜色慢板 · 莫札特《第 21 號鋼琴協奏曲 Andante》',
       eyebrowCountdown: '2014 — 2026 · 婚禮邀請',
       eyebrowTimeUp: '2026.11.29 · 謝謝今天來見我們的你',
       eventTitle: '走過十二年四季，想邀請你來參與我們最重要的一天',
@@ -180,8 +182,10 @@
       langBtnTitle: 'Switch to Traditional Chinese / 切換中文',
       themeBtnTitle: 'Toggle Light / Dark Palette',
       fullscreenBtnTitle: 'Toggle Fullscreen',
-      bgmPlayTitle: 'Play 33⅓ RPM Vinyl Waltz · The Blue Danube',
-      bgmPauseTitle: 'Pause 33⅓ RPM Vinyl Waltz · The Blue Danube',
+      bgmPlayTitle: 'Play 33⅓ Day Waltz · Strauss “The Blue Danube”',
+      bgmPauseTitle: 'Pause 33⅓ Day Waltz · Strauss “The Blue Danube”',
+      bgmPlayTitleDark: 'Play 33⅓ Night Andante · Mozart Piano Concerto No. 21',
+      bgmPauseTitleDark: 'Pause 33⅓ Night Andante · Mozart Piano Concerto No. 21',
       eyebrowCountdown: '2014 — 2026 · Wedding Invitation',
       eyebrowTimeUp: 'Nov 29, 2026 · So Happy You Are Here With Us',
       eventTitle: 'Twelve years of seasons together — we’d love for you to celebrate this day with us',
@@ -874,8 +878,8 @@
       mapLabel: {
         cx: 1070,
         cy: 1045,
-        bw: 138,
-        bh: 64,
+        bw: 148,
+        bh: 76,
         fontSize: 40,
         lineStep: 44,
         zh: ['主桌'],
@@ -883,6 +887,8 @@
       },
       color: '#d97706',
       fillColor: 'rgba(245, 158, 11, 0.22)',
+      darkColor: '#fbbf24',
+      darkFillColor: 'rgba(251, 191, 36, 0.30)',
       debugStats: { headcount: 14, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '主桌 · 新人與雙方主婚人區', en: 'Main Table · Newlyweds, Parents & Family Elders' },
       zone: { zh: '主廳中央 · 主桌', en: 'Main Hall Center · Main Table' },
@@ -905,8 +911,8 @@
       mapLabel: {
         cx: 790,
         cy: 1047,
-        bw: 68,
-        bh: 192,
+        bw: 78,
+        bh: 204,
         fontSize: 36,
         lineStep: 44,
         enFontSize: 28,
@@ -916,6 +922,8 @@
       },
       color: '#e11d48',
       fillColor: 'rgba(225, 29, 72, 0.22)',
+      darkColor: '#fb7185',
+      darkFillColor: 'rgba(251, 113, 133, 0.30)',
       debugStats: { headcount: 11, veg: 0, stroller: 0, childSeat: 2 },
       name: { zh: '新娘親戚區', en: "Bride's Relatives" },
       zone: { zh: '主廳中左側 · 新娘親戚（主桌左側）', en: "Main Hall Center-Left · Bride's Relatives" },
@@ -928,19 +936,21 @@
     },
     {
       id: 'zone-groom-parents-friends',
-      box: { x: 640, y: 288, w: 1113, h: 290 },
+      box: { x: 640, y: 288, w: 1113, h: 314 },
       mapLabel: {
-        cx: 1195,
-        cy: 423,
-        bw: 344,
-        bh: 68,
-        fontSize: 40,
-        lineStep: 44,
+        cx: 1197,
+        cy: 426,
+        bw: 404,
+        bh: 110,
+        fontSize: 42,
+        lineStep: 46,
         zh: ['新郎爸媽朋友'],
         en: ["Parents' Friends"],
       },
-      color: '#65a30d',
+      color: '#4d7c0f',
       fillColor: 'rgba(101, 163, 13, 0.20)',
+      darkColor: '#a3e635',
+      darkFillColor: 'rgba(163, 230, 53, 0.28)',
       debugStats: { headcount: 74, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎爸媽朋友區', en: "Groom's Parents' Friends" },
       zone: { zh: '主廳上方 · 新郎爸媽朋友（共 6 長桌）', en: "Main Hall North · Groom's Parents' Friends (6 Long Tables)" },
@@ -1002,8 +1012,8 @@
       mapLabel: {
         cx: 611,
         cy: 1047,
-        bw: 68,
-        bh: 192,
+        bw: 78,
+        bh: 204,
         fontSize: 36,
         lineStep: 44,
         enFontSize: 32,
@@ -1011,8 +1021,10 @@
         zh: ['董', '家', '親', '戚'],
         en: ['T', 'U', 'N', 'G'],
       },
-      color: '#92400e',
-      fillColor: 'rgba(146, 64, 14, 0.22)',
+      color: '#b45309',
+      fillColor: 'rgba(180, 83, 9, 0.22)',
+      darkColor: '#f59e0b',
+      darkFillColor: 'rgba(245, 158, 11, 0.30)',
       debugStats: { headcount: 11, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎爸爸親戚區（董家親戚）', en: "Groom's Father's Relatives (Tung Family)" },
       zone: { zh: '主廳左側 · 董家親戚（鄰近左側取餐區）', en: 'Main Hall Left · Tung Family Relatives' },
@@ -1032,8 +1044,8 @@
       mapLabel: {
         cx: 1560,
         cy: 1017,
-        bw: 68,
-        bh: 192,
+        bw: 78,
+        bh: 204,
         fontSize: 36,
         lineStep: 44,
         enFontSize: 34,
@@ -1043,6 +1055,8 @@
       },
       color: '#059669',
       fillColor: 'rgba(5, 150, 105, 0.22)',
+      darkColor: '#34d399',
+      darkFillColor: 'rgba(52, 211, 153, 0.30)',
       debugStats: { headcount: 34, veg: 1, stroller: 0, childSeat: 1, detail: '徐玲明：素食1、兒童椅1' },
       name: { zh: '新郎媽媽親戚區（徐家親戚）', en: "Groom's Mother's Relatives (Hsu Family)" },
       zone: { zh: '主廳右側 · 徐家親戚', en: 'Main Hall Right · Hsu Family Relatives' },
@@ -1066,22 +1080,26 @@
     },
     {
       id: 'zone-groom-moz',
-      box: { x: 1103, y: 1666, w: 156, h: 164 },
+      box: { x: 1104, y: 1614, w: 156, h: 164 },
       mapLabel: {
-        cx: 1181,
-        cy: 1751,
-        bw: 126,
-        bh: 62,
+        cx: 1183,
+        cy: 1699,
+        bw: 146,
+        bh: 84,
         fontSize: 38,
         lineStep: 42,
+        enFontSize: 30,
+        enLineStep: 36,
         zh: ['謀智'],
         en: ['Mozilla'],
       },
       color: '#0891b2',
       fillColor: 'rgba(8, 145, 178, 0.22)',
+      darkColor: '#22d3ee',
+      darkFillColor: 'rgba(34, 211, 238, 0.30)',
       debugStats: { headcount: 6, veg: 0, stroller: 0, childSeat: 1, detail: '曾祥信：兒童椅1' },
       name: { zh: '新郎 MOZ 區（謀智）', en: 'Groom · MOZ (Mozilla)' },
-      zone: { zh: '外廳左列第 1 區 · 謀智', en: 'Lower Hall Left Col · Section 1 (MOZ)' },
+      zone: { zh: '外廳左列上方區 · 謀智', en: 'Lower Hall Left Col · Upper (MOZ)' },
       guests: [
         { zh: 'Ethan Tseng 曾祥信等三人', en: 'Ethan Tseng 曾祥信 (3)' },
         { zh: 'Shawn Huang等二人', en: 'Shawn Huang (2)' },
@@ -1089,74 +1107,63 @@
       ],
     },
     {
-      id: 'zone-bride-highschool',
-      box: { x: 1103, y: 1831, w: 156, h: 149 },
+      id: 'zone-groom-highschool',
+      box: { x: 1104, y: 1779, w: 156, h: 356 },
       mapLabel: {
-        cx: 1181,
-        cy: 1906,
-        bw: 126,
-        bh: 62,
+        cx: 1183,
+        cy: 1982,
+        bw: 146,
+        bh: 84,
         fontSize: 38,
         lineStep: 42,
-        zh: ['雄女'],
-        en: ['KGHS'],
+        enFontSize: 34,
+        enLineStep: 40,
+        zh: ['大直'],
+        en: ['DZHS'],
       },
-      color: '#2563eb',
-      fillColor: 'rgba(37, 99, 235, 0.22)',
-      debugStats: { headcount: 5, veg: 1, stroller: 0, childSeat: 0, detail: '王淑菁：素食1' },
-      name: { zh: '新娘高中區（雄女）', en: "Bride's High School (KGHS)" },
-      zone: { zh: '外廳左列第 2 區 · 雄女', en: 'Lower Hall Left Col · Section 2 (KGHS)' },
+      color: '#dc2626',
+      fillColor: 'rgba(220, 38, 38, 0.22)',
+      darkColor: '#f87171',
+      darkFillColor: 'rgba(248, 113, 113, 0.30)',
+      debugStats: { headcount: 15, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1' },
+      name: { zh: '新郎高中區（大直）', en: "Groom's High School (Dazhi)" },
+      zone: { zh: '外廳左列中段區 · 大直', en: 'Lower Hall Left Col · Middle (Dazhi HS)' },
       guests: [
-        { zh: '張恬恬', en: '張恬恬' },
-        { zh: '林佳儒等二人', en: '林佳儒 (2)' },
-        { zh: '張辰', en: '張辰' },
-        { zh: '王淑菁', en: '王淑菁' },
-      ],
-    },
-    {
-      id: 'zone-bride-college',
-      box: { x: 1103, y: 1981, w: 156, h: 154 },
-      mapLabel: {
-        cx: 1182,
-        cy: 2061,
-        bw: 126,
-        bh: 62,
-        fontSize: 38,
-        lineStep: 42,
-        zh: ['北藝'],
-        en: ['TNUA'],
-      },
-      color: '#db2777',
-      fillColor: 'rgba(219, 39, 119, 0.22)',
-      debugStats: { headcount: 6, veg: 0, stroller: 0, childSeat: 0 },
-      name: { zh: '新娘大學區（北藝）', en: "Bride's College (TNUA)" },
-      zone: { zh: '外廳左列第 3 區 · 北藝', en: 'Lower Hall Left Col · Section 3 (TNUA)' },
-      guests: [
-        { zh: '陳品心', en: '陳品心' },
-        { zh: '雷廷萱', en: '雷廷萱' },
-        { zh: '戴嘉謙', en: '戴嘉謙' },
-        { zh: '黃采逸等二人', en: '黃采逸 (2)' },
-        { zh: 'Yalan Chang', en: 'Yalan Chang' },
+        { zh: '施傑耀等三人', en: '施傑耀 (3)' },
+        { zh: '洪維辰', en: '洪維辰' },
+        { zh: '蔡聖傑', en: '蔡聖傑' },
+        { zh: '鄭兆珍', en: '鄭兆珍' },
+        { zh: '朱鎧', en: '朱鎧' },
+        { zh: '林品賢等二人', en: '林品賢 (2)' },
+        { zh: '陳怡瑋等二人', en: '陳怡瑋 (2)' },
+        { zh: '何弋柏', en: '何弋柏' },
+        { zh: '周駿逸', en: '周駿逸' },
+        { zh: '林伯翰', en: '林伯翰' },
+        { zh: '蔡宜達', en: '蔡宜達' },
       ],
     },
     {
       id: 'zone-bride-colleagues',
-      box: { x: 1103, y: 2136, w: 156, h: 215 },
+      box: { x: 1104, y: 2136, w: 156, h: 216 },
       mapLabel: {
         cx: 1181,
-        cy: 2237,
-        bw: 126,
-        bh: 62,
+        cy: 2236,
+        bw: 146,
+        bh: 84,
         fontSize: 38,
         lineStep: 42,
+        enFontSize: 32,
+        enLineStep: 38,
         zh: ['瑪黑'],
         en: ['Marais'],
       },
       color: '#7c3aed',
       fillColor: 'rgba(124, 58, 237, 0.22)',
+      darkColor: '#c084fc',
+      darkFillColor: 'rgba(192, 132, 252, 0.30)',
       debugStats: { headcount: 8, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新娘同事區（瑪黑）', en: "Bride's Colleagues (Marais)" },
-      zone: { zh: '外廳左列第 4 區 · 瑪黑', en: 'Lower Hall Left Col · Section 4 (Marais)' },
+      zone: { zh: '外廳左列下方區 · 瑪黑', en: 'Lower Hall Left Col · Lower (Marais)' },
       guests: [
         { zh: '吳宥蓁', en: '吳宥蓁' },
         { zh: '余汶杰', en: '余汶杰' },
@@ -1164,12 +1171,12 @@
         { zh: '金耘瑞等二人', en: '金耘瑞 (2)' },
         { zh: '張世瑤 Anny', en: '張世瑤 Anny' },
         { zh: '蔡青樺 Iris', en: '蔡青樺 Iris' },
-        { zh: '沈育琪', en: '沈育琪' },
+        { zh: '沈堉綺', en: '沈堉綺' },
       ],
     },
     {
       id: 'zone-groom-colleagues',
-      box: { x: 1340, y: 1608, w: 200, h: 756 },
+      box: { x: 1356, y: 1608, w: 178, h: 746 },
       basePatch: {
         mask: { x: 1402, y: 1861, w: 88, h: 248, fill: '#bdbb9e' },
         tables: [
@@ -1178,10 +1185,10 @@
         ],
       },
       mapLabel: {
-        cx: 1444,
+        cx: 1445,
         cy: 1984,
         bw: 158,
-        bh: 62,
+        bh: 68,
         fontSize: 35,
         lineStep: 40,
         zh: ['Google'],
@@ -1189,6 +1196,8 @@
       },
       color: '#ea580c',
       fillColor: 'rgba(234, 88, 12, 0.22)',
+      darkColor: '#fb923c',
+      darkFillColor: 'rgba(251, 146, 60, 0.30)',
       debugStats: { headcount: 23, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎同事區（Google）', en: "Groom's Colleagues (Google)" },
       zone: { zh: '外廳中列長桌區 · Google', en: 'Lower Hall Center Col · Google' },
@@ -1211,21 +1220,23 @@
     },
     {
       id: 'zone-groom-nctu',
-      box: { x: 1589, y: 1608, w: 161, h: 343 },
+      box: { x: 1589, y: 1609, w: 156, h: 342 },
       mapLabel: {
         cx: 1667,
-        cy: 1784,
-        bw: 66,
-        bh: 122,
-        fontSize: 36,
-        lineStep: 46,
-        enFontSize: 24,
-        enLineStep: 26,
-        zh: ['交', '大'],
-        en: ['N', 'C', 'T', 'U'],
+        cy: 1783,
+        bw: 146,
+        bh: 84,
+        fontSize: 38,
+        lineStep: 42,
+        enFontSize: 34,
+        enLineStep: 40,
+        zh: ['交大'],
+        en: ['NCTU'],
       },
       color: '#ca8a04',
       fillColor: 'rgba(234, 179, 8, 0.24)',
+      darkColor: '#fde047',
+      darkFillColor: 'rgba(253, 224, 71, 0.30)',
       debugStats: { headcount: 11, veg: 0, stroller: 1, childSeat: 1, detail: '林煜峯：嬰兒車1、兒童椅1' },
       name: { zh: '新郎交大區（交大）', en: "Groom's College (NCTU)" },
       zone: { zh: '外廳右列上方區 · 交大', en: 'Lower Hall Right Col · Upper (NCTU)' },
@@ -1239,36 +1250,62 @@
       ],
     },
     {
-      id: 'zone-groom-highschool',
-      box: { x: 1586, y: 2000, w: 160, h: 364 },
+      id: 'zone-bride-highschool',
+      box: { x: 1589, y: 1990, w: 156, h: 164 },
       mapLabel: {
-        cx: 1667,
-        cy: 2188,
-        bw: 66,
-        bh: 122,
-        fontSize: 36,
-        lineStep: 46,
-        enFontSize: 24,
-        enLineStep: 26,
-        zh: ['大', '直'],
-        en: ['D', 'Z', 'H', 'S'],
+        cx: 1665,
+        cy: 2070,
+        bw: 146,
+        bh: 84,
+        fontSize: 38,
+        lineStep: 42,
+        enFontSize: 34,
+        enLineStep: 40,
+        zh: ['雄女'],
+        en: ['KGHS'],
       },
-      color: '#b91c1c',
-      fillColor: 'rgba(185, 28, 28, 0.22)',
-      debugStats: { headcount: 14, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1' },
-      name: { zh: '新郎高中區（大直）', en: "Groom's High School (Dazhi)" },
-      zone: { zh: '外廳右列下方區 · 大直', en: 'Lower Hall Right Col · Lower (Dazhi HS)' },
+      color: '#2563eb',
+      fillColor: 'rgba(37, 99, 235, 0.22)',
+      darkColor: '#60a5fa',
+      darkFillColor: 'rgba(96, 165, 250, 0.30)',
+      debugStats: { headcount: 5, veg: 1, stroller: 0, childSeat: 0, detail: '王淑菁：素食1' },
+      name: { zh: '新娘高中區（雄女）', en: "Bride's High School (KGHS)" },
+      zone: { zh: '外廳右列中段區 · 雄女', en: 'Lower Hall Right Col · Middle (KGHS)' },
       guests: [
-        { zh: '施傑耀等三人', en: '施傑耀 (3)' },
-        { zh: '洪維辰', en: '洪維辰' },
-        { zh: '蔡聖傑', en: '蔡聖傑' },
-        { zh: '鄭兆珍', en: '鄭兆珍' },
-        { zh: '朱鎧', en: '朱鎧' },
-        { zh: '林品賢等二人', en: '林品賢 (2)' },
-        { zh: '陳怡瑋等二人', en: '陳怡瑋 (2)' },
-        { zh: '何弋柏', en: '何弋柏' },
-        { zh: '周駿逸', en: '周駿逸' },
-        { zh: '林伯翰', en: '林伯翰' },
+        { zh: '張恬恬', en: '張恬恬' },
+        { zh: '林佳儒等二人', en: '林佳儒 (2)' },
+        { zh: '張辰', en: '張辰' },
+        { zh: '王淑菁', en: '王淑菁' },
+      ],
+    },
+    {
+      id: 'zone-bride-college',
+      box: { x: 1589, y: 2188, w: 156, h: 165 },
+      mapLabel: {
+        cx: 1666,
+        cy: 2270,
+        bw: 146,
+        bh: 84,
+        fontSize: 38,
+        lineStep: 42,
+        enFontSize: 34,
+        enLineStep: 40,
+        zh: ['北藝'],
+        en: ['TNUA'],
+      },
+      color: '#db2777',
+      fillColor: 'rgba(219, 39, 119, 0.22)',
+      darkColor: '#f472b6',
+      darkFillColor: 'rgba(244, 114, 182, 0.30)',
+      debugStats: { headcount: 6, veg: 0, stroller: 0, childSeat: 0 },
+      name: { zh: '新娘大學區（北藝）', en: "Bride's College (TNUA)" },
+      zone: { zh: '外廳右列下方區 · 北藝', en: 'Lower Hall Right Col · Lower (TNUA)' },
+      guests: [
+        { zh: '陳品心', en: '陳品心' },
+        { zh: '雷廷萱', en: '雷廷萱' },
+        { zh: '戴嘉謙', en: '戴嘉謙' },
+        { zh: '黃采逸等二人', en: '黃采逸 (2)' },
+        { zh: 'Yalan Chang', en: 'Yalan Chang' },
       ],
     },
   ];
@@ -1992,7 +2029,6 @@
 
   const MAX_URL_LENGTH = 300;
   const STORAGE_KEY_THEME = 'wedding_20261129_theme';
-  const STORAGE_KEY_MS = 'wedding_20261129_show_ms';
   const STORAGE_KEY_LANG = 'wedding_20261129_lang';
 
   // DOM Elements
@@ -2000,7 +2036,6 @@
   const elHours = document.getElementById('val-hours');
   const elMinutes = document.getElementById('val-minutes');
   const elSeconds = document.getElementById('val-seconds');
-  const elMs = document.getElementById('val-ms');
 
   const elLabelDays = document.getElementById('label-days');
   const elLabelHours = document.getElementById('label-hours');
@@ -2022,7 +2057,6 @@
   const btnBgm = document.getElementById('bgm-btn');
   const btnLang = document.getElementById('lang-btn');
   const elLangBtnLabel = document.getElementById('lang-btn-label');
-  const btnToggleMs = document.getElementById('toggle-ms-btn');
   const btnTheme = document.getElementById('theme-btn');
   const btnFullscreen = document.getElementById('fullscreen-btn');
   const btnCelebrate = document.getElementById('celebrate-btn');
@@ -2217,9 +2251,12 @@
   }
 
   let currentLang = safeGetStorage(STORAGE_KEY_LANG) === 'en' ? 'en' : 'zh';
-  let showMs = safeGetStorage(STORAGE_KEY_MS) === 'true';
   let isTimeUp = false;
   let renderedMediaKey = '';
+
+  function isDebugUnlocked() {
+    return Boolean(window.__TE_DEBUG_AUTH__ === true);
+  }
 
   // Quiz State
   let quizStarted = false;
@@ -2300,7 +2337,14 @@
   function syncBgmButtonA11y() {
     if (!btnBgm) return;
     const dict = t();
-    const titleStr = bgmPlaying ? dict.bgmPauseTitle : dict.bgmPlayTitle;
+    const isDarkTheme = document.documentElement.getAttribute('data-theme') === 'dark';
+    const titleStr = isDarkTheme
+      ? bgmPlaying
+        ? dict.bgmPauseTitleDark
+        : dict.bgmPlayTitleDark
+      : bgmPlaying
+        ? dict.bgmPauseTitle
+        : dict.bgmPlayTitle;
     btnBgm.setAttribute('aria-pressed', String(bgmPlaying));
     btnBgm.setAttribute('title', titleStr);
     btnBgm.setAttribute('aria-label', titleStr);
@@ -2891,12 +2935,18 @@
     zone: { zh: '場地左下方專區（吧台區左側、洗手間下方）', en: 'Lower-Left Wing (Left of Bar Counter)' },
   };
 
+  const FACILITY_META_BY_ID = {
+    [RESTROOM_ZONE_ID]: RESTROOM_ZONE_META,
+    [BAR_ZONE_ID]: BAR_ZONE_META,
+    [BUFFET_ZONE_ID]: BUFFET_ZONE_META,
+    [RECEPTION_ZONE_ID]: RECEPTION_ZONE_META,
+    [KITCHEN_ZONE_ID]: KITCHEN_ZONE_META,
+  };
+
   function renderSeatingFloorPlan(highlightedIds) {
     if (!elSeatingPhotoStage) return;
     const dict = t();
-    const isDebugPage = Boolean(
-      document.getElementById('debug-toolbar') || document.getElementById('debug-auth-gate')
-    );
+    const isDebugPage = isDebugUnlocked();
     const safeImg = sanitizeSafeUrl(SEATING_CHART_IMAGE_URL, true);
     const safeLink = sanitizeSafeUrl(SEATING_CHART_LINK_URL, false) || safeImg;
 
@@ -2944,20 +2994,13 @@
 
     const hintText = document.createElement('span');
     hintText.className = 'seating-map-hint-text';
-    const activeTable =
-      selectedSeatingZoneId === RESTROOM_ZONE_ID
-        ? RESTROOM_ZONE_META
-        : selectedSeatingZoneId === BAR_ZONE_ID
-          ? BAR_ZONE_META
-          : selectedSeatingZoneId === BUFFET_ZONE_ID
-            ? BUFFET_ZONE_META
-            : selectedSeatingZoneId === RECEPTION_ZONE_ID
-              ? RECEPTION_ZONE_META
-              : selectedSeatingZoneId === KITCHEN_ZONE_ID
-                ? KITCHEN_ZONE_META
-                : selectedSeatingZoneId
-                  ? SEATING_TABLES_DATA.find((item) => item.id === selectedSeatingZoneId)
-                  : null;
+    const activeQuery = elSeatingSearchInput ? elSeatingSearchInput.value.trim() : '';
+    const primaryHighlightId =
+      selectedSeatingZoneId || (highlightedIds.size === 1 ? Array.from(highlightedIds)[0] : null);
+    const activeTable = primaryHighlightId
+      ? FACILITY_META_BY_ID[primaryHighlightId] ||
+        SEATING_TABLES_DATA.find((item) => item.id === primaryHighlightId)
+      : null;
 
     if (activeTable) {
       const activeName = activeTable.name[currentLang] || activeTable.name.zh;
@@ -2977,53 +3020,61 @@
     const actionsWrap = document.createElement('div');
     actionsWrap.className = 'seating-map-actions';
 
-    const receptionBtn = document.createElement('button');
-    receptionBtn.type = 'button';
-    receptionBtn.className = `seating-map-reception-btn${highlightedIds.has(RECEPTION_ZONE_ID) ? ' is-active' : ''}`;
-    receptionBtn.textContent = currentLang === 'en' ? '📋 Highlight Reception' : '📋 標示接待桌';
-    receptionBtn.addEventListener('click', () => {
-      selectedSeatingZoneId = selectedSeatingZoneId === RECEPTION_ZONE_ID ? null : RECEPTION_ZONE_ID;
+    const toggleFacilityZone = (facilityId, e) => {
+      if (e) e.stopPropagation();
+      const wasOnlyHighlightedBySearch =
+        !selectedSeatingZoneId && highlightedIds.size === 1 && highlightedIds.has(facilityId);
+      if (elSeatingSearchInput && elSeatingSearchInput.value.trim()) {
+        elSeatingSearchInput.value = '';
+      }
+      selectedSeatingZoneId =
+        wasOnlyHighlightedBySearch || selectedSeatingZoneId === facilityId ? null : facilityId;
       renderSeatingSection();
-    });
-    actionsWrap.append(receptionBtn);
+    };
 
-    const buffetBtn = document.createElement('button');
-    buffetBtn.type = 'button';
-    buffetBtn.className = `seating-map-buffet-btn${highlightedIds.has(BUFFET_ZONE_ID) ? ' is-active' : ''}`;
-    buffetBtn.textContent = currentLang === 'en' ? '🍽️ Highlight Buffet' : '🍽️ 標示餐點區';
-    buffetBtn.addEventListener('click', () => {
-      selectedSeatingZoneId = selectedSeatingZoneId === BUFFET_ZONE_ID ? null : BUFFET_ZONE_ID;
-      renderSeatingSection();
+    const facilityButtonDefs = [
+      {
+        id: RECEPTION_ZONE_ID,
+        cls: 'seating-map-reception-btn',
+        zh: '📋 標示接待桌',
+        en: '📋 Highlight Reception',
+      },
+      {
+        id: BUFFET_ZONE_ID,
+        cls: 'seating-map-buffet-btn',
+        zh: '🍽️ 標示餐點區',
+        en: '🍽️ Highlight Buffet',
+      },
+      {
+        id: RESTROOM_ZONE_ID,
+        cls: 'seating-map-restroom-btn',
+        zh: '🚻 標示廁所位置',
+        en: '🚻 Highlight Restrooms',
+      },
+      {
+        id: BAR_ZONE_ID,
+        cls: 'seating-map-bar-btn',
+        zh: '🍹 標示吧台位置',
+        en: '🍹 Highlight Bar',
+      },
+    ];
+    facilityButtonDefs.forEach((fDef) => {
+      const fBtn = document.createElement('button');
+      fBtn.type = 'button';
+      fBtn.className = `${fDef.cls}${highlightedIds.has(fDef.id) ? ' is-active' : ''}`;
+      fBtn.textContent = currentLang === 'en' ? fDef.en : fDef.zh;
+      fBtn.addEventListener('click', () => toggleFacilityZone(fDef.id));
+      actionsWrap.append(fBtn);
     });
-    actionsWrap.append(buffetBtn);
 
-    const restroomBtn = document.createElement('button');
-    restroomBtn.type = 'button';
-    restroomBtn.className = `seating-map-restroom-btn${highlightedIds.has(RESTROOM_ZONE_ID) ? ' is-active' : ''}`;
-    restroomBtn.textContent = currentLang === 'en' ? '🚻 Highlight Restrooms' : '🚻 標示廁所位置';
-    restroomBtn.addEventListener('click', () => {
-      selectedSeatingZoneId = selectedSeatingZoneId === RESTROOM_ZONE_ID ? null : RESTROOM_ZONE_ID;
-      renderSeatingSection();
-    });
-    actionsWrap.append(restroomBtn);
-
-    const barBtn = document.createElement('button');
-    barBtn.type = 'button';
-    barBtn.className = `seating-map-bar-btn${highlightedIds.has(BAR_ZONE_ID) ? ' is-active' : ''}`;
-    barBtn.textContent = currentLang === 'en' ? '🍹 Highlight Bar' : '🍹 標示吧台位置';
-    barBtn.addEventListener('click', () => {
-      selectedSeatingZoneId = selectedSeatingZoneId === BAR_ZONE_ID ? null : BAR_ZONE_ID;
-      renderSeatingSection();
-    });
-    actionsWrap.append(barBtn);
-
-    if (selectedSeatingZoneId) {
+    if (selectedSeatingZoneId || activeQuery) {
       const clearBtn = document.createElement('button');
       clearBtn.type = 'button';
       clearBtn.className = 'seating-map-clear-btn';
       clearBtn.textContent = currentLang === 'en' ? '✕ Clear Highlight' : '✕ 取消高亮';
       clearBtn.addEventListener('click', () => {
         selectedSeatingZoneId = null;
+        if (elSeatingSearchInput) elSeatingSearchInput.value = '';
         renderSeatingSection();
       });
       actionsWrap.append(clearBtn);
@@ -3053,7 +3104,16 @@
 
     const handleZoneSelect = (zoneId, e) => {
       e.stopPropagation();
-      selectedSeatingZoneId = selectedSeatingZoneId === zoneId ? null : zoneId;
+      const wasOnlyHighlightedBySearch =
+        !selectedSeatingZoneId && highlightedIds.size === 1 && highlightedIds.has(zoneId);
+      if (elSeatingSearchInput && elSeatingSearchInput.value.trim()) {
+        elSeatingSearchInput.value = '';
+      }
+      if (wasOnlyHighlightedBySearch) {
+        selectedSeatingZoneId = null;
+      } else {
+        selectedSeatingZoneId = selectedSeatingZoneId === zoneId ? null : zoneId;
+      }
       renderSeatingSection();
       if (selectedSeatingZoneId) {
         const targetCard = elSeatingTablesGrid.querySelector(
@@ -3114,6 +3174,12 @@
       if (table.fillColor) {
         rect.style.setProperty('--zone-fill', table.fillColor);
       }
+      if (table.darkColor) {
+        rect.style.setProperty('--zone-dark-color', table.darkColor);
+      }
+      if (table.darkFillColor) {
+        rect.style.setProperty('--zone-dark-fill', table.darkFillColor);
+      }
       rect.setAttribute(
         'class',
         `seating-zone-hotspot${isHighlighted ? ' is-highlighted' : ''}`
@@ -3140,6 +3206,9 @@
       );
       if (table.color) {
         labelGroup.style.setProperty('--zone-color', table.color);
+      }
+      if (table.darkColor) {
+        labelGroup.style.setProperty('--zone-dark-color', table.darkColor);
       }
 
       const bgRect = document.createElementNS(svgNS, 'rect');
@@ -3284,11 +3353,7 @@
     });
 
     receptionGroup.append(recBg, recText);
-    receptionGroup.addEventListener('click', (e) => {
-      e.stopPropagation();
-      selectedSeatingZoneId = selectedSeatingZoneId === RECEPTION_ZONE_ID ? null : RECEPTION_ZONE_ID;
-      renderSeatingSection();
-    });
+    receptionGroup.addEventListener('click', (e) => toggleFacilityZone(RECEPTION_ZONE_ID, e));
     svg.append(receptionGroup);
 
     // 餐點區標示（主廳左側 & 主廳右中側共 2 處百匯取餐區）
@@ -3368,11 +3433,7 @@
       buffetGroup.append(bBg, bText);
     });
 
-    buffetGroup.addEventListener('click', (e) => {
-      e.stopPropagation();
-      selectedSeatingZoneId = selectedSeatingZoneId === BUFFET_ZONE_ID ? null : BUFFET_ZONE_ID;
-      renderSeatingSection();
-    });
+    buffetGroup.addEventListener('click', (e) => toggleFacilityZone(BUFFET_ZONE_ID, e));
 
     svg.append(buffetGroup);
 
@@ -3432,11 +3493,7 @@
       restroomLabelSub
     );
 
-    restroomGroup.addEventListener('click', (e) => {
-      e.stopPropagation();
-      selectedSeatingZoneId = selectedSeatingZoneId === RESTROOM_ZONE_ID ? null : RESTROOM_ZONE_ID;
-      renderSeatingSection();
-    });
+    restroomGroup.addEventListener('click', (e) => toggleFacilityZone(RESTROOM_ZONE_ID, e));
 
     svg.append(restroomGroup);
 
@@ -3495,11 +3552,7 @@
       kitchenLabelSub
     );
 
-    kitchenGroup.addEventListener('click', (e) => {
-      e.stopPropagation();
-      selectedSeatingZoneId = selectedSeatingZoneId === KITCHEN_ZONE_ID ? null : KITCHEN_ZONE_ID;
-      renderSeatingSection();
-    });
+    kitchenGroup.addEventListener('click', (e) => toggleFacilityZone(KITCHEN_ZONE_ID, e));
 
     svg.append(kitchenGroup);
 
@@ -3552,17 +3605,14 @@
     barTitle.textContent = `${BAR_ZONE_META.name[currentLang]} · ${BAR_ZONE_META.zone[currentLang]}`;
     barGroup.append(barTitle, barRect, barBadgeBg, barLabelMain, barLabelSub);
 
-    barGroup.addEventListener('click', (e) => {
-      e.stopPropagation();
-      selectedSeatingZoneId = selectedSeatingZoneId === BAR_ZONE_ID ? null : BAR_ZONE_ID;
-      renderSeatingSection();
-    });
+    barGroup.addEventListener('click', (e) => toggleFacilityZone(BAR_ZONE_ID, e));
 
     svg.append(barGroup);
 
     mapWrap.addEventListener('click', () => {
-      if (selectedSeatingZoneId) {
+      if (selectedSeatingZoneId || (elSeatingSearchInput && elSeatingSearchInput.value.trim())) {
         selectedSeatingZoneId = null;
+        if (elSeatingSearchInput) elSeatingSearchInput.value = '';
         renderSeatingSection();
       }
     });
@@ -3576,9 +3626,7 @@
   function renderSeatingSection() {
     if (!elSeatingTablesGrid) return;
 
-    const isDebugPage = Boolean(
-      document.getElementById('debug-toolbar') || document.getElementById('debug-auth-gate')
-    );
+    const isDebugPage = isDebugUnlocked();
     const query = elSeatingSearchInput ? elSeatingSearchInput.value.trim().toLowerCase() : '';
     const highlightedIds = new Set();
     if (selectedSeatingZoneId) {
@@ -3586,7 +3634,7 @@
     }
 
     const matchesFacility = (keywords, exactSingleChars = []) => {
-      if (!query) return false;
+      if (selectedSeatingZoneId || !query) return false;
       if (exactSingleChars.includes(query)) return true;
       return keywords.some(
         (kw) =>
@@ -3623,6 +3671,13 @@
       highlightedIds.add(KITCHEN_ZONE_ID);
     }
 
+    const stripPublicGuestMeta = (text) =>
+      String(text || '')
+        .replace(/等[一二三四五六七八九十\d]+人/g, '')
+        .replace(/[（(]\d+[)）]/g, '')
+        .trim()
+        .toLowerCase();
+
     const tableCards = [];
     SEATING_TABLES_DATA.forEach((table) => {
       const tName = table.name[currentLang] || table.name.zh;
@@ -3634,13 +3689,18 @@
         (table.name.zh && table.name.zh.toLowerCase().includes(query)) ||
         (table.name.en && table.name.en.toLowerCase().includes(query));
 
-      const hasMatchingGuest = table.guests.some(
-        (g) =>
-          (g.zh && g.zh.toLowerCase().includes(query)) ||
-          (g.en && g.en.toLowerCase().includes(query))
-      );
+      const canMatchGuestByQuery = isDebugPage ? Boolean(query) : query.length >= 2;
+      const hasMatchingGuest =
+        canMatchGuestByQuery &&
+        table.guests.some((g) =>
+          isDebugPage
+            ? (g.zh && g.zh.toLowerCase().includes(query)) ||
+              (g.en && g.en.toLowerCase().includes(query))
+            : (g.zh && stripPublicGuestMeta(g.zh).includes(query)) ||
+              (g.en && stripPublicGuestMeta(g.en).includes(query))
+        );
 
-      if (query && (matchesTableTitle || hasMatchingGuest)) {
+      if (!selectedSeatingZoneId && query && (matchesTableTitle || hasMatchingGuest)) {
         highlightedIds.add(table.id);
       }
 
@@ -3658,10 +3718,27 @@
       if (table.fillColor) {
         card.style.setProperty('--zone-fill', table.fillColor);
       }
+      if (table.darkColor) {
+        card.style.setProperty('--zone-dark-color', table.darkColor);
+      }
+      if (table.darkFillColor) {
+        card.style.setProperty('--zone-dark-fill', table.darkFillColor);
+      }
       card.addEventListener('click', () => {
-        selectedSeatingZoneId = selectedSeatingZoneId === table.id ? null : table.id;
+        const wasOnlyHighlightedBySearch =
+          !selectedSeatingZoneId && highlightedIds.size === 1 && highlightedIds.has(table.id);
+        if (wasOnlyHighlightedBySearch) {
+          if (elSeatingSearchInput) elSeatingSearchInput.value = '';
+          selectedSeatingZoneId = null;
+        } else {
+          selectedSeatingZoneId = selectedSeatingZoneId === table.id ? null : table.id;
+        }
         renderSeatingSection();
-        if (selectedSeatingZoneId && elSeatingPhotoStage && typeof elSeatingPhotoStage.scrollIntoView === 'function') {
+        if (
+          (selectedSeatingZoneId || (elSeatingSearchInput && elSeatingSearchInput.value.trim())) &&
+          elSeatingPhotoStage &&
+          typeof elSeatingPhotoStage.scrollIntoView === 'function'
+        ) {
           elSeatingPhotoStage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
       });
@@ -3687,7 +3764,7 @@
       head.append(nameEl, zoneBadge);
       card.append(head);
 
-      // 僅在 Debug 版本顯示每區「人數、素食人數、嬰兒車人數」（正常版 index.html 不顯示）
+      // 僅在 Debug 版本顯示每區「人數、素食人數、嬰兒車人數」與賓客姓名清單（公開版 index.html 隱藏姓名保護隱私）
       if (isDebugPage && table.debugStats) {
         const statsBar = document.createElement('div');
         statsBar.className = 'seating-debug-stats';
@@ -3728,22 +3805,33 @@
         card.append(statsBar);
       }
 
-      const guestsWrap = document.createElement('div');
-      guestsWrap.className = 'seating-guests-list';
+      if (isDebugPage) {
+        const guestsWrap = document.createElement('div');
+        guestsWrap.className = 'seating-guests-list';
 
-      table.guests.forEach((guest) => {
-        const pill = document.createElement('span');
-        const gLabel = guest[currentLang] || guest.zh;
-        const isGuestHit =
-          Boolean(query) &&
-          ((guest.zh && guest.zh.toLowerCase().includes(query)) ||
-            (guest.en && guest.en.toLowerCase().includes(query)));
-        pill.className = `seating-guest-pill${isGuestHit ? ' is-match' : ''}`;
-        pill.textContent = gLabel;
-        guestsWrap.append(pill);
-      });
+        table.guests.forEach((guest) => {
+          const pill = document.createElement('span');
+          const gLabel = guest[currentLang] || guest.zh;
+          const isGuestHit =
+            Boolean(query) &&
+            ((guest.zh && guest.zh.toLowerCase().includes(query)) ||
+              (guest.en && guest.en.toLowerCase().includes(query)));
+          pill.className = `seating-guest-pill${isGuestHit ? ' is-match' : ''}`;
+          pill.textContent = gLabel;
+          guestsWrap.append(pill);
+        });
 
-      card.append(guestsWrap);
+        card.append(guestsWrap);
+      } else if (query && (hasMatchingGuest || matchesTableTitle)) {
+        const matchNote = document.createElement('p');
+        matchNote.className = 'seating-public-match-note';
+        matchNote.textContent =
+          currentLang === 'en'
+            ? '📍 Your seating zone is highlighted on the floor plan above.'
+            : '📍 已為您標示入座區域，請對照上方平面圖高亮位置。';
+        card.append(matchNote);
+      }
+
       tableCards.push(card);
     });
 
@@ -3757,6 +3845,11 @@
           currentLang === 'en'
             ? '📍 Facility location highlighted on the floor plan above.'
             : '📍 已於上方平面圖為您標示設施位置。';
+      } else if (!isDebugPage && query.length < 2) {
+        emptyBox.textContent =
+          currentLang === 'en'
+            ? '🔎 Please enter at least 2 characters of your name or group to look up your seating zone.'
+            : '🔎 請輸入至少 2 個字的姓名或親友分類（例如：全名、北藝、瑪黑、Google）以查詢座位區域。';
       } else {
         emptyBox.textContent =
           currentLang === 'en'
@@ -5688,9 +5781,11 @@
     }
     elQuizSummaryRank.textContent = evalResult.comment;
 
-    if (window.__DBG_FORCE_WATERMARK) {
+    if (
+      typeof window.__CONSUME_DBG_FORCE_WATERMARK__ === 'function' &&
+      window.__CONSUME_DBG_FORCE_WATERMARK__()
+    ) {
       forcedSealWatermarkActive = true;
-      window.__DBG_FORCE_WATERMARK = false;
     } else if (triggerConfetti && quizScore < 6) {
       forcedSealWatermarkActive = false;
     }
@@ -5817,8 +5912,18 @@
     btnTabMenu.addEventListener('click', () => showHubView('banquet-menu'));
   }
   if (elSeatingSearchInput) {
-    elSeatingSearchInput.addEventListener('input', () => renderSeatingSection());
+    const handleSeatingSearchChange = () => {
+      selectedSeatingZoneId = null;
+      renderSeatingSection();
+    };
+    elSeatingSearchInput.addEventListener('input', handleSeatingSearchChange);
+    elSeatingSearchInput.addEventListener('search', handleSeatingSearchChange);
   }
+
+  window.addEventListener('te-debug-auth-change', () => {
+    renderSeatingSection();
+    updateCountdown(true);
+  });
 
   // ============================================================================
   // 3. 偏好設定與倒數計時核心邏輯
@@ -5835,18 +5940,7 @@
       btnFullscreen.classList.add('hidden');
     }
 
-    updateMsVisibility();
     applyLanguage();
-  }
-
-  function updateMsVisibility() {
-    if (!btnToggleMs || !elMs) return;
-    btnToggleMs.setAttribute('aria-pressed', String(showMs));
-    if (showMs) {
-      elMs.classList.remove('hidden');
-    } else {
-      elMs.classList.add('hidden');
-    }
   }
 
   function enterTimeUpState() {
@@ -5874,9 +5968,22 @@
     showHubView('countdown');
   }
 
-  function updateCountdown() {
+  let lastRenderedEpochSec = -1;
+  let lastRenderedRemSec = -1;
+  let tickRafId = 0;
+
+  function updateCountdown(force = false) {
     const now = Date.now();
     const diff = REAL_TARGET_TIMESTAMP - now;
+    const epochSec = Math.floor(now / 1000);
+    const remSec = diff <= 0 ? 0 : Math.floor(diff / 1000);
+    const stateChanging = (diff <= 0) !== isTimeUp;
+
+    if (!force && !stateChanging && epochSec === lastRenderedEpochSec && remSec === lastRenderedRemSec) {
+      return;
+    }
+    lastRenderedEpochSec = epochSec;
+    lastRenderedRemSec = remSec;
 
     elCurrentTwTime.textContent = twFormatter.format(new Date(now));
     renderLoveStoryNote(false);
@@ -5886,7 +5993,6 @@
       elHours.textContent = '00';
       elMinutes.textContent = '00';
       elSeconds.textContent = '00';
-      if (elMs) elMs.textContent = '.00';
 
       enterTimeUpState();
       return;
@@ -5896,7 +6002,7 @@
       exitTimeUpState();
     }
 
-    const totalSeconds = Math.floor(diff / 1000);
+    const totalSeconds = remSec;
     const totalMinutes = Math.floor(totalSeconds / 60);
     const totalHours = Math.floor(totalMinutes / 60);
     const days = Math.floor(totalHours / 24);
@@ -5904,34 +6010,50 @@
     const hours = totalHours % 24;
     const minutes = totalMinutes % 60;
     const seconds = totalSeconds % 60;
-    const centiseconds = Math.floor((diff % 1000) / 10);
 
     elDays.textContent = pad2(days);
     elHours.textContent = pad2(hours);
     elMinutes.textContent = pad2(minutes);
     elSeconds.textContent = pad2(seconds);
-    if (showMs && elMs) {
-      elMs.textContent = `.${pad2(centiseconds)}`;
-    }
   }
 
   function tick() {
-    updateCountdown();
-    requestAnimationFrame(tick);
+    if (document.hidden) {
+      tickRafId = 0;
+      return;
+    }
+    updateCountdown(false);
+    tickRafId = requestAnimationFrame(tick);
   }
 
-  // Gentle 33⅓ RPM Vinyl Felt-Piano & Music-Box Waltz — Johann Strauss II "The Blue Danube" (Op. 314)
+  function ensureCountdownTickLoop() {
+    if (!document.hidden && !tickRafId) {
+      updateCountdown(true);
+      tickRafId = requestAnimationFrame(tick);
+    }
+  }
+
+  // Dual-Palette 33⅓ RPM Austrian Salon Audio Engine (Vienna & Salzburg Honeymoon Homage):
+  // - Light Mode (Day): Johann Strauss II — "The Blue Danube" (Op. 314, D major 3/4 waltz)
+  // - Dark Mode (Night): W. A. Mozart — Piano Concerto No. 21 in C major, K. 467, II. Andante (F major)
   let bgmAudioCtx = null;
   let bgmMasterGain = null;
   let bgmNoteTarget = null;
+  let bgmLightBusGain = null;
+  let bgmDarkBusGain = null;
   let bgmLoopTimer = null;
   let bgmWatchdogTimer = null;
   let bgmWakeRetryTimers = [];
-  let bgmBarIndex = 0;
+  let bgmLightBarIndex = 0;
+  let bgmDarkBarIndex = 0;
   let bgmWasStandby = false;
   let bgmNeedsRebuild = false;
   let bgmLastCtxTime = -1;
   let bgmFrozenTicks = 0;
+
+  function getBgmThemeMode() {
+    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  }
 
   // 32-bar intimate 3/4 Viennese Waltz in D Major (honoring Tom & Eunice's Vienna honeymoon)
   // Each bar: { bass, chord: [n1, n2], notes: [[beat, midi, durBeats, gain, isChime?], ...] }
@@ -5980,6 +6102,120 @@
     { bass: 50, chord: [57, 66], notes: [[1, 69, 1.1, 0.04], [2, 62, 1.0, 0.044]] },
   ];
 
+  // 16-bar candlelit nocturnal Andante in F Major — W. A. Mozart, Piano Concerto No. 21 (K. 467), II. Andante
+  // 4/4 meter with pulsing muted-string triplets, cello pizzicato, and singing cantabile forte-piano
+  // Each bar: { pizz: [[beat, midi], ...], pad: [m1, m2, m3], triplets: [t1, t2, t3], triplets2?: [t1, t2, t3], notes: [[beat, midi, durBeats, gain, isChime?], ...] }
+  const MOZART_K467_ANDANTE_BARS = [
+    // Bars 1–3: Noble F-major rising arpeggio -> singing high F5 -> iconic 4-3 suspension (F5 -> E5) over C7/G
+    {
+      pizz: [[0, 41], [2, 48]],
+      pad: [57, 60, 65],
+      triplets: [57, 60, 65],
+      notes: [[0, 72, 1.05, 0.052], [1, 65, 1.05, 0.048], [2, 69, 1.05, 0.051], [3, 72, 1.08, 0.054]],
+    },
+    {
+      pizz: [[0, 41], [2, 48]],
+      pad: [57, 60, 65],
+      triplets: [57, 60, 65],
+      notes: [[0, 77, 2.95, 0.06], [3, 81, 0.42, 0.052], [3.333, 79, 0.42, 0.05], [3.667, 77, 0.45, 0.049]],
+    },
+    {
+      pizz: [[0, 43], [2, 48]],
+      pad: [55, 58, 64],
+      triplets: [55, 58, 64],
+      notes: [[0, 77, 1.05, 0.057], [1, 76, 2.45, 0.053], [3, 84, 0.95, 0.021, true]],
+    },
+
+    // Bars 4–6: Answering C7 arpeggio -> singing E5 -> tender 6-5 appoggiatura (D5 -> C5) resolving to F
+    {
+      pizz: [[0, 48], [2, 43]],
+      pad: [55, 58, 64],
+      triplets: [55, 58, 64],
+      notes: [[0, 70, 1.05, 0.051], [1, 64, 1.05, 0.047], [2, 67, 1.05, 0.05], [3, 70, 1.08, 0.053]],
+    },
+    {
+      pizz: [[0, 48], [2, 43]],
+      pad: [55, 58, 64],
+      triplets: [55, 58, 64],
+      notes: [[0, 76, 2.95, 0.059], [3, 79, 0.42, 0.051], [3.333, 77, 0.42, 0.049], [3.667, 76, 0.45, 0.048]],
+    },
+    {
+      pizz: [[0, 41], [2, 48]],
+      pad: [57, 60, 65],
+      triplets: [57, 60, 65],
+      notes: [[0, 74, 1.05, 0.056], [1, 72, 1.9, 0.052], [3, 72, 0.42, 0.047], [3.333, 74, 0.42, 0.049], [3.667, 76, 0.45, 0.051]],
+    },
+
+    // Bars 7–10: F7/A -> Bb lyrical arch -> Mozart's chiaroscuro Bbm6/Db sigh (Db5 -> C5) -> F/C - C7
+    {
+      pizz: [[0, 45], [2, 41]],
+      pad: [57, 60, 63],
+      triplets: [57, 60, 63],
+      notes: [[0, 77, 1.95, 0.058], [2, 77, 0.98, 0.053], [3, 75, 1.05, 0.054]],
+    },
+    {
+      pizz: [[0, 46], [2, 50]],
+      pad: [58, 62, 65],
+      triplets: [58, 62, 65],
+      notes: [[0, 74, 1.95, 0.057], [2, 77, 0.68, 0.055], [2.667, 74, 0.68, 0.051], [3.333, 70, 0.72, 0.049]],
+    },
+    {
+      pizz: [[0, 49], [2, 48]],
+      pad: [56, 58, 65],
+      triplets: [56, 58, 65],
+      notes: [[0, 73, 1.95, 0.056], [2, 72, 0.98, 0.053], [3, 71, 0.42, 0.048], [3.333, 72, 0.42, 0.05], [3.667, 73, 0.45, 0.051]],
+    },
+    {
+      pizz: [[0, 48], [2, 48]],
+      pad: [57, 60, 65],
+      triplets: [57, 60, 65],
+      triplets2: [55, 58, 64],
+      notes: [[0, 72, 1.05, 0.055], [1, 69, 1.05, 0.052], [2, 70, 1.02, 0.053], [3, 67, 1.05, 0.05]],
+    },
+
+    // Bars 11–16: Solo forte-piano crystalline entrance -> cantabile dialogue -> moonlit tonic breath
+    {
+      pizz: [[0, 41], [2, 48]],
+      pad: [57, 60, 65],
+      triplets: [57, 60, 65],
+      notes: [[0, 65, 1.5, 0.051], [1.5, 72, 0.62, 0.05], [2, 77, 1.05, 0.056], [3, 81, 1.08, 0.059]],
+    },
+    {
+      pizz: [[0, 43], [2, 48]],
+      pad: [58, 62, 65],
+      triplets: [58, 62, 65],
+      triplets2: [55, 58, 64],
+      notes: [[0, 82, 1.05, 0.058], [1, 79, 0.98, 0.055], [2, 76, 1.05, 0.054], [3, 72, 0.55, 0.049], [3.5, 70, 0.58, 0.048]],
+    },
+    {
+      pizz: [[0, 45], [2, 50]],
+      pad: [57, 60, 64],
+      triplets: [57, 60, 64],
+      triplets2: [57, 62, 65],
+      notes: [[0, 69, 1.45, 0.052], [1.5, 72, 0.58, 0.051], [2, 77, 1.35, 0.057], [3.333, 76, 0.42, 0.051], [3.667, 74, 0.45, 0.05]],
+    },
+    {
+      pizz: [[0, 43], [2, 48]],
+      pad: [55, 58, 62],
+      triplets: [55, 58, 62],
+      triplets2: [55, 58, 64],
+      notes: [[0, 70, 1.05, 0.053], [1, 67, 1.02, 0.05], [2, 72, 0.68, 0.054], [2.667, 69, 0.68, 0.052], [3.333, 67, 0.72, 0.05]],
+    },
+    {
+      pizz: [[0, 41], [2, 41]],
+      pad: [57, 60, 65],
+      triplets: [57, 60, 65],
+      triplets2: [58, 62, 65],
+      notes: [[0, 65, 2.1, 0.054], [1, 77, 1.5, 0.024, true], [2, 74, 1.02, 0.048], [3, 70, 1.02, 0.046]],
+    },
+    {
+      pizz: [[0, 41], [2, 48]],
+      pad: [57, 60, 65],
+      triplets: [57, 60, 65],
+      notes: [[0, 69, 2.1, 0.05], [2, 84, 1.6, 0.02, true], [3, 67, 0.98, 0.045]],
+    },
+  ];
+
   function midiToHz(midi) {
     return 440 * Math.pow(2, (midi - 69) / 12);
   }
@@ -6010,6 +6246,27 @@
     }
   }
 
+  function syncBgmThemeBuses(immediate = false) {
+    if (!bgmAudioCtx || !bgmLightBusGain || !bgmDarkBusGain) return;
+    try {
+      const now = bgmAudioCtx.currentTime;
+      const isDark = getBgmThemeMode() === 'dark';
+      const lightTarget = isDark ? 0.0001 : 1.0;
+      const darkTarget = isDark ? 1.0 : 0.0001;
+      bgmLightBusGain.gain.cancelScheduledValues(now);
+      bgmDarkBusGain.gain.cancelScheduledValues(now);
+      if (immediate || typeof bgmLightBusGain.gain.setTargetAtTime !== 'function') {
+        bgmLightBusGain.gain.setValueAtTime(lightTarget, now);
+        bgmDarkBusGain.gain.setValueAtTime(darkTarget, now);
+      } else {
+        bgmLightBusGain.gain.setTargetAtTime(lightTarget, now, 0.09);
+        bgmDarkBusGain.gain.setTargetAtTime(darkTarget, now, 0.09);
+      }
+    } catch (_e) {
+      // ignore sub-bus gain ramp errors
+    }
+  }
+
   function destroyBgmAudioGraph() {
     if (bgmLoopTimer) {
       clearTimeout(bgmLoopTimer);
@@ -6019,6 +6276,8 @@
     bgmAudioCtx = null;
     bgmMasterGain = null;
     bgmNoteTarget = null;
+    bgmLightBusGain = null;
+    bgmDarkBusGain = null;
     bgmLastCtxTime = -1;
     bgmFrozenTicks = 0;
     if (oldCtx && typeof oldCtx.close === 'function') {
@@ -6050,16 +6309,21 @@
 
       const toneFilter = bgmAudioCtx.createBiquadFilter();
       toneFilter.type = 'lowpass';
-      toneFilter.frequency.setValueAtTime(1480, bgmAudioCtx.currentTime);
-      toneFilter.Q.setValueAtTime(0.55, bgmAudioCtx.currentTime);
+      toneFilter.frequency.setValueAtTime(1680, bgmAudioCtx.currentTime);
+      toneFilter.Q.setValueAtTime(0.52, bgmAudioCtx.currentTime);
       toneFilter.connect(master);
 
-      // Warm Viennese salon echo so felt-piano & music-box notes bloom gently
+      const lightBus = bgmAudioCtx.createGain();
+      const darkBus = bgmAudioCtx.createGain();
+      lightBus.connect(toneFilter);
+      darkBus.connect(toneFilter);
+
+      // Warm Viennese salon echo so felt-piano, strings & music-box notes bloom gently
       const delay = bgmAudioCtx.createDelay(1.0);
       delay.delayTime.setValueAtTime(0.29, bgmAudioCtx.currentTime);
       const echoFilter = bgmAudioCtx.createBiquadFilter();
       echoFilter.type = 'lowpass';
-      echoFilter.frequency.setValueAtTime(920, bgmAudioCtx.currentTime);
+      echoFilter.frequency.setValueAtTime(940, bgmAudioCtx.currentTime);
       const feedback = bgmAudioCtx.createGain();
       feedback.gain.setValueAtTime(0.19, bgmAudioCtx.currentTime);
       const wet = bgmAudioCtx.createGain();
@@ -6074,6 +6338,9 @@
 
       bgmMasterGain = master;
       bgmNoteTarget = toneFilter;
+      bgmLightBusGain = lightBus;
+      bgmDarkBusGain = darkBus;
+      syncBgmThemeBuses(true);
 
       const boundCtx = bgmAudioCtx;
       if (typeof boundCtx.addEventListener === 'function') {
@@ -6094,14 +6361,15 @@
   }
 
   function scheduleFeltPianoNote(ctx, midi, startTime, durationSec, peakGain, isChime = false) {
-    if (!bgmNoteTarget) return;
+    const targetBus = bgmLightBusGain || bgmNoteTarget;
+    if (!targetBus) return;
     const freq = midiToHz(midi);
     const env = ctx.createGain();
     env.gain.setValueAtTime(0.0001, startTime);
     env.gain.linearRampToValueAtTime(peakGain, startTime + (isChime ? 0.012 : 0.024));
     env.gain.exponentialRampToValueAtTime(peakGain * 0.34, startTime + (isChime ? 0.28 : 0.38));
     env.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec);
-    env.connect(bgmNoteTarget);
+    env.connect(targetBus);
 
     const oscMain = ctx.createOscillator();
     oscMain.type = 'sine';
@@ -6118,10 +6386,157 @@
     oscWarm.connect(warmGain);
     warmGain.connect(env);
 
+    oscMain.onended = () => {
+      try {
+        warmGain.disconnect();
+        env.disconnect();
+      } catch (_e) {
+        // ignore audio node cleanup errors
+      }
+    };
     oscMain.start(startTime);
     oscWarm.start(startTime);
     oscMain.stop(startTime + durationSec + 0.05);
     oscWarm.stop(startTime + durationSec + 0.05);
+  }
+
+  // Dark Mode Voice 1: Warm Cello/Bass Pizzicato Pluck
+  function scheduleMozartPizzBass(ctx, midi, startTime, durationSec, peakGain = 0.04) {
+    const targetBus = bgmDarkBusGain || bgmNoteTarget;
+    if (!targetBus) return;
+    const freq = midiToHz(midi);
+    const env = ctx.createGain();
+    env.gain.setValueAtTime(0.0001, startTime);
+    env.gain.linearRampToValueAtTime(peakGain, startTime + 0.016);
+    env.gain.exponentialRampToValueAtTime(peakGain * 0.28, startTime + 0.26);
+    env.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec);
+    env.connect(targetBus);
+
+    const oscFund = ctx.createOscillator();
+    oscFund.type = 'sine';
+    oscFund.frequency.setValueAtTime(freq, startTime);
+
+    const oscBody = ctx.createOscillator();
+    oscBody.type = 'triangle';
+    oscBody.frequency.setValueAtTime(freq * 2, startTime);
+    const bodyGain = ctx.createGain();
+    bodyGain.gain.setValueAtTime(0.16, startTime);
+    bodyGain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.18);
+
+    oscFund.connect(env);
+    oscBody.connect(bodyGain);
+    bodyGain.connect(env);
+
+    oscFund.onended = () => {
+      try {
+        bodyGain.disconnect();
+        env.disconnect();
+      } catch (_e) {
+        // ignore audio node cleanup errors
+      }
+    };
+    oscFund.start(startTime);
+    oscBody.start(startTime);
+    oscFund.stop(startTime + durationSec + 0.05);
+    oscBody.stop(startTime + durationSec + 0.05);
+  }
+
+  // Dark Mode Voice 2: Velvet Muted Strings (con sordino) Nocturnal Halo
+  function scheduleMozartMutedStrings(ctx, midiList, startTime, durationSec, peakGain = 0.011) {
+    const targetBus = bgmDarkBusGain || bgmNoteTarget;
+    if (!targetBus || !midiList || !midiList.length) return;
+    midiList.forEach((midi, idx) => {
+      const freq = midiToHz(midi);
+      const env = ctx.createGain();
+      env.gain.setValueAtTime(0.0001, startTime);
+      env.gain.linearRampToValueAtTime(peakGain, startTime + Math.min(0.65, durationSec * 0.26));
+      env.gain.setValueAtTime(peakGain * 0.85, startTime + durationSec * 0.72);
+      env.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec);
+      env.connect(targetBus);
+
+      const osc = ctx.createOscillator();
+      osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+      osc.frequency.setValueAtTime(freq, startTime);
+      if (osc.detune) osc.detune.setValueAtTime((idx - 1) * 3.5, startTime);
+      osc.connect(env);
+      osc.onended = () => {
+        try {
+          env.disconnect();
+        } catch (_e) {
+          // ignore audio node cleanup errors
+        }
+      };
+      osc.start(startTime);
+      osc.stop(startTime + durationSec + 0.06);
+    });
+  }
+
+  // Dark Mode Voice 3: Feather-Soft Muted Triplet Accompaniment (Mozart's Moonlit Heartbeat)
+  function scheduleMozartTripletNote(ctx, midi, startTime, durationSec, peakGain = 0.014) {
+    const targetBus = bgmDarkBusGain || bgmNoteTarget;
+    if (!targetBus) return;
+    const freq = midiToHz(midi);
+    const env = ctx.createGain();
+    env.gain.setValueAtTime(0.0001, startTime);
+    env.gain.linearRampToValueAtTime(peakGain, startTime + 0.032);
+    env.gain.exponentialRampToValueAtTime(peakGain * 0.42, startTime + durationSec * 0.62);
+    env.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec);
+    env.connect(targetBus);
+
+    const osc = ctx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, startTime);
+    osc.connect(env);
+    osc.onended = () => {
+      try {
+        env.disconnect();
+      } catch (_e) {
+        // ignore audio node cleanup errors
+      }
+    };
+    osc.start(startTime);
+    osc.stop(startTime + durationSec + 0.04);
+  }
+
+  // Dark Mode Voice 4: Singing Cantabile Solo Forte-Piano & Starlight Harmonic
+  function scheduleMozartCantabileNote(ctx, midi, startTime, durationSec, peakGain, isChime = false) {
+    const targetBus = bgmDarkBusGain || bgmNoteTarget;
+    if (!targetBus) return;
+    const freq = midiToHz(midi);
+    const env = ctx.createGain();
+    env.gain.setValueAtTime(0.0001, startTime);
+    env.gain.linearRampToValueAtTime(peakGain, startTime + (isChime ? 0.016 : 0.03));
+    env.gain.exponentialRampToValueAtTime(peakGain * 0.52, startTime + Math.min(0.65, durationSec * 0.48));
+    env.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec);
+    env.connect(targetBus);
+
+    const oscMain = ctx.createOscillator();
+    oscMain.type = 'sine';
+    oscMain.frequency.setValueAtTime(freq, startTime);
+
+    const oscOver = ctx.createOscillator();
+    oscOver.type = isChime ? 'sine' : 'triangle';
+    oscOver.frequency.setValueAtTime(freq * 2, startTime);
+    const overGain = ctx.createGain();
+    overGain.gain.setValueAtTime(isChime ? 0.09 : 0.14, startTime);
+    overGain.gain.exponentialRampToValueAtTime(0.01, startTime + Math.min(0.48, durationSec * 0.6));
+
+    oscMain.connect(env);
+    oscOver.connect(overGain);
+    overGain.connect(env);
+
+    oscMain.onended = () => {
+      try {
+        overGain.disconnect();
+        env.disconnect();
+      } catch (_e) {
+        // ignore audio node cleanup errors
+      }
+    };
+    oscMain.start(startTime);
+    oscOver.start(startTime);
+    oscMain.stop(startTime + durationSec + 0.05);
+    oscOver.stop(startTime + durationSec + 0.05);
   }
 
   function scheduleNextBgmBar() {
@@ -6135,10 +6550,62 @@
       bgmFrozenTicks = 0;
     }
     bgmLastCtxTime = bgmAudioCtx.currentTime;
-    const beatSec = 0.43; // Unhurried, tender Viennese 3/4 waltz (~140 quarter BPM = ~46 bars/min)
     const barStart = bgmAudioCtx.currentTime + 0.05;
-    const bar = BLUE_DANUBE_BARS[bgmBarIndex % BLUE_DANUBE_BARS.length];
-    bgmBarIndex = (bgmBarIndex + 1) % BLUE_DANUBE_BARS.length;
+
+    if (getBgmThemeMode() === 'dark') {
+      const beatSec = 0.86; // Tranquil candlelit Andante (~70 BPM quarter pulse; 3 triplets/beat)
+      const tripletSec = beatSec / 3;
+      const bar = MOZART_K467_ANDANTE_BARS[bgmDarkBarIndex % MOZART_K467_ANDANTE_BARS.length];
+      bgmDarkBarIndex = (bgmDarkBarIndex + 1) % MOZART_K467_ANDANTE_BARS.length;
+
+      // 1. Muted con sordino strings sustain halo
+      scheduleMozartMutedStrings(bgmAudioCtx, bar.pad, barStart, beatSec * 3.92, 0.0105);
+
+      // 2. Cello/bass pizzicato on beats 1 & 3
+      if (bar.pizz && bar.pizz.length) {
+        bar.pizz.forEach(([pBeat, pMidi]) => {
+          scheduleMozartPizzBass(bgmAudioCtx, pMidi, barStart + pBeat * beatSec, beatSec * 1.55, 0.038);
+        });
+      }
+
+      // 3. Twelve pulsing triplet accompaniment notes across the 4 beats
+      for (let step = 0; step < 12; step += 1) {
+        const activeTriad = step >= 6 && bar.triplets2 ? bar.triplets2 : bar.triplets;
+        if (activeTriad && activeTriad.length) {
+          const tMidi = activeTriad[step % activeTriad.length];
+          const tGain = step % 3 === 0 ? 0.0155 : 0.0125;
+          scheduleMozartTripletNote(
+            bgmAudioCtx,
+            tMidi,
+            barStart + step * tripletSec,
+            tripletSec * 1.18,
+            tGain
+          );
+        }
+      }
+
+      // 4. Singing solo forte-piano cantabile melody
+      bar.notes.forEach((n) => {
+        const [beatOffset, midi, durBeats, gain, isChime] = n;
+        const rubato = (Math.random() - 0.5) * 0.01;
+        const tStart = Math.max(bgmAudioCtx.currentTime + 0.02, barStart + beatOffset * beatSec + rubato);
+        scheduleMozartCantabileNote(
+          bgmAudioCtx,
+          midi,
+          tStart,
+          Math.max(0.32, durBeats * beatSec),
+          gain,
+          Boolean(isChime)
+        );
+      });
+
+      bgmLoopTimer = window.setTimeout(scheduleNextBgmBar, Math.round(beatSec * 4 * 1000));
+      return;
+    }
+
+    const beatSec = 0.43; // Unhurried, tender Viennese 3/4 waltz (~140 quarter BPM = ~46 bars/min)
+    const bar = BLUE_DANUBE_BARS[bgmLightBarIndex % BLUE_DANUBE_BARS.length];
+    bgmLightBarIndex = (bgmLightBarIndex + 1) % BLUE_DANUBE_BARS.length;
 
     // Soft waltz accompaniment: warm bass on beat 1, feather-light brushed dyads on beats 2 & 3
     // (subtle -12ms Viennese lilt on beat 2 so it sways gently rather than marching mechanically)
@@ -6181,6 +6648,7 @@
     } catch (_e) {
       // ignore gain transition errors
     }
+    syncBgmThemeBuses(false);
   }
 
   // Never call bgmAudioCtx.suspend() on standby so iOS/macOS Safari can auto-resume AVAudioSession on wake!
@@ -6362,9 +6830,30 @@
     if (!document.hidden && bgmPlaying) scheduleStaggeredBgmWake();
   });
 
+  function handleBgmThemeSwitch() {
+    if (getBgmThemeMode() === 'dark') {
+      bgmDarkBarIndex = 0;
+    } else {
+      bgmLightBarIndex = 0;
+    }
+    syncBgmButtonA11y();
+    if (!bgmPlaying) return;
+
+    if (bgmLoopTimer) {
+      clearTimeout(bgmLoopTimer);
+      bgmLoopTimer = null;
+    }
+    if (!isVinylAudioHealthy()) {
+      rebuildAndWakeVinylOnGesture();
+      return;
+    }
+    syncBgmThemeBuses(false);
+    wakeVinylBgm();
+  }
+
   const unlockBgmAfterStandby = (e) => {
     if (!bgmPlaying || document.hidden || isVinylAudioHealthy()) return;
-    if (btnBgm && e && e.target && typeof e.target.closest === 'function' && e.target.closest('#bgm-toggle-btn')) {
+    if (btnBgm && e && e.target && typeof e.target.closest === 'function' && e.target.closest('#bgm-btn')) {
       return;
     }
     rebuildAndWakeVinylOnGesture();
@@ -6378,21 +6867,15 @@
     currentLang = currentLang === 'zh' ? 'en' : 'zh';
     safeSetStorage(STORAGE_KEY_LANG, currentLang);
     applyLanguage();
+    updateCountdown(true);
   });
-
-  if (btnToggleMs) {
-    btnToggleMs.addEventListener('click', () => {
-      showMs = !showMs;
-      safeSetStorage(STORAGE_KEY_MS, String(showMs));
-      updateMsVisibility();
-    });
-  }
 
   btnTheme.addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-theme') || 'light';
     const next = current === 'light' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', next);
     safeSetStorage(STORAGE_KEY_THEME, next);
+    handleBgmThemeSwitch();
   });
 
   if (btnFullscreen) {
@@ -6580,8 +7063,11 @@
   }
 
   document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && (particles.length > 0 || !reducedMotionQuery.matches)) {
-      ensureConfettiLoop();
+    if (!document.hidden) {
+      ensureCountdownTickLoop();
+      if (particles.length > 0 || !reducedMotionQuery.matches) {
+        ensureConfettiLoop();
+      }
     }
   });
 
@@ -6597,7 +7083,7 @@
   // Initialize
   initPreferences();
   ensureConfettiLoop();
-  requestAnimationFrame(tick);
+  ensureCountdownTickLoop();
 
   // Register Offline Service Worker (Network-First + Zero Easter Egg Spoiler)
   if (
@@ -6606,7 +7092,7 @@
     !document.getElementById('debug-auth-gate')
   ) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js?v=20261111h').catch(() => {});
+      navigator.serviceWorker.register('./sw.js?v=20261111n').catch(() => {});
     });
   }
 })();

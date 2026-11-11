@@ -7,8 +7,26 @@
   // 未通過帳密驗證前，預設為 0（不啟動任何模擬時間偏移）
   let offsetMs = 0;
   let isAuthenticated = false;
+  let forceWatermarkOnce = false;
 
   Date.now = () => (isAuthenticated ? realDateNow() + offsetMs : realDateNow());
+
+  Object.defineProperty(window, '__TE_DEBUG_AUTH__', {
+    get: () => isAuthenticated,
+    configurable: false,
+    enumerable: false,
+  });
+
+  Object.defineProperty(window, '__CONSUME_DBG_FORCE_WATERMARK__', {
+    value: () => {
+      if (!isAuthenticated || !forceWatermarkOnce) return false;
+      forceWatermarkOnce = false;
+      return true;
+    },
+    writable: false,
+    configurable: false,
+    enumerable: false,
+  });
 
   // ============================================================================
   // PBKDF2-HMAC-SHA256 (12,000 Iterations) + Encrypt-then-MAC 加密載荷
@@ -434,6 +452,7 @@
 
     inner.append(headerRow, btnGroup);
     toolbar.replaceChildren(inner);
+    window.dispatchEvent(new CustomEvent('te-debug-auth-change'));
 
     // 綁定各個模擬按鈕事件
     const btnDbg5s = document.getElementById('dbg-5s-btn');
@@ -549,7 +568,7 @@
       btnDbgEgg.addEventListener('click', () => {
         offsetMs = (REAL_TARGET_TIMESTAMP + 1000) - realDateNow();
         setTimeout(() => {
-          window.__DBG_FORCE_WATERMARK = true;
+          forceWatermarkOnce = true;
           const quizCard = document.getElementById('choose-quiz-card');
           if (quizCard) quizCard.click();
           for (let i = 0; i < 20; i++) {
@@ -582,6 +601,7 @@
           activeViewportResizeHandler = null;
         }
         isAuthenticated = false;
+        forceWatermarkOnce = false;
         offsetMs = 0;
         toolbar.replaceChildren();
         toolbar.classList.add('hidden');
@@ -590,6 +610,7 @@
           authGate.classList.remove('hidden');
           authGate.style.display = '';
         }
+        window.dispatchEvent(new CustomEvent('te-debug-auth-change'));
       });
     }
   }

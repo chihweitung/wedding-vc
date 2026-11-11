@@ -462,15 +462,6 @@ body.is-time-up .countdown-stage-wrap {
   color: var(--text-primary);
 }
 
-.ms-value {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(0.95rem, 1.8vw, 1.4rem);
-  font-weight: 500;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-  margin-left: 3px;
-}
-
 .hidden {
   display: none !important;
 }
@@ -1795,6 +1786,17 @@ body.is-time-up .countdown-stage-wrap {
   filter: brightness(0.84) saturate(0.88);
 }
 
+[data-theme="dark"] .embedded-photo-stage .seating-map-interactive img,
+[data-theme="dark"] .seating-map-interactive img,
+[data-theme="dark"] .seating-map-base-patch {
+  filter: brightness(0.74) saturate(0.56) contrast(1.06);
+}
+
+[data-theme="dark"] .seating-map-interactive.has-active-zone img,
+[data-theme="dark"] .seating-map-interactive.has-active-zone .seating-map-base-patch {
+  filter: brightness(0.46) saturate(0.42) contrast(1.08);
+}
+
 .seating-map-svg {
   position: absolute;
   inset: 0;
@@ -2283,6 +2285,193 @@ body.is-time-up .countdown-stage-wrap {
   color: #ffffff;
   border-color: var(--accent);
   font-weight: 600;
+}
+
+.seating-public-match-note {
+  margin: 2px 0 0;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--zone-color, var(--accent));
+}
+
+/* Dark Mode Seating Map & Card High-Contrast Overrides */
+[data-theme="dark"] .seating-zone-hotspot {
+  fill: var(--zone-dark-fill, rgba(251, 191, 36, 0.28));
+  stroke: var(--zone-dark-color, #fbbf24);
+  stroke-width: 9;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.65));
+}
+
+[data-theme="dark"] .seating-map-interactive.has-active-zone .seating-zone-hotspot:not(.is-highlighted) {
+  opacity: 0.34;
+}
+
+[data-theme="dark"] .seating-zone-hotspot:hover {
+  fill: var(--zone-dark-fill, rgba(251, 191, 36, 0.4));
+  stroke: var(--zone-dark-color, #fde047);
+  stroke-width: 13;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.65)) drop-shadow(0 0 18px var(--zone-dark-color, #fbbf24));
+}
+
+[data-theme="dark"] .seating-zone-hotspot.is-highlighted {
+  fill: var(--zone-dark-fill, rgba(250, 204, 21, 0.44));
+  stroke: var(--zone-dark-color, #fde047);
+  stroke-width: 15;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 26px var(--zone-dark-color, #fbbf24));
+}
+
+[data-theme="dark"] .seating-zone-label-bg {
+  fill: rgba(11, 18, 28, 0.95);
+  stroke: var(--zone-dark-color, #fbbf24);
+  stroke-width: 6.5;
+  filter: drop-shadow(0 5px 14px rgba(0, 0, 0, 0.78));
+}
+
+[data-theme="dark"] .seating-zone-label-text {
+  fill: #ffffff;
+  stroke: rgba(8, 12, 20, 0.96);
+  stroke-width: 6px;
+}
+
+[data-theme="dark"] .seating-zone-label-group:hover .seating-zone-label-bg,
+[data-theme="dark"] .seating-zone-label-group.is-highlighted .seating-zone-label-bg {
+  fill: var(--zone-dark-color, #fde047);
+  stroke: #ffffff;
+  stroke-width: 7.5;
+  filter: drop-shadow(0 0 20px var(--zone-dark-color, rgba(250, 204, 21, 0.9))) drop-shadow(0 6px 18px rgba(0, 0, 0, 0.72));
+}
+
+[data-theme="dark"] .seating-zone-label-group:hover .seating-zone-label-text,
+[data-theme="dark"] .seating-zone-label-group.is-highlighted .seating-zone-label-text {
+  fill: #090f18;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 3px;
+}
+
+[data-theme="dark"] .seating-facility-badge-bg {
+  fill: rgba(11, 18, 28, 0.94);
+  stroke: #cbd5e1;
+  stroke-width: 5.5;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.72));
+}
+
+[data-theme="dark"] .seating-facility-badge-text {
+  fill: #f8fafc;
+}
+
+[data-theme="dark"] .seating-restroom-badge-bg,
+[data-theme="dark"] .seating-reception-badge-bg {
+  fill: rgba(11, 18, 28, 0.95);
+  stroke: #38bdf8;
+  stroke-width: 6.5;
+  filter: drop-shadow(0 5px 14px rgba(0, 0, 0, 0.76));
+}
+
+[data-theme="dark"] .seating-restroom-label-main,
+[data-theme="dark"] .seating-reception-badge-text {
+  fill: #7dd3fc;
+}
+
+[data-theme="dark"] .seating-restroom-label-sub {
+  fill: #bae6fd;
+}
+
+[data-theme="dark"] .seating-restroom-group:hover .seating-restroom-badge-bg,
+[data-theme="dark"] .seating-restroom-group.is-highlighted .seating-restroom-badge-bg,
+[data-theme="dark"] .seating-reception-group:hover .seating-reception-badge-bg,
+[data-theme="dark"] .seating-reception-group.is-highlighted .seating-reception-badge-bg {
+  fill: #0284c7;
+  stroke: #ffffff;
+}
+
+[data-theme="dark"] .seating-bar-badge-bg {
+  fill: rgba(11, 18, 28, 0.95);
+  stroke: #f472b6;
+  stroke-width: 6.5;
+  filter: drop-shadow(0 5px 14px rgba(0, 0, 0, 0.76));
+}
+
+[data-theme="dark"] .seating-bar-label-main {
+  fill: #f9a8d4;
+}
+
+[data-theme="dark"] .seating-bar-label-sub {
+  fill: #fbcfe8;
+}
+
+[data-theme="dark"] .seating-bar-group:hover .seating-bar-badge-bg,
+[data-theme="dark"] .seating-bar-group.is-highlighted .seating-bar-badge-bg {
+  fill: #be185d;
+  stroke: #ffffff;
+}
+
+[data-theme="dark"] .seating-buffet-badge-bg {
+  fill: rgba(11, 18, 28, 0.95);
+  stroke: #2dd4bf;
+  stroke-width: 6.5;
+  filter: drop-shadow(0 5px 14px rgba(0, 0, 0, 0.76));
+}
+
+[data-theme="dark"] .seating-buffet-badge-text {
+  fill: #5eead4;
+}
+
+[data-theme="dark"] .seating-buffet-group:hover .seating-buffet-badge-bg,
+[data-theme="dark"] .seating-buffet-group.is-highlighted .seating-buffet-badge-bg {
+  fill: #0d9488;
+  stroke: #ffffff;
+}
+
+[data-theme="dark"] .seating-kitchen-badge-bg {
+  fill: rgba(11, 18, 28, 0.95);
+  stroke: #818cf8;
+  stroke-width: 6.5;
+  filter: drop-shadow(0 5px 14px rgba(0, 0, 0, 0.76));
+}
+
+[data-theme="dark"] .seating-kitchen-label-main {
+  fill: #a5b4fc;
+}
+
+[data-theme="dark"] .seating-kitchen-label-sub {
+  fill: #c7d2fe;
+}
+
+[data-theme="dark"] .seating-kitchen-group:hover .seating-kitchen-badge-bg,
+[data-theme="dark"] .seating-kitchen-group.is-highlighted .seating-kitchen-badge-bg {
+  fill: #4f46e5;
+  stroke: #ffffff;
+}
+
+[data-theme="dark"] .seating-table-card {
+  border-color: color-mix(in srgb, var(--zone-dark-color, #9ab8a1) 58%, transparent);
+  border-left-color: var(--zone-dark-color, var(--accent));
+}
+
+[data-theme="dark"] .seating-table-card.is-zone-highlighted {
+  border-color: var(--zone-dark-color, #fbbf24);
+  box-shadow: 0 0 0 3px var(--zone-dark-fill, rgba(251, 191, 36, 0.36)), 0 12px 28px rgba(0, 0, 0, 0.45);
+  background: var(--surface-card);
+}
+
+[data-theme="dark"] .seating-table-card:hover {
+  box-shadow: 0 8px 20px -6px var(--zone-dark-fill, rgba(0, 0, 0, 0.4));
+}
+
+[data-theme="dark"] .seating-zone-swatch {
+  background: var(--zone-dark-color, var(--accent));
+  box-shadow: 0 0 0 3px var(--zone-dark-fill, rgba(154, 184, 161, 0.28));
+}
+
+[data-theme="dark"] .seating-table-badge {
+  background: rgba(11, 18, 28, 0.62);
+  border-color: var(--zone-dark-color, var(--border-subtle));
+  color: var(--zone-dark-color, var(--accent));
+}
+
+[data-theme="dark"] .seating-public-match-note {
+  color: var(--zone-dark-color, var(--accent));
 }
 
 .banquet-menu-note {
@@ -2897,6 +3086,7 @@ body.hp-secret-theme {
     radial-gradient(ellipse 75% 42% at 50% 8%, rgba(168, 32, 38, 0.24) 0%, rgba(180, 83, 9, 0.12) 45%, transparent 78%),
     radial-gradient(circle at 50% 24%, #22162e 0%, #120d1d 55%, #09070f 100%);
   color: #f6e8c8;
+  font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
   min-height: 100vh;
   min-height: 100dvh;
   position: relative;
@@ -2986,7 +3176,7 @@ body.hp-lumos-on .hp-lumos-overlay {
   background: rgba(116, 0, 1, 0.55);
   border: 1px solid rgba(212, 175, 55, 0.55);
   color: #fde68a;
-  font-family: 'Cinzel', 'Noto Serif TC', serif;
+  font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
   letter-spacing: 0.08em;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
 }
@@ -3009,8 +3199,8 @@ body.hp-lumos-on .hp-lumos-overlay {
   background: rgba(28, 22, 42, 0.82);
   border: 1px solid rgba(212, 175, 55, 0.5);
   color: #fde68a;
-  font-family: 'Noto Serif TC', serif;
-  font-size: 0.85rem;
+  font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
+  font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
@@ -3076,29 +3266,35 @@ body.hp-lumos-on .hp-lumos-overlay {
 }
 
 .hp-oath-eyebrow {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(0.7rem, 1.8vw, 0.86rem);
+  font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
+  font-size: clamp(0.76rem, 1.9vw, 0.94rem);
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   color: #e5c158;
   text-shadow: 0 2px 10px rgba(212, 175, 55, 0.35);
 }
 
 .hp-couple-names {
-  font-family: 'Cinzel Decorative', 'Cormorant Garamond', serif;
-  font-size: clamp(2.6rem, 6.5vw, 4.4rem);
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  background: linear-gradient(180deg, #fff7d6 0%, #eab308 52%, #a16207 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 4px 18px rgba(234, 179, 8, 0.32));
+  font-family: 'Alex Brush', 'Pinyon Script', 'Great Vibes', 'Cormorant Garamond', cursive;
+  font-size: clamp(3.35rem, 8.2vw, 5.6rem);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: 0.02em;
+  filter: drop-shadow(0 4px 18px rgba(234, 179, 8, 0.34));
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  margin: 4px 0;
+  gap: clamp(8px, 1.8vw, 18px);
+  margin: 2px 0;
+}
+
+.hp-couple-names > span:not(.hp-emblem-knot) {
+  display: inline-block;
+  padding: 0.05em 0.14em 0.08em;
+  background: linear-gradient(180deg, #fffbeb 0%, #fde68a 34%, #eab308 68%, #b45309 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .hp-emblem-knot {
@@ -3125,8 +3321,8 @@ body.hp-lumos-on .hp-lumos-overlay {
 }
 
 .hp-event-title {
-  font-family: 'Noto Serif TC', serif;
-  font-size: clamp(1.12rem, 2.5vw, 1.45rem);
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: clamp(1.14rem, 2.5vw, 1.48rem);
   font-weight: 700;
   color: #fef3c7;
   letter-spacing: 0.06em;
@@ -3134,9 +3330,9 @@ body.hp-lumos-on .hp-lumos-overlay {
 }
 
 .hp-subtitle {
-  font-family: 'Noto Serif TC', serif;
-  font-size: 0.92rem;
-  color: rgba(246, 232, 200, 0.82);
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: 0.94rem;
+  color: rgba(246, 232, 200, 0.85);
   margin-top: 4px;
 }
 
@@ -3303,15 +3499,15 @@ body.hp-lumos-on .hp-parchment-card,
 }
 
 .hp-wax-monogram {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 0.84rem;
-  font-weight: 900;
+  font-family: 'Pinyon Script', 'Alex Brush', 'Cormorant Garamond', serif;
+  font-size: 1.02rem;
+  font-weight: 400;
   color: #fef3c7;
 }
 
 .hp-wax-year {
-  font-family: 'Cinzel', 'Cormorant Garamond', serif;
-  font-size: 0.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.54rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: rgba(253, 230, 138, 0.9);
@@ -3325,16 +3521,16 @@ body.hp-lumos-on .hp-parchment-card,
 }
 
 .hp-ministry-tag {
-  font-family: 'Cinzel', 'Noto Serif TC', serif;
-  font-size: 0.74rem;
+  font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   color: #7f1d1d;
 }
 
 .hp-parchment-title {
-  font-family: 'Noto Serif TC', serif;
-  font-size: clamp(1.25rem, 2.8vw, 1.6rem);
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: clamp(1.28rem, 2.8vw, 1.64rem);
   font-weight: 700;
   color: #231409;
 }
@@ -3350,8 +3546,8 @@ body.hp-lumos-on .hp-parchment-card,
   border-radius: 12px;
   background: rgba(127, 29, 29, 0.06);
   border: 1px dashed rgba(127, 29, 29, 0.36);
-  font-family: 'Noto Serif TC', serif;
-  font-size: 0.82rem;
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
   color: #4a2611;
 }
 
@@ -3415,8 +3611,9 @@ body.hp-lumos-on .hp-parchment-card,
 }
 
 .hp-parchment-body {
-  font-size: 0.96rem;
-  line-height: 1.75;
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: 0.98rem;
+  line-height: 1.82;
   color: #3b2614;
   max-width: 640px;
 }
@@ -3527,8 +3724,8 @@ body.hp-lumos-on .hp-parchment-card,
 }
 
 .hp-ink-header {
-  font-family: 'Cinzel', 'Noto Serif TC', serif;
-  font-size: 0.76rem;
+  font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   color: #740001;
@@ -3536,9 +3733,9 @@ body.hp-lumos-on .hp-parchment-card,
 }
 
 .hp-ink-text {
-  font-family: 'Noto Serif TC', serif;
-  font-size: 0.88rem;
-  line-height: 1.65;
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  line-height: 1.7;
   color: #3b2311;
 }
 
@@ -3558,16 +3755,16 @@ body.hp-lumos-on .hp-parchment-card,
 }
 
 .hp-decree-eyebrow {
-  font-family: 'Cinzel', 'Noto Serif TC', serif;
-  font-size: 0.74rem;
+  font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   color: #eab308;
 }
 
 .hp-decree-code {
-  font-family: 'Noto Serif TC', serif;
-  font-size: clamp(1.05rem, 2.4vw, 1.32rem);
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: clamp(1.06rem, 2.4vw, 1.34rem);
   font-weight: 700;
   color: #fffbeb;
   letter-spacing: 0.04em;
@@ -3581,8 +3778,8 @@ body.hp-lumos-on .hp-parchment-card,
   background: linear-gradient(135deg, #b45309, #d97706);
   border: 1px solid #fde68a;
   color: #fffbeb;
-  font-family: 'Noto Serif TC', serif;
-  font-size: 0.84rem;
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: 0.86rem;
   font-weight: 700;
   cursor: pointer;
   transition: transform 0.18s ease, box-shadow 0.2s ease;
@@ -3595,18 +3792,18 @@ body.hp-lumos-on .hp-parchment-card,
 
 .hp-vow-signature {
   margin-top: 2px;
-  font-family: 'Great Vibes', 'Cormorant Garamond', 'Noto Serif TC', serif;
-  font-size: 1.18rem;
+  font-family: 'Alex Brush', 'Pinyon Script', 'Great Vibes', 'LXGW WenKai TC', 'Noto Serif TC', serif;
+  font-size: 1.28rem;
   color: #7f1d1d;
-  letter-spacing: 0.04em;
-  opacity: 0.9;
+  letter-spacing: 0.03em;
+  opacity: 0.92;
 }
 
 .hp-footer-motto {
-  font-family: 'Cinzel', 'Noto Serif TC', serif;
-  font-size: 0.76rem;
+  font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
+  font-size: 0.8rem;
   letter-spacing: 0.08em;
-  color: rgba(246, 232, 200, 0.68);
+  color: rgba(246, 232, 200, 0.72);
 }
 
 /* ==========================================================================
@@ -3716,8 +3913,8 @@ body.hp-lumos-on .hp-parchment-card,
   border-radius: 999px;
   background: rgba(212, 175, 55, 0.14);
   border: 1px solid rgba(212, 175, 55, 0.42);
-  font-family: 'Cinzel', 'Noto Serif TC', serif;
-  font-size: 0.72rem;
+  font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
+  font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   color: #fde68a;
@@ -3725,8 +3922,8 @@ body.hp-lumos-on .hp-parchment-card,
 }
 
 .hp-riddle-title {
-  font-family: 'Noto Serif TC', 'Cinzel Decorative', serif;
-  font-size: clamp(1.18rem, 2.8vw, 1.52rem);
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: clamp(1.2rem, 2.8vw, 1.56rem);
   font-weight: 700;
   letter-spacing: 0.08em;
   color: #fff3c4;
@@ -3745,9 +3942,9 @@ body.hp-lumos-on .hp-parchment-card,
   background: rgba(10, 7, 4, 0.62);
   border: 1px dashed rgba(212, 175, 55, 0.42);
   text-align: left;
-  font-family: 'Noto Serif TC', 'Cormorant Garamond', serif;
-  line-height: 1.9;
-  font-size: 0.96rem;
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
+  line-height: 1.92;
+  font-size: 0.98rem;
   color: #f5e6c8;
   margin-bottom: 16px;
 }
@@ -3806,14 +4003,84 @@ body.hp-lumos-on .hp-parchment-card,
   border-left: 3px solid #fbbf24;
   border-right: 3px solid #fbbf24;
   text-align: center;
-  font-family: 'Cinzel', 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
   font-variant-numeric: tabular-nums;
-  font-size: 1.14rem;
+  font-size: 1.22rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   color: #fde047;
   text-shadow: 0 0 12px rgba(250, 204, 21, 0.45);
   user-select: all;
+}
+
+.hp-cipher-token {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px) scale(0.62);
+  filter: blur(5px);
+  transition: opacity 0.24s ease, transform 0.24s ease, filter 0.24s ease;
+}
+
+.hp-cipher-token.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+.hp-cipher-token.is-num.is-popping-in {
+  animation: hpCipherNumPopIn 0.46s cubic-bezier(0.22, 1.35, 0.36, 1) forwards;
+}
+
+.hp-cipher-token.is-num.is-popping-out {
+  animation: hpCipherNumPopOut 0.38s cubic-bezier(0.4, 0, 0.85, 0.25) forwards;
+}
+
+@keyframes hpCipherNumPopIn {
+  0% {
+    opacity: 0;
+    transform: translateY(11px) scale(0.55);
+    filter: blur(5px);
+    color: #fffbeb;
+    text-shadow: 0 0 0 rgba(254, 240, 138, 0);
+  }
+  56% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.26);
+    filter: blur(0);
+    color: #fffbeb;
+    text-shadow: 0 0 20px #fffbeb, 0 0 32px rgba(250, 204, 21, 0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    color: #fde047;
+    text-shadow: 0 0 12px rgba(250, 204, 21, 0.45);
+  }
+}
+
+@keyframes hpCipherNumPopOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    color: #fde047;
+    text-shadow: 0 0 12px rgba(250, 204, 21, 0.45);
+  }
+  32% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.14);
+    filter: blur(0);
+    color: #fffbeb;
+    text-shadow: 0 0 16px #fffbeb, 0 0 24px rgba(250, 204, 21, 0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.52);
+    filter: blur(5px);
+    color: #fde047;
+    text-shadow: 0 0 0 rgba(254, 240, 138, 0);
+  }
 }
 
 .hp-riddle-actions {
@@ -3830,9 +4097,9 @@ body.hp-lumos-on .hp-parchment-card,
   border: 1px solid rgba(251, 191, 36, 0.7);
   background: linear-gradient(135deg, #78350f 0%, #b45309 50%, #92400e 100%);
   color: #fffbeb;
-  font-family: 'Noto Serif TC', 'Cinzel', serif;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: 0.92rem;
+  font-weight: 700;
   letter-spacing: 0.06em;
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
