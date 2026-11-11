@@ -1255,7 +1255,7 @@
       },
       color: '#b91c1c',
       fillColor: 'rgba(185, 28, 28, 0.22)',
-      debugStats: { headcount: 13, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1' },
+      debugStats: { headcount: 14, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1' },
       name: { zh: '新郎高中區（大直）', en: "Groom's High School (Dazhi)" },
       zone: { zh: '外廳右列下方區 · 大直', en: 'Lower Hall Right Col · Lower (Dazhi HS)' },
       guests: [
@@ -1268,6 +1268,7 @@
         { zh: '陳怡瑋等二人', en: '陳怡瑋 (2)' },
         { zh: '何弋柏', en: '何弋柏' },
         { zh: '周駿逸', en: '周駿逸' },
+        { zh: '林伯翰', en: '林伯翰' },
       ],
     },
   ];
@@ -6605,7 +6606,7 @@
     !document.getElementById('debug-auth-gate')
   ) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js?v=20261111g').catch(() => {});
+      navigator.serviceWorker.register('./sw.js?v=20261111h').catch(() => {});
     });
   }
 })();
