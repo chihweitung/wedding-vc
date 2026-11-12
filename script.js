@@ -52,8 +52,8 @@
   ];
 
   // 婚宴座位表與菜單的 Google Photos / 圖片連結（若填入圖片網址會直接顯示於頁面頂部，填入分享連結會顯示開啟按鈕）
-  const SEATING_CHART_IMAGE_URL = 'seating-chart.jpg?v=20261111n';
-  const SEATING_CHART_LINK_URL = 'seating-chart.jpg?v=20261111n';
+  const SEATING_CHART_IMAGE_URL = 'seating-chart.jpg?v=20261112c';
+  const SEATING_CHART_LINK_URL = 'seating-chart.jpg?v=20261112c';
   const WEDDING_MENU_IMAGE_URL = '';
   const WEDDING_MENU_LINK_URL = '';
 
@@ -875,20 +875,10 @@
     {
       id: 'table-main',
       box: { x: 890, y: 890, w: 359, h: 315 },
-      mapLabel: {
-        cx: 1070,
-        cy: 1045,
-        bw: 148,
-        bh: 76,
-        fontSize: 40,
-        lineStep: 44,
-        zh: ['主桌'],
-        en: ['Main'],
-      },
       color: '#d97706',
-      fillColor: 'rgba(245, 158, 11, 0.22)',
+      fillColor: 'rgba(245, 158, 11, 0.12)',
       darkColor: '#fbbf24',
-      darkFillColor: 'rgba(251, 191, 36, 0.30)',
+      darkFillColor: 'rgba(251, 191, 36, 0.16)',
       debugStats: { headcount: 14, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '主桌 · 新人與雙方主婚人區', en: 'Main Table · Newlyweds, Parents & Family Elders' },
       zone: { zh: '主廳中央 · 主桌', en: 'Main Hall Center · Main Table' },
@@ -904,26 +894,71 @@
         { zh: '傅昭凱', en: '傅昭凱' },
         { zh: '董庭瑜', en: '董庭瑜' },
       ],
+      seatPlan: {
+        sweetheartTitle: {
+          zh: '💑 右上方新人小桌（並排雙人席）',
+          en: '💑 Top-Right Newlyweds Sweetheart Table',
+        },
+        sweetheartSeats: [
+          {
+            key: 'tom',
+            side: 'left',
+            cx: 1158,
+            cy: 911,
+            pinText: '♥',
+            zh: '董智瑋 Tom',
+            en: 'Tom Tung',
+            match: '董智瑋 tom tung 新郎 groom',
+          },
+          {
+            key: 'eunice',
+            side: 'right',
+            cx: 1209,
+            cy: 911,
+            pinText: '♥',
+            zh: '蕭睦宸 Eunice',
+            en: 'Eunice Hsiao',
+            match: '蕭睦宸 eunice hsiao 新娘 bride',
+          },
+        ],
+        leftX: 916,
+        rightX: 1025,
+        rowYs: [916, 967, 1015, 1065, 1116, 1167],
+        rows: [
+          [
+            { key: '蕭能駿', zh: '蕭能駿', en: '蕭能駿', match: '蕭能駿' },
+            { key: '董煥新', zh: '董煥新', en: '董煥新', match: '董煥新' },
+          ],
+          [
+            { key: '傅郁淳', zh: '傅郁淳', en: '傅郁淳', match: '傅郁淳' },
+            { key: '徐淑明', zh: '徐淑明', en: '徐淑明', match: '徐淑明' },
+          ],
+          [
+            { key: '傅昭雄', zh: '傅昭雄', en: '傅昭雄', match: '傅昭雄' },
+            { key: '婆婆', zh: '婆婆', en: 'Grandmother (婆婆)', match: '婆婆 grandmother' },
+          ],
+          [
+            { key: '傅昭雄', zh: '傅昭雄', en: '傅昭雄', match: '傅昭雄' },
+            { key: '董庭瑜', zh: '董庭瑜', en: '董庭瑜', match: '董庭瑜' },
+          ],
+          [
+            { key: '傅楷凌', zh: '傅楷凌', en: '傅楷凌', match: '傅楷凌' },
+            { key: '董素娟', zh: '董素娟', en: '董素娟', match: '董素娟' },
+          ],
+          [
+            { key: '傅昭凱', zh: '傅昭凱', en: '傅昭凱', match: '傅昭凱' },
+            { key: '董素娟', zh: '董素娟', en: '董素娟', match: '董素娟' },
+          ],
+        ],
+      },
     },
     {
       id: 'zone-bride-relatives',
       box: { x: 712, y: 890, w: 156, h: 316 },
-      mapLabel: {
-        cx: 790,
-        cy: 1047,
-        bw: 78,
-        bh: 204,
-        fontSize: 36,
-        lineStep: 44,
-        enFontSize: 28,
-        enLineStep: 33,
-        zh: ['新', '娘', '親', '戚'],
-        en: ['B', 'R', 'I', 'D', 'E'],
-      },
       color: '#e11d48',
-      fillColor: 'rgba(225, 29, 72, 0.22)',
+      fillColor: 'rgba(225, 29, 72, 0.12)',
       darkColor: '#fb7185',
-      darkFillColor: 'rgba(251, 113, 133, 0.30)',
+      darkFillColor: 'rgba(251, 113, 133, 0.16)',
       debugStats: { headcount: 11, veg: 0, stroller: 0, childSeat: 2 },
       name: { zh: '新娘親戚區', en: "Bride's Relatives" },
       zone: { zh: '主廳中左側 · 新娘親戚（主桌左側）', en: "Main Hall Center-Left · Bride's Relatives" },
@@ -937,20 +972,10 @@
     {
       id: 'zone-groom-parents-friends',
       box: { x: 640, y: 288, w: 1113, h: 314 },
-      mapLabel: {
-        cx: 1197,
-        cy: 426,
-        bw: 404,
-        bh: 110,
-        fontSize: 42,
-        lineStep: 46,
-        zh: ['新郎爸媽朋友'],
-        en: ["Parents' Friends"],
-      },
       color: '#4d7c0f',
-      fillColor: 'rgba(101, 163, 13, 0.20)',
+      fillColor: 'rgba(101, 163, 13, 0.11)',
       darkColor: '#a3e635',
-      darkFillColor: 'rgba(163, 230, 53, 0.28)',
+      darkFillColor: 'rgba(163, 230, 53, 0.15)',
       debugStats: { headcount: 74, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎爸媽朋友區', en: "Groom's Parents' Friends" },
       zone: { zh: '主廳上方 · 新郎爸媽朋友（共 6 長桌）', en: "Main Hall North · Groom's Parents' Friends (6 Long Tables)" },
@@ -1009,22 +1034,10 @@
     {
       id: 'zone-groom-dad-relatives',
       box: { x: 534, y: 890, w: 156, h: 316 },
-      mapLabel: {
-        cx: 611,
-        cy: 1047,
-        bw: 78,
-        bh: 204,
-        fontSize: 36,
-        lineStep: 44,
-        enFontSize: 32,
-        enLineStep: 40,
-        zh: ['董', '家', '親', '戚'],
-        en: ['T', 'U', 'N', 'G'],
-      },
       color: '#b45309',
-      fillColor: 'rgba(180, 83, 9, 0.22)',
+      fillColor: 'rgba(180, 83, 9, 0.12)',
       darkColor: '#f59e0b',
-      darkFillColor: 'rgba(245, 158, 11, 0.30)',
+      darkFillColor: 'rgba(245, 158, 11, 0.16)',
       debugStats: { headcount: 11, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎爸爸親戚區（董家親戚）', en: "Groom's Father's Relatives (Tung Family)" },
       zone: { zh: '主廳左側 · 董家親戚（鄰近左側取餐區）', en: 'Main Hall Left · Tung Family Relatives' },
@@ -1037,26 +1050,45 @@
         { zh: '洪瑞隆等二人', en: '洪瑞隆 (2)' },
         { zh: '洪鶴祐', en: '洪鶴祐' },
       ],
+      seatPlan: {
+        leftX: 557,
+        rightX: 666,
+        rowYs: [916, 967, 1015, 1065, 1116, 1167],
+        rows: [
+          [
+            { key: '董素真', zh: '董素真', en: '董素真', match: '董素真' },
+            { key: '董素芬', zh: '董素芬', en: '董素芬', match: '董素芬' },
+          ],
+          [
+            { key: '董素真', zh: '董素真', en: '董素真', match: '董素真' },
+            { key: '董素芬', zh: '董素芬', en: '董素芬', match: '董素芬' },
+          ],
+          [
+            { key: '洪瑞隆', zh: '洪瑞隆', en: '洪瑞隆', match: '洪瑞隆' },
+            { key: '陳思樺', zh: '陳思樺', en: '陳思樺', match: '陳思樺' },
+          ],
+          [
+            { key: '洪瑞隆', zh: '洪瑞隆', en: '洪瑞隆', match: '洪瑞隆' },
+            { key: '陳思樺', zh: '陳思樺', en: '陳思樺', match: '陳思樺' },
+          ],
+          [
+            { key: '洪鶴祐', zh: '洪鶴祐', en: '洪鶴祐', match: '洪鶴祐' },
+            { key: '陳怡玲', zh: '陳怡玲', en: '陳怡玲', match: '陳怡玲' },
+          ],
+          [
+            null,
+            { key: '陳振揚', zh: '陳振揚', en: '陳振揚', match: '陳振揚' },
+          ],
+        ],
+      },
     },
     {
       id: 'zone-groom-mom-relatives',
       box: { x: 1384, y: 741, w: 352, h: 554 },
-      mapLabel: {
-        cx: 1560,
-        cy: 1017,
-        bw: 78,
-        bh: 204,
-        fontSize: 36,
-        lineStep: 44,
-        enFontSize: 34,
-        enLineStep: 46,
-        zh: ['徐', '家', '親', '戚'],
-        en: ['H', 'S', 'U'],
-      },
       color: '#059669',
-      fillColor: 'rgba(5, 150, 105, 0.22)',
+      fillColor: 'rgba(5, 150, 105, 0.12)',
       darkColor: '#34d399',
-      darkFillColor: 'rgba(52, 211, 153, 0.30)',
+      darkFillColor: 'rgba(52, 211, 153, 0.16)',
       debugStats: { headcount: 34, veg: 1, stroller: 0, childSeat: 1, detail: '徐玲明：素食1、兒童椅1' },
       name: { zh: '新郎媽媽親戚區（徐家親戚）', en: "Groom's Mother's Relatives (Hsu Family)" },
       zone: { zh: '主廳右側 · 徐家親戚', en: 'Main Hall Right · Hsu Family Relatives' },
@@ -1079,55 +1111,17 @@
       ],
     },
     {
-      id: 'zone-groom-moz',
-      box: { x: 1104, y: 1614, w: 156, h: 164 },
-      mapLabel: {
-        cx: 1183,
-        cy: 1699,
-        bw: 146,
-        bh: 84,
-        fontSize: 38,
-        lineStep: 42,
-        enFontSize: 30,
-        enLineStep: 36,
-        zh: ['謀智'],
-        en: ['Mozilla'],
-      },
-      color: '#0891b2',
-      fillColor: 'rgba(8, 145, 178, 0.22)',
-      darkColor: '#22d3ee',
-      darkFillColor: 'rgba(34, 211, 238, 0.30)',
-      debugStats: { headcount: 6, veg: 0, stroller: 0, childSeat: 1, detail: '曾祥信：兒童椅1' },
-      name: { zh: '新郎 MOZ 區（謀智）', en: 'Groom · MOZ (Mozilla)' },
-      zone: { zh: '外廳左列上方區 · 謀智', en: 'Lower Hall Left Col · Upper (MOZ)' },
-      guests: [
-        { zh: 'Ethan Tseng 曾祥信等三人', en: 'Ethan Tseng 曾祥信 (3)' },
-        { zh: 'Shawn Huang等二人', en: 'Shawn Huang (2)' },
-        { zh: '陳亮亨 Gary Chen', en: '陳亮亨 Gary Chen' },
-      ],
-    },
-    {
       id: 'zone-groom-highschool',
-      box: { x: 1104, y: 1779, w: 156, h: 356 },
-      mapLabel: {
-        cx: 1183,
-        cy: 1982,
-        bw: 146,
-        bh: 84,
-        fontSize: 38,
-        lineStep: 42,
-        enFontSize: 34,
-        enLineStep: 40,
-        zh: ['大直'],
-        en: ['DZHS'],
-      },
+      box: { x: 1104, y: 1609, w: 156, h: 411 },
+      svgPath:
+        'M 1120 1609 L 1244 1609 Q 1260 1609 1260 1625 L 1260 1966 Q 1260 1978 1248 1978 L 1178 1978 Q 1168 1978 1168 1988 L 1168 2010 Q 1168 2020 1158 2020 L 1118 2020 Q 1104 2020 1104 2006 L 1104 1625 Q 1104 1609 1120 1609 Z',
       color: '#dc2626',
-      fillColor: 'rgba(220, 38, 38, 0.22)',
+      fillColor: 'rgba(220, 38, 38, 0.12)',
       darkColor: '#f87171',
-      darkFillColor: 'rgba(248, 113, 113, 0.30)',
-      debugStats: { headcount: 15, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1' },
+      darkFillColor: 'rgba(248, 113, 113, 0.16)',
+      debugStats: { headcount: 15, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1（第8排左席借用雄女區左上座位）' },
       name: { zh: '新郎高中區（大直）', en: "Groom's High School (Dazhi)" },
-      zone: { zh: '外廳左列中段區 · 大直', en: 'Lower Hall Left Col · Middle (Dazhi HS)' },
+      zone: { zh: '外廳左列上方區 · 大直（含雄女左上 1 席）', en: 'Lower Hall Left Col · Upper (Dazhi HS)' },
       guests: [
         { zh: '施傑耀等三人', en: '施傑耀 (3)' },
         { zh: '洪維辰', en: '洪維辰' },
@@ -1141,26 +1135,72 @@
         { zh: '林伯翰', en: '林伯翰' },
         { zh: '蔡宜達', en: '蔡宜達' },
       ],
+      seatPlan: {
+        leftX: 1127,
+        rightX: 1236,
+        rowYs: [1654, 1705, 1755, 1805, 1855, 1906, 1956, 2007],
+        rows: [
+          [
+            { key: '林品賢', zh: '林品賢', en: '林品賢', match: '林品賢' },
+            { key: '朱鎧', zh: '朱鎧', en: '朱鎧', match: '朱鎧' },
+          ],
+          [
+            { key: '林品賢', zh: '林品賢', en: '林品賢', match: '林品賢' },
+            { key: '施傑耀', zh: '施傑耀', en: '施傑耀', match: '施傑耀' },
+          ],
+          [
+            { key: '陳怡瑋', zh: '陳怡瑋', en: '陳怡瑋', match: '陳怡瑋' },
+            { key: '施傑耀', zh: '施傑耀', en: '施傑耀', match: '施傑耀' },
+          ],
+          [
+            { key: '陳怡瑋', zh: '陳怡瑋', en: '陳怡瑋', match: '陳怡瑋' },
+            { key: '施傑耀', zh: '施傑耀', en: '施傑耀', match: '施傑耀' },
+          ],
+          [
+            { key: '洪維辰', zh: '洪維辰', en: '洪維辰', match: '洪維辰' },
+            { key: '周駿逸', zh: '周駿逸', en: '周駿逸', match: '周駿逸' },
+          ],
+          [
+            { key: '鄭兆珍', zh: '鄭兆珍', en: '鄭兆珍', match: '鄭兆珍' },
+            { key: '何弋柏', zh: '何弋柏', en: '何弋柏', match: '何弋柏' },
+          ],
+          [
+            { key: '林伯翰', zh: '林伯翰', en: '林伯翰', match: '林伯翰' },
+            { key: '蔡聖傑', zh: '蔡聖傑', en: '蔡聖傑', match: '蔡聖傑' },
+          ],
+          [
+            { key: '蔡宜達', zh: '蔡宜達', en: '蔡宜達', match: '蔡宜達' },
+            { isOtherZone: true, zh: '（雄女區）', en: '(KGHS)' },
+          ],
+        ],
+      },
+    },
+    {
+      id: 'zone-bride-highschool',
+      box: { x: 1104, y: 1982, w: 156, h: 152 },
+      svgPath:
+        'M 1186 1982 L 1246 1982 Q 1260 1982 1260 1996 L 1260 2120 Q 1260 2134 1246 2134 L 1118 2134 Q 1104 2134 1104 2120 L 1104 2036 Q 1104 2024 1116 2024 L 1164 2024 Q 1174 2024 1174 2014 L 1174 1994 Q 1174 1982 1186 1982 Z',
+      color: '#2563eb',
+      fillColor: 'rgba(37, 99, 235, 0.12)',
+      darkColor: '#60a5fa',
+      darkFillColor: 'rgba(96, 165, 250, 0.16)',
+      debugStats: { headcount: 5, veg: 1, stroller: 0, childSeat: 0, detail: '王淑菁：素食1（左上1席供大直區使用，本區共5席）' },
+      name: { zh: '新娘高中區（雄女）', en: "Bride's High School (KGHS)" },
+      zone: { zh: '外廳左列中段區 · 雄女', en: 'Lower Hall Left Col · Middle (KGHS)' },
+      guests: [
+        { zh: '張恬恬', en: '張恬恬' },
+        { zh: '林佳儒等二人', en: '林佳儒 (2)' },
+        { zh: '張辰', en: '張辰' },
+        { zh: '王淑菁', en: '王淑菁' },
+      ],
     },
     {
       id: 'zone-bride-colleagues',
       box: { x: 1104, y: 2136, w: 156, h: 216 },
-      mapLabel: {
-        cx: 1181,
-        cy: 2236,
-        bw: 146,
-        bh: 84,
-        fontSize: 38,
-        lineStep: 42,
-        enFontSize: 32,
-        enLineStep: 38,
-        zh: ['瑪黑'],
-        en: ['Marais'],
-      },
       color: '#7c3aed',
-      fillColor: 'rgba(124, 58, 237, 0.22)',
+      fillColor: 'rgba(124, 58, 237, 0.12)',
       darkColor: '#c084fc',
-      darkFillColor: 'rgba(192, 132, 252, 0.30)',
+      darkFillColor: 'rgba(192, 132, 252, 0.16)',
       debugStats: { headcount: 8, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新娘同事區（瑪黑）', en: "Bride's Colleagues (Marais)" },
       zone: { zh: '外廳左列下方區 · 瑪黑', en: 'Lower Hall Left Col · Lower (Marais)' },
@@ -1176,28 +1216,11 @@
     },
     {
       id: 'zone-groom-colleagues',
-      box: { x: 1356, y: 1608, w: 178, h: 746 },
-      basePatch: {
-        mask: { x: 1402, y: 1861, w: 88, h: 248, fill: '#bdbb9e' },
-        tables: [
-          { x: 1413, y: 1839, w: 65, h: 101, fill: '#cacdb2', stroke: '#46492e', strokeWidth: 4 },
-          { x: 1413, y: 2027, w: 65, h: 102, fill: '#cacdb2', stroke: '#46492e', strokeWidth: 4 },
-        ],
-      },
-      mapLabel: {
-        cx: 1445,
-        cy: 1984,
-        bw: 158,
-        bh: 68,
-        fontSize: 35,
-        lineStep: 40,
-        zh: ['Google'],
-        en: ['Google'],
-      },
+      box: { x: 1368, y: 1608, w: 156, h: 745 },
       color: '#ea580c',
-      fillColor: 'rgba(234, 88, 12, 0.22)',
+      fillColor: 'rgba(234, 88, 12, 0.12)',
       darkColor: '#fb923c',
-      darkFillColor: 'rgba(251, 146, 60, 0.30)',
+      darkFillColor: 'rgba(251, 146, 60, 0.16)',
       debugStats: { headcount: 23, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎同事區（Google）', en: "Groom's Colleagues (Google)" },
       zone: { zh: '外廳中列長桌區 · Google', en: 'Lower Hall Center Col · Google' },
@@ -1217,27 +1240,71 @@
         { zh: '沈昊平(Michael Shen/gpgpgp)等二人', en: '沈昊平(Michael Shen/gpgpgp) (2)' },
         { zh: 'Leo Tu', en: 'Leo Tu' },
       ],
+      seatPlan: {
+        leftX: 1391,
+        rightX: 1499,
+        rowYs: [1657, 1708, 1758, 1808, 1859, 1911, 2053, 2103, 2155, 2205, 2256, 2306],
+        aisleAfterRow: 6,
+        rows: [
+          [
+            { key: 'jasmine', zh: '查忠敏', en: 'Jasmine Cha', match: '查忠敏 jasmine cha' },
+            { key: 'andy', zh: 'Andy Sun', en: 'Andy Sun', match: 'andy sun 孫銘鴻' },
+          ],
+          [
+            { key: 'jasmine', zh: '查忠敏', en: 'Jasmine Cha', match: '查忠敏 jasmine cha' },
+            { key: 'andy', zh: 'Andy Sun', en: 'Andy Sun', match: 'andy sun 孫銘鴻' },
+          ],
+          [
+            { key: 'jasmine', zh: '查忠敏', en: 'Jasmine Cha', match: '查忠敏 jasmine cha' },
+            { key: 'andy', zh: 'Andy Sun', en: 'Andy Sun', match: 'andy sun 孫銘鴻' },
+          ],
+          [
+            { key: 'jasmine', zh: '查忠敏', en: 'Jasmine Cha', match: '查忠敏 jasmine cha' },
+            { key: 'andy', zh: 'Andy Sun', en: 'Andy Sun', match: 'andy sun 孫銘鴻' },
+          ],
+          [
+            { key: '賴豊彰', zh: '賴豊彰', en: '賴豊彰', match: '賴豊彰' },
+            { key: 'harry', zh: 'Harry Lu', en: 'Harry Lu', match: 'harry lu' },
+          ],
+          [
+            { key: 'leo', zh: 'Leo Tu', en: 'Leo Tu', match: 'leo tu' },
+            { key: 'terry', zh: '王廷睿', en: 'Terry Wang', match: '王廷睿 terry wang' },
+          ],
+          [
+            { key: 'rock', zh: 'Rock Tsai', en: 'Rock Tsai', match: 'rock tsai' },
+            { key: 'anh', zh: 'ANH PHAN', en: 'ANH PHAN', match: 'anh phan' },
+          ],
+          [
+            { key: '張均銘', zh: '張均銘', en: '張均銘', match: '張均銘' },
+            { key: 'anh', zh: 'ANH PHAN', en: 'ANH PHAN', match: 'anh phan' },
+          ],
+          [
+            { key: '張均銘', zh: '張均銘', en: '張均銘', match: '張均銘' },
+            { key: 'michael', zh: '沈昊平', en: 'Michael Shen', match: '沈昊平 michael shen gpgpgp' },
+          ],
+          [
+            { key: 'medicine', zh: 'Medicine Yeh', en: 'Medicine Yeh', match: 'medicine yeh' },
+            { key: 'michael', zh: '沈昊平', en: 'Michael Shen', match: '沈昊平 michael shen gpgpgp' },
+          ],
+          [
+            { key: 'ray', zh: 'Ray Li', en: 'Ray Li', match: 'ray li' },
+            { key: 'mark', zh: 'Mark Chu', en: 'Mark Chu', match: 'mark chu' },
+          ],
+          [
+            null,
+            { key: '葛家聿', zh: '葛家聿', en: '葛家聿', match: '葛家聿' },
+          ],
+        ],
+      },
     },
     {
       id: 'zone-groom-nctu',
       box: { x: 1589, y: 1609, w: 156, h: 342 },
-      mapLabel: {
-        cx: 1667,
-        cy: 1783,
-        bw: 146,
-        bh: 84,
-        fontSize: 38,
-        lineStep: 42,
-        enFontSize: 34,
-        enLineStep: 40,
-        zh: ['交大'],
-        en: ['NCTU'],
-      },
       color: '#ca8a04',
-      fillColor: 'rgba(234, 179, 8, 0.24)',
+      fillColor: 'rgba(234, 179, 8, 0.13)',
       darkColor: '#fde047',
-      darkFillColor: 'rgba(253, 224, 71, 0.30)',
-      debugStats: { headcount: 11, veg: 0, stroller: 1, childSeat: 1, detail: '林煜峯：嬰兒車1、兒童椅1' },
+      darkFillColor: 'rgba(253, 224, 71, 0.16)',
+      debugStats: { headcount: 12, veg: 0, stroller: 1, childSeat: 1, detail: '林煜峯：嬰兒車1、兒童椅1' },
       name: { zh: '新郎交大區（交大）', en: "Groom's College (NCTU)" },
       zone: { zh: '外廳右列上方區 · 交大', en: 'Lower Hall Right Col · Upper (NCTU)' },
       guests: [
@@ -1247,56 +1314,82 @@
         { zh: 'KJ Liu 等二人', en: 'KJ Liu (2)' },
         { zh: '張家瑋', en: '張家瑋' },
         { zh: '褚祐任等二人', en: '褚祐任 (2)' },
+        { zh: '黃柏翰', en: '黃柏翰' },
       ],
+      seatPlan: {
+        leftX: 1613,
+        rightX: 1722,
+        rowYs: [1650, 1701, 1755, 1805, 1852, 1902],
+        rows: [
+          [
+            { key: '張家瑋', zh: '張家瑋', en: '張家瑋', match: '張家瑋' },
+            { key: '林煜峯', zh: '林煜峯', en: '林煜峯', match: '林煜峯' },
+          ],
+          [
+            { key: '葉峻宇', zh: '葉峻宇', en: '葉峻宇', match: '葉峻宇' },
+            { key: '林煜峯', zh: '林煜峯', en: '林煜峯', match: '林煜峯' },
+          ],
+          [
+            { key: 'allan', zh: 'Allan Sun', en: 'Allan Sun', match: 'allan sun' },
+            { key: '林煜峯', zh: '林煜峯', en: '林煜峯', match: '林煜峯' },
+          ],
+          [
+            { key: '黃柏翰', zh: '黃柏翰', en: '黃柏翰', match: '黃柏翰' },
+            { key: '林煜峯', zh: '林煜峯', en: '林煜峯', match: '林煜峯' },
+          ],
+          [
+            { key: 'kj', zh: 'KJ Liu', en: 'KJ Liu', match: 'kj liu 劉凱傑' },
+            { key: '褚祐任', zh: '褚祐任', en: '褚祐任', match: '褚祐任' },
+          ],
+          [
+            { key: 'kj', zh: 'KJ Liu', en: 'KJ Liu', match: 'kj liu 劉凱傑' },
+            { key: '褚祐任', zh: '褚祐任', en: '褚祐任', match: '褚祐任' },
+          ],
+        ],
+      },
     },
     {
-      id: 'zone-bride-highschool',
+      id: 'zone-groom-moz',
       box: { x: 1589, y: 1990, w: 156, h: 164 },
-      mapLabel: {
-        cx: 1665,
-        cy: 2070,
-        bw: 146,
-        bh: 84,
-        fontSize: 38,
-        lineStep: 42,
-        enFontSize: 34,
-        enLineStep: 40,
-        zh: ['雄女'],
-        en: ['KGHS'],
-      },
-      color: '#2563eb',
-      fillColor: 'rgba(37, 99, 235, 0.22)',
-      darkColor: '#60a5fa',
-      darkFillColor: 'rgba(96, 165, 250, 0.30)',
-      debugStats: { headcount: 5, veg: 1, stroller: 0, childSeat: 0, detail: '王淑菁：素食1' },
-      name: { zh: '新娘高中區（雄女）', en: "Bride's High School (KGHS)" },
-      zone: { zh: '外廳右列中段區 · 雄女', en: 'Lower Hall Right Col · Middle (KGHS)' },
+      color: '#0891b2',
+      fillColor: 'rgba(8, 145, 178, 0.12)',
+      darkColor: '#22d3ee',
+      darkFillColor: 'rgba(34, 211, 238, 0.16)',
+      debugStats: { headcount: 6, veg: 0, stroller: 0, childSeat: 1, detail: '曾祥信：兒童椅1' },
+      name: { zh: '新郎 MOZ 區（謀智）', en: 'Groom · MOZ (Mozilla)' },
+      zone: { zh: '外廳右列中段區 · 謀智', en: 'Lower Hall Right Col · Middle (MOZ)' },
       guests: [
-        { zh: '張恬恬', en: '張恬恬' },
-        { zh: '林佳儒等二人', en: '林佳儒 (2)' },
-        { zh: '張辰', en: '張辰' },
-        { zh: '王淑菁', en: '王淑菁' },
+        { zh: 'Ethan Tseng 曾祥信等三人', en: 'Ethan Tseng 曾祥信 (3)' },
+        { zh: 'Shawn Huang等二人', en: 'Shawn Huang (2)' },
+        { zh: '陳亮亨 Gary Chen', en: '陳亮亨 Gary Chen' },
       ],
+      seatPlan: {
+        leftX: 1613,
+        rightX: 1722,
+        rowYs: [2033, 2075, 2116],
+        rows: [
+          [
+            { key: 'shawn', zh: 'Shawn Huang', en: 'Shawn Huang', match: 'shawn huang' },
+            { key: 'ethan', zh: '曾祥信', en: 'Ethan Tseng', match: 'ethan tseng 曾祥信' },
+          ],
+          [
+            { key: 'shawn', zh: 'Shawn Huang', en: 'Shawn Huang', match: 'shawn huang' },
+            { key: 'ethan', zh: '曾祥信', en: 'Ethan Tseng', match: 'ethan tseng 曾祥信' },
+          ],
+          [
+            { key: 'gary', zh: '陳亮亨', en: 'Gary Chen', match: '陳亮亨 gary chen' },
+            { key: 'ethan', zh: '曾祥信', en: 'Ethan Tseng', match: 'ethan tseng 曾祥信' },
+          ],
+        ],
+      },
     },
     {
       id: 'zone-bride-college',
       box: { x: 1589, y: 2188, w: 156, h: 165 },
-      mapLabel: {
-        cx: 1666,
-        cy: 2270,
-        bw: 146,
-        bh: 84,
-        fontSize: 38,
-        lineStep: 42,
-        enFontSize: 34,
-        enLineStep: 40,
-        zh: ['北藝'],
-        en: ['TNUA'],
-      },
       color: '#db2777',
-      fillColor: 'rgba(219, 39, 119, 0.22)',
+      fillColor: 'rgba(219, 39, 119, 0.12)',
       darkColor: '#f472b6',
-      darkFillColor: 'rgba(244, 114, 182, 0.30)',
+      darkFillColor: 'rgba(244, 114, 182, 0.16)',
       debugStats: { headcount: 6, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新娘大學區（北藝）', en: "Bride's College (TNUA)" },
       zone: { zh: '外廳右列下方區 · 北藝', en: 'Lower Hall Right Col · Lower (TNUA)' },
@@ -2943,7 +3036,257 @@
     [KITCHEN_ZONE_ID]: KITCHEN_ZONE_META,
   };
 
-  function renderSeatingFloorPlan(highlightedIds) {
+  function findMatchingSeatSlots(table, query, isDebugPage) {
+    const empty = { slots: [], uniqueKeys: new Set() };
+    if (!table || !table.seatPlan || !query) return empty;
+    if (!isDebugPage && query.length < 2) return empty;
+
+    const sp = table.seatPlan;
+    const slots = [];
+    const uniqueKeys = new Set();
+
+    if (Array.isArray(sp.sweetheartSeats)) {
+      sp.sweetheartSeats.forEach((s, idx) => {
+        if (!s) return;
+        const hay = `${s.match || ''} ${s.zh || ''} ${s.en || ''}`.toLowerCase();
+        if (hay.includes(query)) {
+          const side = s.side || (idx === 0 ? 'left' : 'right');
+          slots.push({
+            isSweetheart: true,
+            rowIndex: -1,
+            side,
+            slotKey: `sweet:${side}`,
+            cx: s.cx,
+            cy: s.cy,
+            pinText: s.pinText || '♥',
+            seat: s,
+          });
+          uniqueKeys.add(s.key || s.zh || `sweet:${side}`);
+        }
+      });
+    }
+
+    sp.rows.forEach((pair, rIdx) => {
+      if (!Array.isArray(pair)) return;
+      ['left', 'right'].forEach((side, sIdx) => {
+        const seat = pair[sIdx];
+        if (!seat || seat.isOtherZone) return;
+        const hay = `${seat.match || ''} ${seat.zh || ''} ${seat.en || ''}`.toLowerCase();
+        if (hay.includes(query)) {
+          const slotKey = `${rIdx}:${side}`;
+          slots.push({
+            rowIndex: rIdx,
+            side,
+            slotKey,
+            cx: side === 'left' ? sp.leftX : sp.rightX,
+            cy: sp.rowYs[rIdx],
+            seat,
+          });
+          uniqueKeys.add(seat.key || seat.zh || slotKey);
+        }
+      });
+    });
+
+    return { slots, uniqueKeys };
+  }
+
+  function formatSeatSlotsSummary(slots, lang) {
+    if (!Array.isArray(slots) || slots.length === 0) return '';
+    const sweetSlots = slots.filter((s) => s.isSweetheart);
+    const rowSlots = slots.filter((s) => !s.isSweetheart);
+    const summaries = [];
+
+    if (sweetSlots.length > 0) {
+      if (lang === 'en') {
+        if (sweetSlots.length === 1) {
+          summaries.push(
+            `Top-Right Sweetheart Table · ${sweetSlots[0].side === 'left' ? 'Left seat' : 'Right seat'}`
+          );
+        } else {
+          summaries.push('Top-Right Sweetheart Table (2 seats)');
+        }
+      } else if (sweetSlots.length === 1) {
+        summaries.push(
+          `右上方新人小桌 · ${sweetSlots[0].side === 'left' ? '左側席' : '右側席'}`
+        );
+      } else {
+        summaries.push('右上方新人小桌（並排雙人席）');
+      }
+    }
+
+    if (rowSlots.length > 0) {
+      const sides = new Set(rowSlots.map((s) => s.side));
+      const rows = rowSlots.map((s) => s.rowIndex + 1).sort((a, b) => a - b);
+      const isContiguous = rows.every((r, idx) => idx === 0 || r === rows[idx - 1] + 1);
+
+      if (sides.size === 1) {
+        const onlySide = rowSlots[0].side;
+        if (lang === 'en') {
+          const sideLabel = onlySide === 'left' ? 'Left side' : 'Right side';
+          if (rows.length === 1) {
+            summaries.push(`${sideLabel} · Row ${rows[0]} (counted from top / Main Hall)`);
+          } else {
+            const rowDesc = isContiguous
+              ? `Rows ${rows[0]}–${rows[rows.length - 1]}`
+              : `Rows ${rows.join(', ')}`;
+            summaries.push(`${sideLabel} · ${rowDesc} (${rows.length} seats, from top)`);
+          }
+        } else {
+          const sideLabel = onlySide === 'left' ? '長桌左側' : '長桌右側';
+          if (rows.length === 1) {
+            summaries.push(`${sideLabel} · 第 ${rows[0]} 排（上方朝主廳方向算起）`);
+          } else {
+            const rowDesc = isContiguous
+              ? `第 ${rows[0]}–${rows[rows.length - 1]} 排`
+              : `第 ${rows.join('、')} 排`;
+            summaries.push(`${sideLabel} · ${rowDesc}（共 ${rows.length} 席，上方朝主廳）`);
+          }
+        }
+      } else if (lang === 'en') {
+        const parts = rowSlots.map(
+          (s) => `R${s.rowIndex + 1} ${s.side === 'left' ? 'Left' : 'Right'}`
+        );
+        summaries.push(`${parts.join(', ')} (from top)`);
+      } else {
+        const parts = rowSlots.map(
+          (s) => `第 ${s.rowIndex + 1} 排${s.side === 'left' ? '左' : '右'}`
+        );
+        summaries.push(`${parts.join('、')}（上方朝主廳）`);
+      }
+    }
+
+    return lang === 'en'
+      ? `🪑 Table Position: ${summaries.join(' ｜ ')}`
+      : `🪑 桌內相對位置：${summaries.join(' ｜ ')}`;
+  }
+
+  function buildSeatMapElement(table, matchedSlotSet, isDebugPage) {
+    const sp = table.seatPlan;
+    if (!sp || !Array.isArray(sp.rows)) return null;
+
+    const wrap = document.createElement('div');
+    wrap.className = `seating-seatmap${isDebugPage ? ' is-debug-seatmap' : ' is-public-seatmap'}`;
+
+    const orient = document.createElement('div');
+    orient.className = 'seating-seatmap-orient';
+    orient.textContent =
+      currentLang === 'en'
+        ? '▲ Toward Top of Floor Plan · Relative Table Seats'
+        : '▲ 朝向平面圖上方 · 桌內左右相對位置';
+    wrap.append(orient);
+
+    if (Array.isArray(sp.sweetheartSeats) && sp.sweetheartSeats.length === 2) {
+      const sweetTitle = document.createElement('div');
+      sweetTitle.className = 'seating-seatmap-subhead';
+      sweetTitle.textContent =
+        (sp.sweetheartTitle && (sp.sweetheartTitle[currentLang] || sp.sweetheartTitle.zh)) ||
+        (currentLang === 'en' ? '💑 Sweetheart Table' : '💑 新人小桌');
+      wrap.append(sweetTitle);
+
+      const sweetRow = document.createElement('div');
+      sweetRow.className = 'seating-seatmap-row';
+      const buildSweetCell = (s, fallbackSide) => {
+        const side = (s && s.side) || fallbackSide;
+        const cell = document.createElement('div');
+        const isHit = matchedSlotSet.has(`sweet:${side}`);
+        if (isDebugPage) {
+          cell.className = `seating-seatmap-cell is-${side}${isHit ? ' is-seat-match' : ''}`;
+          cell.textContent = s ? (currentLang === 'en' ? s.en : s.zh) || s.zh : '—';
+        } else if (isHit) {
+          cell.className = `seating-seatmap-cell is-${side} is-seat-match`;
+          cell.textContent = currentLang === 'en' ? '📍 Your Seat' : '📍 您的座位';
+        } else {
+          cell.className = `seating-seatmap-cell is-${side} is-anon`;
+          cell.textContent = '○';
+        }
+        return cell;
+      };
+      const sweetSpine = document.createElement('div');
+      sweetSpine.className = 'seating-seatmap-spine';
+      sweetSpine.textContent = '♥';
+      sweetRow.append(
+        buildSweetCell(sp.sweetheartSeats[0], 'left'),
+        sweetSpine,
+        buildSweetCell(sp.sweetheartSeats[1], 'right')
+      );
+      wrap.append(sweetRow);
+
+      const mainSub = document.createElement('div');
+      mainSub.className = 'seating-seatmap-subhead';
+      mainSub.textContent =
+        currentLang === 'en' ? '🪑 Left Main Long Table (6 Rows)' : '🪑 左側主婚人與長輩長桌（共 6 排）';
+      wrap.append(mainSub);
+    }
+
+    const colHead = document.createElement('div');
+    colHead.className = 'seating-seatmap-colhead';
+    const headLeft = document.createElement('span');
+    headLeft.textContent = currentLang === 'en' ? 'Left Side' : '左側座位';
+    const headMid = document.createElement('span');
+    headMid.textContent = currentLang === 'en' ? 'Row' : '排';
+    const headRight = document.createElement('span');
+    headRight.textContent = currentLang === 'en' ? 'Right Side' : '右側座位';
+    colHead.append(headLeft, headMid, headRight);
+    wrap.append(colHead);
+
+    const rowsBox = document.createElement('div');
+    rowsBox.className = 'seating-seatmap-rows';
+
+    sp.rows.forEach((pair, rIdx) => {
+      if (sp.aisleAfterRow && sp.aisleAfterRow === rIdx) {
+        const aisle = document.createElement('div');
+        aisle.className = 'seating-seatmap-aisle';
+        aisle.textContent =
+          currentLang === 'en'
+            ? '┈┈ Mid-Table Walkway (Upper 6 / Lower 6) ┈┈'
+            : '┈┈ 中段走道（上段 6 排 ／ 下段 6 排） ┈┈';
+        rowsBox.append(aisle);
+      }
+
+      const rowEl = document.createElement('div');
+      rowEl.className = 'seating-seatmap-row';
+
+      const makeCell = (seat, side) => {
+        const cell = document.createElement('div');
+        const slotKey = `${rIdx}:${side}`;
+        const isHit = matchedSlotSet.has(slotKey);
+        if (isDebugPage) {
+          if (!seat) {
+            cell.className = `seating-seatmap-cell is-${side} is-empty`;
+            cell.textContent = currentLang === 'en' ? 'Empty' : '（空位）';
+          } else if (seat.isOtherZone) {
+            cell.className = `seating-seatmap-cell is-${side} is-empty`;
+            cell.textContent = (currentLang === 'en' ? seat.en : seat.zh) || seat.zh;
+          } else {
+            cell.className = `seating-seatmap-cell is-${side}${isHit ? ' is-seat-match' : ''}`;
+            cell.textContent = (currentLang === 'en' ? seat.en : seat.zh) || seat.zh;
+          }
+        } else if (isHit) {
+          cell.className = `seating-seatmap-cell is-${side} is-seat-match`;
+          cell.textContent = currentLang === 'en' ? '📍 Your Seat' : '📍 您的座位';
+        } else if (!seat || seat.isOtherZone) {
+          cell.className = `seating-seatmap-cell is-${side} is-empty is-anon`;
+          cell.textContent = '—';
+        } else {
+          cell.className = `seating-seatmap-cell is-${side} is-anon`;
+          cell.textContent = '○';
+        }
+        return cell;
+      };
+
+      const spine = document.createElement('div');
+      spine.className = 'seating-seatmap-spine';
+      spine.textContent = String(rIdx + 1);
+
+      rowEl.append(makeCell(pair[0], 'left'), spine, makeCell(pair[1], 'right'));
+      rowsBox.append(rowEl);
+    });
+
+    wrap.append(rowsBox);
+    return wrap;
+  }
+
+  function renderSeatingFloorPlan(highlightedIds, seatMarkersByZone = new Map()) {
     if (!elSeatingPhotoStage) return;
     const dict = t();
     const isDebugPage = isDebugUnlocked();
@@ -3125,124 +3468,209 @@
       }
     };
 
-    // 0. 若底圖原標籤為直排且已改為橫向，先無縫還原底圖桌面與底色（避免原直排標籤上下露邊）
+    // 1. 繪製所有座位區域顏色框框（使用底圖原生文字標籤，支援矩形或 L 型精準多邊形外框）
     SEATING_TABLES_DATA.forEach((table) => {
-      if (!table.basePatch) return;
-      const patchGroup = document.createElementNS(svgNS, 'g');
-      patchGroup.setAttribute('class', 'seating-map-base-patch');
-      patchGroup.setAttribute('aria-hidden', 'true');
-      const m = table.basePatch.mask;
-      if (m) {
-        const maskRect = document.createElementNS(svgNS, 'rect');
-        maskRect.setAttribute('x', String(m.x));
-        maskRect.setAttribute('y', String(m.y));
-        maskRect.setAttribute('width', String(m.w));
-        maskRect.setAttribute('height', String(m.h));
-        maskRect.setAttribute('fill', m.fill);
-        patchGroup.append(maskRect);
-      }
-      if (Array.isArray(table.basePatch.tables)) {
-        table.basePatch.tables.forEach((tb) => {
-          const tbRect = document.createElementNS(svgNS, 'rect');
-          tbRect.setAttribute('x', String(tb.x));
-          tbRect.setAttribute('y', String(tb.y));
-          tbRect.setAttribute('width', String(tb.w));
-          tbRect.setAttribute('height', String(tb.h));
-          tbRect.setAttribute('fill', tb.fill);
-          tbRect.setAttribute('stroke', tb.stroke);
-          tbRect.setAttribute('stroke-width', String(tb.strokeWidth || 4));
-          patchGroup.append(tbRect);
-        });
-      }
-      svg.append(patchGroup);
-    });
-
-    // 1. 先繪製所有座位區域色塊
-    SEATING_TABLES_DATA.forEach((table) => {
-      if (!table.box) return;
+      if (!table.box && !table.svgPath) return;
       const isHighlighted = highlightedIds.has(table.id);
-      const rect = document.createElementNS(svgNS, 'rect');
-      rect.setAttribute('x', String(table.box.x));
-      rect.setAttribute('y', String(table.box.y));
-      rect.setAttribute('width', String(table.box.w));
-      rect.setAttribute('height', String(table.box.h));
-      rect.setAttribute('rx', '18');
-      rect.setAttribute('ry', '18');
+      let shapeEl;
+      if (table.svgPath) {
+        shapeEl = document.createElementNS(svgNS, 'path');
+        shapeEl.setAttribute('d', table.svgPath);
+      } else {
+        shapeEl = document.createElementNS(svgNS, 'rect');
+        shapeEl.setAttribute('x', String(table.box.x));
+        shapeEl.setAttribute('y', String(table.box.y));
+        shapeEl.setAttribute('width', String(table.box.w));
+        shapeEl.setAttribute('height', String(table.box.h));
+        shapeEl.setAttribute('rx', '18');
+        shapeEl.setAttribute('ry', '18');
+      }
       if (table.color) {
-        rect.style.setProperty('--zone-color', table.color);
+        shapeEl.style.setProperty('--zone-color', table.color);
       }
       if (table.fillColor) {
-        rect.style.setProperty('--zone-fill', table.fillColor);
+        shapeEl.style.setProperty('--zone-fill', table.fillColor);
       }
       if (table.darkColor) {
-        rect.style.setProperty('--zone-dark-color', table.darkColor);
+        shapeEl.style.setProperty('--zone-dark-color', table.darkColor);
       }
       if (table.darkFillColor) {
-        rect.style.setProperty('--zone-dark-fill', table.darkFillColor);
+        shapeEl.style.setProperty('--zone-dark-fill', table.darkFillColor);
       }
-      rect.setAttribute(
+      shapeEl.setAttribute(
         'class',
         `seating-zone-hotspot${isHighlighted ? ' is-highlighted' : ''}`
       );
 
       const titleTag = document.createElementNS(svgNS, 'title');
       titleTag.textContent = `${table.name[currentLang] || table.name.zh} · ${table.zone[currentLang] || table.zone.zh}`;
-      rect.append(titleTag);
+      shapeEl.append(titleTag);
 
-      rect.addEventListener('click', (e) => handleZoneSelect(table.id, e));
-      svg.append(rect);
+      shapeEl.addEventListener('click', (e) => handleZoneSelect(table.id, e));
+      svg.append(shapeEl);
     });
 
-    // 2. 繪製高對比清晰座位區文字標籤（若該區有設定自訂覆蓋標籤）
+    // 2. 繪製桌內相對座位精準標點（搜尋命中時高亮指定座位；Debug 點選該區時顯示全區座位點）
     SEATING_TABLES_DATA.forEach((table) => {
-      if (!table.mapLabel) return;
-      const isHighlighted = highlightedIds.has(table.id);
-      const ml = table.mapLabel;
-      const lines = (currentLang === 'en' ? ml.en : ml.zh) || ml.zh;
-      const labelGroup = document.createElementNS(svgNS, 'g');
-      labelGroup.setAttribute(
-        'class',
-        `seating-zone-label-group${isHighlighted ? ' is-highlighted' : ''}`
-      );
-      if (table.color) {
-        labelGroup.style.setProperty('--zone-color', table.color);
+      if (!table.seatPlan) return;
+      const matchedSlots = seatMarkersByZone ? seatMarkersByZone.get(table.id) : null;
+      const showAllDebugSeats =
+        isDebugPage && selectedSeatingZoneId === table.id && (!matchedSlots || matchedSlots.length === 0);
+
+      if ((!matchedSlots || matchedSlots.length === 0) && !showAllDebugSeats) return;
+
+      const sp = table.seatPlan;
+      const pinLayer = document.createElementNS(svgNS, 'g');
+      pinLayer.setAttribute('class', 'seating-seat-pins-layer');
+      if (table.color) pinLayer.style.setProperty('--zone-color', table.color);
+      if (table.darkColor) pinLayer.style.setProperty('--zone-dark-color', table.darkColor);
+
+      if (showAllDebugSeats) {
+        if (Array.isArray(sp.sweetheartSeats)) {
+          sp.sweetheartSeats.forEach((s, idx) => {
+            if (!s) return;
+            const side = s.side || (idx === 0 ? 'left' : 'right');
+            const g = document.createElementNS(svgNS, 'g');
+            g.setAttribute('class', 'seating-seat-debug-dot');
+
+            const c = document.createElementNS(svgNS, 'circle');
+            c.setAttribute('cx', String(s.cx));
+            c.setAttribute('cy', String(s.cy));
+            c.setAttribute('r', '15');
+            c.setAttribute('class', 'seating-seat-debug-circle');
+
+            const t = document.createElementNS(svgNS, 'text');
+            t.setAttribute('x', String(s.cx));
+            t.setAttribute('y', String(Math.round(s.cy + 6)));
+            t.setAttribute('text-anchor', 'middle');
+            t.setAttribute('class', 'seating-seat-debug-num');
+            t.textContent = s.pinText || '♥';
+
+            const tip = document.createElementNS(svgNS, 'title');
+            const seatLabel = (currentLang === 'en' ? s.en : s.zh) || s.zh;
+            tip.textContent =
+              currentLang === 'en'
+                ? `Sweetheart Table (${side === 'left' ? 'Left' : 'Right'}): ${seatLabel}`
+                : `新人小桌（${side === 'left' ? '左席' : '右席'}）：${seatLabel}`;
+
+            g.append(tip, c, t);
+            g.addEventListener('click', (e) => handleZoneSelect(table.id, e));
+            pinLayer.append(g);
+          });
+        }
+
+        sp.rows.forEach((pair, rIdx) => {
+          ['left', 'right'].forEach((side, sIdx) => {
+            const seat = pair[sIdx];
+            if (seat && seat.isOtherZone) return;
+            const cx = side === 'left' ? sp.leftX : sp.rightX;
+            const cy = sp.rowYs[rIdx];
+            const g = document.createElementNS(svgNS, 'g');
+            g.setAttribute('class', `seating-seat-debug-dot${seat ? '' : ' is-empty'}`);
+
+            const c = document.createElementNS(svgNS, 'circle');
+            c.setAttribute('cx', String(cx));
+            c.setAttribute('cy', String(cy));
+            c.setAttribute('r', '15');
+            c.setAttribute('class', 'seating-seat-debug-circle');
+
+            const t = document.createElementNS(svgNS, 'text');
+            t.setAttribute('x', String(cx));
+            t.setAttribute('y', String(Math.round(cy + 6)));
+            t.setAttribute('text-anchor', 'middle');
+            t.setAttribute('class', 'seating-seat-debug-num');
+            t.textContent = seat ? String(rIdx + 1) : '–';
+
+            const tip = document.createElementNS(svgNS, 'title');
+            const sideText =
+              currentLang === 'en'
+                ? side === 'left'
+                  ? 'Left'
+                  : 'Right'
+                : side === 'left'
+                  ? '左'
+                  : '右';
+            const seatLabel = seat
+              ? (currentLang === 'en' ? seat.en : seat.zh) || seat.zh
+              : currentLang === 'en'
+                ? 'Empty'
+                : '空位';
+            tip.textContent =
+              currentLang === 'en'
+                ? `Row ${rIdx + 1} (${sideText}): ${seatLabel}`
+                : `第 ${rIdx + 1} 排${sideText}：${seatLabel}`;
+
+            g.append(tip, c, t);
+            g.addEventListener('click', (e) => handleZoneSelect(table.id, e));
+            pinLayer.append(g);
+          });
+        });
+      } else if (matchedSlots && matchedSlots.length > 0) {
+        matchedSlots.forEach((slot) => {
+          const g = document.createElementNS(svgNS, 'g');
+          g.setAttribute('class', 'seating-seat-pin-group');
+
+          const halo = document.createElementNS(svgNS, 'circle');
+          halo.setAttribute('cx', String(slot.cx));
+          halo.setAttribute('cy', String(slot.cy));
+          halo.setAttribute('r', '25');
+          halo.setAttribute('class', 'seating-seat-pin-halo');
+
+          const dot = document.createElementNS(svgNS, 'circle');
+          dot.setAttribute('cx', String(slot.cx));
+          dot.setAttribute('cy', String(slot.cy));
+          dot.setAttribute('r', '16');
+          dot.setAttribute('class', 'seating-seat-pin-dot');
+
+          const num = document.createElementNS(svgNS, 'text');
+          num.setAttribute('x', String(slot.cx));
+          num.setAttribute('y', String(Math.round(slot.cy + 6)));
+          num.setAttribute('text-anchor', 'middle');
+          num.setAttribute('class', 'seating-seat-pin-num');
+          num.textContent = slot.isSweetheart ? slot.pinText || '♥' : String(slot.rowIndex + 1);
+
+          const tip = document.createElementNS(svgNS, 'title');
+          const sideText =
+            currentLang === 'en'
+              ? slot.side === 'left'
+                ? 'Left'
+                : 'Right'
+              : slot.side === 'left'
+                ? '左側'
+                : '右側';
+          if (slot.isSweetheart) {
+            if (isDebugPage) {
+              const seatName = (currentLang === 'en' ? slot.seat.en : slot.seat.zh) || slot.seat.zh;
+              tip.textContent =
+                currentLang === 'en'
+                  ? `Sweetheart Table (${sideText}): ${seatName}`
+                  : `新人小桌${sideText}：${seatName}`;
+            } else {
+              tip.textContent =
+                currentLang === 'en'
+                  ? `Your Seat: Sweetheart Table (${sideText})`
+                  : `您的座位：新人小桌${sideText}`;
+            }
+          } else if (isDebugPage) {
+            const seatName = (currentLang === 'en' ? slot.seat.en : slot.seat.zh) || slot.seat.zh;
+            tip.textContent =
+              currentLang === 'en'
+                ? `Row ${slot.rowIndex + 1} (${sideText}): ${seatName}`
+                : `第 ${slot.rowIndex + 1} 排${sideText}：${seatName}`;
+          } else {
+            tip.textContent =
+              currentLang === 'en'
+                ? `Your Seat: Row ${slot.rowIndex + 1} (${sideText})`
+                : `您的座位：第 ${slot.rowIndex + 1} 排${sideText}`;
+          }
+
+          g.append(tip, halo, dot, num);
+          g.addEventListener('click', (e) => handleZoneSelect(table.id, e));
+          pinLayer.append(g);
+        });
       }
-      if (table.darkColor) {
-        labelGroup.style.setProperty('--zone-dark-color', table.darkColor);
-      }
 
-      const bgRect = document.createElementNS(svgNS, 'rect');
-      bgRect.setAttribute('x', String(Math.round(ml.cx - ml.bw / 2)));
-      bgRect.setAttribute('y', String(Math.round(ml.cy - ml.bh / 2)));
-      bgRect.setAttribute('width', String(ml.bw));
-      bgRect.setAttribute('height', String(ml.bh));
-      bgRect.setAttribute('rx', '16');
-      bgRect.setAttribute('ry', '16');
-      bgRect.setAttribute('class', 'seating-zone-label-bg');
-
-      const fSize = (currentLang === 'en' && ml.enFontSize) ? ml.enFontSize : (ml.fontSize || 42);
-      const step = (currentLang === 'en' && ml.enLineStep) ? ml.enLineStep : (ml.lineStep || 46);
-
-      const textEl = document.createElementNS(svgNS, 'text');
-      textEl.setAttribute('x', String(ml.cx));
-      textEl.setAttribute('text-anchor', 'middle');
-      textEl.setAttribute('class', 'seating-zone-label-text');
-      textEl.style.fontSize = `${fSize}px`;
-
-      const firstY = ml.cy - ((lines.length - 1) * step) / 2 + fSize * 0.34;
-      lines.forEach((lineStr, idx) => {
-        const tspan = document.createElementNS(svgNS, 'tspan');
-        tspan.setAttribute('x', String(ml.cx));
-        tspan.setAttribute('y', String(Math.round(firstY + idx * step)));
-        tspan.textContent = lineStr;
-        textEl.append(tspan);
-      });
-
-      const titleTag = document.createElementNS(svgNS, 'title');
-      titleTag.textContent = `${table.name[currentLang] || table.name.zh} · ${table.zone[currentLang] || table.zone.zh}`;
-      labelGroup.append(titleTag, bgRect, textEl);
-      labelGroup.addEventListener('click', (e) => handleZoneSelect(table.id, e));
-      svg.append(labelGroup);
+      svg.append(pinLayer);
     });
 
     // 3. 繪製大廳入口標籤、接待桌標示與可互動餐點區標示（取餐區 × 2）
@@ -3678,6 +4106,7 @@
         .trim()
         .toLowerCase();
 
+    const seatMarkersByZone = new Map();
     const tableCards = [];
     SEATING_TABLES_DATA.forEach((table) => {
       const tName = table.name[currentLang] || table.name.zh;
@@ -3689,16 +4118,22 @@
         (table.name.zh && table.name.zh.toLowerCase().includes(query)) ||
         (table.name.en && table.name.en.toLowerCase().includes(query));
 
+      const seatMatch = findMatchingSeatSlots(table, query, isDebugPage);
       const canMatchGuestByQuery = isDebugPage ? Boolean(query) : query.length >= 2;
       const hasMatchingGuest =
         canMatchGuestByQuery &&
-        table.guests.some((g) =>
-          isDebugPage
-            ? (g.zh && g.zh.toLowerCase().includes(query)) ||
-              (g.en && g.en.toLowerCase().includes(query))
-            : (g.zh && stripPublicGuestMeta(g.zh).includes(query)) ||
-              (g.en && stripPublicGuestMeta(g.en).includes(query))
-        );
+        (seatMatch.slots.length > 0 ||
+          table.guests.some((g) =>
+            isDebugPage
+              ? (g.zh && g.zh.toLowerCase().includes(query)) ||
+                (g.en && g.en.toLowerCase().includes(query))
+              : (g.zh && stripPublicGuestMeta(g.zh).includes(query)) ||
+                (g.en && stripPublicGuestMeta(g.en).includes(query))
+          ));
+
+      if (seatMatch.slots.length > 0 && (isDebugPage || seatMatch.uniqueKeys.size === 1)) {
+        seatMarkersByZone.set(table.id, seatMatch.slots);
+      }
 
       if (!selectedSeatingZoneId && query && (matchesTableTitle || hasMatchingGuest)) {
         highlightedIds.add(table.id);
@@ -3707,6 +4142,10 @@
       if (query && !matchesTableTitle && !hasMatchingGuest) {
         return;
       }
+
+      const matchedSlotSet = new Set(
+        seatMatch.slots.map((s) => s.slotKey || `${s.rowIndex}:${s.side}`)
+      );
 
       const isZoneActive = highlightedIds.has(table.id);
       const card = document.createElement('article');
@@ -3822,6 +4261,17 @@
         });
 
         card.append(guestsWrap);
+
+        if (table.seatPlan) {
+          if (seatMatch.slots.length > 0) {
+            const seatPosNote = document.createElement('p');
+            seatPosNote.className = 'seating-public-seat-pos';
+            seatPosNote.textContent = formatSeatSlotsSummary(seatMatch.slots, currentLang);
+            card.append(seatPosNote);
+          }
+          const seatMapEl = buildSeatMapElement(table, matchedSlotSet, true);
+          if (seatMapEl) card.append(seatMapEl);
+        }
       } else if (query && (hasMatchingGuest || matchesTableTitle)) {
         const matchNote = document.createElement('p');
         matchNote.className = 'seating-public-match-note';
@@ -3830,12 +4280,32 @@
             ? '📍 Your seating zone is highlighted on the floor plan above.'
             : '📍 已為您標示入座區域，請對照上方平面圖高亮位置。';
         card.append(matchNote);
+
+        if (seatMatch.slots.length > 0) {
+          if (seatMatch.uniqueKeys.size === 1) {
+            const seatPosNote = document.createElement('p');
+            seatPosNote.className = 'seating-public-seat-pos';
+            seatPosNote.textContent = formatSeatSlotsSummary(seatMatch.slots, currentLang);
+            card.append(seatPosNote);
+
+            const seatMapEl = buildSeatMapElement(table, matchedSlotSet, false);
+            if (seatMapEl) card.append(seatMapEl);
+          } else {
+            const hintNote = document.createElement('p');
+            hintNote.className = 'seating-public-seat-pos is-hint';
+            hintNote.textContent =
+              currentLang === 'en'
+                ? '💡 Enter your full name to pinpoint your exact seat at the table.'
+                : '💡 請輸入完整姓名，即可進一步標示桌內的精準相對座位。';
+            card.append(hintNote);
+          }
+        }
       }
 
       tableCards.push(card);
     });
 
-    renderSeatingFloorPlan(highlightedIds);
+    renderSeatingFloorPlan(highlightedIds, seatMarkersByZone);
     if (query && tableCards.length === 0) {
       const emptyBox = document.createElement('div');
       emptyBox.className = 'seating-empty-state';

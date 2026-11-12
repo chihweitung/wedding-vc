@@ -1,15 +1,15 @@
 'use strict';
 
-const CACHE_NAME = 'te-wedding-20261129-v17';
+const CACHE_NAME = 'te-wedding-20261129-v20';
 const NETWORK_TIMEOUT_MS = 2500;
 
 // 僅預快取公開首頁必要資源（嚴格排除任何隱藏頁或測試頁檔案名稱）
 const PRECACHE_ASSETS = [
   './',
   './index.html',
-  './style.css?v=20261111n',
-  './script.js?v=20261111n',
-  './seating-chart.jpg?v=20261111n',
+  './style.css?v=20261112c',
+  './script.js?v=20261112c',
+  './seating-chart.jpg?v=20261112c',
 ];
 
 // 僅允許快取的公開靜態資源白名單（防止帶參數網址或敏感頁面寫入 Cache Storage）
