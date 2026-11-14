@@ -976,7 +976,7 @@
       fillColor: 'rgba(101, 163, 13, 0.11)',
       darkColor: '#a3e635',
       darkFillColor: 'rgba(163, 230, 53, 0.15)',
-      debugStats: { headcount: 74, veg: 0, stroller: 0, childSeat: 0 },
+      debugStats: { headcount: 73, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎爸媽朋友區', en: "Groom's Parents' Friends" },
       zone: { zh: '主廳上方 · 新郎爸媽朋友（共 6 長桌）', en: "Main Hall North · Groom's Parents' Friends (6 Long Tables)" },
       guests: [
@@ -1011,7 +1011,7 @@
         { zh: '梁光華&韋雪華等二人', en: '梁光華 & 韋雪華 (2)' },
         { zh: '嚴惠英', en: '嚴惠英' },
         { zh: '林光男', en: '林光男' },
-        { zh: '曾智聰等二人', en: '曾智聰 (2)' },
+        { zh: '曾智聰', en: '曾智聰' },
         { zh: '林澔儒', en: '林澔儒' },
         { zh: '何毅夫等二人', en: '何毅夫 (2)' },
         { zh: '鄭能達&汪美雲等二人', en: '鄭能達 & 汪美雲 (2)' },
@@ -1030,6 +1030,214 @@
         { zh: '康裕傑等二人', en: '康裕傑 (2)' },
         { zh: '高增堯&張淑貞等二人', en: '高增堯 & 張淑貞 (2)' },
       ],
+      seatPlan: {
+        subTables: [
+          {
+            title: { zh: '第 1 桌（最左）', en: 'Table 1 (Far Left)' },
+            leftX: 695,
+            rightX: 802,
+            rowYs: [319, 360, 401, 452, 493, 535],
+            rows: [
+              [
+                { key: '梁光華', zh: '梁光華', en: '梁光華', match: '梁光華' },
+                { key: '嚴惠英', zh: '嚴惠英', en: '嚴惠英', match: '嚴惠英' },
+              ],
+              [
+                { key: '林光男', zh: '林光男', en: '林光男', match: '林光男' },
+                { key: '韋雪華', zh: '韋雪華', en: '韋雪華', match: '韋雪華' },
+              ],
+              [
+                { key: '吳淑芸', zh: '吳淑芸', en: '吳淑芸', match: '吳淑芸' },
+                { key: '林本芬', zh: '林本芬', en: '林本芬', match: '林本芬' },
+              ],
+              [
+                { key: '楊文', zh: '楊文', en: '楊文', match: '楊文' },
+                { key: '劉東皋', zh: '劉東皋', en: '劉東皋', match: '劉東皋' },
+              ],
+              [
+                { key: '曾智聰', zh: '曾智聰', en: '曾智聰', match: '曾智聰' },
+                { key: '廖惠生', zh: '廖惠生', en: '廖惠生', match: '廖惠生' },
+              ],
+              [
+                { key: '蕭文瑜', zh: '蕭文瑜', en: '蕭文瑜', match: '蕭文瑜' },
+                { key: '林碧華', zh: '林碧華', en: '林碧華', match: '林碧華 碧華' },
+              ],
+            ],
+          },
+          {
+            title: { zh: '第 2 桌', en: 'Table 2' },
+            leftX: 878,
+            rightX: 985,
+            rowYs: [319, 360, 401, 452, 493, 535],
+            rows: [
+              [
+                { key: '龔紹興', zh: '龔紹興', en: '龔紹興', match: '龔紹興' },
+                { key: '嬉吟', zh: '嬉吟', en: '嬉吟', match: '嬉吟' },
+              ],
+              [
+                { key: '陳溍源', zh: '陳溍源', en: '陳溍源', match: '陳溍源' },
+                { key: '倪琦懿', zh: '倪琦懿', en: '倪琦懿', match: '倪琦懿' },
+              ],
+              [
+                { key: '鄭瑋玲', zh: '鄭瑋玲', en: '鄭瑋玲', match: '鄭瑋玲' },
+                { key: '林澔儒', zh: '林澔儒', en: '林澔儒', match: '林澔儒' },
+              ],
+              [
+                { key: '陳裕珍', zh: '陳裕珍', en: '陳裕珍', match: '陳裕珍' },
+                { key: '林鳳姿', zh: '林鳳姿', en: '林鳳姿', match: '林鳳姿' },
+              ],
+              [
+                { key: '許惠珍', zh: '許惠珍', en: '許惠珍', match: '許惠珍' },
+                { key: '張愛卿', zh: '張愛卿', en: '張愛卿', match: '張愛卿' },
+              ],
+              [
+                { key: '李旻貞', zh: '李旻貞', en: '李旻貞', match: '李旻貞' },
+                { key: '許家彰', zh: '許家彰', en: '許家彰', match: '許家彰' },
+              ],
+            ],
+          },
+          {
+            title: { zh: '第 3 桌', en: 'Table 3' },
+            leftX: 1061,
+            rightX: 1167,
+            rowYs: [319, 360, 401, 452, 493, 535],
+            rows: [
+              [
+                { key: '蘇超瑋', zh: '蘇超瑋', en: '蘇超瑋', match: '蘇超瑋' },
+                { key: '王仲瑛', zh: '王仲瑛', en: '王仲瑛', match: '王仲瑛' },
+              ],
+              [
+                { key: '李素幸', zh: '李素幸', en: '李素幸', match: '李素幸' },
+                { key: '呂淑貞', zh: '呂淑貞', en: '呂淑貞', match: '呂淑貞' },
+              ],
+              [
+                { key: '廖美鸞', zh: '廖美鸞', en: '廖美鸞', match: '廖美鸞' },
+                { key: '黃寶瑛', zh: '黃寶瑛', en: '黃寶瑛', match: '黃寶瑛' },
+              ],
+              [
+                { key: '高栢鈴', zh: '高栢鈴', en: '高栢鈴', match: '高栢鈴' },
+                { key: '邱慧文', zh: '邱慧文', en: '邱慧文', match: '邱慧文' },
+              ],
+              [
+                { key: '鄭能達', zh: '鄭能達', en: '鄭能達', match: '鄭能達' },
+                { key: '汪美雲', zh: '汪美雲', en: '汪美雲', match: '汪美雲' },
+              ],
+              [
+                { key: '劉聰明', zh: '劉聰明', en: '劉聰明', match: '劉聰明' },
+                { key: '陳秋娥', zh: '陳秋娥', en: '陳秋娥', match: '陳秋娥' },
+              ],
+            ],
+            extraSeats: [
+              {
+                key: '夏正德',
+                side: 'center',
+                cx: 1114,
+                cy: 583,
+                pinText: '加',
+                zh: '夏正德（桌尾席）',
+                en: '夏正德 (End Seat)',
+                match: '夏正德',
+              },
+            ],
+          },
+          {
+            title: { zh: '第 4 桌', en: 'Table 4' },
+            leftX: 1244,
+            rightX: 1350,
+            rowYs: [319, 360, 401, 452, 493, 535],
+            rows: [
+              [
+                { key: '高增堯', zh: '高增堯', en: '高增堯', match: '高增堯' },
+                { key: '張淑貞', zh: '張淑貞', en: '張淑貞', match: '張淑貞' },
+              ],
+              [
+                { key: '劉子經', zh: '劉子經', en: '劉子經', match: '劉子經' },
+                { key: '林貞吟', zh: '林貞吟', en: '林貞吟', match: '林貞吟' },
+              ],
+              [
+                { key: '林瑋謙', zh: '林瑋謙', en: '林瑋謙', match: '林瑋謙 林緯謙' },
+                { key: '林學濬', zh: '林學濬', en: '林學濬', match: '林學濬' },
+              ],
+              [
+                { key: '陳兆伸', zh: '陳兆伸', en: '陳兆伸', match: '陳兆伸' },
+                { key: '夏智弘', zh: '夏智弘', en: '夏智弘', match: '夏智弘' },
+              ],
+              [
+                { key: '何義夫', zh: '何義夫', en: '何義夫', match: '何義夫 何毅夫' },
+                { key: '何太太', zh: '何太太', en: '何太太', match: '何太太 何夫人' },
+              ],
+              [
+                { key: '吳逸楓', zh: '吳逸楓', en: '吳逸楓', match: '吳逸楓' },
+                { key: '蕭培元', zh: '蕭培元', en: '蕭培元', match: '蕭培元' },
+              ],
+            ],
+          },
+          {
+            title: { zh: '第 5 桌', en: 'Table 5' },
+            leftX: 1427,
+            rightX: 1533,
+            rowYs: [319, 360, 401, 452, 493, 535],
+            rows: [
+              [
+                { key: '楊哲彰', zh: '楊哲彰', en: '楊哲彰', match: '楊哲彰' },
+                { key: '楊演松', zh: '楊演松', en: '楊演松', match: '楊演松' },
+              ],
+              [
+                { key: '余鳳琴', zh: '余鳳琴', en: '余鳳琴', match: '余鳳琴' },
+                { key: '何麗郁', zh: '何麗郁', en: '何麗郁', match: '何麗郁' },
+              ],
+              [
+                { key: '楊恕銘', zh: '楊恕銘', en: '楊恕銘', match: '楊恕銘' },
+                { key: '陳晉輝', zh: '陳晉輝', en: '陳晉輝', match: '陳晉輝' },
+              ],
+              [
+                { key: '林明珠', zh: '林明珠', en: '林明珠', match: '林明珠' },
+                { key: '葛蘭芳', zh: '葛蘭芳', en: '葛蘭芳', match: '葛蘭芳' },
+              ],
+              [
+                { key: '許少荃', zh: '許少荃', en: '許少荃', match: '許少荃' },
+                { key: '劉園德', zh: '劉園德', en: '劉園德', match: '劉園德' },
+              ],
+              [
+                { key: '陳紫雲', zh: '陳紫雲', en: '陳紫雲', match: '陳紫雲' },
+                { key: '張金鳳', zh: '張金鳳', en: '張金鳳', match: '張金鳳' },
+              ],
+            ],
+          },
+          {
+            title: { zh: '第 6 桌（最右）', en: 'Table 6 (Far Right)' },
+            leftX: 1610,
+            rightX: 1716,
+            rowYs: [319, 360, 401, 452, 493, 535],
+            rows: [
+              [
+                { key: '許天和', zh: '許天和', en: '許天和', match: '許天和' },
+                { key: '黃棟樑', zh: '黃棟樑', en: '黃棟樑', match: '黃棟樑' },
+              ],
+              [
+                { key: '陳聞禮', zh: '陳聞禮', en: '陳聞禮', match: '陳聞禮' },
+                { key: '龔淑惠', zh: '龔淑惠', en: '龔淑惠', match: '龔淑惠' },
+              ],
+              [
+                { key: '邱文德', zh: '邱文德', en: '邱文德', match: '邱文德' },
+                { key: '洪世昌', zh: '洪世昌', en: '洪世昌', match: '洪世昌' },
+              ],
+              [
+                { key: '蔡瑞娥', zh: '蔡瑞娥', en: '蔡瑞娥', match: '蔡瑞娥' },
+                { key: '連瑞怜', zh: '連瑞怜', en: '連瑞怜', match: '連瑞怜' },
+              ],
+              [
+                { key: '梁志遠', zh: '梁志遠', en: '梁志遠', match: '梁志遠' },
+                { key: '康裕傑', zh: '康裕傑', en: '康裕傑', match: '康裕傑' },
+              ],
+              [
+                { key: '丘梅琪', zh: '丘梅琪', en: '丘梅琪', match: '丘梅琪' },
+                { key: '邱美森', zh: '邱美森', en: '邱美森', match: '邱美森' },
+              ],
+            ],
+          },
+        ],
+      },
     },
     {
       id: 'zone-groom-dad-relatives',
@@ -1042,13 +1250,15 @@
       name: { zh: '新郎爸爸親戚區（董家親戚）', en: "Groom's Father's Relatives (Tung Family)" },
       zone: { zh: '主廳左側 · 董家親戚（鄰近左側取餐區）', en: 'Main Hall Left · Tung Family Relatives' },
       guests: [
+        { zh: '董素芬', en: '董素芬' },
+        { zh: '董素真', en: '董素真' },
+        { zh: '陳建和', en: '陳建和' },
+        { zh: '洪連統', en: '洪連統' },
+        { zh: '洪瑞隆等二人', en: '洪瑞隆 (2)' },
+        { zh: '陳思樺等二人', en: '陳思樺 (2)' },
+        { zh: '洪鶴祐', en: '洪鶴祐' },
         { zh: '陳怡玲', en: '陳怡玲' },
         { zh: '陳振揚', en: '陳振揚' },
-        { zh: '陳思樺等二人', en: '陳思樺 (2)' },
-        { zh: '董素芬等二人', en: '董素芬 (2)' },
-        { zh: '董素真等二人', en: '董素真 (2)' },
-        { zh: '洪瑞隆等二人', en: '洪瑞隆 (2)' },
-        { zh: '洪鶴祐', en: '洪鶴祐' },
       ],
       seatPlan: {
         leftX: 557,
@@ -1056,28 +1266,28 @@
         rowYs: [916, 967, 1015, 1065, 1116, 1167],
         rows: [
           [
-            { key: '董素真', zh: '董素真', en: '董素真', match: '董素真' },
             { key: '董素芬', zh: '董素芬', en: '董素芬', match: '董素芬' },
-          ],
-          [
             { key: '董素真', zh: '董素真', en: '董素真', match: '董素真' },
-            { key: '董素芬', zh: '董素芬', en: '董素芬', match: '董素芬' },
           ],
           [
-            { key: '洪瑞隆', zh: '洪瑞隆', en: '洪瑞隆', match: '洪瑞隆' },
-            { key: '陳思樺', zh: '陳思樺', en: '陳思樺', match: '陳思樺' },
-          ],
-          [
-            { key: '洪瑞隆', zh: '洪瑞隆', en: '洪瑞隆', match: '洪瑞隆' },
-            { key: '陳思樺', zh: '陳思樺', en: '陳思樺', match: '陳思樺' },
+            { key: '陳建和', zh: '陳建和', en: '陳建和', match: '陳建和' },
+            { key: '洪連統', zh: '洪連統', en: '洪連統', match: '洪連統' },
           ],
           [
             { key: '洪鶴祐', zh: '洪鶴祐', en: '洪鶴祐', match: '洪鶴祐' },
+            { key: '洪瑞隆', zh: '洪瑞隆', en: '洪瑞隆', match: '洪瑞隆' },
+          ],
+          [
+            { key: '陳思樺', zh: '陳思樺', en: '陳思樺', match: '陳思樺' },
+            { key: '洪瑞隆', zh: '洪瑞隆', en: '洪瑞隆', match: '洪瑞隆' },
+          ],
+          [
+            { key: '陳思樺', zh: '陳思樺', en: '陳思樺', match: '陳思樺' },
             { key: '陳怡玲', zh: '陳怡玲', en: '陳怡玲', match: '陳怡玲' },
           ],
           [
-            null,
             { key: '陳振揚', zh: '陳振揚', en: '陳振揚', match: '陳振揚' },
+            null,
           ],
         ],
       },
@@ -3045,47 +3255,87 @@
     const slots = [];
     const uniqueKeys = new Set();
 
-    if (Array.isArray(sp.sweetheartSeats)) {
-      sp.sweetheartSeats.forEach((s, idx) => {
-        if (!s) return;
-        const hay = `${s.match || ''} ${s.zh || ''} ${s.en || ''}`.toLowerCase();
-        if (hay.includes(query)) {
-          const side = s.side || (idx === 0 ? 'left' : 'right');
-          slots.push({
-            isSweetheart: true,
-            rowIndex: -1,
-            side,
-            slotKey: `sweet:${side}`,
-            cx: s.cx,
-            cy: s.cy,
-            pinText: s.pinText || '♥',
-            seat: s,
-          });
-          uniqueKeys.add(s.key || s.zh || `sweet:${side}`);
-        }
-      });
-    }
+    const scanPlan = (plan, subTableIndex) => {
+      if (!plan) return;
+      const prefix = subTableIndex !== null ? `t${subTableIndex}:` : '';
+      if (Array.isArray(plan.sweetheartSeats)) {
+        plan.sweetheartSeats.forEach((s, idx) => {
+          if (!s) return;
+          const hay = `${s.match || ''} ${s.zh || ''} ${s.en || ''}`.toLowerCase();
+          if (hay.includes(query)) {
+            const side = s.side || (idx === 0 ? 'left' : 'right');
+            const slotKey = `${prefix}sweet:${side}`;
+            slots.push({
+              isSweetheart: true,
+              subTableIndex,
+              subTableTitle: plan.title || null,
+              rowIndex: -1,
+              side,
+              slotKey,
+              cx: s.cx,
+              cy: s.cy,
+              pinText: s.pinText || '♥',
+              seat: s,
+            });
+            uniqueKeys.add(s.key || s.zh || slotKey);
+          }
+        });
+      }
 
-    sp.rows.forEach((pair, rIdx) => {
-      if (!Array.isArray(pair)) return;
-      ['left', 'right'].forEach((side, sIdx) => {
-        const seat = pair[sIdx];
-        if (!seat || seat.isOtherZone) return;
-        const hay = `${seat.match || ''} ${seat.zh || ''} ${seat.en || ''}`.toLowerCase();
-        if (hay.includes(query)) {
-          const slotKey = `${rIdx}:${side}`;
-          slots.push({
-            rowIndex: rIdx,
-            side,
-            slotKey,
-            cx: side === 'left' ? sp.leftX : sp.rightX,
-            cy: sp.rowYs[rIdx],
-            seat,
+      if (Array.isArray(plan.rows)) {
+        plan.rows.forEach((pair, rIdx) => {
+          if (!Array.isArray(pair)) return;
+          ['left', 'right'].forEach((side, sIdx) => {
+            const seat = pair[sIdx];
+            if (!seat || seat.isOtherZone) return;
+            const hay = `${seat.match || ''} ${seat.zh || ''} ${seat.en || ''}`.toLowerCase();
+            if (hay.includes(query)) {
+              const slotKey = `${prefix}${rIdx}:${side}`;
+              slots.push({
+                subTableIndex,
+                subTableTitle: plan.title || null,
+                rowIndex: rIdx,
+                side,
+                slotKey,
+                cx: side === 'left' ? plan.leftX : plan.rightX,
+                cy: plan.rowYs[rIdx],
+                seat,
+              });
+              uniqueKeys.add(seat.key || seat.zh || slotKey);
+            }
           });
-          uniqueKeys.add(seat.key || seat.zh || slotKey);
-        }
-      });
-    });
+        });
+      }
+
+      if (Array.isArray(plan.extraSeats)) {
+        plan.extraSeats.forEach((s, eIdx) => {
+          if (!s) return;
+          const hay = `${s.match || ''} ${s.zh || ''} ${s.en || ''}`.toLowerCase();
+          if (hay.includes(query)) {
+            const slotKey = `${prefix}extra:${eIdx}`;
+            slots.push({
+              isExtraSeat: true,
+              subTableIndex,
+              subTableTitle: plan.title || null,
+              rowIndex: -1,
+              side: s.side || 'center',
+              slotKey,
+              cx: s.cx,
+              cy: s.cy,
+              pinText: s.pinText || '加',
+              seat: s,
+            });
+            uniqueKeys.add(s.key || s.zh || slotKey);
+          }
+        });
+      }
+    };
+
+    if (Array.isArray(sp.subTables)) {
+      sp.subTables.forEach((sub, idx) => scanPlan(sub, idx));
+    } else {
+      scanPlan(sp, null);
+    }
 
     return { slots, uniqueKeys };
   }
@@ -3093,7 +3343,8 @@
   function formatSeatSlotsSummary(slots, lang) {
     if (!Array.isArray(slots) || slots.length === 0) return '';
     const sweetSlots = slots.filter((s) => s.isSweetheart);
-    const rowSlots = slots.filter((s) => !s.isSweetheart);
+    const extraSlots = slots.filter((s) => s.isExtraSeat);
+    const rowSlots = slots.filter((s) => !s.isSweetheart && !s.isExtraSeat);
     const summaries = [];
 
     if (sweetSlots.length > 0) {
@@ -3115,6 +3366,10 @@
     }
 
     if (rowSlots.length > 0) {
+      const tableTitle = rowSlots[0].subTableTitle
+        ? (rowSlots[0].subTableTitle[lang] || rowSlots[0].subTableTitle.zh)
+        : '';
+      const tablePrefix = tableTitle ? `${tableTitle} · ` : '';
       const sides = new Set(rowSlots.map((s) => s.side));
       const rows = rowSlots.map((s) => s.rowIndex + 1).sort((a, b) => a - b);
       const isContiguous = rows.every((r, idx) => idx === 0 || r === rows[idx - 1] + 1);
@@ -3124,35 +3379,45 @@
         if (lang === 'en') {
           const sideLabel = onlySide === 'left' ? 'Left side' : 'Right side';
           if (rows.length === 1) {
-            summaries.push(`${sideLabel} · Row ${rows[0]} (counted from top / Main Hall)`);
+            summaries.push(`${tablePrefix}${sideLabel} · Row ${rows[0]} (counted from top / Main Hall)`);
           } else {
             const rowDesc = isContiguous
               ? `Rows ${rows[0]}–${rows[rows.length - 1]}`
               : `Rows ${rows.join(', ')}`;
-            summaries.push(`${sideLabel} · ${rowDesc} (${rows.length} seats, from top)`);
+            summaries.push(`${tablePrefix}${sideLabel} · ${rowDesc} (${rows.length} seats, from top)`);
           }
         } else {
           const sideLabel = onlySide === 'left' ? '長桌左側' : '長桌右側';
           if (rows.length === 1) {
-            summaries.push(`${sideLabel} · 第 ${rows[0]} 排（上方朝主廳方向算起）`);
+            summaries.push(`${tablePrefix}${sideLabel} · 第 ${rows[0]} 排（上方朝主廳方向算起）`);
           } else {
             const rowDesc = isContiguous
               ? `第 ${rows[0]}–${rows[rows.length - 1]} 排`
               : `第 ${rows.join('、')} 排`;
-            summaries.push(`${sideLabel} · ${rowDesc}（共 ${rows.length} 席，上方朝主廳）`);
+            summaries.push(`${tablePrefix}${sideLabel} · ${rowDesc}（共 ${rows.length} 席，上方朝主廳）`);
           }
         }
       } else if (lang === 'en') {
         const parts = rowSlots.map(
           (s) => `R${s.rowIndex + 1} ${s.side === 'left' ? 'Left' : 'Right'}`
         );
-        summaries.push(`${parts.join(', ')} (from top)`);
+        summaries.push(`${tablePrefix}${parts.join(', ')} (from top)`);
       } else {
         const parts = rowSlots.map(
           (s) => `第 ${s.rowIndex + 1} 排${s.side === 'left' ? '左' : '右'}`
         );
-        summaries.push(`${parts.join('、')}（上方朝主廳）`);
+        summaries.push(`${tablePrefix}${parts.join('、')}（上方朝主廳）`);
       }
+    }
+
+    if (extraSlots.length > 0) {
+      extraSlots.forEach((s) => {
+        const tableTitle = s.subTableTitle ? (s.subTableTitle[lang] || s.subTableTitle.zh) : '';
+        const tablePrefix = tableTitle ? `${tableTitle} · ` : '';
+        summaries.push(
+          lang === 'en' ? `${tablePrefix}Bottom End Seat` : `${tablePrefix}桌尾加開席`
+        );
+      });
     }
 
     return lang === 'en'
@@ -3160,35 +3425,32 @@
       : `🪑 桌內相對位置：${summaries.join(' ｜ ')}`;
   }
 
-  function buildSeatMapElement(table, matchedSlotSet, isDebugPage) {
-    const sp = table.seatPlan;
-    if (!sp || !Array.isArray(sp.rows)) return null;
+  function buildSingleSeatTableBlock(plan, subTableIndex, matchedSlotSet, isDebugPage) {
+    const prefix = subTableIndex !== null ? `t${subTableIndex}:` : '';
+    const block = document.createElement('div');
+    block.className = 'seating-seatmap-block';
 
-    const wrap = document.createElement('div');
-    wrap.className = `seating-seatmap${isDebugPage ? ' is-debug-seatmap' : ' is-public-seatmap'}`;
+    if (plan.title) {
+      const titleEl = document.createElement('div');
+      titleEl.className = 'seating-seatmap-subhead';
+      titleEl.textContent = plan.title[currentLang] || plan.title.zh;
+      block.append(titleEl);
+    }
 
-    const orient = document.createElement('div');
-    orient.className = 'seating-seatmap-orient';
-    orient.textContent =
-      currentLang === 'en'
-        ? '▲ Toward Top of Floor Plan · Relative Table Seats'
-        : '▲ 朝向平面圖上方 · 桌內左右相對位置';
-    wrap.append(orient);
-
-    if (Array.isArray(sp.sweetheartSeats) && sp.sweetheartSeats.length === 2) {
+    if (Array.isArray(plan.sweetheartSeats) && plan.sweetheartSeats.length === 2) {
       const sweetTitle = document.createElement('div');
       sweetTitle.className = 'seating-seatmap-subhead';
       sweetTitle.textContent =
-        (sp.sweetheartTitle && (sp.sweetheartTitle[currentLang] || sp.sweetheartTitle.zh)) ||
+        (plan.sweetheartTitle && (plan.sweetheartTitle[currentLang] || plan.sweetheartTitle.zh)) ||
         (currentLang === 'en' ? '💑 Sweetheart Table' : '💑 新人小桌');
-      wrap.append(sweetTitle);
+      block.append(sweetTitle);
 
       const sweetRow = document.createElement('div');
       sweetRow.className = 'seating-seatmap-row';
       const buildSweetCell = (s, fallbackSide) => {
         const side = (s && s.side) || fallbackSide;
         const cell = document.createElement('div');
-        const isHit = matchedSlotSet.has(`sweet:${side}`);
+        const isHit = matchedSlotSet.has(`${prefix}sweet:${side}`);
         if (isDebugPage) {
           cell.className = `seating-seatmap-cell is-${side}${isHit ? ' is-seat-match' : ''}`;
           cell.textContent = s ? (currentLang === 'en' ? s.en : s.zh) || s.zh : '—';
@@ -3205,17 +3467,17 @@
       sweetSpine.className = 'seating-seatmap-spine';
       sweetSpine.textContent = '♥';
       sweetRow.append(
-        buildSweetCell(sp.sweetheartSeats[0], 'left'),
+        buildSweetCell(plan.sweetheartSeats[0], 'left'),
         sweetSpine,
-        buildSweetCell(sp.sweetheartSeats[1], 'right')
+        buildSweetCell(plan.sweetheartSeats[1], 'right')
       );
-      wrap.append(sweetRow);
+      block.append(sweetRow);
 
       const mainSub = document.createElement('div');
       mainSub.className = 'seating-seatmap-subhead';
       mainSub.textContent =
         currentLang === 'en' ? '🪑 Left Main Long Table (6 Rows)' : '🪑 左側主婚人與長輩長桌（共 6 排）';
-      wrap.append(mainSub);
+      block.append(mainSub);
     }
 
     const colHead = document.createElement('div');
@@ -3227,13 +3489,13 @@
     const headRight = document.createElement('span');
     headRight.textContent = currentLang === 'en' ? 'Right Side' : '右側座位';
     colHead.append(headLeft, headMid, headRight);
-    wrap.append(colHead);
+    block.append(colHead);
 
     const rowsBox = document.createElement('div');
     rowsBox.className = 'seating-seatmap-rows';
 
-    sp.rows.forEach((pair, rIdx) => {
-      if (sp.aisleAfterRow && sp.aisleAfterRow === rIdx) {
+    (plan.rows || []).forEach((pair, rIdx) => {
+      if (plan.aisleAfterRow && plan.aisleAfterRow === rIdx) {
         const aisle = document.createElement('div');
         aisle.className = 'seating-seatmap-aisle';
         aisle.textContent =
@@ -3248,7 +3510,7 @@
 
       const makeCell = (seat, side) => {
         const cell = document.createElement('div');
-        const slotKey = `${rIdx}:${side}`;
+        const slotKey = `${prefix}${rIdx}:${side}`;
         const isHit = matchedSlotSet.has(slotKey);
         if (isDebugPage) {
           if (!seat) {
@@ -3282,7 +3544,61 @@
       rowsBox.append(rowEl);
     });
 
-    wrap.append(rowsBox);
+    if (Array.isArray(plan.extraSeats)) {
+      plan.extraSeats.forEach((s, eIdx) => {
+        if (!s) return;
+        const slotKey = `${prefix}extra:${eIdx}`;
+        const isHit = matchedSlotSet.has(slotKey);
+        const extraEl = document.createElement('div');
+        extraEl.className = `seating-seatmap-cell seating-seatmap-extra${isHit ? ' is-seat-match' : isDebugPage ? '' : ' is-anon'}`;
+        if (isDebugPage) {
+          extraEl.textContent = (currentLang === 'en' ? s.en : s.zh) || s.zh;
+        } else if (isHit) {
+          extraEl.textContent = currentLang === 'en' ? '📍 Your Seat (End Seat)' : '📍 您的座位（桌尾席）';
+        } else {
+          extraEl.textContent = '○';
+        }
+        rowsBox.append(extraEl);
+      });
+    }
+
+    block.append(rowsBox);
+    return block;
+  }
+
+  function buildSeatMapElement(table, matchedSlotSet, isDebugPage) {
+    const sp = table.seatPlan;
+    if (!sp) return null;
+
+    const wrap = document.createElement('div');
+    wrap.className = `seating-seatmap${isDebugPage ? ' is-debug-seatmap' : ' is-public-seatmap'}`;
+
+    const orient = document.createElement('div');
+    orient.className = 'seating-seatmap-orient';
+    orient.textContent =
+      currentLang === 'en'
+        ? '▲ Toward Top of Floor Plan · Relative Table Seats'
+        : '▲ 朝向平面圖上方 · 桌內左右相對位置';
+    wrap.append(orient);
+
+    if (Array.isArray(sp.subTables)) {
+      const grid = document.createElement('div');
+      grid.className = 'seating-seatmap-subgrid';
+      let renderedCount = 0;
+      sp.subTables.forEach((sub, idx) => {
+        const prefix = `t${idx}:`;
+        const hasHitInSub = Array.from(matchedSlotSet).some((k) => k.startsWith(prefix));
+        if (!isDebugPage && !hasHitInSub) return;
+        grid.append(buildSingleSeatTableBlock(sub, idx, matchedSlotSet, isDebugPage));
+        renderedCount += 1;
+      });
+      if (renderedCount === 0) return null;
+      wrap.append(grid);
+      return wrap;
+    }
+
+    if (!Array.isArray(sp.rows)) return null;
+    wrap.append(buildSingleSeatTableBlock(sp, null, matchedSlotSet, isDebugPage));
     return wrap;
   }
 
@@ -3526,85 +3842,124 @@
       if (table.darkColor) pinLayer.style.setProperty('--zone-dark-color', table.darkColor);
 
       if (showAllDebugSeats) {
-        if (Array.isArray(sp.sweetheartSeats)) {
-          sp.sweetheartSeats.forEach((s, idx) => {
-            if (!s) return;
-            const side = s.side || (idx === 0 ? 'left' : 'right');
-            const g = document.createElementNS(svgNS, 'g');
-            g.setAttribute('class', 'seating-seat-debug-dot');
+        const renderDebugDotsForPlan = (plan) => {
+          if (!plan) return;
+          const tPrefix = plan.title ? `${plan.title[currentLang] || plan.title.zh} · ` : '';
+          if (Array.isArray(plan.sweetheartSeats)) {
+            plan.sweetheartSeats.forEach((s, idx) => {
+              if (!s) return;
+              const side = s.side || (idx === 0 ? 'left' : 'right');
+              const g = document.createElementNS(svgNS, 'g');
+              g.setAttribute('class', 'seating-seat-debug-dot');
 
-            const c = document.createElementNS(svgNS, 'circle');
-            c.setAttribute('cx', String(s.cx));
-            c.setAttribute('cy', String(s.cy));
-            c.setAttribute('r', '15');
-            c.setAttribute('class', 'seating-seat-debug-circle');
+              const c = document.createElementNS(svgNS, 'circle');
+              c.setAttribute('cx', String(s.cx));
+              c.setAttribute('cy', String(s.cy));
+              c.setAttribute('r', '15');
+              c.setAttribute('class', 'seating-seat-debug-circle');
 
-            const t = document.createElementNS(svgNS, 'text');
-            t.setAttribute('x', String(s.cx));
-            t.setAttribute('y', String(Math.round(s.cy + 6)));
-            t.setAttribute('text-anchor', 'middle');
-            t.setAttribute('class', 'seating-seat-debug-num');
-            t.textContent = s.pinText || '♥';
+              const t = document.createElementNS(svgNS, 'text');
+              t.setAttribute('x', String(s.cx));
+              t.setAttribute('y', String(Math.round(s.cy + 6)));
+              t.setAttribute('text-anchor', 'middle');
+              t.setAttribute('class', 'seating-seat-debug-num');
+              t.textContent = s.pinText || '♥';
 
-            const tip = document.createElementNS(svgNS, 'title');
-            const seatLabel = (currentLang === 'en' ? s.en : s.zh) || s.zh;
-            tip.textContent =
-              currentLang === 'en'
-                ? `Sweetheart Table (${side === 'left' ? 'Left' : 'Right'}): ${seatLabel}`
-                : `新人小桌（${side === 'left' ? '左席' : '右席'}）：${seatLabel}`;
+              const tip = document.createElementNS(svgNS, 'title');
+              const seatLabel = (currentLang === 'en' ? s.en : s.zh) || s.zh;
+              tip.textContent =
+                currentLang === 'en'
+                  ? `Sweetheart Table (${side === 'left' ? 'Left' : 'Right'}): ${seatLabel}`
+                  : `新人小桌（${side === 'left' ? '左席' : '右席'}）：${seatLabel}`;
 
-            g.append(tip, c, t);
-            g.addEventListener('click', (e) => handleZoneSelect(table.id, e));
-            pinLayer.append(g);
+              g.append(tip, c, t);
+              g.addEventListener('click', (e) => handleZoneSelect(table.id, e));
+              pinLayer.append(g);
+            });
+          }
+
+          (plan.rows || []).forEach((pair, rIdx) => {
+            ['left', 'right'].forEach((side, sIdx) => {
+              const seat = pair[sIdx];
+              if (seat && seat.isOtherZone) return;
+              const cx = side === 'left' ? plan.leftX : plan.rightX;
+              const cy = plan.rowYs[rIdx];
+              const g = document.createElementNS(svgNS, 'g');
+              g.setAttribute('class', `seating-seat-debug-dot${seat ? '' : ' is-empty'}`);
+
+              const c = document.createElementNS(svgNS, 'circle');
+              c.setAttribute('cx', String(cx));
+              c.setAttribute('cy', String(cy));
+              c.setAttribute('r', '15');
+              c.setAttribute('class', 'seating-seat-debug-circle');
+
+              const t = document.createElementNS(svgNS, 'text');
+              t.setAttribute('x', String(cx));
+              t.setAttribute('y', String(Math.round(cy + 6)));
+              t.setAttribute('text-anchor', 'middle');
+              t.setAttribute('class', 'seating-seat-debug-num');
+              t.textContent = seat ? String(rIdx + 1) : '–';
+
+              const tip = document.createElementNS(svgNS, 'title');
+              const sideText =
+                currentLang === 'en'
+                  ? side === 'left'
+                    ? 'Left'
+                    : 'Right'
+                  : side === 'left'
+                    ? '左'
+                    : '右';
+              const seatLabel = seat
+                ? (currentLang === 'en' ? seat.en : seat.zh) || seat.zh
+                : currentLang === 'en'
+                  ? 'Empty'
+                  : '空位';
+              tip.textContent =
+                currentLang === 'en'
+                  ? `${tPrefix}Row ${rIdx + 1} (${sideText}): ${seatLabel}`
+                  : `${tPrefix}第 ${rIdx + 1} 排${sideText}：${seatLabel}`;
+
+              g.append(tip, c, t);
+              g.addEventListener('click', (e) => handleZoneSelect(table.id, e));
+              pinLayer.append(g);
+            });
           });
+
+          if (Array.isArray(plan.extraSeats)) {
+            plan.extraSeats.forEach((s) => {
+              if (!s) return;
+              const g = document.createElementNS(svgNS, 'g');
+              g.setAttribute('class', 'seating-seat-debug-dot');
+
+              const c = document.createElementNS(svgNS, 'circle');
+              c.setAttribute('cx', String(s.cx));
+              c.setAttribute('cy', String(s.cy));
+              c.setAttribute('r', '15');
+              c.setAttribute('class', 'seating-seat-debug-circle');
+
+              const t = document.createElementNS(svgNS, 'text');
+              t.setAttribute('x', String(s.cx));
+              t.setAttribute('y', String(Math.round(s.cy + 6)));
+              t.setAttribute('text-anchor', 'middle');
+              t.setAttribute('class', 'seating-seat-debug-num');
+              t.textContent = s.pinText || '加';
+
+              const tip = document.createElementNS(svgNS, 'title');
+              const seatLabel = (currentLang === 'en' ? s.en : s.zh) || s.zh;
+              tip.textContent = `${tPrefix}${seatLabel}`;
+
+              g.append(tip, c, t);
+              g.addEventListener('click', (e) => handleZoneSelect(table.id, e));
+              pinLayer.append(g);
+            });
+          }
+        };
+
+        if (Array.isArray(sp.subTables)) {
+          sp.subTables.forEach((sub) => renderDebugDotsForPlan(sub));
+        } else {
+          renderDebugDotsForPlan(sp);
         }
-
-        sp.rows.forEach((pair, rIdx) => {
-          ['left', 'right'].forEach((side, sIdx) => {
-            const seat = pair[sIdx];
-            if (seat && seat.isOtherZone) return;
-            const cx = side === 'left' ? sp.leftX : sp.rightX;
-            const cy = sp.rowYs[rIdx];
-            const g = document.createElementNS(svgNS, 'g');
-            g.setAttribute('class', `seating-seat-debug-dot${seat ? '' : ' is-empty'}`);
-
-            const c = document.createElementNS(svgNS, 'circle');
-            c.setAttribute('cx', String(cx));
-            c.setAttribute('cy', String(cy));
-            c.setAttribute('r', '15');
-            c.setAttribute('class', 'seating-seat-debug-circle');
-
-            const t = document.createElementNS(svgNS, 'text');
-            t.setAttribute('x', String(cx));
-            t.setAttribute('y', String(Math.round(cy + 6)));
-            t.setAttribute('text-anchor', 'middle');
-            t.setAttribute('class', 'seating-seat-debug-num');
-            t.textContent = seat ? String(rIdx + 1) : '–';
-
-            const tip = document.createElementNS(svgNS, 'title');
-            const sideText =
-              currentLang === 'en'
-                ? side === 'left'
-                  ? 'Left'
-                  : 'Right'
-                : side === 'left'
-                  ? '左'
-                  : '右';
-            const seatLabel = seat
-              ? (currentLang === 'en' ? seat.en : seat.zh) || seat.zh
-              : currentLang === 'en'
-                ? 'Empty'
-                : '空位';
-            tip.textContent =
-              currentLang === 'en'
-                ? `Row ${rIdx + 1} (${sideText}): ${seatLabel}`
-                : `第 ${rIdx + 1} 排${sideText}：${seatLabel}`;
-
-            g.append(tip, c, t);
-            g.addEventListener('click', (e) => handleZoneSelect(table.id, e));
-            pinLayer.append(g);
-          });
-        });
       } else if (matchedSlots && matchedSlots.length > 0) {
         matchedSlots.forEach((slot) => {
           const g = document.createElementNS(svgNS, 'g');
@@ -3627,9 +3982,15 @@
           num.setAttribute('y', String(Math.round(slot.cy + 6)));
           num.setAttribute('text-anchor', 'middle');
           num.setAttribute('class', 'seating-seat-pin-num');
-          num.textContent = slot.isSweetheart ? slot.pinText || '♥' : String(slot.rowIndex + 1);
+          num.textContent =
+            slot.isSweetheart || slot.isExtraSeat
+              ? slot.pinText || '♥'
+              : String(slot.rowIndex + 1);
 
           const tip = document.createElementNS(svgNS, 'title');
+          const tPrefix = slot.subTableTitle
+            ? `${slot.subTableTitle[currentLang] || slot.subTableTitle.zh} · `
+            : '';
           const sideText =
             currentLang === 'en'
               ? slot.side === 'left'
@@ -3651,17 +4012,27 @@
                   ? `Your Seat: Sweetheart Table (${sideText})`
                   : `您的座位：新人小桌${sideText}`;
             }
+          } else if (slot.isExtraSeat) {
+            if (isDebugPage) {
+              const seatName = (currentLang === 'en' ? slot.seat.en : slot.seat.zh) || slot.seat.zh;
+              tip.textContent = `${tPrefix}${seatName}`;
+            } else {
+              tip.textContent =
+                currentLang === 'en'
+                  ? `${tPrefix}Your Seat (Bottom End Seat)`
+                  : `${tPrefix}您的座位（桌尾席）`;
+            }
           } else if (isDebugPage) {
             const seatName = (currentLang === 'en' ? slot.seat.en : slot.seat.zh) || slot.seat.zh;
             tip.textContent =
               currentLang === 'en'
-                ? `Row ${slot.rowIndex + 1} (${sideText}): ${seatName}`
-                : `第 ${slot.rowIndex + 1} 排${sideText}：${seatName}`;
+                ? `${tPrefix}Row ${slot.rowIndex + 1} (${sideText}): ${seatName}`
+                : `${tPrefix}第 ${slot.rowIndex + 1} 排${sideText}：${seatName}`;
           } else {
             tip.textContent =
               currentLang === 'en'
-                ? `Your Seat: Row ${slot.rowIndex + 1} (${sideText})`
-                : `您的座位：第 ${slot.rowIndex + 1} 排${sideText}`;
+                ? `${tPrefix}Your Seat: Row ${slot.rowIndex + 1} (${sideText})`
+                : `${tPrefix}您的座位：第 ${slot.rowIndex + 1} 排${sideText}`;
           }
 
           g.append(tip, halo, dot, num);

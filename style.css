@@ -2633,6 +2633,28 @@ body.is-time-up .countdown-stage-wrap {
   opacity: 0.82;
 }
 
+.seating-seatmap-subgrid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.seating-seatmap-block {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.seating-seatmap-subgrid .seating-seatmap-block + .seating-seatmap-block {
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.seating-seatmap-extra {
+  margin-top: 2px;
+  font-size: 0.75rem;
+}
+
 .banquet-menu-note {
   padding: 12px 16px;
   margin-bottom: 14px;
