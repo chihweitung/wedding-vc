@@ -1887,6 +1887,7 @@ body.is-time-up .countdown-stage-wrap {
 
 .wedding-carousel-counter,
 .wedding-carousel-autoplay-btn,
+.wedding-carousel-rotate-btn,
 .wedding-carousel-fullscreen-btn {
   padding: 5px 11px;
   border-radius: 999px;
@@ -1921,6 +1922,30 @@ body.is-time-up .countdown-stage-wrap {
   z-index: 99999;
   background: #0d130f;
   touch-action: pan-y;
+}
+
+.wedding-carousel-rotate-btn,
+.timeline-rotate-btn {
+  display: none;
+}
+
+.wedding-carousel-stage.is-css-fullscreen .wedding-carousel-rotate-btn,
+.footprint-video-player.is-css-fullscreen .timeline-rotate-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wedding-carousel-stage.is-css-fullscreen.is-rotated-90,
+.footprint-video-player.is-css-fullscreen.is-rotated-90 {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  width: 100vh;
+  width: 100dvh;
+  height: 100vw;
+  transform: translate(-50%, -50%) rotate(90deg);
 }
 
 .wedding-carousel-stage:fullscreen .wedding-carousel-topbar,

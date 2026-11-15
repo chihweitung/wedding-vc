@@ -2303,6 +2303,7 @@
   const btnTimelineSpeed = document.getElementById('timeline-speed-btn');
   const btnTimelineReplay = document.getElementById('timeline-replay-btn');
   const btnTimelineBgm = document.getElementById('timeline-bgm-btn');
+  const btnTimelineRotate = document.getElementById('timeline-rotate-btn');
   const btnTimelineFullscreen = document.getElementById('timeline-fullscreen-btn');
   const elTimelineScrubberFill = document.getElementById('timeline-scrubber-fill');
 
@@ -3022,11 +3023,16 @@
     autoplayBtn.type = 'button';
     autoplayBtn.className = 'wedding-carousel-autoplay-btn';
 
+    const rotateBtn = document.createElement('button');
+    rotateBtn.type = 'button';
+    rotateBtn.className = 'wedding-carousel-rotate-btn';
+    rotateBtn.textContent = currentLang === 'en' ? '↻ Rotate' : '↻ 橫向';
+
     const fullscreenBtn = document.createElement('button');
     fullscreenBtn.type = 'button';
     fullscreenBtn.className = 'wedding-carousel-fullscreen-btn';
 
-    topBar.append(counterBadge, autoplayBtn, fullscreenBtn);
+    topBar.append(counterBadge, autoplayBtn, rotateBtn, fullscreenBtn);
 
     const prevBtn = document.createElement('button');
     prevBtn.type = 'button';
@@ -3089,6 +3095,7 @@
     function syncFullscreenUi() {
       const active = isCarouselFullscreen();
       if (!stage.classList.contains('is-css-fullscreen')) {
+        stage.classList.remove('is-rotated-90');
         restoreStageToCarousel();
       }
       fullscreenBtn.textContent = active
@@ -3140,6 +3147,7 @@
       mountStageToBody();
       stage.classList.add('is-css-fullscreen');
       syncFullscreenUi();
+      restartTimer();
     }
 
     const handleKeydown = (e) => {
@@ -3153,6 +3161,9 @@
         stepSlide(1);
       }
     };
+    rotateBtn.addEventListener('click', () => {
+      stage.classList.toggle('is-rotated-90');
+    });
     fullscreenBtn.addEventListener('click', toggleCarouselFullscreen);
     document.addEventListener('fullscreenchange', syncFullscreenUi);
     document.addEventListener('webkitfullscreenchange', syncFullscreenUi);
@@ -3268,8 +3279,10 @@
       }, 4500);
     }
 
-    stage.addEventListener('mouseenter', stopWeddingCarouselTimer);
-    stage.addEventListener('mouseleave', restartTimer);
+    if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      stage.addEventListener('mouseenter', stopWeddingCarouselTimer);
+      stage.addEventListener('mouseleave', restartTimer);
+    }
 
     syncAutoplayUi();
     updateSlideView();
@@ -6968,6 +6981,7 @@
     const syncMapFullscreenUi = () => {
       const active = isMapStageFullscreen();
       if (!elFootprintMapStage.classList.contains('is-css-fullscreen')) {
+        elFootprintMapStage.classList.remove('is-rotated-90');
         restoreMapStage();
       }
       btnTimelineFullscreen.textContent = active
@@ -7013,6 +7027,11 @@
       syncMapFullscreenUi();
     };
 
+    if (btnTimelineRotate) {
+      btnTimelineRotate.addEventListener('click', () => {
+        elFootprintMapStage.classList.toggle('is-rotated-90');
+      });
+    }
     btnTimelineFullscreen.addEventListener('click', toggleMapFullscreen);
     document.addEventListener('fullscreenchange', syncMapFullscreenUi);
     document.addEventListener('webkitfullscreenchange', syncMapFullscreenUi);
