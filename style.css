@@ -1134,6 +1134,36 @@ body.is-time-up .countdown-stage-wrap {
   border: 1px solid rgba(61, 107, 76, 0.28);
 }
 
+.quiz-option-icon.icon-animal-pikachu {
+  background: rgba(254, 249, 195, 0.72);
+  border: 1px solid rgba(202, 138, 4, 0.35);
+}
+
+[data-theme="dark"] .quiz-option-icon.icon-animal-pikachu {
+  background: rgba(250, 204, 21, 0.14);
+  border-color: rgba(250, 204, 21, 0.38);
+}
+
+.quiz-option-icon.icon-animal-capybara {
+  background: rgba(245, 222, 195, 0.72);
+  border: 1px solid rgba(166, 115, 70, 0.35);
+}
+
+[data-theme="dark"] .quiz-option-icon.icon-animal-capybara {
+  background: rgba(166, 115, 70, 0.18);
+  border-color: rgba(199, 149, 104, 0.38);
+}
+
+.quiz-option-icon.icon-bmc-magic {
+  background: rgba(252, 231, 243, 0.85);
+  border: 1px solid rgba(236, 72, 153, 0.35);
+}
+
+[data-theme="dark"] .quiz-option-icon.icon-bmc-magic {
+  background: rgba(236, 72, 153, 0.18);
+  border-color: rgba(244, 114, 182, 0.42);
+}
+
 .quiz-option-btn.is-correct {
   background: var(--success-bg);
   border-color: var(--accent-emerald);
@@ -1193,12 +1223,60 @@ body.is-time-up .countdown-stage-wrap {
 }
 
 /* Quiz Summary View */
+.quiz-intro-view,
 .quiz-summary-view {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 14px;
+}
+
+.quiz-intro-tiers {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 4px 0 8px;
+}
+
+.quiz-intro-tier {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--surface-pill);
+  border: 1px solid var(--border-subtle);
+  text-align: left;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.quiz-intro-tier.is-highlight {
+  border-color: var(--border-highlight);
+  box-shadow: 0 4px 14px -4px rgba(154, 184, 161, 0.28);
+}
+
+.quiz-intro-tier-score {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.quiz-intro-tier-desc {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 560px) {
+  .quiz-intro-tier {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
 }
 
 .quiz-summary-title {
@@ -1583,26 +1661,51 @@ body.is-time-up .countdown-stage-wrap {
 
 /* Wedding Seating Chart & Banquet Menu */
 .seating-search-bar {
+  position: relative;
   width: 100%;
+  margin: 4px 0 6px;
+}
+
+.seating-search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent);
+  pointer-events: none;
+  opacity: 0.92;
 }
 
 .seating-search-input {
   width: 100%;
-  min-height: 46px;
-  padding: 10px 16px;
-  border-radius: 14px;
-  background: var(--surface-pill);
-  border: 1px solid var(--border-subtle);
+  min-height: 52px;
+  padding: 12px 18px 12px 46px;
+  border-radius: 16px;
+  background: var(--surface-card, #ffffff);
+  border: 2px solid color-mix(in srgb, var(--accent) 52%, var(--border-highlight));
+  box-shadow: 0 6px 20px -6px rgba(68, 86, 72, 0.14), 0 0 0 4px color-mix(in srgb, var(--accent) 10%, transparent);
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 1.02rem;
+  font-weight: 500;
   font-family: inherit;
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.seating-search-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.88;
 }
 
 .seating-search-input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--surface-subtle);
+  box-shadow: 0 8px 24px -6px rgba(68, 86, 72, 0.2), 0 0 0 5px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+[data-theme="dark"] .seating-search-input {
+  background: var(--surface-card);
+  border-color: color-mix(in srgb, var(--accent) 62%, var(--border-subtle));
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.45), 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
 .embedded-photo-stage {
@@ -2125,11 +2228,13 @@ body.is-time-up .countdown-stage-wrap {
 
 .seating-tables-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  align-items: stretch;
   gap: 14px;
 }
 
 .seating-table-card {
+  height: 100%;
   padding: 16px 18px;
   border-radius: 18px;
   background: var(--surface-pill);
@@ -2137,6 +2242,7 @@ body.is-time-up .countdown-stage-wrap {
   border-left: 6px solid var(--zone-color, var(--accent));
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   gap: 10px;
   text-align: left;
   cursor: pointer;
@@ -2174,10 +2280,10 @@ body.is-time-up .countdown-stage-wrap {
 
 .seating-table-head {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
+  width: 100%;
 }
 
 .seating-zone-swatch {
@@ -2188,14 +2294,16 @@ body.is-time-up .countdown-stage-wrap {
   background: var(--zone-color, var(--accent));
   box-shadow: 0 0 0 3px var(--zone-fill, rgba(61, 107, 76, 0.2));
   flex-shrink: 0;
-  margin-top: 4px;
+  margin-top: 5px;
 }
 
 .seating-table-badge {
-  font-family: 'JetBrains Mono', 'Noto Sans TC', monospace;
-  font-size: 0.74rem;
-  font-weight: 700;
-  padding: 3px 10px;
+  font-family: 'Inter', 'Noto Sans TC', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  padding: 4px 11px;
   border-radius: 999px;
   background: var(--zone-fill, var(--surface-subtle));
   border: 1px solid var(--zone-color, var(--border-subtle));
@@ -2206,9 +2314,10 @@ body.is-time-up .countdown-stage-wrap {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-family: 'Noto Serif TC', serif;
+  font-family: 'Noto Serif TC', 'Cormorant Garamond', serif;
   font-size: 1.05rem;
   font-weight: 700;
+  line-height: 1.4;
   color: var(--text-primary);
   margin: 0;
 }
@@ -2385,7 +2494,7 @@ body.is-time-up .countdown-stage-wrap {
 }
 
 [data-theme="dark"] .seating-table-badge {
-  background: rgba(11, 18, 28, 0.62);
+  background: rgba(18, 27, 21, 0.72);
   border-color: var(--zone-dark-color, var(--border-subtle));
   color: var(--zone-dark-color, var(--accent));
 }
@@ -2591,10 +2700,6 @@ body.is-time-up .countdown-stage-wrap {
 .seating-loupe-dim-neighbor {
   fill: rgba(247, 244, 238, 0.84);
   stroke: none;
-}
-
-[data-theme="dark"] .seating-loupe-dim-neighbor {
-  fill: rgba(15, 23, 42, 0.82);
 }
 
 @keyframes seatingPinHaloPulse {

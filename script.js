@@ -978,7 +978,7 @@
       darkFillColor: 'rgba(163, 230, 53, 0.15)',
       debugStats: { headcount: 73, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎爸媽朋友區', en: "Groom's Parents' Friends" },
-      zone: { zh: '主廳上方 · 新郎爸媽朋友（共 6 長桌）', en: "Main Hall North · Groom's Parents' Friends (6 Long Tables)" },
+      zone: { zh: '主廳上方 · 新郎爸媽朋友', en: "Main Hall North · Groom's Parents' Friends" },
       guests: [
         { zh: '吳淑芸', en: '吳淑芸' },
         { zh: '楊文', en: '楊文' },
@@ -1331,7 +1331,7 @@
       darkFillColor: 'rgba(248, 113, 113, 0.16)',
       debugStats: { headcount: 15, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1（大直區自由入座共 15 席，含第 8 排左席）' },
       name: { zh: '新郎高中區（大直）', en: "Groom's High School (Dazhi)" },
-      zone: { zh: '外廳左列上方區 · 大直（15 席自由入座）', en: 'Lower Hall Left Col · Upper (Dazhi HS · Open Seating)' },
+      zone: { zh: '外廳左列上方區 · 大直', en: 'Lower Hall Left Col · Upper (Dazhi HS)' },
       guests: [
         { zh: '施傑耀等三人', en: '施傑耀 (3)' },
         { zh: '洪維辰', en: '洪維辰' },
@@ -2437,6 +2437,12 @@
 
   // Quiz Elements
   const elQuizSection = document.getElementById('quiz-section');
+  const elQuizIntroView = document.getElementById('quiz-intro-view');
+  const elQuizIntroEyebrow = document.getElementById('quiz-intro-eyebrow');
+  const elQuizIntroTitle = document.getElementById('quiz-intro-title');
+  const elQuizIntroDesc = document.getElementById('quiz-intro-desc');
+  const elQuizIntroTiers = document.getElementById('quiz-intro-tiers');
+  const btnQuizStart = document.getElementById('quiz-start-btn');
   const elQuizQuestionView = document.getElementById('quiz-question-view');
   const elQuizSummaryView = document.getElementById('quiz-summary-view');
   const elQuizProgressText = document.getElementById('quiz-progress-text');
@@ -2752,6 +2758,7 @@
     elQuizSummaryTitle.textContent = dict.quizSummaryTitle;
     btnQuizRestart.textContent = dict.restartBtn;
     btnQuizToVideo.textContent = dict.toVideoBtn;
+    renderQuizIntroLanguage();
 
     elClockCaption.textContent = dict.clockCaption;
     btnCelebrate.textContent = dict.celebrateBtn;
@@ -2760,7 +2767,7 @@
     if (!elQuizSection.classList.contains('hidden')) {
       if (!elQuizSummaryView.classList.contains('hidden')) {
         showQuizSummary(false);
-      } else {
+      } else if (quizStarted) {
         refreshQuizLanguage();
       }
     }
@@ -2954,7 +2961,7 @@
       clearVideoIframe();
       if (mode === 'quiz') {
         if (!quizStarted) {
-          startQuiz();
+          showQuizIntro();
         } else if (quizIndex >= QUIZ_QUESTIONS.length) {
           showQuizSummary(false);
         } else {
@@ -3848,6 +3855,48 @@
       };
     };
 
+    const appendFocusFrameAndBadge = (layer, fb, label) => {
+      if (!fb) return;
+      const focusRect = document.createElementNS(svgNS, 'rect');
+      focusRect.setAttribute('x', String(fb.x));
+      focusRect.setAttribute('y', String(fb.y));
+      focusRect.setAttribute('width', String(fb.w));
+      focusRect.setAttribute('height', String(fb.h));
+      focusRect.setAttribute('rx', '22');
+      focusRect.setAttribute('ry', '22');
+      focusRect.setAttribute('class', 'seating-table-focus-frame');
+      layer.append(focusRect);
+
+      if (!label) return;
+      const badgeTextStr = `📍 ${label}`;
+      const badgeW = Math.max(150, Math.min(420, badgeTextStr.length * 30 + 44));
+      const badgeH = 54;
+      const badgeCx = Math.max(
+        badgeW / 2 + 18,
+        Math.min(2090 - badgeW / 2 - 18, Math.round(fb.x + fb.w / 2))
+      );
+      const badgeCy = fb.y < 86 ? fb.y + fb.h + 36 : fb.y - 34;
+
+      const badgeGroup = document.createElementNS(svgNS, 'g');
+      badgeGroup.setAttribute('class', 'seating-table-focus-badge');
+      const badgeBg = document.createElementNS(svgNS, 'rect');
+      badgeBg.setAttribute('x', String(Math.round(badgeCx - badgeW / 2)));
+      badgeBg.setAttribute('y', String(Math.round(badgeCy - badgeH / 2)));
+      badgeBg.setAttribute('width', String(badgeW));
+      badgeBg.setAttribute('height', String(badgeH));
+      badgeBg.setAttribute('rx', '27');
+      badgeBg.setAttribute('ry', '27');
+      badgeBg.setAttribute('class', 'seating-table-focus-badge-bg');
+      const badgeText = document.createElementNS(svgNS, 'text');
+      badgeText.setAttribute('x', String(badgeCx));
+      badgeText.setAttribute('y', String(Math.round(badgeCy + 11)));
+      badgeText.setAttribute('text-anchor', 'middle');
+      badgeText.setAttribute('class', 'seating-table-focus-badge-text');
+      badgeText.textContent = badgeTextStr;
+      badgeGroup.append(badgeBg, badgeText);
+      layer.append(badgeGroup);
+    };
+
     SEATING_TABLES_DATA.forEach((table) => {
       if (!table.seatPlan) return;
       const sp = table.seatPlan;
@@ -3998,49 +4047,9 @@
                 renderDebugDotsForPlan(subPlan);
               }
               const fb = computePlanFocusBox(subPlan, table.box);
-              if (fb) {
-                const focusRect = document.createElementNS(svgNS, 'rect');
-                focusRect.setAttribute('x', String(fb.x));
-                focusRect.setAttribute('y', String(fb.y));
-                focusRect.setAttribute('width', String(fb.w));
-                focusRect.setAttribute('height', String(fb.h));
-                focusRect.setAttribute('rx', '22');
-                focusRect.setAttribute('ry', '22');
-                focusRect.setAttribute('class', 'seating-table-focus-frame');
-                pinLayer.append(focusRect);
-
-                const subLabel =
-                  subPlan && subPlan.title ? (subPlan.title[currentLang] || subPlan.title.zh) : '';
-                if (subLabel) {
-                  const badgeTextStr = `📍 ${subLabel}`;
-                  const badgeW = Math.max(150, Math.min(420, badgeTextStr.length * 30 + 44));
-                  const badgeH = 54;
-                  const badgeCx = Math.max(
-                    badgeW / 2 + 18,
-                    Math.min(2090 - badgeW / 2 - 18, Math.round(fb.x + fb.w / 2))
-                  );
-                  const badgeCy = fb.y < 86 ? fb.y + fb.h + 36 : fb.y - 34;
-
-                  const badgeGroup = document.createElementNS(svgNS, 'g');
-                  badgeGroup.setAttribute('class', 'seating-table-focus-badge');
-                  const badgeBg = document.createElementNS(svgNS, 'rect');
-                  badgeBg.setAttribute('x', String(Math.round(badgeCx - badgeW / 2)));
-                  badgeBg.setAttribute('y', String(Math.round(badgeCy - badgeH / 2)));
-                  badgeBg.setAttribute('width', String(badgeW));
-                  badgeBg.setAttribute('height', String(badgeH));
-                  badgeBg.setAttribute('rx', '27');
-                  badgeBg.setAttribute('ry', '27');
-                  badgeBg.setAttribute('class', 'seating-table-focus-badge-bg');
-                  const badgeText = document.createElementNS(svgNS, 'text');
-                  badgeText.setAttribute('x', String(badgeCx));
-                  badgeText.setAttribute('y', String(Math.round(badgeCy + 11)));
-                  badgeText.setAttribute('text-anchor', 'middle');
-                  badgeText.setAttribute('class', 'seating-table-focus-badge-text');
-                  badgeText.textContent = badgeTextStr;
-                  badgeGroup.append(badgeBg, badgeText);
-                  pinLayer.append(badgeGroup);
-                }
-              }
+              const subLabel =
+                subPlan && subPlan.title ? (subPlan.title[currentLang] || subPlan.title.zh) : '';
+              appendFocusFrameAndBadge(pinLayer, fb, subLabel);
             });
           } else if (!sp.hideSeatGrid) {
             sp.subTables.forEach((sub) => renderDebugDotsForPlan(sub));
@@ -4161,49 +4170,7 @@
           }
         }
         focusBoxes.forEach(({ box: fb, label }) => {
-          const focusRect = document.createElementNS(svgNS, 'rect');
-          focusRect.setAttribute('x', String(fb.x));
-          focusRect.setAttribute('y', String(fb.y));
-          focusRect.setAttribute('width', String(fb.w));
-          focusRect.setAttribute('height', String(fb.h));
-          focusRect.setAttribute('rx', '22');
-          focusRect.setAttribute('ry', '22');
-          focusRect.setAttribute('class', 'seating-table-focus-frame');
-          pinLayer.append(focusRect);
-
-          if (label) {
-            const badgeTextStr = `📍 ${label}`;
-            const badgeW = Math.max(150, Math.min(420, badgeTextStr.length * 30 + 44));
-            const badgeH = 54;
-            const badgeCx = Math.max(
-              badgeW / 2 + 18,
-              Math.min(2090 - badgeW / 2 - 18, Math.round(fb.x + fb.w / 2))
-            );
-            const placeBelow = fb.y < 86;
-            const badgeCy = placeBelow ? fb.y + fb.h + 36 : fb.y - 34;
-
-            const badgeGroup = document.createElementNS(svgNS, 'g');
-            badgeGroup.setAttribute('class', 'seating-table-focus-badge');
-
-            const badgeBg = document.createElementNS(svgNS, 'rect');
-            badgeBg.setAttribute('x', String(Math.round(badgeCx - badgeW / 2)));
-            badgeBg.setAttribute('y', String(Math.round(badgeCy - badgeH / 2)));
-            badgeBg.setAttribute('width', String(badgeW));
-            badgeBg.setAttribute('height', String(badgeH));
-            badgeBg.setAttribute('rx', '27');
-            badgeBg.setAttribute('ry', '27');
-            badgeBg.setAttribute('class', 'seating-table-focus-badge-bg');
-
-            const badgeText = document.createElementNS(svgNS, 'text');
-            badgeText.setAttribute('x', String(badgeCx));
-            badgeText.setAttribute('y', String(Math.round(badgeCy + 11)));
-            badgeText.setAttribute('text-anchor', 'middle');
-            badgeText.setAttribute('class', 'seating-table-focus-badge-text');
-            badgeText.textContent = badgeTextStr;
-
-            badgeGroup.append(badgeBg, badgeText);
-            pinLayer.append(badgeGroup);
-          }
+          appendFocusFrameAndBadge(pinLayer, fb, label);
         });
 
         matchedSlots.forEach((slot) => {
@@ -4598,27 +4565,21 @@
       }
     });
 
-    // 7. 步驟二：搜尋命中單人／同組座位（1–4 席）時，延遲在旁彈出放大鏡（不遮擋原本桌框）+ 全桌相對位置說明
-    if (focusLoupeSlots.length > 0 && focusLoupeSlots.length <= 4) {
-      const firstItem = focusLoupeSlots[0];
-      const firstSlot = firstItem.slot;
-      const nearbySlots = focusLoupeSlots.filter(({ slot }) => {
-        const dx = slot.cx - firstSlot.cx;
-        const dy = slot.cy - firstSlot.cy;
-        return Math.hypot(dx, dy) <= 280;
-      });
-      const targetSlots = nearbySlots.length > 0 ? nearbySlots : [firstItem];
-      const cx = Math.round(
-        targetSlots.reduce((sum, item) => sum + item.slot.cx, 0) / targetSlots.length
-      );
-      const cy = Math.round(
-        targetSlots.reduce((sum, item) => sum + item.slot.cy, 0) / targetSlots.length
-      );
-
+    // 7. 步驟二：延遲在旁彈出放大鏡（單人／同組座位 1–4 席，或大直／雄女交界自由入座）
+    const appendMagnifierLoupe = ({
+      cx,
+      cy,
+      zoomScale,
+      focusBox,
+      captionStr,
+      zoneColor,
+      darkColor,
+      preferLeft = false,
+      anchorRadius = 28,
+      populateOverlay,
+    }) => {
       const loupeR = 215;
-      const zoomScale = 1.9;
-      const fb = firstItem.focusBox || { x: cx - 120, y: cy - 160, w: 240, h: 320 };
-
+      const fb = focusBox || { x: cx - 120, y: cy - 160, w: 240, h: 320 };
       const minLx = loupeR + 30;
       const maxLx = 2090 - loupeR - 115;
       const minLy = loupeR + 40;
@@ -4626,14 +4587,13 @@
       const clampX = (v) => Math.max(minLx, Math.min(maxLx, Math.round(v)));
       const clampY = (v) => Math.max(minLy, Math.min(maxLy, Math.round(v)));
 
-      const candidates = [
-        { x: fb.x + fb.w + loupeR + 68, y: cy },
-        { x: fb.x - loupeR - 68, y: cy },
-        { x: cx, y: fb.y + fb.h + loupeR + 78 },
-        { x: cx, y: fb.y - loupeR - 78 },
-      ];
+      const rightPos = { x: fb.x + fb.w + loupeR + 68, y: cy };
+      const leftPos = { x: fb.x - loupeR - 68, y: cy };
+      const candidates = preferLeft
+        ? [leftPos, rightPos, { x: cx, y: fb.y + fb.h + loupeR + 78 }, { x: cx, y: fb.y - loupeR - 78 }]
+        : [rightPos, leftPos, { x: cx, y: fb.y + fb.h + loupeR + 78 }, { x: cx, y: fb.y - loupeR - 78 }];
       const fitsInside = (p) => p.x >= minLx && p.x <= maxLx && p.y >= minLy && p.y <= maxLy;
-      const chosen = candidates.find(fitsInside) || (cx < 1045 ? candidates[0] : candidates[1]);
+      const chosen = candidates.find(fitsInside) || (cx < 1045 && !preferLeft ? rightPos : leftPos);
       const lx = clampX(chosen.x);
       const ly = clampY(chosen.y);
 
@@ -4651,287 +4611,8 @@
       const loupeGroup = document.createElementNS(svgNS, 'g');
       loupeGroup.setAttribute('class', 'seating-loupe-group');
       loupeGroup.style.transformOrigin = `${lx}px ${ly}px`;
-      loupeGroup.style.setProperty('--zone-color', firstItem.color || '#d97706');
-      loupeGroup.style.setProperty('--zone-dark-color', firstItem.darkColor || '#fbbf24');
-
-      // 導引線 + 原桌座位錨點，清楚連結「框起來的桌子座位」與「放大鏡」
-      const leaderLine = document.createElementNS(svgNS, 'line');
-      leaderLine.setAttribute('x1', String(cx));
-      leaderLine.setAttribute('y1', String(cy));
-      leaderLine.setAttribute('x2', String(lx));
-      leaderLine.setAttribute('y2', String(ly));
-      leaderLine.setAttribute('class', 'seating-loupe-leader');
-
-      const anchorRing = document.createElementNS(svgNS, 'circle');
-      anchorRing.setAttribute('cx', String(cx));
-      anchorRing.setAttribute('cy', String(cy));
-      anchorRing.setAttribute('r', '28');
-      anchorRing.setAttribute('class', 'seating-loupe-anchor');
-
-      const cos45 = 0.7071;
-      const handleStart = loupeR - 2;
-      const handleEnd = loupeR + 115;
-      const handleShadow = document.createElementNS(svgNS, 'line');
-      handleShadow.setAttribute('x1', String(Math.round(lx + handleStart * cos45)));
-      handleShadow.setAttribute('y1', String(Math.round(ly + handleStart * cos45)));
-      handleShadow.setAttribute('x2', String(Math.round(lx + handleEnd * cos45)));
-      handleShadow.setAttribute('y2', String(Math.round(ly + handleEnd * cos45)));
-      handleShadow.setAttribute('class', 'seating-loupe-handle-outer');
-
-      const handleGrip = document.createElementNS(svgNS, 'line');
-      handleGrip.setAttribute('x1', String(Math.round(lx + (handleStart + 18) * cos45)));
-      handleGrip.setAttribute('y1', String(Math.round(ly + (handleStart + 18) * cos45)));
-      handleGrip.setAttribute('x2', String(Math.round(lx + handleEnd * cos45)));
-      handleGrip.setAttribute('y2', String(Math.round(ly + handleEnd * cos45)));
-      handleGrip.setAttribute('class', 'seating-loupe-handle-inner');
-
-      const lensBackdrop = document.createElementNS(svgNS, 'circle');
-      lensBackdrop.setAttribute('cx', String(lx));
-      lensBackdrop.setAttribute('cy', String(ly));
-      lensBackdrop.setAttribute('r', String(loupeR));
-      lensBackdrop.setAttribute('class', 'seating-loupe-backdrop');
-
-      const clippedContent = document.createElementNS(svgNS, 'g');
-      clippedContent.setAttribute('clip-path', 'url(#seating-loupe-clip)');
-
-      const zoomTransform = `translate(${lx}, ${ly}) scale(${zoomScale}) translate(${-cx}, ${-cy})`;
-
-      const zoomedImg = document.createElementNS(svgNS, 'image');
-      zoomedImg.setAttribute('href', safeImg);
-      zoomedImg.setAttribute('x', '0');
-      zoomedImg.setAttribute('y', '0');
-      zoomedImg.setAttribute('width', '2090');
-      zoomedImg.setAttribute('height', '3153');
-      zoomedImg.setAttribute('transform', zoomTransform);
-      clippedContent.append(zoomedImg);
-
-      const zoomedPins = document.createElementNS(svgNS, 'g');
-      zoomedPins.setAttribute('transform', zoomTransform);
-
-      // 先畫出同一張桌子的其他參考座位點（讓使用者一眼看懂「由上往下第幾排／左側或右側」）
-      const targetSlotKeys = new Set(targetSlots.map((item) => item.slot.slotKey));
-      const refPlan = firstItem.plan;
-      if (refPlan) {
-        const prefix =
-          typeof firstSlot.subTableIndex === 'number' ? `t${firstSlot.subTableIndex}:` : '';
-        const appendContextDot = (rx, ry, labelText, isEmptySeat) => {
-          const cg = document.createElementNS(svgNS, 'g');
-          cg.setAttribute('class', `seating-loupe-ctx-dot${isEmptySeat ? ' is-empty' : ''}`);
-          const cc = document.createElementNS(svgNS, 'circle');
-          cc.setAttribute('cx', String(rx));
-          cc.setAttribute('cy', String(ry));
-          cc.setAttribute('r', '11');
-          cc.setAttribute('class', 'seating-loupe-ctx-circle');
-          const ct = document.createElementNS(svgNS, 'text');
-          ct.setAttribute('x', String(rx));
-          ct.setAttribute('y', String(Math.round(ry + 4)));
-          ct.setAttribute('text-anchor', 'middle');
-          ct.setAttribute('class', 'seating-loupe-ctx-num');
-          ct.textContent = labelText;
-          cg.append(cc, ct);
-          zoomedPins.append(cg);
-        };
-        if (Array.isArray(refPlan.rows)) {
-          refPlan.rows.forEach((pair, rIdx) => {
-            ['left', 'right'].forEach((side, sIdx) => {
-              const seat = pair[sIdx];
-              if (seat && seat.isOtherZone) return;
-              const slotKey = `${prefix}${rIdx}:${side}`;
-              if (targetSlotKeys.has(slotKey)) return;
-              const rx = side === 'left' ? refPlan.leftX : refPlan.rightX;
-              const ry = refPlan.rowYs[rIdx];
-              appendContextDot(rx, ry, seat ? String(rIdx + 1) : '–', !seat);
-            });
-          });
-        }
-        if (Array.isArray(refPlan.sweetheartSeats)) {
-          refPlan.sweetheartSeats.forEach((s, idx) => {
-            if (!s) return;
-            const side = s.side || (idx === 0 ? 'left' : 'right');
-            const slotKey = `${prefix}sweet:${side}`;
-            if (targetSlotKeys.has(slotKey)) return;
-            appendContextDot(s.cx, s.cy, s.pinText || '♥', false);
-          });
-        }
-        if (Array.isArray(refPlan.extraSeats)) {
-          refPlan.extraSeats.forEach((s, eIdx) => {
-            if (!s) return;
-            const slotKey = `${prefix}extra:${eIdx}`;
-            if (targetSlotKeys.has(slotKey)) return;
-            appendContextDot(s.cx, s.cy, s.pinText || '加', false);
-          });
-        }
-      }
-
-      targetSlots.forEach(({ slot, color, darkColor }) => {
-        const pg = document.createElementNS(svgNS, 'g');
-        pg.style.setProperty('--zone-color', color);
-        pg.style.setProperty('--zone-dark-color', darkColor);
-
-        const pHalo = document.createElementNS(svgNS, 'circle');
-        pHalo.setAttribute('cx', String(slot.cx));
-        pHalo.setAttribute('cy', String(slot.cy));
-        pHalo.setAttribute('r', '22');
-        pHalo.setAttribute('class', 'seating-seat-pin-halo');
-
-        const pDot = document.createElementNS(svgNS, 'circle');
-        pDot.setAttribute('cx', String(slot.cx));
-        pDot.setAttribute('cy', String(slot.cy));
-        pDot.setAttribute('r', '14');
-        pDot.setAttribute('class', 'seating-seat-pin-dot');
-
-        const pNum = document.createElementNS(svgNS, 'text');
-        pNum.setAttribute('x', String(slot.cx));
-        pNum.setAttribute('y', String(Math.round(slot.cy + 5)));
-        pNum.setAttribute('text-anchor', 'middle');
-        pNum.setAttribute('class', 'seating-seat-pin-num');
-        pNum.style.fontSize = '15px';
-        pNum.textContent =
-          slot.isSweetheart || slot.isExtraSeat
-            ? slot.pinText || '♥'
-            : String(slot.rowIndex + 1);
-
-        pg.append(pHalo, pDot, pNum);
-        zoomedPins.append(pg);
-      });
-      clippedContent.append(zoomedPins);
-
-      const sheen = document.createElementNS(svgNS, 'path');
-      const sx1 = Math.round(lx - loupeR * 0.62);
-      const sy1 = Math.round(ly - loupeR * 0.36);
-      const sx2 = Math.round(lx - loupeR * 0.16);
-      const sy2 = Math.round(ly - loupeR * 0.76);
-      sheen.setAttribute(
-        'd',
-        `M ${sx1} ${sy1} A ${Math.round(loupeR * 0.82)} ${Math.round(loupeR * 0.82)} 0 0 1 ${sx2} ${sy2}`
-      );
-      sheen.setAttribute('class', 'seating-loupe-sheen');
-
-      const rim = document.createElementNS(svgNS, 'circle');
-      rim.setAttribute('cx', String(lx));
-      rim.setAttribute('cy', String(ly));
-      rim.setAttribute('r', String(loupeR));
-      rim.setAttribute('class', 'seating-loupe-rim');
-
-      // 白話相對位置標籤（例如：第 2 桌 ｜ 長桌右側 · 由上第 3 排）
-      const slotList = targetSlots.map((item) => item.slot);
-      const tableTitle = firstItem.tableLabel || '';
-      let posLabel = '';
-      if (slotList.every((s) => s.isSweetheart)) {
-        if (currentLang === 'en') {
-          posLabel =
-            slotList.length === 1
-              ? `Sweetheart Table · ${slotList[0].side === 'left' ? 'Left' : 'Right'}`
-              : 'Sweetheart Table (2 seats)';
-        } else {
-          posLabel =
-            slotList.length === 1
-              ? `新人小桌 · ${slotList[0].side === 'left' ? '左側席' : '右側席'}`
-              : '新人小桌 · 雙人席';
-        }
-      } else if (slotList.every((s) => s.isExtraSeat)) {
-        posLabel = currentLang === 'en' ? 'Bottom End Seat' : '桌尾加開席';
-      } else {
-        const rowSlots = slotList.filter((s) => !s.isSweetheart && !s.isExtraSeat);
-        const sides = new Set(rowSlots.map((s) => s.side));
-        const rows = rowSlots.map((s) => s.rowIndex + 1).sort((a, b) => a - b);
-        const rowText =
-          rows.length === 1
-            ? currentLang === 'en'
-              ? `Row ${rows[0]} from top`
-              : `由上第 ${rows[0]} 排`
-            : currentLang === 'en'
-              ? `Rows ${rows[0]}–${rows[rows.length - 1]} from top`
-              : `由上第 ${rows[0]}–${rows[rows.length - 1]} 排`;
-        const sideText =
-          sides.size === 1
-            ? currentLang === 'en'
-              ? rowSlots[0].side === 'left'
-                ? 'Left side'
-                : 'Right side'
-              : rowSlots[0].side === 'left'
-                ? '長桌左側'
-                : '長桌右側'
-            : '';
-        posLabel = sideText ? `${sideText} · ${rowText}` : rowText;
-      }
-      const captionStr = tableTitle ? `${tableTitle} ｜ ${posLabel}` : posLabel;
-      const capW = Math.max(260, Math.min(640, captionStr.length * 26 + 52));
-      const capH = 58;
-      const capX = Math.max(capW / 2 + 18, Math.min(2090 - capW / 2 - 18, lx));
-      const capY = ly + loupeR + 44 <= 3115 ? ly + loupeR + 44 : ly - loupeR - 44;
-
-      const capBg = document.createElementNS(svgNS, 'rect');
-      capBg.setAttribute('x', String(Math.round(capX - capW / 2)));
-      capBg.setAttribute('y', String(Math.round(capY - capH / 2)));
-      capBg.setAttribute('width', String(capW));
-      capBg.setAttribute('height', String(capH));
-      capBg.setAttribute('rx', '29');
-      capBg.setAttribute('ry', '29');
-      capBg.setAttribute('class', 'seating-loupe-caption-bg');
-
-      const capText = document.createElementNS(svgNS, 'text');
-      capText.setAttribute('x', String(capX));
-      capText.setAttribute('y', String(Math.round(capY + 11)));
-      capText.setAttribute('text-anchor', 'middle');
-      capText.setAttribute('class', 'seating-loupe-caption-text');
-      capText.textContent = captionStr;
-
-      loupeGroup.append(
-        leaderLine,
-        anchorRing,
-        handleShadow,
-        handleGrip,
-        lensBackdrop,
-        clippedContent,
-        sheen,
-        rim,
-        capBg,
-        capText
-      );
-      svg.append(loupeGroup);
-    } else if (freeSeatingLoupeTarget) {
-      const { table: fTable, plan: fPlan, loupe: fLoupe, focusBox: fBox } = freeSeatingLoupeTarget;
-      const cx = fLoupe.cx;
-      const cy = fLoupe.cy;
-      const loupeR = 215;
-      const zoomScale = fLoupe.zoomScale || 1.75;
-      const fb = fBox || { x: cx - 120, y: cy - 180, w: 240, h: 360 };
-
-      const minLx = loupeR + 30;
-      const maxLx = 2090 - loupeR - 115;
-      const minLy = loupeR + 40;
-      const maxLy = 3153 - loupeR - 130;
-      const clampX = (v) => Math.max(minLx, Math.min(maxLx, Math.round(v)));
-      const clampY = (v) => Math.max(minLy, Math.min(maxLy, Math.round(v)));
-
-      const candidates = [
-        { x: fb.x - loupeR - 72, y: cy },
-        { x: fb.x + fb.w + loupeR + 72, y: cy },
-        { x: cx, y: fb.y + fb.h + loupeR + 78 },
-        { x: cx, y: fb.y - loupeR - 78 },
-      ];
-      const fitsInside = (p) => p.x >= minLx && p.x <= maxLx && p.y >= minLy && p.y <= maxLy;
-      const chosen = candidates.find(fitsInside) || candidates[0];
-      const lx = clampX(chosen.x);
-      const ly = clampY(chosen.y);
-
-      const defs = document.createElementNS(svgNS, 'defs');
-      const clip = document.createElementNS(svgNS, 'clipPath');
-      clip.setAttribute('id', 'seating-loupe-clip');
-      const clipCircle = document.createElementNS(svgNS, 'circle');
-      clipCircle.setAttribute('cx', String(lx));
-      clipCircle.setAttribute('cy', String(ly));
-      clipCircle.setAttribute('r', String(loupeR));
-      clip.append(clipCircle);
-      defs.append(clip);
-      svg.append(defs);
-
-      const loupeGroup = document.createElementNS(svgNS, 'g');
-      loupeGroup.setAttribute('class', 'seating-loupe-group');
-      loupeGroup.style.transformOrigin = `${lx}px ${ly}px`;
-      loupeGroup.style.setProperty('--zone-color', fTable.color || '#dc2626');
-      loupeGroup.style.setProperty('--zone-dark-color', fTable.darkColor || '#f87171');
+      loupeGroup.style.setProperty('--zone-color', zoneColor || '#d97706');
+      loupeGroup.style.setProperty('--zone-dark-color', darkColor || '#fbbf24');
 
       const leaderLine = document.createElementNS(svgNS, 'line');
       leaderLine.setAttribute('x1', String(cx));
@@ -4943,7 +4624,7 @@
       const anchorRing = document.createElementNS(svgNS, 'circle');
       anchorRing.setAttribute('cx', String(cx));
       anchorRing.setAttribute('cy', String(cy));
-      anchorRing.setAttribute('r', '34');
+      anchorRing.setAttribute('r', String(anchorRadius));
       anchorRing.setAttribute('class', 'seating-loupe-anchor');
 
       const cos45 = 0.7071;
@@ -4984,52 +4665,8 @@
 
       const zoomedOverlay = document.createElementNS(svgNS, 'g');
       zoomedOverlay.setAttribute('transform', zoomTransform);
-
-      // 在放大鏡內淡化相鄰他區（例如看大直時淡化雄女，看雄女時淡化大直），只突顯本區可入座位置與 L 型邊界
-      (fLoupe.dimNeighborIds || []).forEach((nId) => {
-        const neighbor = SEATING_TABLES_DATA.find((t) => t.id === nId);
-        if (!neighbor || !neighbor.svgPath) return;
-        const dimPath = document.createElementNS(svgNS, 'path');
-        dimPath.setAttribute('d', neighbor.svgPath);
-        dimPath.setAttribute('class', 'seating-loupe-dim-neighbor');
-        zoomedOverlay.append(dimPath);
-      });
-
-      if (fTable.svgPath) {
-        const zPath = document.createElementNS(svgNS, 'path');
-        zPath.setAttribute('d', fTable.svgPath);
-        zPath.setAttribute('fill', fTable.fillColor || 'transparent');
-        zPath.setAttribute('stroke', fTable.color || '#dc2626');
-        zPath.setAttribute('stroke-width', '6');
-        zoomedOverlay.append(zPath);
-      }
-
-      if (Array.isArray(fPlan.rows)) {
-        fPlan.rows.forEach((pair, rIdx) => {
-          ['left', 'right'].forEach((side, sIdx) => {
-            const seat = pair[sIdx];
-            if (!seat || seat.isOtherZone) return;
-            const rx = side === 'left' ? fPlan.leftX : fPlan.rightX;
-            const ry = fPlan.rowYs[rIdx];
-            const pg = document.createElementNS(svgNS, 'g');
-            pg.style.setProperty('--zone-color', fTable.color || '#dc2626');
-            pg.style.setProperty('--zone-dark-color', fTable.darkColor || '#f87171');
-            const pDot = document.createElementNS(svgNS, 'circle');
-            pDot.setAttribute('cx', String(rx));
-            pDot.setAttribute('cy', String(ry));
-            pDot.setAttribute('r', '13');
-            pDot.setAttribute('class', 'seating-seat-pin-dot');
-            const pNum = document.createElementNS(svgNS, 'text');
-            pNum.setAttribute('x', String(rx));
-            pNum.setAttribute('y', String(Math.round(ry + 5)));
-            pNum.setAttribute('text-anchor', 'middle');
-            pNum.setAttribute('class', 'seating-seat-pin-num');
-            pNum.style.fontSize = '14px';
-            pNum.textContent = String(rIdx + 1);
-            pg.append(pDot, pNum);
-            zoomedOverlay.append(pg);
-          });
-        });
+      if (typeof populateOverlay === 'function') {
+        populateOverlay(zoomedOverlay);
       }
       clippedContent.append(zoomedOverlay);
 
@@ -5050,8 +4687,7 @@
       rim.setAttribute('r', String(loupeR));
       rim.setAttribute('class', 'seating-loupe-rim');
 
-      const captionStr = fLoupe.caption[currentLang] || fLoupe.caption.zh;
-      const capW = Math.max(280, Math.min(680, captionStr.length * 25 + 52));
+      const capW = Math.max(260, Math.min(680, captionStr.length * 26 + 52));
       const capH = 58;
       const capX = Math.max(capW / 2 + 18, Math.min(2090 - capW / 2 - 18, lx));
       const capY = ly + loupeR + 44 <= 3115 ? ly + loupeR + 44 : ly - loupeR - 44;
@@ -5085,8 +4721,206 @@
         capText
       );
       svg.append(loupeGroup);
-    }
+    };
 
+    if (focusLoupeSlots.length > 0 && focusLoupeSlots.length <= 4) {
+      const firstItem = focusLoupeSlots[0];
+      const firstSlot = firstItem.slot;
+      const nearbySlots = focusLoupeSlots.filter(({ slot }) => {
+        const dx = slot.cx - firstSlot.cx;
+        const dy = slot.cy - firstSlot.cy;
+        return Math.hypot(dx, dy) <= 280;
+      });
+      const targetSlots = nearbySlots.length > 0 ? nearbySlots : [firstItem];
+      const cx = Math.round(
+        targetSlots.reduce((sum, item) => sum + item.slot.cx, 0) / targetSlots.length
+      );
+      const cy = Math.round(
+        targetSlots.reduce((sum, item) => sum + item.slot.cy, 0) / targetSlots.length
+      );
+
+      const slotList = targetSlots.map((item) => item.slot);
+      const tableTitle = firstItem.tableLabel || '';
+      let posLabel = '';
+      if (slotList.every((s) => s.isSweetheart)) {
+        posLabel = currentLang === 'en'
+          ? slotList.length === 1
+            ? `Sweetheart Table · ${slotList[0].side === 'left' ? 'Left' : 'Right'}`
+            : 'Sweetheart Table (2 seats)'
+          : slotList.length === 1
+            ? `新人小桌 · ${slotList[0].side === 'left' ? '左側席' : '右側席'}`
+            : '新人小桌 · 雙人席';
+      } else if (slotList.every((s) => s.isExtraSeat)) {
+        posLabel = currentLang === 'en' ? 'Bottom End Seat' : '桌尾加開席';
+      } else {
+        const rowSlots = slotList.filter((s) => !s.isSweetheart && !s.isExtraSeat);
+        const sides = new Set(rowSlots.map((s) => s.side));
+        const rows = rowSlots.map((s) => s.rowIndex + 1).sort((a, b) => a - b);
+        const rowText = rows.length === 1
+          ? currentLang === 'en' ? `Row ${rows[0]} from top` : `由上第 ${rows[0]} 排`
+          : currentLang === 'en' ? `Rows ${rows[0]}–${rows[rows.length - 1]} from top` : `由上第 ${rows[0]}–${rows[rows.length - 1]} 排`;
+        const sideText = sides.size === 1
+          ? currentLang === 'en'
+            ? rowSlots[0].side === 'left' ? 'Left side' : 'Right side'
+            : rowSlots[0].side === 'left' ? '長桌左側' : '長桌右側'
+          : '';
+        posLabel = sideText ? `${sideText} · ${rowText}` : rowText;
+      }
+
+      appendMagnifierLoupe({
+        cx,
+        cy,
+        zoomScale: 1.9,
+        focusBox: firstItem.focusBox,
+        captionStr: tableTitle ? `${tableTitle} ｜ ${posLabel}` : posLabel,
+        zoneColor: firstItem.color,
+        darkColor: firstItem.darkColor,
+        populateOverlay: (zoomedPins) => {
+          const targetSlotKeys = new Set(targetSlots.map((item) => item.slot.slotKey));
+          const refPlan = firstItem.plan;
+          if (refPlan) {
+            const prefix =
+              typeof firstSlot.subTableIndex === 'number' ? `t${firstSlot.subTableIndex}:` : '';
+            const appendContextDot = (rx, ry, labelText, isEmptySeat) => {
+              const cg = document.createElementNS(svgNS, 'g');
+              cg.setAttribute('class', `seating-loupe-ctx-dot${isEmptySeat ? ' is-empty' : ''}`);
+              const cc = document.createElementNS(svgNS, 'circle');
+              cc.setAttribute('cx', String(rx));
+              cc.setAttribute('cy', String(ry));
+              cc.setAttribute('r', '11');
+              cc.setAttribute('class', 'seating-loupe-ctx-circle');
+              const ct = document.createElementNS(svgNS, 'text');
+              ct.setAttribute('x', String(rx));
+              ct.setAttribute('y', String(Math.round(ry + 4)));
+              ct.setAttribute('text-anchor', 'middle');
+              ct.setAttribute('class', 'seating-loupe-ctx-num');
+              ct.textContent = labelText;
+              cg.append(cc, ct);
+              zoomedPins.append(cg);
+            };
+            if (Array.isArray(refPlan.rows)) {
+              refPlan.rows.forEach((pair, rIdx) => {
+                ['left', 'right'].forEach((side, sIdx) => {
+                  const seat = pair[sIdx];
+                  if (seat && seat.isOtherZone) return;
+                  const slotKey = `${prefix}${rIdx}:${side}`;
+                  if (targetSlotKeys.has(slotKey)) return;
+                  const rx = side === 'left' ? refPlan.leftX : refPlan.rightX;
+                  const ry = refPlan.rowYs[rIdx];
+                  appendContextDot(rx, ry, seat ? String(rIdx + 1) : '–', !seat);
+                });
+              });
+            }
+            if (Array.isArray(refPlan.sweetheartSeats)) {
+              refPlan.sweetheartSeats.forEach((s, idx) => {
+                if (!s) return;
+                const side = s.side || (idx === 0 ? 'left' : 'right');
+                if (targetSlotKeys.has(`${prefix}sweet:${side}`)) return;
+                appendContextDot(s.cx, s.cy, s.pinText || '♥', false);
+              });
+            }
+            if (Array.isArray(refPlan.extraSeats)) {
+              refPlan.extraSeats.forEach((s, eIdx) => {
+                if (!s || targetSlotKeys.has(`${prefix}extra:${eIdx}`)) return;
+                appendContextDot(s.cx, s.cy, s.pinText || '加', false);
+              });
+            }
+          }
+
+          targetSlots.forEach(({ slot, color, darkColor }) => {
+            const pg = document.createElementNS(svgNS, 'g');
+            pg.style.setProperty('--zone-color', color);
+            pg.style.setProperty('--zone-dark-color', darkColor);
+
+            const pHalo = document.createElementNS(svgNS, 'circle');
+            pHalo.setAttribute('cx', String(slot.cx));
+            pHalo.setAttribute('cy', String(slot.cy));
+            pHalo.setAttribute('r', '22');
+            pHalo.setAttribute('class', 'seating-seat-pin-halo');
+
+            const pDot = document.createElementNS(svgNS, 'circle');
+            pDot.setAttribute('cx', String(slot.cx));
+            pDot.setAttribute('cy', String(slot.cy));
+            pDot.setAttribute('r', '14');
+            pDot.setAttribute('class', 'seating-seat-pin-dot');
+
+            const pNum = document.createElementNS(svgNS, 'text');
+            pNum.setAttribute('x', String(slot.cx));
+            pNum.setAttribute('y', String(Math.round(slot.cy + 5)));
+            pNum.setAttribute('text-anchor', 'middle');
+            pNum.setAttribute('class', 'seating-seat-pin-num');
+            pNum.style.fontSize = '15px';
+            pNum.textContent =
+              slot.isSweetheart || slot.isExtraSeat
+                ? slot.pinText || '♥'
+                : String(slot.rowIndex + 1);
+
+            pg.append(pHalo, pDot, pNum);
+            zoomedPins.append(pg);
+          });
+        },
+      });
+    } else if (freeSeatingLoupeTarget) {
+      const { table: fTable, plan: fPlan, loupe: fLoupe, focusBox: fBox } = freeSeatingLoupeTarget;
+      appendMagnifierLoupe({
+        cx: fLoupe.cx,
+        cy: fLoupe.cy,
+        zoomScale: fLoupe.zoomScale || 1.75,
+        focusBox: fBox,
+        captionStr: fLoupe.caption[currentLang] || fLoupe.caption.zh,
+        zoneColor: fTable.color || '#dc2626',
+        darkColor: fTable.darkColor || '#f87171',
+        preferLeft: true,
+        anchorRadius: 34,
+        populateOverlay: (zoomedOverlay) => {
+          (fLoupe.dimNeighborIds || []).forEach((nId) => {
+            const neighbor = SEATING_TABLES_DATA.find((t) => t.id === nId);
+            if (!neighbor || !neighbor.svgPath) return;
+            const dimPath = document.createElementNS(svgNS, 'path');
+            dimPath.setAttribute('d', neighbor.svgPath);
+            dimPath.setAttribute('class', 'seating-loupe-dim-neighbor');
+            zoomedOverlay.append(dimPath);
+          });
+
+          if (fTable.svgPath) {
+            const zPath = document.createElementNS(svgNS, 'path');
+            zPath.setAttribute('d', fTable.svgPath);
+            zPath.setAttribute('fill', fTable.fillColor || 'transparent');
+            zPath.setAttribute('stroke', fTable.color || '#dc2626');
+            zPath.setAttribute('stroke-width', '6');
+            zoomedOverlay.append(zPath);
+          }
+
+          if (Array.isArray(fPlan.rows)) {
+            fPlan.rows.forEach((pair, rIdx) => {
+              ['left', 'right'].forEach((side, sIdx) => {
+                const seat = pair[sIdx];
+                if (!seat || seat.isOtherZone) return;
+                const rx = side === 'left' ? fPlan.leftX : fPlan.rightX;
+                const ry = fPlan.rowYs[rIdx];
+                const pg = document.createElementNS(svgNS, 'g');
+                pg.style.setProperty('--zone-color', fTable.color || '#dc2626');
+                pg.style.setProperty('--zone-dark-color', fTable.darkColor || '#f87171');
+                const pDot = document.createElementNS(svgNS, 'circle');
+                pDot.setAttribute('cx', String(rx));
+                pDot.setAttribute('cy', String(ry));
+                pDot.setAttribute('r', '13');
+                pDot.setAttribute('class', 'seating-seat-pin-dot');
+                const pNum = document.createElementNS(svgNS, 'text');
+                pNum.setAttribute('x', String(rx));
+                pNum.setAttribute('y', String(Math.round(ry + 5)));
+                pNum.setAttribute('text-anchor', 'middle');
+                pNum.setAttribute('class', 'seating-seat-pin-num');
+                pNum.style.fontSize = '14px';
+                pNum.textContent = String(rIdx + 1);
+                pg.append(pDot, pNum);
+                zoomedOverlay.append(pg);
+              });
+            });
+          }
+        },
+      });
+    }
     mapWrap.append(img, svg);
     stageChildren.push(mapWrap);
     elSeatingPhotoStage.replaceChildren(...stageChildren);
@@ -6248,6 +6082,48 @@
       };
     };
 
+    const appendFocusFrameAndBadge = (layer, fb, label) => {
+      if (!fb) return;
+      const focusRect = document.createElementNS(svgNS, 'rect');
+      focusRect.setAttribute('x', String(fb.x));
+      focusRect.setAttribute('y', String(fb.y));
+      focusRect.setAttribute('width', String(fb.w));
+      focusRect.setAttribute('height', String(fb.h));
+      focusRect.setAttribute('rx', '22');
+      focusRect.setAttribute('ry', '22');
+      focusRect.setAttribute('class', 'seating-table-focus-frame');
+      layer.append(focusRect);
+
+      if (!label) return;
+      const badgeTextStr = `📍 ${label}`;
+      const badgeW = Math.max(150, Math.min(420, badgeTextStr.length * 30 + 44));
+      const badgeH = 54;
+      const badgeCx = Math.max(
+        badgeW / 2 + 18,
+        Math.min(2090 - badgeW / 2 - 18, Math.round(fb.x + fb.w / 2))
+      );
+      const badgeCy = fb.y < 86 ? fb.y + fb.h + 36 : fb.y - 34;
+
+      const badgeGroup = document.createElementNS(svgNS, 'g');
+      badgeGroup.setAttribute('class', 'seating-table-focus-badge');
+      const badgeBg = document.createElementNS(svgNS, 'rect');
+      badgeBg.setAttribute('x', String(Math.round(badgeCx - badgeW / 2)));
+      badgeBg.setAttribute('y', String(Math.round(badgeCy - badgeH / 2)));
+      badgeBg.setAttribute('width', String(badgeW));
+      badgeBg.setAttribute('height', String(badgeH));
+      badgeBg.setAttribute('rx', '27');
+      badgeBg.setAttribute('ry', '27');
+      badgeBg.setAttribute('class', 'seating-table-focus-badge-bg');
+      const badgeText = document.createElementNS(svgNS, 'text');
+      badgeText.setAttribute('x', String(badgeCx));
+      badgeText.setAttribute('y', String(Math.round(badgeCy + 11)));
+      badgeText.setAttribute('text-anchor', 'middle');
+      badgeText.setAttribute('class', 'seating-table-focus-badge-text');
+      badgeText.textContent = badgeTextStr;
+      badgeGroup.append(badgeBg, badgeText);
+      layer.append(badgeGroup);
+    };
+
     const drawRoleTrajectory = (roleKey, strokeActive, strokeRecent, strokePast, shadowCol, liftSign) => {
       for (let i = 0; i < totalSegs; i++) {
         const sA = LOVE_FOOTPRINTS_DATA[i][roleKey];
@@ -6779,6 +6655,66 @@
     });
   }
 
+  function renderQuizIntroLanguage() {
+    const isEn = currentLang === 'en';
+    if (elQuizIntroEyebrow) {
+      elQuizIntroEyebrow.textContent = 'COUPLE TRIVIA · WARM-UP + 10 Qs';
+    }
+    if (elQuizIntroTitle) {
+      elQuizIntroTitle.textContent = isEn
+        ? 'Tom & Eunice Couple Trivia'
+        : 'Tom & Eunice 小默契問答';
+    }
+    if (elQuizIntroDesc) {
+      elQuizIntroDesc.textContent = isEn
+        ? 'Take on 1 warm-up + 10 trivia questions (11 total) to test how well you know the groom and bride! Scoring different tiers unlocks secret Easter eggs at the end:'
+        : '挑戰 1 道暖身題與 10 道關於新人的趣味問答（共 11 題），看看你對新郎還是新娘最熟悉！答對不同題數，最後還會解鎖隱藏秘密彩蛋喔：';
+    }
+    if (btnQuizStart) {
+      btnQuizStart.textContent = isEn ? 'Start the Quiz →' : '開始挑戰問答 →';
+    }
+    if (elQuizIntroTiers) {
+      const tiers = isEn
+        ? [
+            { score: '🪄 0–5 Qs', desc: 'Muggle-Repelling Charm active (secret Easter egg locked)', hi: false },
+            { score: '✨ 6–9 Qs', desc: 'Lift the charm & reveal the hidden secret Easter egg hint', hi: false },
+            { score: '🏆 10–11 Qs', desc: 'Top Tier! Automatically reveals the full secret Easter egg code', hi: true },
+          ]
+        : [
+            { score: '🪄 0–5 題', desc: '麻瓜驅逐咒生效中（尚未解鎖秘密彩蛋）', hi: false },
+            { score: '✨ 6–9 題', desc: '解除麻瓜驅逐咒，浮現隱藏秘密彩蛋提示', hi: false },
+            { score: '🏆 10–11 題', desc: '最高默契！自動顯影完整秘密彩蛋密碼', hi: true },
+          ];
+      const nodes = tiers.map((tier) => {
+        const row = document.createElement('div');
+        row.className = `quiz-intro-tier${tier.hi ? ' is-highlight' : ''}`;
+        const s = document.createElement('span');
+        s.className = 'quiz-intro-tier-score';
+        s.textContent = tier.score;
+        const d = document.createElement('span');
+        d.className = 'quiz-intro-tier-desc';
+        d.textContent = tier.desc;
+        row.append(s, d);
+        return row;
+      });
+      elQuizIntroTiers.replaceChildren(...nodes);
+    }
+  }
+
+  function showQuizIntro() {
+    quizStarted = false;
+    quizIndex = 0;
+    quizScore = 0;
+    groomScore = 0;
+    brideScore = 0;
+    quizAnswered = false;
+    lastSelectedOption = null;
+    renderQuizIntroLanguage();
+    if (elQuizIntroView) elQuizIntroView.classList.remove('hidden');
+    elQuizQuestionView.classList.add('hidden');
+    elQuizSummaryView.classList.add('hidden');
+  }
+
   function startQuiz() {
     shuffleQuestionOptions();
     quizStarted = true;
@@ -6788,6 +6724,7 @@
     brideScore = 0;
     quizAnswered = false;
     lastSelectedOption = null;
+    if (elQuizIntroView) elQuizIntroView.classList.add('hidden');
     elQuizSummaryView.classList.add('hidden');
     elQuizQuestionView.classList.remove('hidden');
     renderCurrentQuizQuestion();
@@ -7007,6 +6944,106 @@
           'stroke-width': '1',
         })
       );
+    } else if (iconType === 'animal-pikachu') {
+      // 皮卡丘向量可愛大頭圖示（尖耳朵黑耳尖 + 黃色圓臉 + 紅臉頰 + 微笑）
+      svg.setAttribute('width', '24');
+      svg.setAttribute('height', '24');
+      svg.append(
+        createSvgNode('path', { d: 'M5.2 10.2 L2.6 2.6 L8.8 6.4 Z', fill: '#facc15', stroke: '#ca8a04', 'stroke-width': '0.8', 'stroke-linejoin': 'round' }),
+        createSvgNode('path', { d: 'M3.5 5.3 L2.6 2.6 L5.4 4.3 Z', fill: '#1f2937' }),
+        createSvgNode('path', { d: 'M18.8 10.2 L21.4 2.6 L15.2 6.4 Z', fill: '#facc15', stroke: '#ca8a04', 'stroke-width': '0.8', 'stroke-linejoin': 'round' }),
+        createSvgNode('path', { d: 'M20.5 5.3 L21.4 2.6 L18.6 4.3 Z', fill: '#1f2937' }),
+        createSvgNode('ellipse', { cx: '12', cy: '14', rx: '7.8', ry: '6.6', fill: '#facc15', stroke: '#ca8a04', 'stroke-width': '0.85' }),
+        createSvgNode('circle', { cx: '8.9', cy: '12.6', r: '1.3', fill: '#1f2937' }),
+        createSvgNode('circle', { cx: '9.3', cy: '12.1', r: '0.45', fill: '#ffffff' }),
+        createSvgNode('circle', { cx: '15.1', cy: '12.6', r: '1.3', fill: '#1f2937' }),
+        createSvgNode('circle', { cx: '15.5', cy: '12.1', r: '0.45', fill: '#ffffff' }),
+        createSvgNode('ellipse', { cx: '12', cy: '14.3', rx: '0.7', ry: '0.45', fill: '#1f2937' }),
+        createSvgNode('circle', { cx: '6.5', cy: '15.4', r: '1.65', fill: '#ef4444' }),
+        createSvgNode('circle', { cx: '17.5', cy: '15.4', r: '1.65', fill: '#ef4444' }),
+        createSvgNode('path', {
+          d: 'M9.8 15.9 Q10.9 17.0 12 15.9 Q13.1 17.0 14.2 15.9',
+          fill: 'none',
+          stroke: '#1f2937',
+          'stroke-width': '1.05',
+          'stroke-linecap': 'round',
+          'stroke-linejoin': 'round',
+        })
+      );
+    } else if (iconType === 'animal-capybara') {
+      // 卡皮巴拉（水豚）向量可愛大頭圖示（頭頂小橘子 + 淡定瞇瞇眼 + 圓耳朵）
+      svg.setAttribute('width', '24');
+      svg.setAttribute('height', '24');
+      svg.append(
+        createSvgNode('circle', { cx: '7.2', cy: '8.4', r: '2.1', fill: '#8b5a2b', stroke: '#6b4423', 'stroke-width': '0.75' }),
+        createSvgNode('circle', { cx: '16.8', cy: '8.4', r: '2.1', fill: '#8b5a2b', stroke: '#6b4423', 'stroke-width': '0.75' }),
+        createSvgNode('ellipse', { cx: '12', cy: '13.8', rx: '7.6', ry: '6.2', fill: '#a67346', stroke: '#6b4423', 'stroke-width': '0.8' }),
+        createSvgNode('ellipse', { cx: '12', cy: '15.8', rx: '4.4', ry: '2.8', fill: '#c79568' }),
+        createSvgNode('circle', { cx: '10.4', cy: '15.1', r: '0.55', fill: '#4a2e16' }),
+        createSvgNode('circle', { cx: '13.6', cy: '15.1', r: '0.55', fill: '#4a2e16' }),
+        createSvgNode('path', {
+          d: 'M12 15.6 L12 16.9 M10.7 17.2 Q12 17.9 13.3 17.2',
+          fill: 'none',
+          stroke: '#4a2e16',
+          'stroke-width': '0.9',
+          'stroke-linecap': 'round',
+        }),
+        createSvgNode('path', {
+          d: 'M7.6 12.2 Q8.8 11.7 10.0 12.2',
+          fill: 'none',
+          stroke: '#3b2310',
+          'stroke-width': '1.2',
+          'stroke-linecap': 'round',
+        }),
+        createSvgNode('path', {
+          d: 'M14.0 12.2 Q15.2 11.7 16.4 12.2',
+          fill: 'none',
+          stroke: '#3b2310',
+          'stroke-width': '1.2',
+          'stroke-linecap': 'round',
+        }),
+        createSvgNode('circle', { cx: '12', cy: '6.6', r: '2.3', fill: '#f97316', stroke: '#ea580c', 'stroke-width': '0.7' }),
+        createSvgNode('ellipse', { cx: '13.1', cy: '4.4', rx: '1.1', ry: '0.6', transform: 'rotate(-22 13.1 4.4)', fill: '#22c55e' })
+      );
+    } else if (iconType === 'bmc-magic') {
+      // 小魔女 DoReMi 向量可愛圖示（粉紅尖頂魔女帽 + 雙丸子頭 + 魔法星星）
+      svg.setAttribute('width', '24');
+      svg.setAttribute('height', '24');
+      svg.append(
+        createSvgNode('circle', { cx: '5.8', cy: '12.4', r: '2.5', fill: '#ec4899', stroke: '#be185d', 'stroke-width': '0.65' }),
+        createSvgNode('circle', { cx: '18.2', cy: '12.4', r: '2.5', fill: '#ec4899', stroke: '#be185d', 'stroke-width': '0.65' }),
+        createSvgNode('circle', { cx: '12', cy: '14.6', r: '5.0', fill: '#ffe4d6', stroke: '#e5b8a3', 'stroke-width': '0.6' }),
+        createSvgNode('path', {
+          d: 'M7.2 13.2 Q9.5 10.9 12 12.4 Q14.5 10.9 16.8 13.2 L16.2 11.1 L7.8 11.1 Z',
+          fill: '#ec4899',
+        }),
+        createSvgNode('circle', { cx: '10.0', cy: '14.7', r: '1.1', fill: '#db2777' }),
+        createSvgNode('circle', { cx: '10.3', cy: '14.3', r: '0.38', fill: '#ffffff' }),
+        createSvgNode('circle', { cx: '14.0', cy: '14.7', r: '1.1', fill: '#db2777' }),
+        createSvgNode('circle', { cx: '14.3', cy: '14.3', r: '0.38', fill: '#ffffff' }),
+        createSvgNode('ellipse', { cx: '8.5', cy: '16.2', rx: '0.9', ry: '0.5', fill: '#fda4af' }),
+        createSvgNode('ellipse', { cx: '15.5', cy: '16.2', rx: '0.9', ry: '0.5', fill: '#fda4af' }),
+        createSvgNode('path', {
+          d: 'M10.8 16.8 Q12 17.9 13.2 16.8',
+          fill: 'none',
+          stroke: '#9d174d',
+          'stroke-width': '0.9',
+          'stroke-linecap': 'round',
+        }),
+        createSvgNode('ellipse', { cx: '12', cy: '9.6', rx: '8.4', ry: '1.9', fill: '#f472b6', stroke: '#be185d', 'stroke-width': '0.65' }),
+        createSvgNode('path', {
+          d: 'M12 2.2 L6.7 9.3 L17.3 9.3 Z',
+          fill: '#ec4899',
+          stroke: '#be185d',
+          'stroke-width': '0.65',
+          'stroke-linejoin': 'round',
+        }),
+        createSvgNode('rect', { x: '7.1', y: '7.8', width: '9.8', height: '1.45', rx: '0.6', fill: '#fbbf24' }),
+        createSvgNode('path', {
+          d: 'M19.5 3.6 L20.0 4.8 L21.2 5.3 L20.0 5.8 L19.5 7.0 L19.0 5.8 L17.8 5.3 L19.0 4.8 Z',
+          fill: '#fbbf24',
+        })
+      );
     } else {
       // 其他題目的趣味主題圖示（動物吉祥物、歷史人物、航線、工程梗、筆畫）
       const emojiMap = {
@@ -7014,8 +7051,6 @@
         'stroke-77': '🖋️',
         'stroke-68': '📜',
         'stroke-82': '✒️',
-        'animal-pikachu': '⚡',
-        'animal-capybara': '🍊',
         'animal-giraffe': '🦒',
         'animal-zebra': '🦓',
         'corp-guge': '🏢',
@@ -7039,7 +7074,6 @@
         'fig-robinhood': '🏹',
         'fig-joan': '⚔️',
         'bmc-mood': '💝',
-        'bmc-magic': '🪄',
         'bmc-cash': '🧧',
         'bmc-chip': '🖥️',
       };
@@ -7242,10 +7276,82 @@
       .join('');
   }
 
+  const SEAL_TIME_BUCKET_MS = 12 * 60 * 60 * 1000;
+
+  function getDeviceBindingString() {
+    const storageKey = 'te_device_seal_id';
+    let devId = '';
+    try {
+      devId = window.localStorage.getItem(storageKey) || '';
+      if (!devId) {
+        if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+          const arr = new Uint8Array(12);
+          window.crypto.getRandomValues(arr);
+          devId = Array.from(arr, (b) => b.toString(16).padStart(2, '0')).join('');
+        } else {
+          devId = `${Math.random().toString(36).slice(2)}${Date.now().toString(36)}`;
+        }
+        window.localStorage.setItem(storageKey, devId);
+      }
+    } catch (_e) {
+      devId = 'no-ls';
+    }
+    let tz = '';
+    try {
+      tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    } catch (_e) {
+      tz = '';
+    }
+    const scr = window.screen
+      ? `${window.screen.width}x${window.screen.height}x${window.screen.colorDepth}`
+      : '';
+    return [
+      devId,
+      navigator.userAgent || '',
+      navigator.language || '',
+      tz,
+      scr,
+      String(navigator.hardwareConcurrency || ''),
+    ].join('|');
+  }
+
+  function deriveDeviceMaskBytes(seedStr, length) {
+    let h1 = 2166136261 >>> 0;
+    let h2 = 3735928559 >>> 0;
+    for (let i = 0; i < seedStr.length; i++) {
+      const ch = seedStr.charCodeAt(i);
+      h1 ^= ch;
+      h1 = Math.imul(h1, 16777619) >>> 0;
+      h2 = Math.imul(h2 ^ (ch + i), 2246822519) >>> 0;
+    }
+    const mask = new Uint8Array(length);
+    for (let i = 0; i < length; i++) {
+      h1 = (Math.imul(h1, 1664525) + 1013904223) >>> 0;
+      h2 ^= h2 << 13;
+      h2 ^= h2 >>> 17;
+      h2 ^= h2 << 5;
+      h2 = h2 >>> 0;
+      mask[i] = ((h1 >>> 16) ^ (h2 >>> 8)) & 0xff;
+    }
+    return mask;
+  }
+
   function formatSummarySeal() {
     const relPath = decodeSealBytes(SUMMARY_SEAL_VECTORS, '');
-    const fullUrl = new URL(relPath, 'https://chihweitung.github.io/wedding-vc/').toString();
-    return window.btoa(fullUrl);
+    const parsed = new URL(relPath, 'https://chihweitung.github.io/wedding-vc/');
+    const masterKey = parsed.searchParams.get('k') || '';
+    if (masterKey) {
+      const timeBucket = Math.floor(Date.now() / SEAL_TIME_BUCKET_MS);
+      const seedStr = `${getDeviceBindingString()}|${timeBucket}`;
+      const rawBytes = new TextEncoder().encode(masterKey);
+      const mask = deriveDeviceMaskBytes(seedStr, rawBytes.length);
+      const boundHex = Array.from(rawBytes, (b, idx) =>
+        (b ^ mask[idx]).toString(16).padStart(2, '0')
+      ).join('');
+      parsed.searchParams.set('k', boundHex);
+      parsed.searchParams.set('t', String(timeBucket));
+    }
+    return window.btoa(parsed.toString());
   }
 
   function getFamiliarityEvaluation() {
@@ -7361,7 +7467,10 @@
     renderCurrentQuizQuestion();
   });
 
-  btnQuizRestart.addEventListener('click', startQuiz);
+  if (btnQuizStart) {
+    btnQuizStart.addEventListener('click', startQuiz);
+  }
+  btnQuizRestart.addEventListener('click', showQuizIntro);
   btnQuizToVideo.addEventListener('click', () => showHubView('video'));
 
   // 支援手機版 (iOS Safari / Android) 與電腦版反白選取顯影：
@@ -7402,7 +7511,6 @@
   // Hub Navigation Listeners
   btnChooseVideoCard.addEventListener('click', () => showHubView('video'));
   btnChooseQuizCard.addEventListener('click', () => {
-    startQuiz();
     showHubView('quiz');
   });
   if (btnChooseSharePhotosCard) {

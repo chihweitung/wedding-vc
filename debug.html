@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261115m" />
+  <link rel="stylesheet" href="style.css?v=20261115x" />
   <link rel="stylesheet" href="debug.css?v=20261111n" />
 </head>
 <body class="debug-locked">
@@ -374,7 +374,32 @@
 
         <!-- Panel 2: Couple Quiz -->
         <div class="quiz-section hidden" id="quiz-section" aria-label="Couple Quiz">
-          <div class="quiz-card" id="quiz-question-view">
+          <div class="quiz-card quiz-intro-view" id="quiz-intro-view">
+            <span class="choice-eyebrow" id="quiz-intro-eyebrow">COUPLE TRIVIA · WARM-UP + 10 Qs</span>
+            <h3 class="quiz-summary-title" id="quiz-intro-title">Tom &amp; Eunice 小默契問答</h3>
+            <p class="quiz-summary-rank" id="quiz-intro-desc">
+              挑戰 1 道暖身題與 10 道關於新人的趣味問答（共 11 題），看看你對新郎還是新娘最熟悉！答對不同題數，最後還會解鎖隱藏秘密彩蛋喔：
+            </p>
+            <div class="quiz-intro-tiers" id="quiz-intro-tiers">
+              <div class="quiz-intro-tier">
+                <span class="quiz-intro-tier-score">🪄 0–5 題</span>
+                <span class="quiz-intro-tier-desc">麻瓜驅逐咒生效中（尚未解鎖秘密彩蛋）</span>
+              </div>
+              <div class="quiz-intro-tier">
+                <span class="quiz-intro-tier-score">✨ 6–9 題</span>
+                <span class="quiz-intro-tier-desc">解除麻瓜驅逐咒，浮現隱藏秘密彩蛋提示</span>
+              </div>
+              <div class="quiz-intro-tier is-highlight">
+                <span class="quiz-intro-tier-score">🏆 10–11 題</span>
+                <span class="quiz-intro-tier-desc">最高默契！自動顯影完整秘密彩蛋密碼</span>
+              </div>
+            </div>
+            <div class="quiz-summary-actions">
+              <button type="button" class="primary-btn" id="quiz-start-btn">開始挑戰問答 →</button>
+            </div>
+          </div>
+
+          <div class="quiz-card hidden" id="quiz-question-view">
             <div class="quiz-header">
               <span class="quiz-progress-text" id="quiz-progress-text">WARM-UP · 暖身題</span>
               <span class="quiz-score-badge" id="quiz-score-badge">目前得分：0</span>
@@ -552,11 +577,15 @@
             </div>
 
             <div class="seating-search-bar">
+              <svg class="seating-search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7.5"></circle>
+                <line x1="20" y1="20" x2="16.35" y2="16.35"></line>
+              </svg>
               <input
                 type="search"
                 id="seating-search-input"
                 class="seating-search-input"
-                placeholder="🔍 輸入您的姓名、桌名或親友分類（例如：大學、Google、主桌）快速查詢..."
+                placeholder="輸入您的姓名、桌名或親友分類（例如：大學、Google、主桌）快速查詢..."
                 autocomplete="off"
               />
             </div>
@@ -609,6 +638,6 @@
   </div>
 
   <script src="debug.js?v=20261111n"></script>
-  <script src="script.js?v=20261115m"></script>
+  <script src="script.js?v=20261115x"></script>
 </body>
 </html>
