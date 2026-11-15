@@ -740,12 +740,12 @@
    * 若放入實際照片檔案（例如 photos/2014.jpg）或圖片連結於 imageUrl 欄位，即會自動顯示照片
    */
   /**
-   * 精選婚紗照片輪播資料（來自 Google Drive prewed 資料夾，共 64 張最佳化實拍）
+   * 精選婚紗照片輪播資料（來自 Google Drive prewed 資料夾，共 61 張最佳化實拍）
    */
-  const PAST_PHOTOS_DATA = Array.from({ length: 64 }, (_unused, idx) => {
+  const PAST_PHOTOS_DATA = Array.from({ length: 61 }, (_unused, idx) => {
     const num = String(idx + 1).padStart(2, '0');
     return {
-      yearLabel: `PRE-WEDDING · ${num} / 64`,
+      yearLabel: `PRE-WEDDING · ${num} / 61`,
       emoji: '💍',
       imageUrl: `photos/wedding-${num}.jpg`,
       title: {
@@ -2295,12 +2295,15 @@
   const elFootprintTrackEunice = document.getElementById('footprint-track-eunice');
   const elFootprintYearBar = document.getElementById('footprint-year-bar');
   const elFootprintTimelineList = document.getElementById('footprint-timeline-list');
+  const elFootprintMapStage = document.getElementById('footprint-map-stage');
   const elTimelineVideoCanvas = document.getElementById('timeline-video-canvas');
   const btnTimelinePlay = document.getElementById('timeline-play-btn');
   const btnTimelinePrev = document.getElementById('timeline-prev-btn');
   const btnTimelineNext = document.getElementById('timeline-next-btn');
   const btnTimelineSpeed = document.getElementById('timeline-speed-btn');
   const btnTimelineReplay = document.getElementById('timeline-replay-btn');
+  const btnTimelineBgm = document.getElementById('timeline-bgm-btn');
+  const btnTimelineFullscreen = document.getElementById('timeline-fullscreen-btn');
   const elTimelineScrubberFill = document.getElementById('timeline-scrubber-fill');
 
   const FOOTPRINT_AVATAR_SRCS = {
@@ -2674,6 +2677,20 @@
       btnTimelineSpeed.setAttribute('aria-label', dict.timelineSpeedTitle);
     }
     if (btnTimelineReplay) btnTimelineReplay.textContent = dict.timelineReplayBtn;
+    if (typeof syncFootprintBgmUi === 'function') syncFootprintBgmUi();
+    if (btnTimelineFullscreen) {
+      const isFs =
+        document.fullscreenElement === elFootprintMapStage ||
+        document.webkitFullscreenElement === elFootprintMapStage ||
+        (elFootprintMapStage && elFootprintMapStage.classList.contains('is-css-fullscreen'));
+      btnTimelineFullscreen.textContent = isFs
+        ? currentLang === 'en'
+          ? '✕ Exit'
+          : '✕ 退出全螢幕'
+        : currentLang === 'en'
+          ? '⛶ Fullscreen'
+          : '⛶ 全螢幕';
+    }
 
     if (elSeatingPanelEyebrow) elSeatingPanelEyebrow.textContent = dict.seatingPanelEyebrow;
     if (elSeatingPanelTitle) elSeatingPanelTitle.textContent = dict.seatingPanelTitle;
@@ -3046,6 +3063,21 @@
           : '▶ 繼續輪播';
     }
 
+    const stageAnchor = document.createComment('wedding-carousel-stage-anchor');
+    carousel.append(stageAnchor);
+
+    function mountStageToBody() {
+      if (stage.parentNode !== document.body) {
+        document.body.append(stage);
+      }
+    }
+
+    function restoreStageToCarousel() {
+      if (stageAnchor.parentNode && stage.parentNode !== carousel) {
+        stageAnchor.parentNode.insertBefore(stage, stageAnchor);
+      }
+    }
+
     function isCarouselFullscreen() {
       return (
         document.fullscreenElement === stage ||
@@ -3056,6 +3088,9 @@
 
     function syncFullscreenUi() {
       const active = isCarouselFullscreen();
+      if (!stage.classList.contains('is-css-fullscreen')) {
+        restoreStageToCarousel();
+      }
       fullscreenBtn.textContent = active
         ? currentLang === 'en'
           ? '✕ Exit'
@@ -3073,12 +3108,14 @@
             ? 'View fullscreen'
             : '全螢幕瀏覽'
       );
+      document.documentElement.classList.toggle('carousel-fullscreen-open', active);
       document.body.classList.toggle('carousel-fullscreen-open', active);
     }
 
     async function toggleCarouselFullscreen() {
       if (isCarouselFullscreen()) {
         stage.classList.remove('is-css-fullscreen');
+        restoreStageToCarousel();
         if (document.fullscreenElement === stage && document.exitFullscreen) {
           await document.exitFullscreen().catch(() => {});
         } else if (document.webkitFullscreenElement === stage && document.webkitExitFullscreen) {
@@ -3087,23 +3124,20 @@
         syncFullscreenUi();
         return;
       }
-      if (stage.requestFullscreen) {
+      const isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      const canNativeFs = !isCoarsePointer && document.fullscreenEnabled !== false;
+      if (canNativeFs && stage.requestFullscreen) {
         try {
           await stage.requestFullscreen();
-          syncFullscreenUi();
-          return;
-        } catch (_err) {
-          // Fallback to CSS fullscreen below (e.g. iOS Safari)
-        }
-      } else if (stage.webkitRequestFullscreen) {
-        try {
-          stage.webkitRequestFullscreen();
-          syncFullscreenUi();
-          return;
+          if (document.fullscreenElement === stage) {
+            syncFullscreenUi();
+            return;
+          }
         } catch (_err) {
           // Fallback to CSS fullscreen below
         }
       }
+      mountStageToBody();
       stage.classList.add('is-css-fullscreen');
       syncFullscreenUi();
     }
@@ -3127,6 +3161,11 @@
       document.removeEventListener('fullscreenchange', syncFullscreenUi);
       document.removeEventListener('webkitfullscreenchange', syncFullscreenUi);
       document.removeEventListener('keydown', handleKeydown);
+      stage.classList.remove('is-css-fullscreen');
+      if (stage.parentNode === document.body) {
+        stage.remove();
+      }
+      document.documentElement.classList.remove('carousel-fullscreen-open');
       document.body.classList.remove('carousel-fullscreen-open');
     };
     syncFullscreenUi();
@@ -3174,8 +3213,8 @@
       yearTag.textContent = item.yearLabel;
       captionEl.textContent =
         currentLang === 'en'
-          ? 'Swipe, use arrows, or tap Fullscreen to enjoy all 64 portraits.'
-          : '可左右切換、觸控滑動，或點右上角「全螢幕」完整欣賞 64 張婚紗寫真。';
+          ? 'Swipe, use arrows, or tap Fullscreen to enjoy all 61 portraits.'
+          : '可左右切換、觸控滑動，或點右上角「全螢幕」完整欣賞 61 張婚紗寫真。';
     }
 
     function stepSlide(delta) {
@@ -6182,12 +6221,26 @@
     ctx2d.beginPath();
     ctx2d.roundRect(mapLeft, mapTop, mapW, mapH, 16);
     const seaGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapRight, mapBottom);
-    seaGrad.addColorStop(0, 'rgba(23, 58, 59, 0.88)');
-    seaGrad.addColorStop(0.55, 'rgba(29, 72, 68, 0.88)');
-    seaGrad.addColorStop(1, 'rgba(19, 46, 49, 0.90)');
+    seaGrad.addColorStop(0, '#163f48');
+    seaGrad.addColorStop(0.5, '#1f545a');
+    seaGrad.addColorStop(1, '#13323b');
     ctx2d.fillStyle = seaGrad;
     ctx2d.fill();
     ctx2d.clip();
+
+    // 海面陽光水彩暈染
+    const seaSheen = ctx2d.createRadialGradient(
+      mapLeft + mapW * 0.35,
+      mapTop + mapH * 0.25,
+      20,
+      mapLeft + mapW * 0.35,
+      mapTop + mapH * 0.25,
+      mapW * 0.65
+    );
+    seaSheen.addColorStop(0, 'rgba(255, 234, 174, 0.11)');
+    seaSheen.addColorStop(1, 'rgba(255, 234, 174, 0)');
+    ctx2d.fillStyle = seaSheen;
+    ctx2d.fillRect(mapLeft, mapTop, mapW, mapH);
 
     // 手繪海面波紋
     ctx2d.save();
@@ -6243,7 +6296,16 @@
       ctx2d.restore();
     }
 
-    // 3. 繪製世界地圖各大洲與台灣高精度島嶼輪廓 (WORLD_MAP_POLYGONS，支援跨國際換日線 ±360° 太平洋無縫拼接)
+    // 3. 繪製世界地圖各大洲與台灣高精度島嶼輪廓 (水彩漸層陸地 + 淺海珊瑚礁光暈 + 暖羊皮紙海岸線)
+    const landGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapLeft, mapBottom);
+    landGrad.addColorStop(0, 'rgba(148, 212, 146, 0.56)');
+    landGrad.addColorStop(0.55, 'rgba(116, 184, 124, 0.52)');
+    landGrad.addColorStop(1, 'rgba(84, 148, 102, 0.50)');
+
+    const taiwanGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapLeft, mapBottom);
+    taiwanGrad.addColorStop(0, 'rgba(176, 235, 160, 0.78)');
+    taiwanGrad.addColorStop(1, 'rgba(116, 198, 132, 0.72)');
+
     const worldOffsets = [-360, 0, 360];
     worldOffsets.forEach((lngOffset) => {
       WORLD_MAP_POLYGONS.forEach((poly) => {
@@ -6256,19 +6318,81 @@
         });
         ctx2d.closePath();
 
+        // 淺海海岸線柔光暈
+        ctx2d.save();
+        ctx2d.lineJoin = 'round';
+        ctx2d.strokeStyle = poly.isHighlight ? 'rgba(255, 226, 138, 0.24)' : 'rgba(116, 214, 198, 0.14)';
+        ctx2d.lineWidth = poly.isHighlight ? 11 : 8;
+        ctx2d.stroke();
+        ctx2d.restore();
+
+        ctx2d.save();
+        ctx2d.lineJoin = 'round';
         if (poly.isHighlight) {
-          ctx2d.fillStyle = 'rgba(154, 222, 146, 0.52)';
-          ctx2d.strokeStyle = 'rgba(248, 238, 210, 0.94)';
-          ctx2d.lineWidth = cam.spanLng <= 20 ? 2.6 : 1.8;
+          ctx2d.shadowColor = 'rgba(255, 226, 138, 0.48)';
+          ctx2d.shadowBlur = 12;
+          ctx2d.fillStyle = taiwanGrad;
+          ctx2d.strokeStyle = 'rgba(253, 244, 214, 0.96)';
+          ctx2d.lineWidth = cam.spanLng <= 20 ? 2.6 : 1.9;
         } else {
-          ctx2d.fillStyle = 'rgba(122, 186, 128, 0.36)';
-          ctx2d.strokeStyle = 'rgba(235, 226, 196, 0.62)';
+          ctx2d.shadowColor = 'rgba(8, 22, 24, 0.35)';
+          ctx2d.shadowBlur = 6;
+          ctx2d.shadowOffsetY = 2;
+          ctx2d.fillStyle = landGrad;
+          ctx2d.strokeStyle = 'rgba(244, 234, 204, 0.74)';
           ctx2d.lineWidth = cam.spanLng <= 40 ? 1.8 : 1.3;
         }
         ctx2d.fill();
+        ctx2d.shadowBlur = 0;
+        ctx2d.shadowOffsetY = 0;
         ctx2d.stroke();
+        ctx2d.restore();
       });
     });
+
+    // 古典航海圖洋流與大洋／大陸優雅字標
+    if (cam.spanLng > 22) {
+      const seaLabels = [
+        { text: 'PACIFIC OCEAN', lat: 24, lng: -158 },
+        { text: 'PACIFIC OCEAN', lat: 20, lng: 165 },
+        { text: 'ATLANTIC OCEAN', lat: 34, lng: -40 },
+        { text: 'INDIAN OCEAN', lat: -8, lng: 78 },
+        { text: 'EURASIA', lat: 54, lng: 75 },
+        { text: 'NORTH AMERICA', lat: 46, lng: -102 },
+      ];
+      ctx2d.save();
+      ctx2d.font = 'italic 600 13px "Cormorant Garamond", serif';
+      ctx2d.fillStyle = 'rgba(248, 238, 210, 0.22)';
+      ctx2d.textAlign = 'center';
+      seaLabels.forEach((lbl) => {
+        const lp = projectWithCamera(lbl.lat, unwrapNear(lbl.lng, cam.centerLng), cam, w, h);
+        if (lp.x > mapLeft + 40 && lp.x < mapRight - 40 && lp.y > mapTop + 25 && lp.y < mapBottom - 25) {
+          ctx2d.fillText(lbl.text, lp.x, lp.y);
+        }
+      });
+
+      const worldRefCities = [
+        { name: currentLang === 'zh' ? '東京' : 'Tokyo', lat: 35.68, lng: 139.69 },
+        { name: currentLang === 'zh' ? '柏林' : 'Berlin', lat: 52.52, lng: 13.4 },
+        { name: currentLang === 'zh' ? '倫敦' : 'London', lat: 51.51, lng: -0.13 },
+        { name: currentLang === 'zh' ? '巴黎' : 'Paris', lat: 48.85, lng: 2.35 },
+        { name: currentLang === 'zh' ? '舊金山' : 'San Francisco', lat: 37.77, lng: -122.42 },
+        { name: currentLang === 'zh' ? '紐約' : 'New York', lat: 40.71, lng: -74.01 },
+      ];
+      ctx2d.font = '500 11px "Noto Sans TC", sans-serif';
+      worldRefCities.forEach((wc) => {
+        const wp = projectWithCamera(wc.lat, unwrapNear(wc.lng, cam.centerLng), cam, w, h);
+        if (wp.x > mapLeft + 24 && wp.x < mapRight - 24 && wp.y > mapTop + 20 && wp.y < mapBottom - 20) {
+          ctx2d.fillStyle = 'rgba(248, 238, 210, 0.34)';
+          ctx2d.beginPath();
+          ctx2d.arc(wp.x, wp.y, 2, 0, Math.PI * 2);
+          ctx2d.fill();
+          ctx2d.textAlign = 'left';
+          ctx2d.fillText(wc.name, wp.x + 5, wp.y + 3.5);
+        }
+      });
+      ctx2d.restore();
+    }
 
     // 若鏡頭特寫台灣 (spanLng <= 20)，標註台灣主要地標暗紋供方位參考
     if (cam.spanLng <= 20) {
@@ -6690,6 +6814,56 @@
     }
   }
 
+  const FOOTPRINT_BGM_SRC = 'audio/music.mp3';
+  let footprintGhibliEnabled = false;
+  let footprintGhibliPlaying = false;
+  let footprintAudioEl = null;
+
+  function syncFootprintBgmUi() {
+    if (!btnTimelineBgm) return;
+    if (!footprintGhibliEnabled) {
+      btnTimelineBgm.textContent = currentLang === 'en' ? '🔇 Music: Off' : '🔇 配樂：關';
+      btnTimelineBgm.setAttribute('aria-pressed', 'false');
+    } else if (footprintGhibliPlaying) {
+      btnTimelineBgm.textContent = currentLang === 'en' ? '🎵 Music: On' : '🎵 配樂播放中';
+      btnTimelineBgm.setAttribute('aria-pressed', 'true');
+    } else {
+      btnTimelineBgm.textContent = currentLang === 'en' ? '🎵 Music: Ready' : '🎵 配樂：開';
+      btnTimelineBgm.setAttribute('aria-pressed', 'false');
+    }
+  }
+
+  function startFootprintGhibliBgm() {
+    if (!footprintGhibliEnabled || footprintGhibliPlaying) return;
+    if (bgmPlaying && typeof toggleBgm === 'function') {
+      toggleBgm();
+    }
+    if (!footprintAudioEl) {
+      const audio = new Audio(FOOTPRINT_BGM_SRC);
+      audio.loop = true;
+      audio.preload = 'auto';
+      audio.volume = 0.7;
+      footprintAudioEl = audio;
+    }
+    const playPromise = footprintAudioEl.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {
+        footprintGhibliPlaying = false;
+        syncFootprintBgmUi();
+      });
+    }
+    footprintGhibliPlaying = true;
+    syncFootprintBgmUi();
+  }
+
+  function stopFootprintGhibliBgm() {
+    footprintGhibliPlaying = false;
+    if (footprintAudioEl) {
+      footprintAudioEl.pause();
+    }
+    syncFootprintBgmUi();
+  }
+
   function stepTimelineAnimation(ts) {
     if (!timelinePlaying) return;
     if (!timelineLastTs) timelineLastTs = ts;
@@ -6700,6 +6874,7 @@
     if (timelineProgress >= 1) {
       timelineProgress = 1;
       timelinePlaying = false;
+      stopFootprintGhibliBgm();
       if (btnTimelinePlay) btnTimelinePlay.textContent = t().timelinePlayBtn;
       drawTimelineVideoFrame(1);
       return;
@@ -6713,6 +6888,7 @@
     const dict = t();
     if (timelinePlaying) {
       timelinePlaying = false;
+      stopFootprintGhibliBgm();
       if (timelineAnimId) cancelAnimationFrame(timelineAnimId);
       if (btnTimelinePlay) btnTimelinePlay.textContent = dict.timelinePlayBtn;
       return;
@@ -6722,6 +6898,7 @@
     }
     timelinePlaying = true;
     timelineLastTs = 0;
+    startFootprintGhibliBgm();
     if (btnTimelinePlay) btnTimelinePlay.textContent = dict.timelinePauseBtn;
     timelineAnimId = requestAnimationFrame(stepTimelineAnimation);
   }
@@ -6758,6 +6935,95 @@
   if (btnTimelineNext) btnTimelineNext.addEventListener('click', () => stepTimelineMilestone(1));
   if (btnTimelineSpeed) btnTimelineSpeed.addEventListener('click', cycleTimelineSpeed);
   if (btnTimelineReplay) btnTimelineReplay.addEventListener('click', replayTimeline);
+  if (btnTimelineBgm) {
+    btnTimelineBgm.addEventListener('click', () => {
+      footprintGhibliEnabled = !footprintGhibliEnabled;
+      if (!footprintGhibliEnabled) {
+        stopFootprintGhibliBgm();
+      } else {
+        startFootprintGhibliBgm();
+      }
+      syncFootprintBgmUi();
+    });
+    syncFootprintBgmUi();
+  }
+
+  if (btnTimelineFullscreen && elFootprintMapStage) {
+    const mapStageAnchor = document.createComment('footprint-map-stage-anchor');
+    if (elFootprintMapStage.parentNode) {
+      elFootprintMapStage.parentNode.insertBefore(mapStageAnchor, elFootprintMapStage.nextSibling);
+    }
+
+    const isMapStageFullscreen = () =>
+      document.fullscreenElement === elFootprintMapStage ||
+      document.webkitFullscreenElement === elFootprintMapStage ||
+      elFootprintMapStage.classList.contains('is-css-fullscreen');
+
+    const restoreMapStage = () => {
+      if (mapStageAnchor.parentNode && elFootprintMapStage.parentNode !== mapStageAnchor.parentNode) {
+        mapStageAnchor.parentNode.insertBefore(elFootprintMapStage, mapStageAnchor);
+      }
+    };
+
+    const syncMapFullscreenUi = () => {
+      const active = isMapStageFullscreen();
+      if (!elFootprintMapStage.classList.contains('is-css-fullscreen')) {
+        restoreMapStage();
+      }
+      btnTimelineFullscreen.textContent = active
+        ? currentLang === 'en'
+          ? '✕ Exit'
+          : '✕ 退出全螢幕'
+        : currentLang === 'en'
+          ? '⛶ Fullscreen'
+          : '⛶ 全螢幕';
+      document.documentElement.classList.toggle('carousel-fullscreen-open', active);
+      document.body.classList.toggle('carousel-fullscreen-open', active);
+    };
+
+    const toggleMapFullscreen = async () => {
+      if (isMapStageFullscreen()) {
+        elFootprintMapStage.classList.remove('is-css-fullscreen');
+        restoreMapStage();
+        if (document.fullscreenElement === elFootprintMapStage && document.exitFullscreen) {
+          await document.exitFullscreen().catch(() => {});
+        } else if (document.webkitFullscreenElement === elFootprintMapStage && document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+        syncMapFullscreenUi();
+        return;
+      }
+      const isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      const canNativeFs = !isCoarsePointer && document.fullscreenEnabled !== false;
+      if (canNativeFs && elFootprintMapStage.requestFullscreen) {
+        try {
+          await elFootprintMapStage.requestFullscreen();
+          if (document.fullscreenElement === elFootprintMapStage) {
+            syncMapFullscreenUi();
+            return;
+          }
+        } catch (_err) {
+          // Fallback to CSS fullscreen below
+        }
+      }
+      if (elFootprintMapStage.parentNode !== document.body) {
+        document.body.append(elFootprintMapStage);
+      }
+      elFootprintMapStage.classList.add('is-css-fullscreen');
+      syncMapFullscreenUi();
+    };
+
+    btnTimelineFullscreen.addEventListener('click', toggleMapFullscreen);
+    document.addEventListener('fullscreenchange', syncMapFullscreenUi);
+    document.addEventListener('webkitfullscreenchange', syncMapFullscreenUi);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && elFootprintMapStage.classList.contains('is-css-fullscreen')) {
+        elFootprintMapStage.classList.remove('is-css-fullscreen');
+        syncMapFullscreenUi();
+      }
+    });
+    syncMapFullscreenUi();
+  }
   if (elTimelineVideoCanvas) {
     elTimelineVideoCanvas.style.cursor = 'pointer';
     elTimelineVideoCanvas.addEventListener('click', togglePlayTimeline);

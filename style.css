@@ -1900,29 +1900,50 @@ body.is-time-up .countdown-stage-wrap {
 }
 
 .wedding-carousel-stage:fullscreen,
-.wedding-carousel-stage:-webkit-full-screen,
+.wedding-carousel-stage:-webkit-full-screen {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  border-radius: 0;
+  border: none;
+  background: #0d130f;
+}
+
 .wedding-carousel-stage.is-css-fullscreen {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
   max-height: none;
-  aspect-ratio: auto;
   border-radius: 0;
   border: none;
-  z-index: 9999;
+  z-index: 99999;
   background: #0d130f;
+  touch-action: pan-y;
+}
+
+.wedding-carousel-stage:fullscreen .wedding-carousel-topbar,
+.wedding-carousel-stage:-webkit-full-screen .wedding-carousel-topbar,
+.wedding-carousel-stage.is-css-fullscreen .wedding-carousel-topbar {
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
 }
 
 .wedding-carousel-stage:fullscreen .wedding-carousel-slide img,
 .wedding-carousel-stage:-webkit-full-screen .wedding-carousel-slide img,
 .wedding-carousel-stage.is-css-fullscreen .wedding-carousel-slide img {
-  max-width: 100vw;
-  max-height: 100vh;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
+html.carousel-fullscreen-open,
 body.carousel-fullscreen-open {
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .wedding-carousel-autoplay-btn {
@@ -3521,11 +3542,115 @@ body.carousel-fullscreen-open {
   display: block;
 }
 
+.footprint-video-player:fullscreen,
+.footprint-video-player:-webkit-full-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  border: none;
+  background: #102018;
+  padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right))
+    max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+}
+
+.footprint-video-player.is-css-fullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  border-radius: 0;
+  border: none;
+  z-index: 99999;
+  background: #102018;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+
+.footprint-video-player:fullscreen .timeline-canvas-wrap,
+.footprint-video-player:-webkit-full-screen .timeline-canvas-wrap,
+.footprint-video-player.is-css-fullscreen .timeline-canvas-wrap {
+  flex: 1;
+  min-height: 0;
+  aspect-ratio: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footprint-video-player:fullscreen #timeline-video-canvas,
+.footprint-video-player:-webkit-full-screen #timeline-video-canvas,
+.footprint-video-player.is-css-fullscreen #timeline-video-canvas {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
+@media (max-width: 640px) {
+  .footprint-video-player.is-css-fullscreen .timeline-video-controls {
+    gap: 6px;
+  }
+  .footprint-video-player.is-css-fullscreen .sm-btn {
+    padding: 6px 10px;
+    font-size: 0.78rem;
+  }
+}
+
 .timeline-video-controls {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.footprint-yt-mini-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(20, 38, 29, 0.9);
+  border: 1px solid rgba(154, 186, 138, 0.35);
+  color: #f3efe2;
+}
+
+.footprint-yt-mini-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.84rem;
+}
+
+.footprint-yt-mini-title {
+  font-weight: 700;
+  color: #fde68a;
+}
+
+.footprint-yt-mini-hint {
+  font-size: 0.76rem;
+  color: rgba(243, 239, 226, 0.78);
+}
+
+.footprint-yt-mini-frame {
+  width: 240px;
+  height: 135px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  flex-shrink: 0;
+  background: #000;
+}
+
+.footprint-yt-mini-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 
 .timeline-scrubber-wrap {
