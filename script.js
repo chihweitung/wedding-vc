@@ -7338,7 +7338,12 @@
 
   function formatSummarySeal() {
     const relPath = decodeSealBytes(SUMMARY_SEAL_VECTORS, '');
-    const parsed = new URL(relPath, 'https://chihweitung.github.io/wedding-vc/');
+    const isLocalHost =
+      window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost';
+    const baseUrl = isLocalHost
+      ? window.location.href
+      : 'https://chihweitung.github.io/wedding-vc/';
+    const parsed = new URL(relPath, baseUrl);
     const masterKey = parsed.searchParams.get('k') || '';
     if (masterKey) {
       const realNowMs =
