@@ -926,12 +926,12 @@
         rowYs: [916, 967, 1015, 1065, 1116, 1167],
         rows: [
           [
-            { key: '蕭能駿', zh: '蕭能駿', en: '蕭能駿', match: '蕭能駿' },
-            { key: '董煥新', zh: '董煥新', en: '董煥新', match: '董煥新' },
+            { key: '蕭能駿_傅郁淳', zh: '蕭能駿', en: '蕭能駿', match: '蕭能駿 傅郁淳' },
+            { key: '董煥新_徐淑明', zh: '董煥新', en: '董煥新', match: '董煥新 徐淑明' },
           ],
           [
-            { key: '傅郁淳', zh: '傅郁淳', en: '傅郁淳', match: '傅郁淳' },
-            { key: '徐淑明', zh: '徐淑明', en: '徐淑明', match: '徐淑明' },
+            { key: '蕭能駿_傅郁淳', zh: '傅郁淳', en: '傅郁淳', match: '蕭能駿 傅郁淳' },
+            { key: '董煥新_徐淑明', zh: '徐淑明', en: '徐淑明', match: '董煥新 徐淑明' },
           ],
           [
             { key: '傅昭雄', zh: '傅昭雄', en: '傅昭雄', match: '傅昭雄' },
@@ -1039,12 +1039,12 @@
             rowYs: [319, 360, 401, 452, 493, 535],
             rows: [
               [
-                { key: '梁光華', zh: '梁光華', en: '梁光華', match: '梁光華' },
+                { key: '梁光華_韋雪華', zh: '梁光華', en: '梁光華', match: '梁光華 韋雪華' },
                 { key: '嚴惠英', zh: '嚴惠英', en: '嚴惠英', match: '嚴惠英' },
               ],
               [
                 { key: '林光男', zh: '林光男', en: '林光男', match: '林光男' },
-                { key: '韋雪華', zh: '韋雪華', en: '韋雪華', match: '韋雪華' },
+                { key: '梁光華_韋雪華', zh: '韋雪華', en: '韋雪華', match: '梁光華 韋雪華' },
               ],
               [
                 { key: '吳淑芸', zh: '吳淑芸', en: '吳淑芸', match: '吳淑芸' },
@@ -1056,11 +1056,11 @@
               ],
               [
                 { key: '曾智聰', zh: '曾智聰', en: '曾智聰', match: '曾智聰' },
-                { key: '廖惠生', zh: '廖惠生', en: '廖惠生', match: '廖惠生' },
+                { key: '廖惠生_林碧華', zh: '廖惠生', en: '廖惠生', match: '廖惠生 林碧華 碧華' },
               ],
               [
                 { key: '蕭文瑜', zh: '蕭文瑜', en: '蕭文瑜', match: '蕭文瑜' },
-                { key: '林碧華', zh: '林碧華', en: '林碧華', match: '林碧華 碧華' },
+                { key: '廖惠生_林碧華', zh: '林碧華', en: '林碧華', match: '廖惠生 林碧華 碧華' },
               ],
             ],
           },
@@ -1071,12 +1071,12 @@
             rowYs: [319, 360, 401, 452, 493, 535],
             rows: [
               [
-                { key: '龔紹興', zh: '龔紹興', en: '龔紹興', match: '龔紹興' },
-                { key: '嬉吟', zh: '嬉吟', en: '嬉吟', match: '嬉吟' },
+                { key: '龔紹興_嬉吟', zh: '龔紹興', en: '龔紹興', match: '龔紹興 嬉吟' },
+                { key: '龔紹興_嬉吟', zh: '嬉吟', en: '嬉吟', match: '龔紹興 嬉吟' },
               ],
               [
-                { key: '陳溍源', zh: '陳溍源', en: '陳溍源', match: '陳溍源' },
-                { key: '倪琦懿', zh: '倪琦懿', en: '倪琦懿', match: '倪琦懿' },
+                { key: '陳溍源_倪琦懿', zh: '陳溍源', en: '陳溍源', match: '陳溍源 倪琦懿' },
+                { key: '陳溍源_倪琦懿', zh: '倪琦懿', en: '倪琦懿', match: '陳溍源 倪琦懿' },
               ],
               [
                 { key: '鄭瑋玲', zh: '鄭瑋玲', en: '鄭瑋玲', match: '鄭瑋玲' },
@@ -1103,8 +1103,8 @@
             rowYs: [319, 360, 401, 452, 493, 535],
             rows: [
               [
-                { key: '蘇超瑋', zh: '蘇超瑋', en: '蘇超瑋', match: '蘇超瑋' },
-                { key: '王仲瑛', zh: '王仲瑛', en: '王仲瑛', match: '王仲瑛' },
+                { key: '王仲瑛_蘇超瑋', zh: '蘇超瑋', en: '蘇超瑋', match: '王仲瑛 蘇超瑋' },
+                { key: '王仲瑛_蘇超瑋', zh: '王仲瑛', en: '王仲瑛', match: '王仲瑛 蘇超瑋' },
               ],
               [
                 { key: '李素幸', zh: '李素幸', en: '李素幸', match: '李素幸' },
@@ -1115,16 +1115,16 @@
                 { key: '黃寶瑛', zh: '黃寶瑛', en: '黃寶瑛', match: '黃寶瑛' },
               ],
               [
-                { key: '高栢鈴', zh: '高栢鈴', en: '高栢鈴', match: '高栢鈴' },
-                { key: '邱慧文', zh: '邱慧文', en: '邱慧文', match: '邱慧文' },
+                { key: '高栢鈴_邱慧文', zh: '高栢鈴', en: '高栢鈴', match: '高栢鈴 邱慧文' },
+                { key: '高栢鈴_邱慧文', zh: '邱慧文', en: '邱慧文', match: '高栢鈴 邱慧文' },
               ],
               [
-                { key: '鄭能達', zh: '鄭能達', en: '鄭能達', match: '鄭能達' },
-                { key: '汪美雲', zh: '汪美雲', en: '汪美雲', match: '汪美雲' },
+                { key: '鄭能達_汪美雲', zh: '鄭能達', en: '鄭能達', match: '鄭能達 汪美雲' },
+                { key: '鄭能達_汪美雲', zh: '汪美雲', en: '汪美雲', match: '鄭能達 汪美雲' },
               ],
               [
-                { key: '劉聰明', zh: '劉聰明', en: '劉聰明', match: '劉聰明' },
-                { key: '陳秋娥', zh: '陳秋娥', en: '陳秋娥', match: '陳秋娥' },
+                { key: '劉聰明_陳秋娥', zh: '劉聰明', en: '劉聰明', match: '劉聰明 陳秋娥' },
+                { key: '劉聰明_陳秋娥', zh: '陳秋娥', en: '陳秋娥', match: '劉聰明 陳秋娥' },
               ],
             ],
             extraSeats: [
@@ -1147,24 +1147,24 @@
             rowYs: [319, 360, 401, 452, 493, 535],
             rows: [
               [
-                { key: '高增堯', zh: '高增堯', en: '高增堯', match: '高增堯' },
-                { key: '張淑貞', zh: '張淑貞', en: '張淑貞', match: '張淑貞' },
+                { key: '高增堯_張淑貞', zh: '高增堯', en: '高增堯', match: '高增堯 張淑貞' },
+                { key: '高增堯_張淑貞', zh: '張淑貞', en: '張淑貞', match: '高增堯 張淑貞' },
               ],
               [
-                { key: '劉子經', zh: '劉子經', en: '劉子經', match: '劉子經' },
-                { key: '林貞吟', zh: '林貞吟', en: '林貞吟', match: '林貞吟' },
+                { key: '劉子經_林貞吟', zh: '劉子經', en: '劉子經', match: '劉子經 林貞吟' },
+                { key: '劉子經_林貞吟', zh: '林貞吟', en: '林貞吟', match: '劉子經 林貞吟' },
               ],
               [
-                { key: '林瑋謙', zh: '林瑋謙', en: '林瑋謙', match: '林瑋謙 林緯謙' },
-                { key: '林學濬', zh: '林學濬', en: '林學濬', match: '林學濬' },
+                { key: '林緯謙_林學濬', zh: '林瑋謙', en: '林瑋謙', match: '林瑋謙 林緯謙 林學濬' },
+                { key: '林緯謙_林學濬', zh: '林學濬', en: '林學濬', match: '林瑋謙 林緯謙 林學濬' },
               ],
               [
                 { key: '陳兆伸', zh: '陳兆伸', en: '陳兆伸', match: '陳兆伸' },
                 { key: '夏智弘', zh: '夏智弘', en: '夏智弘', match: '夏智弘' },
               ],
               [
-                { key: '何義夫', zh: '何義夫', en: '何義夫', match: '何義夫 何毅夫' },
-                { key: '何太太', zh: '何太太', en: '何太太', match: '何太太 何夫人' },
+                { key: '何義夫_何太太', zh: '何義夫', en: '何義夫', match: '何義夫 何毅夫 何太太 何夫人' },
+                { key: '何義夫_何太太', zh: '何太太', en: '何太太', match: '何義夫 何毅夫 何太太 何夫人' },
               ],
               [
                 { key: '吳逸楓', zh: '吳逸楓', en: '吳逸楓', match: '吳逸楓' },
@@ -1179,28 +1179,28 @@
             rowYs: [319, 360, 401, 452, 493, 535],
             rows: [
               [
-                { key: '楊哲彰', zh: '楊哲彰', en: '楊哲彰', match: '楊哲彰' },
-                { key: '楊演松', zh: '楊演松', en: '楊演松', match: '楊演松' },
+                { key: '楊哲彰_余鳳琴', zh: '楊哲彰', en: '楊哲彰', match: '楊哲彰 余鳳琴' },
+                { key: '楊演松_何麗郁', zh: '楊演松', en: '楊演松', match: '楊演松 何麗郁' },
               ],
               [
-                { key: '余鳳琴', zh: '余鳳琴', en: '余鳳琴', match: '余鳳琴' },
-                { key: '何麗郁', zh: '何麗郁', en: '何麗郁', match: '何麗郁' },
+                { key: '楊哲彰_余鳳琴', zh: '余鳳琴', en: '余鳳琴', match: '楊哲彰 余鳳琴' },
+                { key: '楊演松_何麗郁', zh: '何麗郁', en: '何麗郁', match: '楊演松 何麗郁' },
               ],
               [
-                { key: '楊恕銘', zh: '楊恕銘', en: '楊恕銘', match: '楊恕銘' },
-                { key: '陳晉輝', zh: '陳晉輝', en: '陳晉輝', match: '陳晉輝' },
+                { key: '楊恕銘_林明珠', zh: '楊恕銘', en: '楊恕銘', match: '楊恕銘 林明珠' },
+                { key: '陳晉輝_葛蘭芳', zh: '陳晉輝', en: '陳晉輝', match: '陳晉輝 葛蘭芳' },
               ],
               [
-                { key: '林明珠', zh: '林明珠', en: '林明珠', match: '林明珠' },
-                { key: '葛蘭芳', zh: '葛蘭芳', en: '葛蘭芳', match: '葛蘭芳' },
+                { key: '楊恕銘_林明珠', zh: '林明珠', en: '林明珠', match: '楊恕銘 林明珠' },
+                { key: '陳晉輝_葛蘭芳', zh: '葛蘭芳', en: '葛蘭芳', match: '陳晉輝 葛蘭芳' },
               ],
               [
-                { key: '許少荃', zh: '許少荃', en: '許少荃', match: '許少荃' },
-                { key: '劉園德', zh: '劉園德', en: '劉園德', match: '劉園德' },
+                { key: '許少荃_陳紫雲', zh: '許少荃', en: '許少荃', match: '許少荃 陳紫雲' },
+                { key: '劉園德_張金鳳', zh: '劉園德', en: '劉園德', match: '劉園德 張金鳳' },
               ],
               [
-                { key: '陳紫雲', zh: '陳紫雲', en: '陳紫雲', match: '陳紫雲' },
-                { key: '張金鳳', zh: '張金鳳', en: '張金鳳', match: '張金鳳' },
+                { key: '許少荃_陳紫雲', zh: '陳紫雲', en: '陳紫雲', match: '許少荃 陳紫雲' },
+                { key: '劉園德_張金鳳', zh: '張金鳳', en: '張金鳳', match: '劉園德 張金鳳' },
               ],
             ],
           },
@@ -1211,28 +1211,28 @@
             rowYs: [319, 360, 401, 452, 493, 535],
             rows: [
               [
-                { key: '許天和', zh: '許天和', en: '許天和', match: '許天和' },
-                { key: '黃棟樑', zh: '黃棟樑', en: '黃棟樑', match: '黃棟樑' },
+                { key: '許天和_陳聞禮', zh: '許天和', en: '許天和', match: '許天和 陳聞禮' },
+                { key: '黃棟樑_龔淑惠', zh: '黃棟樑', en: '黃棟樑', match: '黃棟樑 龔淑惠' },
               ],
               [
-                { key: '陳聞禮', zh: '陳聞禮', en: '陳聞禮', match: '陳聞禮' },
-                { key: '龔淑惠', zh: '龔淑惠', en: '龔淑惠', match: '龔淑惠' },
+                { key: '許天和_陳聞禮', zh: '陳聞禮', en: '陳聞禮', match: '許天和 陳聞禮' },
+                { key: '黃棟樑_龔淑惠', zh: '龔淑惠', en: '龔淑惠', match: '黃棟樑 龔淑惠' },
               ],
               [
-                { key: '邱文德', zh: '邱文德', en: '邱文德', match: '邱文德' },
-                { key: '洪世昌', zh: '洪世昌', en: '洪世昌', match: '洪世昌' },
+                { key: '邱文德_蔡瑞娥', zh: '邱文德', en: '邱文德', match: '邱文德 蔡瑞娥' },
+                { key: '洪世昌_連瑞怜', zh: '洪世昌', en: '洪世昌', match: '洪世昌 連瑞怜' },
               ],
               [
-                { key: '蔡瑞娥', zh: '蔡瑞娥', en: '蔡瑞娥', match: '蔡瑞娥' },
-                { key: '連瑞怜', zh: '連瑞怜', en: '連瑞怜', match: '連瑞怜' },
+                { key: '邱文德_蔡瑞娥', zh: '蔡瑞娥', en: '蔡瑞娥', match: '邱文德 蔡瑞娥' },
+                { key: '洪世昌_連瑞怜', zh: '連瑞怜', en: '連瑞怜', match: '洪世昌 連瑞怜' },
               ],
               [
-                { key: '梁志遠', zh: '梁志遠', en: '梁志遠', match: '梁志遠' },
-                { key: '康裕傑', zh: '康裕傑', en: '康裕傑', match: '康裕傑' },
+                { key: '梁志遠_丘梅琪', zh: '梁志遠', en: '梁志遠', match: '梁志遠 丘梅琪' },
+                { key: '康裕傑_邱美森', zh: '康裕傑', en: '康裕傑', match: '康裕傑 邱美森' },
               ],
               [
-                { key: '丘梅琪', zh: '丘梅琪', en: '丘梅琪', match: '丘梅琪' },
-                { key: '邱美森', zh: '邱美森', en: '邱美森', match: '邱美森' },
+                { key: '梁志遠_丘梅琪', zh: '丘梅琪', en: '丘梅琪', match: '梁志遠 丘梅琪' },
+                { key: '康裕傑_邱美森', zh: '邱美森', en: '邱美森', match: '康裕傑 邱美森' },
               ],
             ],
           },
@@ -1266,12 +1266,12 @@
         rowYs: [916, 967, 1015, 1065, 1116, 1167],
         rows: [
           [
-            { key: '董素芬', zh: '董素芬', en: '董素芬', match: '董素芬' },
-            { key: '董素真', zh: '董素真', en: '董素真', match: '董素真' },
+            { key: '董素芬_陳建和', zh: '董素芬', en: '董素芬', match: '董素芬 陳建和' },
+            { key: '董素真_洪連統', zh: '董素真', en: '董素真', match: '董素真 洪連統' },
           ],
           [
-            { key: '陳建和', zh: '陳建和', en: '陳建和', match: '陳建和' },
-            { key: '洪連統', zh: '洪連統', en: '洪連統', match: '洪連統' },
+            { key: '董素芬_陳建和', zh: '陳建和', en: '陳建和', match: '董素芬 陳建和' },
+            { key: '董素真_洪連統', zh: '洪連統', en: '洪連統', match: '董素真 洪連統' },
           ],
           [
             { key: '洪鶴祐', zh: '洪鶴祐', en: '洪鶴祐', match: '洪鶴祐' },
@@ -1329,9 +1329,9 @@
       fillColor: 'rgba(220, 38, 38, 0.12)',
       darkColor: '#f87171',
       darkFillColor: 'rgba(248, 113, 113, 0.16)',
-      debugStats: { headcount: 15, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1（第8排左席借用雄女區左上座位）' },
+      debugStats: { headcount: 15, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1（大直區自由入座共 15 席，含第 8 排左席）' },
       name: { zh: '新郎高中區（大直）', en: "Groom's High School (Dazhi)" },
-      zone: { zh: '外廳左列上方區 · 大直（含雄女左上 1 席）', en: 'Lower Hall Left Col · Upper (Dazhi HS)' },
+      zone: { zh: '外廳左列上方區 · 大直（15 席自由入座）', en: 'Lower Hall Left Col · Upper (Dazhi HS · Open Seating)' },
       guests: [
         { zh: '施傑耀等三人', en: '施傑耀 (3)' },
         { zh: '洪維辰', en: '洪維辰' },
@@ -1346,42 +1346,33 @@
         { zh: '蔡宜達', en: '蔡宜達' },
       ],
       seatPlan: {
+        freeSeating: true,
+        freeSeatingNote: {
+          zh: '✨ 大直區自由入座（共 15 席：第 1–7 排左右兩側＋第 8 排左側；第 8 排右側為雄女區）',
+          en: '✨ Open seating in Dazhi zone (15 seats: Rows 1–7 both sides + Row 8 Left; Row 8 Right is KGHS)',
+        },
+        freeSeatingLoupe: {
+          cx: 1182,
+          cy: 1965,
+          zoomScale: 1.75,
+          dimNeighborIds: ['zone-bride-highschool'],
+          caption: {
+            zh: '大直區 15 席 ｜ 第 8 排僅左側可入座',
+            en: 'Dazhi 15 seats | Row 8 Left only',
+          },
+        },
         leftX: 1127,
         rightX: 1236,
         rowYs: [1654, 1705, 1755, 1805, 1855, 1906, 1956, 2007],
         rows: [
-          [
-            { key: '林品賢', zh: '林品賢', en: '林品賢', match: '林品賢' },
-            { key: '朱鎧', zh: '朱鎧', en: '朱鎧', match: '朱鎧' },
-          ],
-          [
-            { key: '林品賢', zh: '林品賢', en: '林品賢', match: '林品賢' },
-            { key: '施傑耀', zh: '施傑耀', en: '施傑耀', match: '施傑耀' },
-          ],
-          [
-            { key: '陳怡瑋', zh: '陳怡瑋', en: '陳怡瑋', match: '陳怡瑋' },
-            { key: '施傑耀', zh: '施傑耀', en: '施傑耀', match: '施傑耀' },
-          ],
-          [
-            { key: '陳怡瑋', zh: '陳怡瑋', en: '陳怡瑋', match: '陳怡瑋' },
-            { key: '施傑耀', zh: '施傑耀', en: '施傑耀', match: '施傑耀' },
-          ],
-          [
-            { key: '洪維辰', zh: '洪維辰', en: '洪維辰', match: '洪維辰' },
-            { key: '周駿逸', zh: '周駿逸', en: '周駿逸', match: '周駿逸' },
-          ],
-          [
-            { key: '鄭兆珍', zh: '鄭兆珍', en: '鄭兆珍', match: '鄭兆珍' },
-            { key: '何弋柏', zh: '何弋柏', en: '何弋柏', match: '何弋柏' },
-          ],
-          [
-            { key: '林伯翰', zh: '林伯翰', en: '林伯翰', match: '林伯翰' },
-            { key: '蔡聖傑', zh: '蔡聖傑', en: '蔡聖傑', match: '蔡聖傑' },
-          ],
-          [
-            { key: '蔡宜達', zh: '蔡宜達', en: '蔡宜達', match: '蔡宜達' },
-            { isOtherZone: true, zh: '（雄女區）', en: '(KGHS)' },
-          ],
+          [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
+          [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
+          [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
+          [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
+          [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
+          [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
+          [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
+          [{ zh: '大直可入座', en: 'Available' }, { isOtherZone: true, zh: '（雄女區）', en: '(KGHS)' }],
         ],
       },
     },
@@ -1403,6 +1394,31 @@
         { zh: '張辰', en: '張辰' },
         { zh: '王淑菁', en: '王淑菁' },
       ],
+      seatPlan: {
+        freeSeating: true,
+        freeSeatingNote: {
+          zh: '✨ 雄女區自由入座（共 5 席：第 1 排右側＋第 2–3 排左右兩側；第 1 排左側為大直區）',
+          en: '✨ Open seating in KGHS zone (5 seats: Row 1 Right + Rows 2–3 both sides; Row 1 Left is Dazhi)',
+        },
+        freeSeatingLoupe: {
+          cx: 1182,
+          cy: 2055,
+          zoomScale: 1.85,
+          dimNeighborIds: ['zone-groom-highschool'],
+          caption: {
+            zh: '雄女區 5 席 ｜ 僅右側第 1 排＋下方 2 排可入座',
+            en: 'KGHS 5 seats | Row 1 Right + 2 rows below',
+          },
+        },
+        leftX: 1127,
+        rightX: 1236,
+        rowYs: [2007, 2057, 2107],
+        rows: [
+          [{ isOtherZone: true, zh: '（大直區）', en: '(Dazhi)' }, { zh: '雄女可入座', en: 'Available' }],
+          [{ zh: '雄女可入座', en: 'Available' }, { zh: '雄女可入座', en: 'Available' }],
+          [{ zh: '雄女可入座', en: 'Available' }, { zh: '雄女可入座', en: 'Available' }],
+        ],
+      },
     },
     {
       id: 'zone-bride-colleagues',
@@ -1441,8 +1457,8 @@
         { zh: 'Andy Sun (孫銘鴻)等四人', en: 'Andy Sun (孫銘鴻) (4)' },
         { zh: 'Harry Lu', en: 'Harry Lu' },
         { zh: 'Medicine Yeh', en: 'Medicine Yeh' },
-        { zh: '賴豊彰', en: '賴豊彰' },
-        { zh: '張均銘等二人', en: '張均銘 (2)' },
+        { zh: '賴豊彰 (Alex Lai)', en: '賴豊彰 (Alex Lai)' },
+        { zh: '張均銘 (Jimmy Chang)等二人', en: '張均銘 (Jimmy Chang) (2)' },
         { zh: '王廷睿 (Terry Wang)', en: '王廷睿 (Terry Wang)' },
         { zh: 'Ray Li', en: 'Ray Li' },
         { zh: 'ANH PHAN等二人', en: 'ANH PHAN (2)' },
@@ -1451,59 +1467,49 @@
         { zh: 'Leo Tu', en: 'Leo Tu' },
       ],
       seatPlan: {
-        leftX: 1391,
-        rightX: 1499,
-        rowYs: [1657, 1708, 1758, 1808, 1859, 1911, 2053, 2103, 2155, 2205, 2256, 2306],
-        aisleAfterRow: 6,
-        rows: [
-          [
-            { key: 'jasmine', zh: '查忠敏', en: 'Jasmine Cha', match: '查忠敏 jasmine cha' },
-            { key: 'andy', zh: 'Andy Sun', en: 'Andy Sun', match: 'andy sun 孫銘鴻' },
-          ],
-          [
-            { key: 'jasmine', zh: '查忠敏', en: 'Jasmine Cha', match: '查忠敏 jasmine cha' },
-            { key: 'andy', zh: 'Andy Sun', en: 'Andy Sun', match: 'andy sun 孫銘鴻' },
-          ],
-          [
-            { key: 'jasmine', zh: '查忠敏', en: 'Jasmine Cha', match: '查忠敏 jasmine cha' },
-            { key: 'andy', zh: 'Andy Sun', en: 'Andy Sun', match: 'andy sun 孫銘鴻' },
-          ],
-          [
-            { key: 'jasmine', zh: '查忠敏', en: 'Jasmine Cha', match: '查忠敏 jasmine cha' },
-            { key: 'andy', zh: 'Andy Sun', en: 'Andy Sun', match: 'andy sun 孫銘鴻' },
-          ],
-          [
-            { key: '賴豊彰', zh: '賴豊彰', en: '賴豊彰', match: '賴豊彰' },
-            { key: 'harry', zh: 'Harry Lu', en: 'Harry Lu', match: 'harry lu' },
-          ],
-          [
-            { key: 'leo', zh: 'Leo Tu', en: 'Leo Tu', match: 'leo tu' },
-            { key: 'terry', zh: '王廷睿', en: 'Terry Wang', match: '王廷睿 terry wang' },
-          ],
-          [
-            { key: 'rock', zh: 'Rock Tsai', en: 'Rock Tsai', match: 'rock tsai' },
-            { key: 'anh', zh: 'ANH PHAN', en: 'ANH PHAN', match: 'anh phan' },
-          ],
-          [
-            { key: '張均銘', zh: '張均銘', en: '張均銘', match: '張均銘' },
-            { key: 'anh', zh: 'ANH PHAN', en: 'ANH PHAN', match: 'anh phan' },
-          ],
-          [
-            { key: '張均銘', zh: '張均銘', en: '張均銘', match: '張均銘' },
-            { key: 'michael', zh: '沈昊平', en: 'Michael Shen', match: '沈昊平 michael shen gpgpgp' },
-          ],
-          [
-            { key: 'medicine', zh: 'Medicine Yeh', en: 'Medicine Yeh', match: 'medicine yeh' },
-            { key: 'michael', zh: '沈昊平', en: 'Michael Shen', match: '沈昊平 michael shen gpgpgp' },
-          ],
-          [
-            { key: 'ray', zh: 'Ray Li', en: 'Ray Li', match: 'ray li' },
-            { key: 'mark', zh: 'Mark Chu', en: 'Mark Chu', match: 'mark chu' },
-          ],
-          [
-            null,
-            { key: '葛家聿', zh: '葛家聿', en: '葛家聿', match: '葛家聿' },
-          ],
+        freeSeating: true,
+        hideSeatGrid: true,
+        subTables: [
+          {
+            freeSeating: true,
+            title: { zh: 'Google 上桌', en: 'Google Upper Table' },
+            groupMatch: ['查忠敏', 'jasmine', 'andy', '孫銘鴻', '賴豊彰', 'alex lai', 'harry', 'leo', '王廷睿', 'terry'],
+            freeSeatingNote: {
+              zh: '✨ Google 上桌自由入座（共 12 席）',
+              en: '✨ Open seating at Google Upper Table (12 seats)',
+            },
+            leftX: 1391,
+            rightX: 1499,
+            rowYs: [1657, 1708, 1758, 1808, 1859, 1911],
+            rows: [
+              [{ zh: 'Google 上桌', en: 'Upper Table' }, { zh: 'Google 上桌', en: 'Upper Table' }],
+              [{ zh: 'Google 上桌', en: 'Upper Table' }, { zh: 'Google 上桌', en: 'Upper Table' }],
+              [{ zh: 'Google 上桌', en: 'Upper Table' }, { zh: 'Google 上桌', en: 'Upper Table' }],
+              [{ zh: 'Google 上桌', en: 'Upper Table' }, { zh: 'Google 上桌', en: 'Upper Table' }],
+              [{ zh: 'Google 上桌', en: 'Upper Table' }, { zh: 'Google 上桌', en: 'Upper Table' }],
+              [{ zh: 'Google 上桌', en: 'Upper Table' }, { zh: 'Google 上桌', en: 'Upper Table' }],
+            ],
+          },
+          {
+            freeSeating: true,
+            title: { zh: 'Google 下桌', en: 'Google Lower Table' },
+            groupMatch: ['rock', 'anh', '張均銘', 'jimmy chang', '沈昊平', 'michael', 'gpgpgp', 'medicine', 'ray', 'mark', '葛家聿'],
+            freeSeatingNote: {
+              zh: '✨ Google 下桌自由入座（共 11 席）',
+              en: '✨ Open seating at Google Lower Table (11 seats)',
+            },
+            leftX: 1391,
+            rightX: 1499,
+            rowYs: [2053, 2103, 2155, 2205, 2256, 2306],
+            rows: [
+              [{ zh: 'Google 下桌', en: 'Lower Table' }, { zh: 'Google 下桌', en: 'Lower Table' }],
+              [{ zh: 'Google 下桌', en: 'Lower Table' }, { zh: 'Google 下桌', en: 'Lower Table' }],
+              [{ zh: 'Google 下桌', en: 'Lower Table' }, { zh: 'Google 下桌', en: 'Lower Table' }],
+              [{ zh: 'Google 下桌', en: 'Lower Table' }, { zh: 'Google 下桌', en: 'Lower Table' }],
+              [{ zh: 'Google 下桌', en: 'Lower Table' }, { zh: 'Google 下桌', en: 'Lower Table' }],
+              [null, { zh: 'Google 下桌', en: 'Lower Table' }],
+            ],
+          },
         ],
       },
     },
@@ -1521,42 +1527,11 @@
         { zh: 'Allan Sun', en: 'Allan Sun' },
         { zh: '葉峻宇', en: '葉峻宇' },
         { zh: '林煜峯等四人', en: '林煜峯 (4)' },
-        { zh: 'KJ Liu 等二人', en: 'KJ Liu (2)' },
+        { zh: 'KJ Liu (劉凱傑)等二人', en: 'KJ Liu (劉凱傑) (2)' },
         { zh: '張家瑋', en: '張家瑋' },
         { zh: '褚祐任等二人', en: '褚祐任 (2)' },
         { zh: '黃柏翰', en: '黃柏翰' },
       ],
-      seatPlan: {
-        leftX: 1613,
-        rightX: 1722,
-        rowYs: [1650, 1701, 1755, 1805, 1852, 1902],
-        rows: [
-          [
-            { key: '張家瑋', zh: '張家瑋', en: '張家瑋', match: '張家瑋' },
-            { key: '林煜峯', zh: '林煜峯', en: '林煜峯', match: '林煜峯' },
-          ],
-          [
-            { key: '葉峻宇', zh: '葉峻宇', en: '葉峻宇', match: '葉峻宇' },
-            { key: '林煜峯', zh: '林煜峯', en: '林煜峯', match: '林煜峯' },
-          ],
-          [
-            { key: 'allan', zh: 'Allan Sun', en: 'Allan Sun', match: 'allan sun' },
-            { key: '林煜峯', zh: '林煜峯', en: '林煜峯', match: '林煜峯' },
-          ],
-          [
-            { key: '黃柏翰', zh: '黃柏翰', en: '黃柏翰', match: '黃柏翰' },
-            { key: '林煜峯', zh: '林煜峯', en: '林煜峯', match: '林煜峯' },
-          ],
-          [
-            { key: 'kj', zh: 'KJ Liu', en: 'KJ Liu', match: 'kj liu 劉凱傑' },
-            { key: '褚祐任', zh: '褚祐任', en: '褚祐任', match: '褚祐任' },
-          ],
-          [
-            { key: 'kj', zh: 'KJ Liu', en: 'KJ Liu', match: 'kj liu 劉凱傑' },
-            { key: '褚祐任', zh: '褚祐任', en: '褚祐任', match: '褚祐任' },
-          ],
-        ],
-      },
     },
     {
       id: 'zone-groom-moz',
@@ -1573,25 +1548,6 @@
         { zh: 'Shawn Huang等二人', en: 'Shawn Huang (2)' },
         { zh: '陳亮亨 Gary Chen', en: '陳亮亨 Gary Chen' },
       ],
-      seatPlan: {
-        leftX: 1613,
-        rightX: 1722,
-        rowYs: [2033, 2075, 2116],
-        rows: [
-          [
-            { key: 'shawn', zh: 'Shawn Huang', en: 'Shawn Huang', match: 'shawn huang' },
-            { key: 'ethan', zh: '曾祥信', en: 'Ethan Tseng', match: 'ethan tseng 曾祥信' },
-          ],
-          [
-            { key: 'shawn', zh: 'Shawn Huang', en: 'Shawn Huang', match: 'shawn huang' },
-            { key: 'ethan', zh: '曾祥信', en: 'Ethan Tseng', match: 'ethan tseng 曾祥信' },
-          ],
-          [
-            { key: 'gary', zh: '陳亮亨', en: 'Gary Chen', match: '陳亮亨 gary chen' },
-            { key: 'ethan', zh: '曾祥信', en: 'Ethan Tseng', match: 'ethan tseng 曾祥信' },
-          ],
-        ],
-      },
     },
     {
       id: 'zone-bride-college',
@@ -1690,13 +1646,13 @@
     {
       year: '2014',
       dateTag: '2014.01–02',
-      tom: { lat: 24.787, lng: 120.997, city: { zh: '新竹交大／彰化屏東', en: 'Hsinchu NCTU' } },
-      eunice: { lat: 22.627, lng: 120.301, city: { zh: '台北北藝大／高雄過年', en: 'Taipei / Kaohsiung' } },
+      tom: { lat: 24.787, lng: 120.997, city: { zh: '新竹交大／台北', en: 'Hsinchu NCTU / Taipei' } },
+      eunice: { lat: 22.627, lng: 120.301, city: { zh: '台北北藝大／高雄', en: 'Taipei TNUA / Kaohsiung' } },
       lat: 24.787,
       lng: 120.997,
       place: {
-        zh: '2014.01–02 · 新竹交大 ↔ 台北北藝大（過年彰化屏東 ＆ 高雄）',
-        en: 'Jan–Feb 2014 · Hsinchu NCTU ↔ Taipei TNUA (Lunar New Year in Changhua/Pingtung & Kaohsiung)',
+        zh: '2014.01–02 · 新竹交大 ↔ 台北北藝大',
+        en: 'Jan–Feb 2014 · Hsinchu NCTU ↔ Taipei TNUA',
       },
       distanceLabel: { zh: '245 km · 過年南北兩端聊著天', en: '245 km · Chatting Across Lunar New Year' },
       desc: {
@@ -1780,7 +1736,7 @@
     {
       year: '2015',
       dateTag: '2015.02',
-      tom: { lat: 25.033, lng: 121.565, city: { zh: '台北（過年彰化屏東）', en: 'Taipei' } },
+      tom: { lat: 25.033, lng: 121.565, city: { zh: '台北', en: 'Taipei' } },
       eunice: { lat: 35.676, lng: 139.65, city: { zh: '日本東京 Tokyo', en: 'Tokyo, JP' } },
       lat: 35.676,
       lng: 139.65,
@@ -3246,9 +3202,27 @@
     [KITCHEN_ZONE_ID]: KITCHEN_ZONE_META,
   };
 
+  function findMatchingFreeSeatingSubIndices(table, query, isDebugPage) {
+    if (!table || !table.seatPlan || !table.seatPlan.freeSeating || !Array.isArray(table.seatPlan.subTables) || !query) {
+      return [];
+    }
+    if (!isDebugPage && query.length < 2) return [];
+    const q = query.toLowerCase();
+    const indices = [];
+    table.seatPlan.subTables.forEach((sub, idx) => {
+      if (!sub || !Array.isArray(sub.groupMatch)) return;
+      const hit = sub.groupMatch.some((m) => {
+        const kw = String(m || '').toLowerCase();
+        return kw && (kw.includes(q) || q.includes(kw));
+      });
+      if (hit) indices.push(idx);
+    });
+    return indices;
+  }
+
   function findMatchingSeatSlots(table, query, isDebugPage) {
     const empty = { slots: [], uniqueKeys: new Set() };
-    if (!table || !table.seatPlan || !query) return empty;
+    if (!table || !table.seatPlan || table.seatPlan.freeSeating || !query) return empty;
     if (!isDebugPage && query.length < 2) return empty;
 
     const sp = table.seatPlan;
@@ -3519,6 +3493,9 @@
           } else if (seat.isOtherZone) {
             cell.className = `seating-seatmap-cell is-${side} is-empty`;
             cell.textContent = (currentLang === 'en' ? seat.en : seat.zh) || seat.zh;
+          } else if (plan.freeSeating) {
+            cell.className = `seating-seatmap-cell is-${side} is-free-seat`;
+            cell.textContent = (currentLang === 'en' ? seat.en : seat.zh) || seat.zh;
           } else {
             cell.className = `seating-seatmap-cell is-${side}${isHit ? ' is-seat-match' : ''}`;
             cell.textContent = (currentLang === 'en' ? seat.en : seat.zh) || seat.zh;
@@ -3528,7 +3505,10 @@
           cell.textContent = currentLang === 'en' ? '📍 Your Seat' : '📍 您的座位';
         } else if (!seat || seat.isOtherZone) {
           cell.className = `seating-seatmap-cell is-${side} is-empty is-anon`;
-          cell.textContent = '—';
+          cell.textContent = seat && seat.isOtherZone ? ((currentLang === 'en' ? seat.en : seat.zh) || '—') : '—';
+        } else if (plan.freeSeating) {
+          cell.className = `seating-seatmap-cell is-${side} is-free-seat`;
+          cell.textContent = currentLang === 'en' ? '✓ Available' : '✓ 可入座';
         } else {
           cell.className = `seating-seatmap-cell is-${side} is-anon`;
           cell.textContent = '○';
@@ -3566,9 +3546,9 @@
     return block;
   }
 
-  function buildSeatMapElement(table, matchedSlotSet, isDebugPage) {
+  function buildSeatMapElement(table, matchedSlotSet, isDebugPage, matchedSubIndices = []) {
     const sp = table.seatPlan;
-    if (!sp) return null;
+    if (!sp || sp.hideSeatGrid) return null;
 
     const wrap = document.createElement('div');
     wrap.className = `seating-seatmap${isDebugPage ? ' is-debug-seatmap' : ' is-public-seatmap'}`;
@@ -3585,9 +3565,12 @@
       const grid = document.createElement('div');
       grid.className = 'seating-seatmap-subgrid';
       let renderedCount = 0;
+      const subIdxSet = new Set(matchedSubIndices);
       sp.subTables.forEach((sub, idx) => {
         const prefix = `t${idx}:`;
-        const hasHitInSub = Array.from(matchedSlotSet).some((k) => k.startsWith(prefix));
+        const hasHitInSub =
+          subIdxSet.has(idx) ||
+          Array.from(matchedSlotSet).some((k) => k.startsWith(prefix));
         if (!isDebugPage && !hasHitInSub) return;
         grid.append(buildSingleSeatTableBlock(sub, idx, matchedSlotSet, isDebugPage));
         renderedCount += 1;
@@ -3826,22 +3809,70 @@
       svg.append(shapeEl);
     });
 
-    // 2. 繪製桌內相對座位精準標點（搜尋命中時高亮指定座位；Debug 點選該區時顯示全區座位點）
+    // 2. 繪製桌內相對座位精準標點（搜尋命中時先匡起桌子，再以放大鏡放大座位位置；Debug 點選該區時顯示全區座位點）
+    const focusLoupeSlots = [];
+    let freeSeatingLoupeTarget = null;
+    const computePlanFocusBox = (plan, fallbackBox) => {
+      if (!plan) return fallbackBox || null;
+      const xs = [];
+      const ys = [];
+      if (typeof plan.leftX === 'number') xs.push(plan.leftX);
+      if (typeof plan.rightX === 'number') xs.push(plan.rightX);
+      if (Array.isArray(plan.rowYs)) ys.push(...plan.rowYs);
+      if (Array.isArray(plan.sweetheartSeats)) {
+        plan.sweetheartSeats.forEach((s) => {
+          if (s && typeof s.cx === 'number' && typeof s.cy === 'number') {
+            xs.push(s.cx);
+            ys.push(s.cy);
+          }
+        });
+      }
+      if (Array.isArray(plan.extraSeats)) {
+        plan.extraSeats.forEach((s) => {
+          if (s && typeof s.cx === 'number' && typeof s.cy === 'number') {
+            xs.push(s.cx);
+            ys.push(s.cy);
+          }
+        });
+      }
+      if (xs.length === 0 || ys.length === 0) return fallbackBox || null;
+      const minX = Math.min(...xs) - 56;
+      const maxX = Math.max(...xs) + 56;
+      const minY = Math.min(...ys) - 56;
+      const maxY = Math.max(...ys) + 56;
+      return {
+        x: Math.max(8, Math.round(minX)),
+        y: Math.max(8, Math.round(minY)),
+        w: Math.round(maxX - minX),
+        h: Math.round(maxY - minY),
+      };
+    };
+
     SEATING_TABLES_DATA.forEach((table) => {
       if (!table.seatPlan) return;
+      const sp = table.seatPlan;
       const matchedSlots = seatMarkersByZone ? seatMarkersByZone.get(table.id) : null;
+      const showFreeSeatingSeats = Boolean(sp.freeSeating && highlightedIds.has(table.id));
       const showAllDebugSeats =
-        isDebugPage && selectedSeatingZoneId === table.id && (!matchedSlots || matchedSlots.length === 0);
+        showFreeSeatingSeats ||
+        (isDebugPage && selectedSeatingZoneId === table.id && (!matchedSlots || matchedSlots.length === 0));
 
       if ((!matchedSlots || matchedSlots.length === 0) && !showAllDebugSeats) return;
 
-      const sp = table.seatPlan;
       const pinLayer = document.createElementNS(svgNS, 'g');
       pinLayer.setAttribute('class', 'seating-seat-pins-layer');
       if (table.color) pinLayer.style.setProperty('--zone-color', table.color);
       if (table.darkColor) pinLayer.style.setProperty('--zone-dark-color', table.darkColor);
 
       if (showAllDebugSeats) {
+        if (showFreeSeatingSeats && sp.freeSeatingLoupe) {
+          freeSeatingLoupeTarget = {
+            table,
+            plan: sp,
+            loupe: sp.freeSeatingLoupe,
+            focusBox: computePlanFocusBox(sp, table.box),
+          };
+        }
         const renderDebugDotsForPlan = (plan) => {
           if (!plan) return;
           const tPrefix = plan.title ? `${plan.title[currentLang] || plan.title.zh} · ` : '';
@@ -3956,7 +3987,64 @@
         };
 
         if (Array.isArray(sp.subTables)) {
-          sp.subTables.forEach((sub) => renderDebugDotsForPlan(sub));
+          const matchedFreeSubs =
+            showFreeSeatingSeats && activeQuery
+              ? findMatchingFreeSeatingSubIndices(table, activeQuery.toLowerCase(), isDebugPage)
+              : [];
+          if (matchedFreeSubs.length > 0) {
+            matchedFreeSubs.forEach((sIdx) => {
+              const subPlan = sp.subTables[sIdx];
+              if (!sp.hideSeatGrid) {
+                renderDebugDotsForPlan(subPlan);
+              }
+              const fb = computePlanFocusBox(subPlan, table.box);
+              if (fb) {
+                const focusRect = document.createElementNS(svgNS, 'rect');
+                focusRect.setAttribute('x', String(fb.x));
+                focusRect.setAttribute('y', String(fb.y));
+                focusRect.setAttribute('width', String(fb.w));
+                focusRect.setAttribute('height', String(fb.h));
+                focusRect.setAttribute('rx', '22');
+                focusRect.setAttribute('ry', '22');
+                focusRect.setAttribute('class', 'seating-table-focus-frame');
+                pinLayer.append(focusRect);
+
+                const subLabel =
+                  subPlan && subPlan.title ? (subPlan.title[currentLang] || subPlan.title.zh) : '';
+                if (subLabel) {
+                  const badgeTextStr = `📍 ${subLabel}`;
+                  const badgeW = Math.max(150, Math.min(420, badgeTextStr.length * 30 + 44));
+                  const badgeH = 54;
+                  const badgeCx = Math.max(
+                    badgeW / 2 + 18,
+                    Math.min(2090 - badgeW / 2 - 18, Math.round(fb.x + fb.w / 2))
+                  );
+                  const badgeCy = fb.y < 86 ? fb.y + fb.h + 36 : fb.y - 34;
+
+                  const badgeGroup = document.createElementNS(svgNS, 'g');
+                  badgeGroup.setAttribute('class', 'seating-table-focus-badge');
+                  const badgeBg = document.createElementNS(svgNS, 'rect');
+                  badgeBg.setAttribute('x', String(Math.round(badgeCx - badgeW / 2)));
+                  badgeBg.setAttribute('y', String(Math.round(badgeCy - badgeH / 2)));
+                  badgeBg.setAttribute('width', String(badgeW));
+                  badgeBg.setAttribute('height', String(badgeH));
+                  badgeBg.setAttribute('rx', '27');
+                  badgeBg.setAttribute('ry', '27');
+                  badgeBg.setAttribute('class', 'seating-table-focus-badge-bg');
+                  const badgeText = document.createElementNS(svgNS, 'text');
+                  badgeText.setAttribute('x', String(badgeCx));
+                  badgeText.setAttribute('y', String(Math.round(badgeCy + 11)));
+                  badgeText.setAttribute('text-anchor', 'middle');
+                  badgeText.setAttribute('class', 'seating-table-focus-badge-text');
+                  badgeText.textContent = badgeTextStr;
+                  badgeGroup.append(badgeBg, badgeText);
+                  pinLayer.append(badgeGroup);
+                }
+              }
+            });
+          } else if (!sp.hideSeatGrid) {
+            sp.subTables.forEach((sub) => renderDebugDotsForPlan(sub));
+          }
         } else {
           renderDebugDotsForPlan(sp);
         }
@@ -4038,6 +4126,100 @@
           g.append(tip, halo, dot, num);
           g.addEventListener('click', (e) => handleZoneSelect(table.id, e));
           pinLayer.append(g);
+        });
+
+        // 步驟一：先用醒目外框匡起命中座位所在的桌子，並附上清楚的桌號／區名標籤
+        const focusBoxes = [];
+        const focusBoxBySubKey = new Map();
+        const getShortZoneTitle = () => {
+          const raw = table.name[currentLang] || table.name.zh || '';
+          return raw.replace(/[（(].*?[）)]/g, '').trim() || raw;
+        };
+        if (Array.isArray(sp.subTables)) {
+          const seenSubIdx = new Set();
+          matchedSlots.forEach((slot) => {
+            if (typeof slot.subTableIndex === 'number' && !seenSubIdx.has(slot.subTableIndex)) {
+              seenSubIdx.add(slot.subTableIndex);
+              const subPlan = sp.subTables[slot.subTableIndex];
+              const box = computePlanFocusBox(subPlan, table.box);
+              if (box) {
+                const subLabel = subPlan && subPlan.title
+                  ? (subPlan.title[currentLang] || subPlan.title.zh)
+                  : getShortZoneTitle();
+                const entry = { box, label: subLabel, plan: subPlan };
+                focusBoxes.push(entry);
+                focusBoxBySubKey.set(slot.subTableIndex, entry);
+              }
+            }
+          });
+        } else {
+          const box = computePlanFocusBox(sp, table.box);
+          if (box) {
+            const entry = { box, label: getShortZoneTitle(), plan: sp };
+            focusBoxes.push(entry);
+            focusBoxBySubKey.set('single', entry);
+          }
+        }
+        focusBoxes.forEach(({ box: fb, label }) => {
+          const focusRect = document.createElementNS(svgNS, 'rect');
+          focusRect.setAttribute('x', String(fb.x));
+          focusRect.setAttribute('y', String(fb.y));
+          focusRect.setAttribute('width', String(fb.w));
+          focusRect.setAttribute('height', String(fb.h));
+          focusRect.setAttribute('rx', '22');
+          focusRect.setAttribute('ry', '22');
+          focusRect.setAttribute('class', 'seating-table-focus-frame');
+          pinLayer.append(focusRect);
+
+          if (label) {
+            const badgeTextStr = `📍 ${label}`;
+            const badgeW = Math.max(150, Math.min(420, badgeTextStr.length * 30 + 44));
+            const badgeH = 54;
+            const badgeCx = Math.max(
+              badgeW / 2 + 18,
+              Math.min(2090 - badgeW / 2 - 18, Math.round(fb.x + fb.w / 2))
+            );
+            const placeBelow = fb.y < 86;
+            const badgeCy = placeBelow ? fb.y + fb.h + 36 : fb.y - 34;
+
+            const badgeGroup = document.createElementNS(svgNS, 'g');
+            badgeGroup.setAttribute('class', 'seating-table-focus-badge');
+
+            const badgeBg = document.createElementNS(svgNS, 'rect');
+            badgeBg.setAttribute('x', String(Math.round(badgeCx - badgeW / 2)));
+            badgeBg.setAttribute('y', String(Math.round(badgeCy - badgeH / 2)));
+            badgeBg.setAttribute('width', String(badgeW));
+            badgeBg.setAttribute('height', String(badgeH));
+            badgeBg.setAttribute('rx', '27');
+            badgeBg.setAttribute('ry', '27');
+            badgeBg.setAttribute('class', 'seating-table-focus-badge-bg');
+
+            const badgeText = document.createElementNS(svgNS, 'text');
+            badgeText.setAttribute('x', String(badgeCx));
+            badgeText.setAttribute('y', String(Math.round(badgeCy + 11)));
+            badgeText.setAttribute('text-anchor', 'middle');
+            badgeText.setAttribute('class', 'seating-table-focus-badge-text');
+            badgeText.textContent = badgeTextStr;
+
+            badgeGroup.append(badgeBg, badgeText);
+            pinLayer.append(badgeGroup);
+          }
+        });
+
+        matchedSlots.forEach((slot) => {
+          const matchedEntry =
+            typeof slot.subTableIndex === 'number'
+              ? focusBoxBySubKey.get(slot.subTableIndex)
+              : focusBoxBySubKey.get('single');
+          focusLoupeSlots.push({
+            slot,
+            table,
+            plan: matchedEntry ? matchedEntry.plan : sp,
+            focusBox: matchedEntry ? matchedEntry.box : table.box,
+            tableLabel: matchedEntry ? matchedEntry.label : getShortZoneTitle(),
+            color: table.color || '#d97706',
+            darkColor: table.darkColor || '#fbbf24',
+          });
         });
       }
 
@@ -4416,6 +4598,495 @@
       }
     });
 
+    // 7. 步驟二：搜尋命中單人／同組座位（1–4 席）時，延遲在旁彈出放大鏡（不遮擋原本桌框）+ 全桌相對位置說明
+    if (focusLoupeSlots.length > 0 && focusLoupeSlots.length <= 4) {
+      const firstItem = focusLoupeSlots[0];
+      const firstSlot = firstItem.slot;
+      const nearbySlots = focusLoupeSlots.filter(({ slot }) => {
+        const dx = slot.cx - firstSlot.cx;
+        const dy = slot.cy - firstSlot.cy;
+        return Math.hypot(dx, dy) <= 280;
+      });
+      const targetSlots = nearbySlots.length > 0 ? nearbySlots : [firstItem];
+      const cx = Math.round(
+        targetSlots.reduce((sum, item) => sum + item.slot.cx, 0) / targetSlots.length
+      );
+      const cy = Math.round(
+        targetSlots.reduce((sum, item) => sum + item.slot.cy, 0) / targetSlots.length
+      );
+
+      const loupeR = 215;
+      const zoomScale = 1.9;
+      const fb = firstItem.focusBox || { x: cx - 120, y: cy - 160, w: 240, h: 320 };
+
+      const minLx = loupeR + 30;
+      const maxLx = 2090 - loupeR - 115;
+      const minLy = loupeR + 40;
+      const maxLy = 3153 - loupeR - 130;
+      const clampX = (v) => Math.max(minLx, Math.min(maxLx, Math.round(v)));
+      const clampY = (v) => Math.max(minLy, Math.min(maxLy, Math.round(v)));
+
+      const candidates = [
+        { x: fb.x + fb.w + loupeR + 68, y: cy },
+        { x: fb.x - loupeR - 68, y: cy },
+        { x: cx, y: fb.y + fb.h + loupeR + 78 },
+        { x: cx, y: fb.y - loupeR - 78 },
+      ];
+      const fitsInside = (p) => p.x >= minLx && p.x <= maxLx && p.y >= minLy && p.y <= maxLy;
+      const chosen = candidates.find(fitsInside) || (cx < 1045 ? candidates[0] : candidates[1]);
+      const lx = clampX(chosen.x);
+      const ly = clampY(chosen.y);
+
+      const defs = document.createElementNS(svgNS, 'defs');
+      const clip = document.createElementNS(svgNS, 'clipPath');
+      clip.setAttribute('id', 'seating-loupe-clip');
+      const clipCircle = document.createElementNS(svgNS, 'circle');
+      clipCircle.setAttribute('cx', String(lx));
+      clipCircle.setAttribute('cy', String(ly));
+      clipCircle.setAttribute('r', String(loupeR));
+      clip.append(clipCircle);
+      defs.append(clip);
+      svg.append(defs);
+
+      const loupeGroup = document.createElementNS(svgNS, 'g');
+      loupeGroup.setAttribute('class', 'seating-loupe-group');
+      loupeGroup.style.transformOrigin = `${lx}px ${ly}px`;
+      loupeGroup.style.setProperty('--zone-color', firstItem.color || '#d97706');
+      loupeGroup.style.setProperty('--zone-dark-color', firstItem.darkColor || '#fbbf24');
+
+      // 導引線 + 原桌座位錨點，清楚連結「框起來的桌子座位」與「放大鏡」
+      const leaderLine = document.createElementNS(svgNS, 'line');
+      leaderLine.setAttribute('x1', String(cx));
+      leaderLine.setAttribute('y1', String(cy));
+      leaderLine.setAttribute('x2', String(lx));
+      leaderLine.setAttribute('y2', String(ly));
+      leaderLine.setAttribute('class', 'seating-loupe-leader');
+
+      const anchorRing = document.createElementNS(svgNS, 'circle');
+      anchorRing.setAttribute('cx', String(cx));
+      anchorRing.setAttribute('cy', String(cy));
+      anchorRing.setAttribute('r', '28');
+      anchorRing.setAttribute('class', 'seating-loupe-anchor');
+
+      const cos45 = 0.7071;
+      const handleStart = loupeR - 2;
+      const handleEnd = loupeR + 115;
+      const handleShadow = document.createElementNS(svgNS, 'line');
+      handleShadow.setAttribute('x1', String(Math.round(lx + handleStart * cos45)));
+      handleShadow.setAttribute('y1', String(Math.round(ly + handleStart * cos45)));
+      handleShadow.setAttribute('x2', String(Math.round(lx + handleEnd * cos45)));
+      handleShadow.setAttribute('y2', String(Math.round(ly + handleEnd * cos45)));
+      handleShadow.setAttribute('class', 'seating-loupe-handle-outer');
+
+      const handleGrip = document.createElementNS(svgNS, 'line');
+      handleGrip.setAttribute('x1', String(Math.round(lx + (handleStart + 18) * cos45)));
+      handleGrip.setAttribute('y1', String(Math.round(ly + (handleStart + 18) * cos45)));
+      handleGrip.setAttribute('x2', String(Math.round(lx + handleEnd * cos45)));
+      handleGrip.setAttribute('y2', String(Math.round(ly + handleEnd * cos45)));
+      handleGrip.setAttribute('class', 'seating-loupe-handle-inner');
+
+      const lensBackdrop = document.createElementNS(svgNS, 'circle');
+      lensBackdrop.setAttribute('cx', String(lx));
+      lensBackdrop.setAttribute('cy', String(ly));
+      lensBackdrop.setAttribute('r', String(loupeR));
+      lensBackdrop.setAttribute('class', 'seating-loupe-backdrop');
+
+      const clippedContent = document.createElementNS(svgNS, 'g');
+      clippedContent.setAttribute('clip-path', 'url(#seating-loupe-clip)');
+
+      const zoomTransform = `translate(${lx}, ${ly}) scale(${zoomScale}) translate(${-cx}, ${-cy})`;
+
+      const zoomedImg = document.createElementNS(svgNS, 'image');
+      zoomedImg.setAttribute('href', safeImg);
+      zoomedImg.setAttribute('x', '0');
+      zoomedImg.setAttribute('y', '0');
+      zoomedImg.setAttribute('width', '2090');
+      zoomedImg.setAttribute('height', '3153');
+      zoomedImg.setAttribute('transform', zoomTransform);
+      clippedContent.append(zoomedImg);
+
+      const zoomedPins = document.createElementNS(svgNS, 'g');
+      zoomedPins.setAttribute('transform', zoomTransform);
+
+      // 先畫出同一張桌子的其他參考座位點（讓使用者一眼看懂「由上往下第幾排／左側或右側」）
+      const targetSlotKeys = new Set(targetSlots.map((item) => item.slot.slotKey));
+      const refPlan = firstItem.plan;
+      if (refPlan) {
+        const prefix =
+          typeof firstSlot.subTableIndex === 'number' ? `t${firstSlot.subTableIndex}:` : '';
+        const appendContextDot = (rx, ry, labelText, isEmptySeat) => {
+          const cg = document.createElementNS(svgNS, 'g');
+          cg.setAttribute('class', `seating-loupe-ctx-dot${isEmptySeat ? ' is-empty' : ''}`);
+          const cc = document.createElementNS(svgNS, 'circle');
+          cc.setAttribute('cx', String(rx));
+          cc.setAttribute('cy', String(ry));
+          cc.setAttribute('r', '11');
+          cc.setAttribute('class', 'seating-loupe-ctx-circle');
+          const ct = document.createElementNS(svgNS, 'text');
+          ct.setAttribute('x', String(rx));
+          ct.setAttribute('y', String(Math.round(ry + 4)));
+          ct.setAttribute('text-anchor', 'middle');
+          ct.setAttribute('class', 'seating-loupe-ctx-num');
+          ct.textContent = labelText;
+          cg.append(cc, ct);
+          zoomedPins.append(cg);
+        };
+        if (Array.isArray(refPlan.rows)) {
+          refPlan.rows.forEach((pair, rIdx) => {
+            ['left', 'right'].forEach((side, sIdx) => {
+              const seat = pair[sIdx];
+              if (seat && seat.isOtherZone) return;
+              const slotKey = `${prefix}${rIdx}:${side}`;
+              if (targetSlotKeys.has(slotKey)) return;
+              const rx = side === 'left' ? refPlan.leftX : refPlan.rightX;
+              const ry = refPlan.rowYs[rIdx];
+              appendContextDot(rx, ry, seat ? String(rIdx + 1) : '–', !seat);
+            });
+          });
+        }
+        if (Array.isArray(refPlan.sweetheartSeats)) {
+          refPlan.sweetheartSeats.forEach((s, idx) => {
+            if (!s) return;
+            const side = s.side || (idx === 0 ? 'left' : 'right');
+            const slotKey = `${prefix}sweet:${side}`;
+            if (targetSlotKeys.has(slotKey)) return;
+            appendContextDot(s.cx, s.cy, s.pinText || '♥', false);
+          });
+        }
+        if (Array.isArray(refPlan.extraSeats)) {
+          refPlan.extraSeats.forEach((s, eIdx) => {
+            if (!s) return;
+            const slotKey = `${prefix}extra:${eIdx}`;
+            if (targetSlotKeys.has(slotKey)) return;
+            appendContextDot(s.cx, s.cy, s.pinText || '加', false);
+          });
+        }
+      }
+
+      targetSlots.forEach(({ slot, color, darkColor }) => {
+        const pg = document.createElementNS(svgNS, 'g');
+        pg.style.setProperty('--zone-color', color);
+        pg.style.setProperty('--zone-dark-color', darkColor);
+
+        const pHalo = document.createElementNS(svgNS, 'circle');
+        pHalo.setAttribute('cx', String(slot.cx));
+        pHalo.setAttribute('cy', String(slot.cy));
+        pHalo.setAttribute('r', '22');
+        pHalo.setAttribute('class', 'seating-seat-pin-halo');
+
+        const pDot = document.createElementNS(svgNS, 'circle');
+        pDot.setAttribute('cx', String(slot.cx));
+        pDot.setAttribute('cy', String(slot.cy));
+        pDot.setAttribute('r', '14');
+        pDot.setAttribute('class', 'seating-seat-pin-dot');
+
+        const pNum = document.createElementNS(svgNS, 'text');
+        pNum.setAttribute('x', String(slot.cx));
+        pNum.setAttribute('y', String(Math.round(slot.cy + 5)));
+        pNum.setAttribute('text-anchor', 'middle');
+        pNum.setAttribute('class', 'seating-seat-pin-num');
+        pNum.style.fontSize = '15px';
+        pNum.textContent =
+          slot.isSweetheart || slot.isExtraSeat
+            ? slot.pinText || '♥'
+            : String(slot.rowIndex + 1);
+
+        pg.append(pHalo, pDot, pNum);
+        zoomedPins.append(pg);
+      });
+      clippedContent.append(zoomedPins);
+
+      const sheen = document.createElementNS(svgNS, 'path');
+      const sx1 = Math.round(lx - loupeR * 0.62);
+      const sy1 = Math.round(ly - loupeR * 0.36);
+      const sx2 = Math.round(lx - loupeR * 0.16);
+      const sy2 = Math.round(ly - loupeR * 0.76);
+      sheen.setAttribute(
+        'd',
+        `M ${sx1} ${sy1} A ${Math.round(loupeR * 0.82)} ${Math.round(loupeR * 0.82)} 0 0 1 ${sx2} ${sy2}`
+      );
+      sheen.setAttribute('class', 'seating-loupe-sheen');
+
+      const rim = document.createElementNS(svgNS, 'circle');
+      rim.setAttribute('cx', String(lx));
+      rim.setAttribute('cy', String(ly));
+      rim.setAttribute('r', String(loupeR));
+      rim.setAttribute('class', 'seating-loupe-rim');
+
+      // 白話相對位置標籤（例如：第 2 桌 ｜ 長桌右側 · 由上第 3 排）
+      const slotList = targetSlots.map((item) => item.slot);
+      const tableTitle = firstItem.tableLabel || '';
+      let posLabel = '';
+      if (slotList.every((s) => s.isSweetheart)) {
+        if (currentLang === 'en') {
+          posLabel =
+            slotList.length === 1
+              ? `Sweetheart Table · ${slotList[0].side === 'left' ? 'Left' : 'Right'}`
+              : 'Sweetheart Table (2 seats)';
+        } else {
+          posLabel =
+            slotList.length === 1
+              ? `新人小桌 · ${slotList[0].side === 'left' ? '左側席' : '右側席'}`
+              : '新人小桌 · 雙人席';
+        }
+      } else if (slotList.every((s) => s.isExtraSeat)) {
+        posLabel = currentLang === 'en' ? 'Bottom End Seat' : '桌尾加開席';
+      } else {
+        const rowSlots = slotList.filter((s) => !s.isSweetheart && !s.isExtraSeat);
+        const sides = new Set(rowSlots.map((s) => s.side));
+        const rows = rowSlots.map((s) => s.rowIndex + 1).sort((a, b) => a - b);
+        const rowText =
+          rows.length === 1
+            ? currentLang === 'en'
+              ? `Row ${rows[0]} from top`
+              : `由上第 ${rows[0]} 排`
+            : currentLang === 'en'
+              ? `Rows ${rows[0]}–${rows[rows.length - 1]} from top`
+              : `由上第 ${rows[0]}–${rows[rows.length - 1]} 排`;
+        const sideText =
+          sides.size === 1
+            ? currentLang === 'en'
+              ? rowSlots[0].side === 'left'
+                ? 'Left side'
+                : 'Right side'
+              : rowSlots[0].side === 'left'
+                ? '長桌左側'
+                : '長桌右側'
+            : '';
+        posLabel = sideText ? `${sideText} · ${rowText}` : rowText;
+      }
+      const captionStr = tableTitle ? `${tableTitle} ｜ ${posLabel}` : posLabel;
+      const capW = Math.max(260, Math.min(640, captionStr.length * 26 + 52));
+      const capH = 58;
+      const capX = Math.max(capW / 2 + 18, Math.min(2090 - capW / 2 - 18, lx));
+      const capY = ly + loupeR + 44 <= 3115 ? ly + loupeR + 44 : ly - loupeR - 44;
+
+      const capBg = document.createElementNS(svgNS, 'rect');
+      capBg.setAttribute('x', String(Math.round(capX - capW / 2)));
+      capBg.setAttribute('y', String(Math.round(capY - capH / 2)));
+      capBg.setAttribute('width', String(capW));
+      capBg.setAttribute('height', String(capH));
+      capBg.setAttribute('rx', '29');
+      capBg.setAttribute('ry', '29');
+      capBg.setAttribute('class', 'seating-loupe-caption-bg');
+
+      const capText = document.createElementNS(svgNS, 'text');
+      capText.setAttribute('x', String(capX));
+      capText.setAttribute('y', String(Math.round(capY + 11)));
+      capText.setAttribute('text-anchor', 'middle');
+      capText.setAttribute('class', 'seating-loupe-caption-text');
+      capText.textContent = captionStr;
+
+      loupeGroup.append(
+        leaderLine,
+        anchorRing,
+        handleShadow,
+        handleGrip,
+        lensBackdrop,
+        clippedContent,
+        sheen,
+        rim,
+        capBg,
+        capText
+      );
+      svg.append(loupeGroup);
+    } else if (freeSeatingLoupeTarget) {
+      const { table: fTable, plan: fPlan, loupe: fLoupe, focusBox: fBox } = freeSeatingLoupeTarget;
+      const cx = fLoupe.cx;
+      const cy = fLoupe.cy;
+      const loupeR = 215;
+      const zoomScale = fLoupe.zoomScale || 1.75;
+      const fb = fBox || { x: cx - 120, y: cy - 180, w: 240, h: 360 };
+
+      const minLx = loupeR + 30;
+      const maxLx = 2090 - loupeR - 115;
+      const minLy = loupeR + 40;
+      const maxLy = 3153 - loupeR - 130;
+      const clampX = (v) => Math.max(minLx, Math.min(maxLx, Math.round(v)));
+      const clampY = (v) => Math.max(minLy, Math.min(maxLy, Math.round(v)));
+
+      const candidates = [
+        { x: fb.x - loupeR - 72, y: cy },
+        { x: fb.x + fb.w + loupeR + 72, y: cy },
+        { x: cx, y: fb.y + fb.h + loupeR + 78 },
+        { x: cx, y: fb.y - loupeR - 78 },
+      ];
+      const fitsInside = (p) => p.x >= minLx && p.x <= maxLx && p.y >= minLy && p.y <= maxLy;
+      const chosen = candidates.find(fitsInside) || candidates[0];
+      const lx = clampX(chosen.x);
+      const ly = clampY(chosen.y);
+
+      const defs = document.createElementNS(svgNS, 'defs');
+      const clip = document.createElementNS(svgNS, 'clipPath');
+      clip.setAttribute('id', 'seating-loupe-clip');
+      const clipCircle = document.createElementNS(svgNS, 'circle');
+      clipCircle.setAttribute('cx', String(lx));
+      clipCircle.setAttribute('cy', String(ly));
+      clipCircle.setAttribute('r', String(loupeR));
+      clip.append(clipCircle);
+      defs.append(clip);
+      svg.append(defs);
+
+      const loupeGroup = document.createElementNS(svgNS, 'g');
+      loupeGroup.setAttribute('class', 'seating-loupe-group');
+      loupeGroup.style.transformOrigin = `${lx}px ${ly}px`;
+      loupeGroup.style.setProperty('--zone-color', fTable.color || '#dc2626');
+      loupeGroup.style.setProperty('--zone-dark-color', fTable.darkColor || '#f87171');
+
+      const leaderLine = document.createElementNS(svgNS, 'line');
+      leaderLine.setAttribute('x1', String(cx));
+      leaderLine.setAttribute('y1', String(cy));
+      leaderLine.setAttribute('x2', String(lx));
+      leaderLine.setAttribute('y2', String(ly));
+      leaderLine.setAttribute('class', 'seating-loupe-leader');
+
+      const anchorRing = document.createElementNS(svgNS, 'circle');
+      anchorRing.setAttribute('cx', String(cx));
+      anchorRing.setAttribute('cy', String(cy));
+      anchorRing.setAttribute('r', '34');
+      anchorRing.setAttribute('class', 'seating-loupe-anchor');
+
+      const cos45 = 0.7071;
+      const handleStart = loupeR - 2;
+      const handleEnd = loupeR + 115;
+      const handleShadow = document.createElementNS(svgNS, 'line');
+      handleShadow.setAttribute('x1', String(Math.round(lx + handleStart * cos45)));
+      handleShadow.setAttribute('y1', String(Math.round(ly + handleStart * cos45)));
+      handleShadow.setAttribute('x2', String(Math.round(lx + handleEnd * cos45)));
+      handleShadow.setAttribute('y2', String(Math.round(ly + handleEnd * cos45)));
+      handleShadow.setAttribute('class', 'seating-loupe-handle-outer');
+
+      const handleGrip = document.createElementNS(svgNS, 'line');
+      handleGrip.setAttribute('x1', String(Math.round(lx + (handleStart + 18) * cos45)));
+      handleGrip.setAttribute('y1', String(Math.round(ly + (handleStart + 18) * cos45)));
+      handleGrip.setAttribute('x2', String(Math.round(lx + handleEnd * cos45)));
+      handleGrip.setAttribute('y2', String(Math.round(ly + handleEnd * cos45)));
+      handleGrip.setAttribute('class', 'seating-loupe-handle-inner');
+
+      const lensBackdrop = document.createElementNS(svgNS, 'circle');
+      lensBackdrop.setAttribute('cx', String(lx));
+      lensBackdrop.setAttribute('cy', String(ly));
+      lensBackdrop.setAttribute('r', String(loupeR));
+      lensBackdrop.setAttribute('class', 'seating-loupe-backdrop');
+
+      const clippedContent = document.createElementNS(svgNS, 'g');
+      clippedContent.setAttribute('clip-path', 'url(#seating-loupe-clip)');
+      const zoomTransform = `translate(${lx}, ${ly}) scale(${zoomScale}) translate(${-cx}, ${-cy})`;
+
+      const zoomedImg = document.createElementNS(svgNS, 'image');
+      zoomedImg.setAttribute('href', safeImg);
+      zoomedImg.setAttribute('x', '0');
+      zoomedImg.setAttribute('y', '0');
+      zoomedImg.setAttribute('width', '2090');
+      zoomedImg.setAttribute('height', '3153');
+      zoomedImg.setAttribute('transform', zoomTransform);
+      clippedContent.append(zoomedImg);
+
+      const zoomedOverlay = document.createElementNS(svgNS, 'g');
+      zoomedOverlay.setAttribute('transform', zoomTransform);
+
+      // 在放大鏡內淡化相鄰他區（例如看大直時淡化雄女，看雄女時淡化大直），只突顯本區可入座位置與 L 型邊界
+      (fLoupe.dimNeighborIds || []).forEach((nId) => {
+        const neighbor = SEATING_TABLES_DATA.find((t) => t.id === nId);
+        if (!neighbor || !neighbor.svgPath) return;
+        const dimPath = document.createElementNS(svgNS, 'path');
+        dimPath.setAttribute('d', neighbor.svgPath);
+        dimPath.setAttribute('class', 'seating-loupe-dim-neighbor');
+        zoomedOverlay.append(dimPath);
+      });
+
+      if (fTable.svgPath) {
+        const zPath = document.createElementNS(svgNS, 'path');
+        zPath.setAttribute('d', fTable.svgPath);
+        zPath.setAttribute('fill', fTable.fillColor || 'transparent');
+        zPath.setAttribute('stroke', fTable.color || '#dc2626');
+        zPath.setAttribute('stroke-width', '6');
+        zoomedOverlay.append(zPath);
+      }
+
+      if (Array.isArray(fPlan.rows)) {
+        fPlan.rows.forEach((pair, rIdx) => {
+          ['left', 'right'].forEach((side, sIdx) => {
+            const seat = pair[sIdx];
+            if (!seat || seat.isOtherZone) return;
+            const rx = side === 'left' ? fPlan.leftX : fPlan.rightX;
+            const ry = fPlan.rowYs[rIdx];
+            const pg = document.createElementNS(svgNS, 'g');
+            pg.style.setProperty('--zone-color', fTable.color || '#dc2626');
+            pg.style.setProperty('--zone-dark-color', fTable.darkColor || '#f87171');
+            const pDot = document.createElementNS(svgNS, 'circle');
+            pDot.setAttribute('cx', String(rx));
+            pDot.setAttribute('cy', String(ry));
+            pDot.setAttribute('r', '13');
+            pDot.setAttribute('class', 'seating-seat-pin-dot');
+            const pNum = document.createElementNS(svgNS, 'text');
+            pNum.setAttribute('x', String(rx));
+            pNum.setAttribute('y', String(Math.round(ry + 5)));
+            pNum.setAttribute('text-anchor', 'middle');
+            pNum.setAttribute('class', 'seating-seat-pin-num');
+            pNum.style.fontSize = '14px';
+            pNum.textContent = String(rIdx + 1);
+            pg.append(pDot, pNum);
+            zoomedOverlay.append(pg);
+          });
+        });
+      }
+      clippedContent.append(zoomedOverlay);
+
+      const sheen = document.createElementNS(svgNS, 'path');
+      const sx1 = Math.round(lx - loupeR * 0.62);
+      const sy1 = Math.round(ly - loupeR * 0.36);
+      const sx2 = Math.round(lx - loupeR * 0.16);
+      const sy2 = Math.round(ly - loupeR * 0.76);
+      sheen.setAttribute(
+        'd',
+        `M ${sx1} ${sy1} A ${Math.round(loupeR * 0.82)} ${Math.round(loupeR * 0.82)} 0 0 1 ${sx2} ${sy2}`
+      );
+      sheen.setAttribute('class', 'seating-loupe-sheen');
+
+      const rim = document.createElementNS(svgNS, 'circle');
+      rim.setAttribute('cx', String(lx));
+      rim.setAttribute('cy', String(ly));
+      rim.setAttribute('r', String(loupeR));
+      rim.setAttribute('class', 'seating-loupe-rim');
+
+      const captionStr = fLoupe.caption[currentLang] || fLoupe.caption.zh;
+      const capW = Math.max(280, Math.min(680, captionStr.length * 25 + 52));
+      const capH = 58;
+      const capX = Math.max(capW / 2 + 18, Math.min(2090 - capW / 2 - 18, lx));
+      const capY = ly + loupeR + 44 <= 3115 ? ly + loupeR + 44 : ly - loupeR - 44;
+
+      const capBg = document.createElementNS(svgNS, 'rect');
+      capBg.setAttribute('x', String(Math.round(capX - capW / 2)));
+      capBg.setAttribute('y', String(Math.round(capY - capH / 2)));
+      capBg.setAttribute('width', String(capW));
+      capBg.setAttribute('height', String(capH));
+      capBg.setAttribute('rx', '29');
+      capBg.setAttribute('ry', '29');
+      capBg.setAttribute('class', 'seating-loupe-caption-bg');
+
+      const capText = document.createElementNS(svgNS, 'text');
+      capText.setAttribute('x', String(capX));
+      capText.setAttribute('y', String(Math.round(capY + 11)));
+      capText.setAttribute('text-anchor', 'middle');
+      capText.setAttribute('class', 'seating-loupe-caption-text');
+      capText.textContent = captionStr;
+
+      loupeGroup.append(
+        leaderLine,
+        anchorRing,
+        handleShadow,
+        handleGrip,
+        lensBackdrop,
+        clippedContent,
+        sheen,
+        rim,
+        capBg,
+        capText
+      );
+      svg.append(loupeGroup);
+    }
+
     mapWrap.append(img, svg);
     stageChildren.push(mapWrap);
     elSeatingPhotoStage.replaceChildren(...stageChildren);
@@ -4634,13 +5305,26 @@
         card.append(guestsWrap);
 
         if (table.seatPlan) {
-          if (seatMatch.slots.length > 0) {
+          const matchedFreeSubs = findMatchingFreeSeatingSubIndices(table, query, true);
+          if (table.seatPlan.freeSeating) {
+            const subPlan =
+              matchedFreeSubs.length === 1 && Array.isArray(table.seatPlan.subTables)
+                ? table.seatPlan.subTables[matchedFreeSubs[0]]
+                : null;
+            const noteObj = (subPlan && subPlan.freeSeatingNote) || table.seatPlan.freeSeatingNote;
+            if (noteObj) {
+              const seatPosNote = document.createElement('p');
+              seatPosNote.className = 'seating-public-seat-pos';
+              seatPosNote.textContent = noteObj[currentLang] || noteObj.zh;
+              card.append(seatPosNote);
+            }
+          } else if (seatMatch.slots.length > 0) {
             const seatPosNote = document.createElement('p');
             seatPosNote.className = 'seating-public-seat-pos';
             seatPosNote.textContent = formatSeatSlotsSummary(seatMatch.slots, currentLang);
             card.append(seatPosNote);
           }
-          const seatMapEl = buildSeatMapElement(table, matchedSlotSet, true);
+          const seatMapEl = buildSeatMapElement(table, matchedSlotSet, true, matchedFreeSubs);
           if (seatMapEl) card.append(seatMapEl);
         }
       } else if (query && (hasMatchingGuest || matchesTableTitle)) {
@@ -4652,7 +5336,22 @@
             : '📍 已為您標示入座區域，請對照上方平面圖高亮位置。';
         card.append(matchNote);
 
-        if (seatMatch.slots.length > 0) {
+        if (table.seatPlan && table.seatPlan.freeSeating) {
+          const matchedFreeSubs = findMatchingFreeSeatingSubIndices(table, query, false);
+          const subPlan =
+            matchedFreeSubs.length === 1 && Array.isArray(table.seatPlan.subTables)
+              ? table.seatPlan.subTables[matchedFreeSubs[0]]
+              : null;
+          const noteObj = (subPlan && subPlan.freeSeatingNote) || table.seatPlan.freeSeatingNote;
+          if (noteObj) {
+            const seatPosNote = document.createElement('p');
+            seatPosNote.className = 'seating-public-seat-pos';
+            seatPosNote.textContent = noteObj[currentLang] || noteObj.zh;
+            card.append(seatPosNote);
+          }
+          const seatMapEl = buildSeatMapElement(table, matchedSlotSet, false, matchedFreeSubs);
+          if (seatMapEl) card.append(seatMapEl);
+        } else if (seatMatch.slots.length > 0) {
           if (seatMatch.uniqueKeys.size === 1) {
             const seatPosNote = document.createElement('p');
             seatPosNote.className = 'seating-public-seat-pos';
@@ -4841,14 +5540,7 @@
       descEl.className = 'timeline-place-desc';
       descEl.textContent = item.desc[currentLang];
 
-      const mapLink = document.createElement('a');
-      mapLink.className = 'timeline-map-link';
-      mapLink.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.mapQuery)}`;
-      mapLink.target = '_blank';
-      mapLink.rel = 'noopener noreferrer';
-      mapLink.textContent = dict.openMapBtn;
-
-      node.append(titleEl, descEl, mapLink);
+      node.append(titleEl, descEl);
       return node;
     });
 

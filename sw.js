@@ -1,14 +1,14 @@
 'use strict';
 
-const CACHE_NAME = 'te-wedding-20261129-v21';
+const CACHE_NAME = 'te-wedding-20261129-v34';
 const NETWORK_TIMEOUT_MS = 2500;
 
 // 僅預快取公開首頁必要資源（嚴格排除任何隱藏頁或測試頁檔案名稱）
 const PRECACHE_ASSETS = [
   './',
   './index.html',
-  './style.css?v=20261114a',
-  './script.js?v=20261114a',
+  './style.css?v=20261115m',
+  './script.js?v=20261115m',
   './seating-chart.jpg?v=20261112c',
 ];
 
