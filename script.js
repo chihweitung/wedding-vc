@@ -64,7 +64,6 @@
       langBtnLabel: 'EN',
       langBtnTitle: '切換為英文 / Switch to English',
       themeBtnTitle: '切換日夜色調',
-      fullscreenBtnTitle: '全螢幕檢視',
       bgmPlayTitle: '播放 33⅓ 日間圓舞曲 · 史特勞斯《藍色多瑙河》',
       bgmPauseTitle: '暫停 33⅓ 日間圓舞曲 · 史特勞斯《藍色多瑙河》',
       bgmPlayTitleDark: '播放 33⅓ 夜色慢板 · 莫札特《第 21 號鋼琴協奏曲 Andante》',
@@ -177,7 +176,6 @@
       langBtnLabel: '中文',
       langBtnTitle: 'Switch to Traditional Chinese / 切換中文',
       themeBtnTitle: 'Toggle Light / Dark Palette',
-      fullscreenBtnTitle: 'Toggle Fullscreen',
       bgmPlayTitle: 'Play 33⅓ Day Waltz · Strauss “The Blue Danube”',
       bgmPauseTitle: 'Pause 33⅓ Day Waltz · Strauss “The Blue Danube”',
       bgmPlayTitleDark: 'Play 33⅓ Night Andante · Mozart Piano Concerto No. 21',
@@ -2200,7 +2198,6 @@
   const btnLang = document.getElementById('lang-btn');
   const elLangBtnLabel = document.getElementById('lang-btn-label');
   const btnTheme = document.getElementById('theme-btn');
-  const btnFullscreen = document.getElementById('fullscreen-btn');
   const btnCelebrate = document.getElementById('celebrate-btn');
   let bgmPlaying = false;
   let lastRenderedTogetherDays = null;
@@ -2560,10 +2557,6 @@
     if (btnTheme) {
       btnTheme.setAttribute('title', dict.themeBtnTitle);
       btnTheme.setAttribute('aria-label', dict.themeBtnTitle);
-    }
-    if (btnFullscreen) {
-      btnFullscreen.setAttribute('title', dict.fullscreenBtnTitle);
-      btnFullscreen.setAttribute('aria-label', dict.fullscreenBtnTitle);
     }
     syncBgmButtonA11y();
 
@@ -6950,6 +6943,7 @@
       stopFootprintGhibliBgm();
       if (btnTimelinePlay) btnTimelinePlay.textContent = t().timelinePlayBtn;
       drawTimelineVideoFrame(1);
+      if (typeof syncTimelineFullscreenControls === 'function') syncTimelineFullscreenControls(0);
       return;
     }
 
@@ -6968,6 +6962,7 @@
       stopFootprintGhibliBgm();
       if (timelineAnimId) cancelAnimationFrame(timelineAnimId);
       if (btnTimelinePlay) btnTimelinePlay.textContent = dict.timelinePlayBtn;
+      if (typeof syncTimelineFullscreenControls === 'function') syncTimelineFullscreenControls(0);
       return;
     }
     if (timelineProgress >= 0.99) {
@@ -6979,6 +6974,7 @@
     startFootprintGhibliBgm();
     if (btnTimelinePlay) btnTimelinePlay.textContent = dict.timelinePauseBtn;
     timelineAnimId = requestAnimationFrame(stepTimelineAnimation);
+    if (typeof syncTimelineFullscreenControls === 'function') syncTimelineFullscreenControls(1400);
   }
 
   function stepTimelineMilestone(delta) {
@@ -7026,6 +7022,7 @@
     syncFootprintBgmUi();
   }
 
+  let syncTimelineFullscreenControls = null;
   if (btnTimelineFullscreen && elFootprintMapStage) {
     const mapStageAnchor = document.createComment('footprint-map-stage-anchor');
     if (elFootprintMapStage.parentNode) {
@@ -7037,10 +7034,61 @@
       document.webkitFullscreenElement === elFootprintMapStage ||
       elFootprintMapStage.classList.contains('is-css-fullscreen');
 
+    let controlsAutoHideTimer = null;
+    syncTimelineFullscreenControls = (autoHideDelayMs = 3000) => {
+      if (controlsAutoHideTimer) {
+        clearTimeout(controlsAutoHideTimer);
+        controlsAutoHideTimer = null;
+      }
+      if (!isMapStageFullscreen() || !timelinePlaying) {
+        elFootprintMapStage.classList.remove('is-controls-hidden');
+        return;
+      }
+      if (autoHideDelayMs === 0) {
+        elFootprintMapStage.classList.add('is-controls-hidden');
+        return;
+      }
+      elFootprintMapStage.classList.remove('is-controls-hidden');
+      controlsAutoHideTimer = setTimeout(() => {
+        if (isMapStageFullscreen() && timelinePlaying) {
+          elFootprintMapStage.classList.add('is-controls-hidden');
+        }
+      }, autoHideDelayMs);
+    }
+
+    const controlsEl = elFootprintMapStage.querySelector('.timeline-video-controls');
+    if (controlsEl) {
+      controlsEl.addEventListener(
+        'pointerdown',
+        () => {
+          if (isMapStageFullscreen() && timelinePlaying) {
+            syncTimelineFullscreenControls(3200);
+          }
+        },
+        { passive: true }
+      );
+    }
+
     const restoreMapStage = () => {
       if (mapStageAnchor.parentNode && elFootprintMapStage.parentNode !== mapStageAnchor.parentNode) {
         mapStageAnchor.parentNode.insertBefore(elFootprintMapStage, mapStageAnchor);
       }
+    };
+
+    const syncMapFullscreenViewport = () => {
+      if (!isMapStageFullscreen()) {
+        elFootprintMapStage.style.removeProperty('--fs-vh');
+        return;
+      }
+      const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      if (vh > 0) {
+        elFootprintMapStage.style.setProperty('--fs-vh', `${Math.round(vh)}px`);
+      }
+      requestAnimationFrame(() => {
+        if (typeof drawTimelineVideoFrame === 'function') {
+          drawTimelineVideoFrame(timelineProgress);
+        }
+      });
     };
 
     const syncMapFullscreenUi = () => {
@@ -7057,7 +7105,22 @@
           : '⛶ 全螢幕';
       document.documentElement.classList.toggle('carousel-fullscreen-open', active);
       document.body.classList.toggle('carousel-fullscreen-open', active);
+      syncMapFullscreenViewport();
+      syncTimelineFullscreenControls(active && timelinePlaying ? 1800 : 0);
     };
+
+    let orientationSettleTimer = null;
+    const handleMapOrientationOrResize = () => {
+      if (!isMapStageFullscreen()) return;
+      syncMapFullscreenViewport();
+      if (orientationSettleTimer) clearTimeout(orientationSettleTimer);
+      orientationSettleTimer = setTimeout(syncMapFullscreenViewport, 140);
+    };
+    window.addEventListener('orientationchange', handleMapOrientationOrResize, { passive: true });
+    window.addEventListener('resize', handleMapOrientationOrResize, { passive: true });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleMapOrientationOrResize, { passive: true });
+    }
 
     const toggleMapFullscreen = async () => {
       if (isMapStageFullscreen()) {
@@ -7104,7 +7167,22 @@
   }
   if (elTimelineVideoCanvas) {
     elTimelineVideoCanvas.style.cursor = 'pointer';
-    elTimelineVideoCanvas.addEventListener('click', togglePlayTimeline);
+    elTimelineVideoCanvas.addEventListener('click', () => {
+      const inFs =
+        elFootprintMapStage &&
+        (document.fullscreenElement === elFootprintMapStage ||
+          document.webkitFullscreenElement === elFootprintMapStage ||
+          elFootprintMapStage.classList.contains('is-css-fullscreen'));
+      if (inFs && timelinePlaying && typeof syncTimelineFullscreenControls === 'function') {
+        if (elFootprintMapStage.classList.contains('is-controls-hidden')) {
+          syncTimelineFullscreenControls(3200);
+        } else {
+          syncTimelineFullscreenControls(0);
+        }
+        return;
+      }
+      togglePlayTimeline();
+    });
   }
   const elScrubberWrap = elTimelineScrubberFill ? elTimelineScrubberFill.parentElement : null;
   if (elScrubberWrap) {
@@ -8172,10 +8250,6 @@
       document.documentElement.setAttribute('data-theme', 'light');
     }
 
-    if (btnFullscreen && !document.fullscreenEnabled && !document.webkitFullscreenEnabled) {
-      btnFullscreen.classList.add('hidden');
-    }
-
     applyLanguage();
   }
 
@@ -9113,18 +9187,6 @@
     safeSetStorage(STORAGE_KEY_THEME, next);
     handleBgmThemeSwitch();
   });
-
-  if (btnFullscreen) {
-    btnFullscreen.addEventListener('click', () => {
-      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        const req = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen;
-        if (req) req.call(document.documentElement).catch(() => {});
-      } else {
-        const exit = document.exitFullscreen || document.webkitExitFullscreen;
-        if (exit) exit.call(document).catch(() => {});
-      }
-    });
-  }
 
   // Wedding Botanical Rose-Petal & Sage-Leaf Flutter Effect
   const canvas = document.getElementById('confetti-canvas');
