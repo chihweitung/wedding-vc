@@ -96,10 +96,10 @@
       shareCardTitle: '幫我們留下今天',
       shareCardDesc: '如果你今天拍到了喜歡的照片或可愛瞬間，歡迎傳進相簿和我們一起收藏。',
       shareCardCta: '打開共享相簿',
-      galleryCardEyebrow: '2014 — 2026',
-      galleryCardTitle: '我們的舊照片',
-      galleryCardDesc: '從校園草原散步、跨洲遠距到決定成家，翻翻這些年留下的合照。',
-      galleryCardCta: '翻閱舊照片',
+      galleryCardEyebrow: 'PRE-WEDDING · 婚紗寫真',
+      galleryCardTitle: '婚紗照片輪播',
+      galleryCardDesc: '精選 Tom & Eunice 婚紗攝影作品，一起欣賞我們的幸福瞬間。',
+      galleryCardCta: '欣賞婚紗照',
       footprintsCardEyebrow: 'Across the Miles',
       footprintsCardTitle: '十二年足跡地圖',
       footprintsCardDesc: '把我們住過的城市與 9,100 公里的思念，畫成一張會動的地圖。',
@@ -119,7 +119,7 @@
       tabSeating: '座位表',
       tabMenu: '婚宴菜單',
       tabShare: '分享照片',
-      tabGallery: '舊照片',
+      tabGallery: '💍 婚紗照',
       tabFootprints: '十二年足跡',
       seatingPanelEyebrow: 'Brick Yard 33 1/3 · Floor Plan',
       seatingPanelTitle: '美軍俱樂部 · 婚宴座位表',
@@ -136,8 +136,8 @@
       shareStep1: '1. 點選下方按鈕打開 Google Photos 共享相簿',
       shareStep2: '2. 按一下「新增相片」就能直接上傳分享',
       shareLinkBtn: '打開婚禮 Google Photos 相簿 ↗',
-      galleryPanelEyebrow: '2014 — 2026 · Through the Years',
-      galleryPanelTitle: '我們的舊照片',
+      galleryPanelEyebrow: 'PRE-WEDDING PORTRAITS · TOM & EUNICE',
+      galleryPanelTitle: '精選婚紗照片輪播',
       galleryAlbumLinkBtn: '打開完整 Google 相簿 ↗',
       eraAll: '全部年份 (2014–2026)',
       era2014: '2014–2017 初識與校園',
@@ -213,10 +213,10 @@
       shareCardTitle: 'Capture Today With Us',
       shareCardDesc: 'Snapped a favorite photo or candid moment today? Drop it into our shared album so we can treasure it too.',
       shareCardCta: 'Open Shared Album',
-      galleryCardEyebrow: '2014 — 2026',
-      galleryCardTitle: 'Our Old Photos',
-      galleryCardDesc: 'From campus walks and long-distance flights to coming home to the same city.',
-      galleryCardCta: 'Browse Photos',
+      galleryCardEyebrow: 'PRE-WEDDING · GALLERY',
+      galleryCardTitle: 'Wedding Photo Carousel',
+      galleryCardDesc: 'Browse a curated carousel of Tom & Eunice’s pre-wedding portraits.',
+      galleryCardCta: 'View Wedding Photos',
       footprintsCardEyebrow: 'Across the Miles',
       footprintsCardTitle: 'Twelve Years on the Map',
       footprintsCardDesc: 'Every city we lived in and every flight that closed the 9,100 km between us.',
@@ -236,7 +236,7 @@
       tabSeating: 'Seating',
       tabMenu: 'Menu',
       tabShare: 'Share Photos',
-      tabGallery: 'Old Photos',
+      tabGallery: '💍 Wedding Photos',
       tabFootprints: 'Our Map',
       seatingPanelEyebrow: 'Brick Yard 33 1/3 · Floor Plan',
       seatingPanelTitle: 'Brick Yard 33 1/3 · Seating Chart',
@@ -253,8 +253,8 @@
       shareStep1: '1. Tap the button below to open our Google Photos album',
       shareStep2: '2. Select "Add photos" to share your favorite shots',
       shareLinkBtn: 'Open Shared Google Photos Album ↗',
-      galleryPanelEyebrow: '2014 — 2026 · Through the Years',
-      galleryPanelTitle: 'Our Old Photos',
+      galleryPanelEyebrow: 'PRE-WEDDING PORTRAITS · TOM & EUNICE',
+      galleryPanelTitle: 'Pre-Wedding Photo Carousel',
       galleryAlbumLinkBtn: 'Open Full Google Photos Album ↗',
       eraAll: 'All Years (2014–2026)',
       era2014: '2014–2017 Campus Days',
@@ -739,131 +739,74 @@
    * 新人過去照片資料 (2014–2026 歲月寫真)
    * 若放入實際照片檔案（例如 photos/2014.jpg）或圖片連結於 imageUrl 欄位，即會自動顯示照片
    */
+  /**
+   * 精選婚紗照片輪播資料
+   * 若放入實際婚紗照片檔案（例如 photos/wedding-01.jpg）或圖片連結於 imageUrl 欄位，即會自動顯示於輪播中
+   */
   const PAST_PHOTOS_DATA = [
     {
-      era: '2014-2017',
-      yearLabel: '2014 · FIRST MET',
-      emoji: '💌',
-      imageUrl: '',
-      title: {
-        zh: 'Dcard 午夜抽卡的相遇',
-        en: 'Midnight Match on Dcard',
-      },
-      caption: {
-        zh: '2014 年的一封站內信、情人節在台北的第一次見面，沒想到一聊就走過了十二個四季。',
-        en: 'One message in 2014 and our very first Valentine’s Day meet-up in Taipei — somehow that conversation lasted twelve years.',
-      },
-    },
-    {
-      era: '2014-2017',
-      yearLabel: '2015–2016 · CAMPUS DAYS',
-      emoji: '🐮',
-      imageUrl: '',
-      title: {
-        zh: '關渡與北藝大鷺鷥草原的午後',
-        en: 'Afternoons on the TNUA Campus Lawn',
-      },
-      caption: {
-        zh: '在北藝大草原上看著校牛「小麗」、「奧米加咆哮獸」與「犇爺」慢慢吃草，是學生時代最柔軟的記憶。',
-        en: 'Slow sunny afternoons watching TNUA’s campus cows — Xiaoli, OmniShoutmon, and Master Ben — graze across the hillside.',
-      },
-    },
-    {
-      era: '2014-2017',
-      yearLabel: '2017 · GRADUATION & TRIPS',
-      emoji: '🎓',
-      imageUrl: '',
-      title: {
-        zh: '畢業季與南北往返的車票',
-        en: 'Graduation & Train Tickets North and South',
-      },
-      caption: {
-        zh: '一張張往返台北、新竹與高雄的車票，載著我們走過北海岸、台中與好多看海的週末。',
-        en: 'Stacks of train tickets between Taipei, Hsinchu, and Kaohsiung, plus coastal drives whenever we could steal a weekend together.',
-      },
-    },
-    {
-      era: '2018-2021',
-      yearLabel: '2018–2020 · BERLIN & NOTTINGHAM',
-      emoji: '🇬🇧',
-      imageUrl: '',
-      title: {
-        zh: '柏林工作 ＆ 諾丁漢留學的時差歲月',
-        en: 'Berlin & Nottingham Across Time Zones',
-      },
-      caption: {
-        zh: '從柏林與高雄相隔 9,100 公里的視訊日常，到 Eunice 飛往英國諾丁漢讀書，我們終於能在巴黎與布拉格的冬天見面。',
-        en: 'From 9,100 km apart between Berlin and Kaohsiung to Eunice studying in Robin Hood’s Nottingham — meeting halfway in Paris and snowy Prague.',
-      },
-    },
-    {
-      era: '2018-2021',
-      yearLabel: '2020–2021 · BACK IN ONE TIME ZONE',
-      emoji: '🏡',
-      imageUrl: '',
-      title: {
-        zh: '回到同一個時區的板橋日常',
-        en: 'Finally in the Same Time Zone Again',
-      },
-      caption: {
-        zh: '結束遠距離搬進板橋的小家，每天最開心的事就是一起覓食——當然，絕對不加「臭菜」（香菜）！',
-        en: 'Ending long distance and settling into our home in Banqiao, hunting for good food together — strictly free of cilantro (“stinky greens”)!',
-      },
-    },
-    {
-      era: '2022-2026',
-      yearLabel: '2022–2024 · GOOGLE BMC & TRAVELS',
-      emoji: '✈️',
-      imageUrl: '',
-      title: {
-        zh: 'Google BMC Team 與一起看過的世界',
-        en: 'Google BMC Team & Journeys Together',
-      },
-      caption: {
-        zh: '搬到台北忠孝復興後，平日各自在工作裡忙碌打拚，休假就收起行李，一起去陌生的城市散步。',
-        en: 'Life around Zhongxiao Fuxing with Tom in the Google BMC Team and Eunice at work — trading busy weekdays for quiet getaways abroad.',
-      },
-    },
-    {
-      era: '2022-2026',
-      yearLabel: '2025 · SHE SAID YES',
+      yearLabel: 'LOOK 01 · CLASSIC WHITE GOWN',
       emoji: '💍',
       imageUrl: '',
       title: {
-        zh: '說好要一起走下半輩子',
-        en: 'She Said Yes',
+        zh: '純白誓約 · 經典白紗',
+        en: 'Pure Vows · Classic White Gown',
       },
       caption: {
-        zh: '把十二年的默契收進戒指裡，換上白紗與西裝，拍下屬於我們兩個人的紀念。',
-        en: 'Twelve years of quiet understanding slipped onto one ring, dressed up for our pre-wedding portraits.',
+        zh: '十二年的默契收進白紗與西裝裡，把最溫柔的笑容留給彼此。',
+        en: 'Twelve years of quiet understanding captured in timeless white and black.',
       },
     },
     {
-      era: '2022-2026',
-      yearLabel: '2026.09 · AUSTRIA HONEYMOON',
-      emoji: '🏔️',
+      yearLabel: 'LOOK 02 · SUNLIT GARDEN',
+      emoji: '🌿',
       imageUrl: '',
       title: {
-        zh: '2026 年秋初 · 奧地利湖區與維也納蜜月',
-        en: 'Sep 2026 · Honeymoon in Vienna & the Austrian Lakes',
+        zh: '微風與光影 · 自然系婚紗',
+        en: 'Breeze & Sunlight · Garden Portraits',
       },
       caption: {
-        zh: '在維也納的琴聲與阿爾卑斯山湖區的晨霧裡散步，把最安靜浪漫的風景留給彼此。',
-        en: 'Morning mist over Hallstatt’s Alpine lakes and evening music in Vienna on our autumn honeymoon.',
+        zh: '在柔和日光與綠意之間並肩散步，記錄最自然自在的我們。',
+        en: 'Walking side by side under warm sunlight and soft greenery.',
       },
     },
     {
-      era: '2022-2026',
-      yearLabel: '2026.11.29 · BRICK YARD 33 1/3',
+      yearLabel: 'LOOK 03 · EVENING ROMANCE',
+      emoji: '🕯️',
+      imageUrl: '',
+      title: {
+        zh: '暮色星光 · 晚禮服時刻',
+        en: 'Twilight Romance · Evening Gown',
+      },
+      caption: {
+        zh: '夜色微涼、燈火微暖，牽著手走過屬於我們的浪漫瞬間。',
+        en: 'Warm evening lights and quiet moments hand in hand.',
+      },
+    },
+    {
+      yearLabel: 'LOOK 04 · PLAYFUL CANDID',
+      emoji: '💐',
+      imageUrl: '',
+      title: {
+        zh: '日常笑鬧 · 抓拍瞬間',
+        en: 'Playful Candid · Shared Laughter',
+      },
+      caption: {
+        zh: '不用刻意擺拍，只要對視就會忍不住笑出來的日常模樣。',
+        en: 'No posing needed—just the everyday laughter whenever our eyes meet.',
+      },
+    },
+    {
+      yearLabel: 'LOOK 05 · BRICK YARD 33 1/3',
       emoji: '🥂',
       imageUrl: '',
       title: {
-        zh: '2026.11.29 · 陽明山與你相見',
-        en: '2026.11.29 · Celebrating With You in Yangmingshan',
+        zh: '2026.11.29 · 期待與你相見',
+        en: '2026.11.29 · See You at Brick Yard 33 1/3',
       },
       caption: {
-        zh: '謝謝你今天特地來到陽明山，陪我們把這十二年的故事寫下最溫暖的一頁。',
-        en: 'Thank you for coming up the mountain today to share a meal, a toast, and this chapter with us.',
+        zh: '謝謝你來到陽明山美軍俱樂部，一起見證我們故事的新篇章。',
+        en: 'Thank you for celebrating this next chapter with us on Yangmingshan.',
       },
     },
   ];
@@ -3023,52 +2966,144 @@
   // ============================================================================
   // 2A. 「過去照片 (2014–2026)」、「座位表」、「婚宴餐點」與「交往軌跡」渲染邏輯
   // ============================================================================
+  let weddingCarouselIndex = 0;
+  let weddingCarouselAutoplay = true;
+  let weddingCarouselTimer = null;
+
+  function stopWeddingCarouselTimer() {
+    if (weddingCarouselTimer !== null) {
+      clearInterval(weddingCarouselTimer);
+      weddingCarouselTimer = null;
+    }
+  }
+
   function renderGallerySection() {
-    if (!elGalleryEraBar || !elMemoryGalleryGrid) return;
+    if (!elMemoryGalleryGrid) return;
+    if (elGalleryEraBar) {
+      elGalleryEraBar.classList.add('hidden');
+      elGalleryEraBar.replaceChildren();
+    }
     const dict = t();
-    const eras = [
-      { id: 'all', label: dict.eraAll },
-      { id: '2014-2017', label: dict.era2014 },
-      { id: '2018-2021', label: dict.era2018 },
-      { id: '2022-2026', label: dict.era2022 },
-    ];
+    const total = PAST_PHOTOS_DATA.length;
+    if (total === 0) {
+      elMemoryGalleryGrid.replaceChildren();
+      return;
+    }
+    weddingCarouselIndex = ((weddingCarouselIndex % total) + total) % total;
 
-    const eraButtons = eras.map((eraObj) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = `era-pill${selectedGalleryEra === eraObj.id ? ' active' : ''}`;
-      btn.textContent = eraObj.label;
-      btn.addEventListener('click', () => {
-        selectedGalleryEra = eraObj.id;
-        renderGallerySection();
+    const carousel = document.createElement('div');
+    carousel.className = 'wedding-carousel';
+
+    const stage = document.createElement('div');
+    stage.className = 'wedding-carousel-stage';
+
+    const slideWrap = document.createElement('div');
+    slideWrap.className = 'wedding-carousel-slide';
+
+    const topBar = document.createElement('div');
+    topBar.className = 'wedding-carousel-topbar';
+
+    const counterBadge = document.createElement('span');
+    counterBadge.className = 'wedding-carousel-counter';
+
+    const autoplayBtn = document.createElement('button');
+    autoplayBtn.type = 'button';
+    autoplayBtn.className = 'wedding-carousel-autoplay-btn';
+
+    topBar.append(counterBadge, autoplayBtn);
+
+    const prevBtn = document.createElement('button');
+    prevBtn.type = 'button';
+    prevBtn.className = 'wedding-carousel-nav is-prev';
+    prevBtn.setAttribute('aria-label', currentLang === 'en' ? 'Previous photo' : '上一張婚紗照');
+    prevBtn.textContent = '‹';
+
+    const nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.className = 'wedding-carousel-nav is-next';
+    nextBtn.setAttribute('aria-label', currentLang === 'en' ? 'Next photo' : '下一張婚紗照');
+    nextBtn.textContent = '›';
+
+    stage.append(slideWrap, topBar, prevBtn, nextBtn);
+
+    const captionBar = document.createElement('div');
+    captionBar.className = 'wedding-carousel-caption-bar';
+
+    const yearTag = document.createElement('span');
+    yearTag.className = 'memory-year-tag';
+
+    const titleEl = document.createElement('h4');
+    titleEl.className = 'memory-photo-title';
+
+    const captionEl = document.createElement('p');
+    captionEl.className = 'memory-photo-caption';
+
+    const linkBtn = document.createElement('a');
+    linkBtn.className = 'memory-photo-link hidden';
+    linkBtn.target = '_blank';
+    linkBtn.rel = 'noopener noreferrer';
+    linkBtn.textContent = dict.viewGooglePhotoBtn;
+
+    captionBar.append(yearTag, titleEl, captionEl, linkBtn);
+
+    const dotsWrap = document.createElement('div');
+    dotsWrap.className = 'wedding-carousel-dots';
+
+    const dotButtons = PAST_PHOTOS_DATA.map((_item, idx) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'wedding-carousel-dot';
+      dot.textContent = String(idx + 1).padStart(2, '0');
+      dot.addEventListener('click', () => {
+        weddingCarouselIndex = idx;
+        updateSlideView();
       });
-      return btn;
+      dotsWrap.append(dot);
+      return dot;
     });
-    elGalleryEraBar.replaceChildren(...eraButtons);
 
-    const indexedPhotos = PAST_PHOTOS_DATA.map((item, idx) => ({ item, idx })).filter(
-      ({ item }) => selectedGalleryEra === 'all' || item.era === selectedGalleryEra
-    );
+    function syncAutoplayUi() {
+      autoplayBtn.textContent = weddingCarouselAutoplay
+        ? currentLang === 'en'
+          ? '⏸ Auto'
+          : '⏸ 自動輪播'
+        : currentLang === 'en'
+          ? '▶ Play'
+          : '▶ 繼續輪播';
+    }
 
-    const photoCards = indexedPhotos.map(({ item, idx }) => {
-      const card = document.createElement('article');
-      card.className = 'memory-photo-card';
-
+    function updateSlideView() {
+      const idx = weddingCarouselIndex;
+      const item = PAST_PHOTOS_DATA[idx];
       const { directImageUrl, shareLinkUrl } = resolveGooglePhotoConfig(item, idx);
 
-      const visual = document.createElement('div');
-      visual.className = 'memory-photo-visual';
+      slideWrap.replaceChildren();
+      const renderFallbackPlaceholder = () => {
+        slideWrap.replaceChildren();
+        const placeholder = document.createElement('div');
+        placeholder.className = 'wedding-carousel-placeholder';
 
-      const renderFallbackVisual = () => {
-        visual.replaceChildren();
         const emojiSpan = document.createElement('span');
-        emojiSpan.className = 'memory-visual-emoji';
-        emojiSpan.textContent = item.emoji || '🌿';
+        emojiSpan.className = 'wedding-carousel-placeholder-emoji';
+        emojiSpan.textContent = item.emoji || '💍';
 
-        const dateSpan = document.createElement('span');
-        dateSpan.className = 'memory-visual-date';
-        dateSpan.textContent = item.yearLabel;
-        visual.append(emojiSpan, dateSpan);
+        const tagSpan = document.createElement('span');
+        tagSpan.className = 'wedding-carousel-placeholder-tag';
+        tagSpan.textContent = item.yearLabel;
+
+        const pTitle = document.createElement('strong');
+        pTitle.className = 'wedding-carousel-placeholder-title';
+        pTitle.textContent = item.title[currentLang];
+
+        const pHint = document.createElement('span');
+        pHint.className = 'wedding-carousel-placeholder-hint';
+        pHint.textContent =
+          currentLang === 'en'
+            ? `Wedding photo #${idx + 1} ready (add photos/wedding-0${idx + 1}.jpg in script.js)`
+            : `婚紗照 #${idx + 1} 展示版位（於 script.js 填入 photos/wedding-0${idx + 1}.jpg 即可顯示實拍）`;
+
+        placeholder.append(emojiSpan, tagSpan, pTitle, pHint);
+        slideWrap.append(placeholder);
       };
 
       if (directImageUrl) {
@@ -3077,48 +3112,89 @@
         img.alt = item.title[currentLang];
         img.loading = 'lazy';
         img.referrerPolicy = 'no-referrer';
-        img.addEventListener('error', renderFallbackVisual);
-        visual.append(img);
+        img.addEventListener('error', renderFallbackPlaceholder);
+        slideWrap.append(img);
       } else {
-        renderFallbackVisual();
+        renderFallbackPlaceholder();
       }
 
-      const body = document.createElement('div');
-      body.className = 'memory-photo-body';
-
-      const yearTag = document.createElement('span');
-      yearTag.className = 'memory-year-tag';
+      counterBadge.textContent = `${idx + 1} / ${total}`;
       yearTag.textContent = item.yearLabel;
-
-      const titleEl = document.createElement('h4');
-      titleEl.className = 'memory-photo-title';
       titleEl.textContent = item.title[currentLang];
-
-      const captionEl = document.createElement('p');
-      captionEl.className = 'memory-photo-caption';
       captionEl.textContent = item.caption[currentLang];
 
-      body.append(yearTag, titleEl, captionEl);
-
       if (shareLinkUrl) {
-        visual.classList.add('memory-photo-visual-link');
-        visual.addEventListener('click', () => {
-          window.open(shareLinkUrl, '_blank', 'noopener,noreferrer');
-        });
-        const linkBtn = document.createElement('a');
-        linkBtn.className = 'memory-photo-link';
         linkBtn.href = shareLinkUrl;
-        linkBtn.target = '_blank';
-        linkBtn.rel = 'noopener noreferrer';
-        linkBtn.textContent = dict.viewGooglePhotoBtn;
-        body.append(linkBtn);
+        linkBtn.classList.remove('hidden');
+      } else {
+        linkBtn.classList.add('hidden');
       }
 
-      card.append(visual, body);
-      return card;
+      dotButtons.forEach((btn, dIdx) => {
+        btn.classList.toggle('is-active', dIdx === idx);
+      });
+    }
+
+    function stepSlide(delta) {
+      weddingCarouselIndex = (weddingCarouselIndex + delta + total) % total;
+      updateSlideView();
+    }
+
+    prevBtn.addEventListener('click', () => stepSlide(-1));
+    nextBtn.addEventListener('click', () => stepSlide(1));
+
+    let touchStartX = 0;
+    stage.addEventListener(
+      'touchstart',
+      (e) => {
+        if (e.touches && e.touches[0]) {
+          touchStartX = e.touches[0].clientX;
+        }
+      },
+      { passive: true }
+    );
+    stage.addEventListener(
+      'touchend',
+      (e) => {
+        if (!e.changedTouches || !e.changedTouches[0]) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 40) {
+          stepSlide(dx < 0 ? 1 : -1);
+        }
+      },
+      { passive: true }
+    );
+
+    autoplayBtn.addEventListener('click', () => {
+      weddingCarouselAutoplay = !weddingCarouselAutoplay;
+      syncAutoplayUi();
+      restartTimer();
     });
 
-    elMemoryGalleryGrid.replaceChildren(...photoCards);
+    function restartTimer() {
+      stopWeddingCarouselTimer();
+      if (!weddingCarouselAutoplay) return;
+      weddingCarouselTimer = setInterval(() => {
+        if (
+          document.hidden ||
+          !elGallerySection ||
+          elGallerySection.classList.contains('hidden')
+        ) {
+          return;
+        }
+        stepSlide(1);
+      }, 4500);
+    }
+
+    stage.addEventListener('mouseenter', stopWeddingCarouselTimer);
+    stage.addEventListener('mouseleave', restartTimer);
+
+    syncAutoplayUi();
+    updateSlideView();
+    restartTimer();
+
+    carousel.append(stage, captionBar, dotsWrap);
+    elMemoryGalleryGrid.replaceChildren(carousel);
   }
 
   function renderEmbeddedPhotoStage(stageEl, externalLinkEl, imageUrl, linkUrl, altText) {
@@ -6669,8 +6745,8 @@
     }
     if (elQuizIntroDesc) {
       elQuizIntroDesc.textContent = isEn
-        ? 'Take on 1 warm-up + 10 trivia questions (11 total) to test how well you know the groom and bride! Scoring different tiers unlocks secret Easter eggs at the end:'
-        : '挑戰 1 道暖身題與 10 道關於新人的趣味問答（共 11 題），看看你對新郎還是新娘最熟悉！答對不同題數，最後還會解鎖隱藏秘密彩蛋喔：';
+        ? 'Take on 1 warm-up + 10 trivia questions (11 total) to test how well you know the groom and bride!'
+        : '挑戰 1 道暖身題與 10 道關於新人的趣味問答（共 11 題），看看你對新郎還是新娘最熟悉！';
     }
     if (btnQuizStart) {
       btnQuizStart.textContent = isEn ? 'Start the Quiz →' : '開始挑戰問答 →';
@@ -6678,14 +6754,18 @@
     if (elQuizIntroTiers) {
       const tiers = isEn
         ? [
-            { score: '🪄 0–5 Qs', desc: 'Muggle-Repelling Charm active (secret Easter egg locked)', hi: false },
-            { score: '✨ 6–9 Qs', desc: 'Lift the charm & reveal the hidden secret Easter egg hint', hi: false },
-            { score: '🏆 10–11 Qs', desc: 'Top Tier! Automatically reveals the full secret Easter egg code', hi: true },
+            {
+              score: '✨ Secret Easter Egg',
+              desc: 'The more questions you get right, the clearer the hidden clue and hints will be at the end!',
+              hi: true,
+            },
           ]
         : [
-            { score: '🪄 0–5 題', desc: '麻瓜驅逐咒生效中（尚未解鎖秘密彩蛋）', hi: false },
-            { score: '✨ 6–9 題', desc: '解除麻瓜驅逐咒，浮現隱藏秘密彩蛋提示', hi: false },
-            { score: '🏆 10–11 題', desc: '最高默契！自動顯影完整秘密彩蛋密碼', hi: true },
+            {
+              score: '✨ 隱藏秘密彩蛋',
+              desc: '答對越多題，結算時浮現的彩蛋線索與提示會越清楚喔！',
+              hi: true,
+            },
           ];
       const nodes = tiers.map((tier) => {
         const row = document.createElement('div');
@@ -7431,8 +7511,8 @@
     if (elHpCipherClue) {
       elHpCipherClue.textContent =
         currentLang === 'en'
-          ? '🔮 Wizarding Trivia: The day right after our Nov 29 wedding is International Computer Security Day (Nov 30)! Cryptography is the art of hiding plain truth inside scrambled runes—only those who reverse the encoding can awaken Platform 9¾ on this same device & browser.'
-          : '🔮 魔法冷知識：我們的婚禮 11/29 隔天正是「國際電腦安全日（11/30）」！自古以來，密碼學就是把真話藏進看似亂碼的神秘卷軸裡，唯有懂得還原編碼的人，才能在同一個裝置與瀏覽器喚醒隱藏的九又四分之三月台。';
+          ? '🔮 Wizarding Trivia: The day right after our Nov 29 wedding is International Computer Security Day (Nov 30)! Cryptography is the art of hiding plain truth inside scrambled runes—only those who reverse the encoding can awaken Platform 9¾.'
+          : '🔮 魔法冷知識：我們的婚禮 11/29 隔天正是「國際電腦安全日（11/30）」！自古以來，密碼學就是把真話藏進看似亂碼的神秘卷軸裡，唯有懂得還原編碼的人，才能喚醒隱藏的九又四分之三月台。';
     }
     if (!showSealWatermark) {
       if (elHpCipherSpellBtn) elHpCipherSpellBtn.classList.add('hidden');

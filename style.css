@@ -1747,6 +1747,216 @@ body.is-time-up .countdown-stage-wrap {
   text-decoration: none;
 }
 
+/* Wedding Photo Carousel */
+.wedding-carousel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.wedding-carousel-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  max-height: 540px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: linear-gradient(145deg, var(--surface-pill), var(--surface-subtle));
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wedding-carousel-slide {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: carouselFadeIn 0.4s ease;
+}
+
+@keyframes carouselFadeIn {
+  from {
+    opacity: 0.35;
+    transform: scale(0.992);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.wedding-carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.wedding-carousel-placeholder {
+  width: 100%;
+  height: 100%;
+  padding: 28px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  background: radial-gradient(circle at 50% 35%, rgba(197, 127, 137, 0.14), transparent 62%),
+    linear-gradient(155deg, var(--surface-card), var(--surface-pill));
+}
+
+.wedding-carousel-placeholder-emoji {
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.wedding-carousel-placeholder-tag {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.wedding-carousel-placeholder-title {
+  font-family: 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.wedding-carousel-placeholder-hint {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  max-width: 440px;
+  line-height: 1.55;
+}
+
+.wedding-carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: rgba(24, 34, 28, 0.62);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 1.45rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  transition: transform 0.18s ease, background-color 0.18s ease;
+}
+
+.wedding-carousel-nav:hover {
+  background: rgba(24, 34, 28, 0.84);
+  transform: translateY(-50%) scale(1.06);
+}
+
+.wedding-carousel-nav.is-prev {
+  left: 12px;
+}
+
+.wedding-carousel-nav.is-next {
+  right: 12px;
+}
+
+.wedding-carousel-topbar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 3;
+}
+
+.wedding-carousel-counter,
+.wedding-carousel-autoplay-btn {
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(24, 34, 28, 0.66);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #f8fafc;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.wedding-carousel-autoplay-btn {
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+}
+
+.wedding-carousel-autoplay-btn:hover {
+  background: rgba(24, 34, 28, 0.88);
+}
+
+.wedding-carousel-caption-bar {
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: var(--surface-pill);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+
+.wedding-carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wedding-carousel-dot {
+  min-width: 34px;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-pill);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.wedding-carousel-dot.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .wedding-carousel-stage {
+    aspect-ratio: 4 / 3;
+  }
+  .wedding-carousel-nav {
+    width: 36px;
+    height: 36px;
+    font-size: 1.25rem;
+  }
+  .wedding-carousel-placeholder {
+    padding: 20px 44px;
+  }
+}
+
 /* Wedding Seating Chart & Banquet Menu */
 .seating-search-bar {
   position: relative;
