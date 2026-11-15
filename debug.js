@@ -17,6 +17,12 @@
     enumerable: false,
   });
 
+  Object.defineProperty(window, '__TE_REAL_DATE_NOW__', {
+    value: realDateNow,
+    configurable: false,
+    enumerable: false,
+  });
+
   Object.defineProperty(window, '__CONSUME_DBG_FORCE_WATERMARK__', {
     value: () => {
       if (!isAuthenticated || !forceWatermarkOnce) return false;

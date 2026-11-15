@@ -7341,7 +7341,11 @@
     const parsed = new URL(relPath, 'https://chihweitung.github.io/wedding-vc/');
     const masterKey = parsed.searchParams.get('k') || '';
     if (masterKey) {
-      const timeBucket = Math.floor(Date.now() / SEAL_TIME_BUCKET_MS);
+      const realNowMs =
+        typeof window.__TE_REAL_DATE_NOW__ === 'function'
+          ? window.__TE_REAL_DATE_NOW__()
+          : Date.now();
+      const timeBucket = Math.floor(realNowMs / SEAL_TIME_BUCKET_MS);
       const seedStr = `${getDeviceBindingString()}|${timeBucket}`;
       const rawBytes = new TextEncoder().encode(masterKey);
       const mask = deriveDeviceMaskBytes(seedStr, rawBytes.length);
