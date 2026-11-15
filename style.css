@@ -743,6 +743,116 @@ body.is-time-up .countdown-stage-wrap {
   letter-spacing: 0.05em;
 }
 
+.wedding-crew-card {
+  grid-column: 1 / -1;
+  position: relative;
+  padding: clamp(22px, 3vw, 30px) clamp(20px, 3vw, 28px);
+  border-radius: 26px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wedding-crew-card::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border-radius: 20px;
+  border: 1px solid var(--blush-border);
+  opacity: 0.32;
+  pointer-events: none;
+}
+
+.wedding-crew-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wedding-crew-title {
+  font-family: 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: clamp(1.2rem, 2.2vw, 1.4rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.wedding-crew-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 24px;
+}
+
+.wedding-crew-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: 14px;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+}
+
+.wedding-crew-role {
+  font-family: 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.wedding-crew-ig-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--surface-pill);
+  border: 1px solid var(--border-subtle);
+  color: var(--accent);
+  font-family: 'Inter', 'Noto Sans TC', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  min-width: 0;
+  transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.wedding-crew-ig-link span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wedding-crew-ig-link svg {
+  flex-shrink: 0;
+}
+
+.wedding-crew-ig-link:hover,
+.wedding-crew-ig-link:active {
+  transform: translateY(-1px);
+  border-color: var(--border-highlight);
+  background: var(--blush-soft);
+}
+
+@media (max-width: 760px) {
+  .wedding-crew-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
 /* Mode Switcher Navigation Bar */
 .hub-nav-bar {
   width: 100%;
@@ -3573,15 +3683,17 @@ body.carousel-fullscreen-open {
   background: rgba(15, 31, 24, 0.72);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  transition: opacity 0.24s ease, transform 0.24s ease;
+  transition: opacity 0.24s ease, transform 0.24s ease, visibility 0.24s ease;
 }
 
 .footprint-video-player:fullscreen.is-controls-hidden .timeline-video-controls,
 .footprint-video-player:-webkit-full-screen.is-controls-hidden .timeline-video-controls,
-.footprint-video-player.is-css-fullscreen.is-controls-hidden .timeline-video-controls {
-  opacity: 0;
-  transform: translateY(18px);
-  pointer-events: none;
+.footprint-video-player.is-css-fullscreen.is-controls-hidden .timeline-video-controls,
+.timeline-video-controls.is-hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(18px) !important;
+  pointer-events: none !important;
 }
 
 .footprint-video-player:fullscreen #timeline-video-canvas,

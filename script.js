@@ -95,6 +95,18 @@
       shareCardTitle: '幫我們留下今天',
       shareCardDesc: '如果你今天拍到了喜歡的照片或可愛瞬間，歡迎傳進相簿和我們一起收藏。',
       shareCardCta: '打開共享相簿',
+      crewEyebrow: 'WEDDING CREW · WITH GRATITUDE',
+      crewTitle: '婚禮工作團隊',
+      crewRoles: {
+        host: '主持人',
+        stylist: '新秘',
+        regPhoto: '登記紀錄-平面',
+        regVideo: '登記紀錄-錄像',
+        banquetPhoto: '婚宴紀錄-平面',
+        banquetVideo: '婚宴紀錄-錄像',
+        floral: '花藝',
+        audio: '音響',
+      },
       galleryCardEyebrow: 'PRE-WEDDING · 婚紗寫真',
       galleryCardTitle: '婚紗照片輪播',
       galleryCardDesc: '精選 Tom & Eunice 婚紗攝影作品，一起欣賞我們的幸福瞬間。',
@@ -207,6 +219,18 @@
       shareCardTitle: 'Capture Today With Us',
       shareCardDesc: 'Snapped a favorite photo or candid moment today? Drop it into our shared album so we can treasure it too.',
       shareCardCta: 'Open Shared Album',
+      crewEyebrow: 'WEDDING CREW · WITH GRATITUDE',
+      crewTitle: 'Wedding Creative Team',
+      crewRoles: {
+        host: 'Host / MC',
+        stylist: 'Bridal Stylist',
+        regPhoto: 'Registration Photography',
+        regVideo: 'Registration Videography',
+        banquetPhoto: 'Banquet Photography',
+        banquetVideo: 'Banquet Videography',
+        floral: 'Floral Design',
+        audio: 'Audio & Sound',
+      },
       galleryCardEyebrow: 'PRE-WEDDING · GALLERY',
       galleryCardTitle: 'Wedding Photo Carousel',
       galleryCardDesc: 'Browse a curated carousel of Tom & Eunice’s pre-wedding portraits.',
@@ -2585,6 +2609,19 @@
     if (elShareCardTitle) elShareCardTitle.textContent = dict.shareCardTitle;
     if (elShareCardDesc) elShareCardDesc.textContent = dict.shareCardDesc;
     if (elShareCardCta) elShareCardCta.textContent = dict.shareCardCta;
+
+    const elCrewEyebrow = document.getElementById('wedding-crew-eyebrow');
+    const elCrewTitle = document.getElementById('wedding-crew-title');
+    if (elCrewEyebrow && dict.crewEyebrow) elCrewEyebrow.textContent = dict.crewEyebrow;
+    if (elCrewTitle && dict.crewTitle) elCrewTitle.textContent = dict.crewTitle;
+    if (dict.crewRoles) {
+      document.querySelectorAll('[data-crew-role]').forEach((el) => {
+        const key = el.getAttribute('data-crew-role');
+        if (key && dict.crewRoles[key]) {
+          el.textContent = dict.crewRoles[key];
+        }
+      });
+    }
 
     if (elGalleryCardEyebrow) elGalleryCardEyebrow.textContent = dict.galleryCardEyebrow;
     if (elGalleryCardTitle) elGalleryCardTitle.textContent = dict.galleryCardTitle;
@@ -7035,28 +7072,34 @@
       elFootprintMapStage.classList.contains('is-css-fullscreen');
 
     let controlsAutoHideTimer = null;
+    const controlsEl = elFootprintMapStage.querySelector('.timeline-video-controls');
+    const setControlsHidden = (hidden) => {
+      elFootprintMapStage.classList.toggle('is-controls-hidden', hidden);
+      if (controlsEl) {
+        controlsEl.classList.toggle('is-hidden', hidden);
+      }
+    };
     syncTimelineFullscreenControls = (autoHideDelayMs = 3000) => {
       if (controlsAutoHideTimer) {
         clearTimeout(controlsAutoHideTimer);
         controlsAutoHideTimer = null;
       }
       if (!isMapStageFullscreen() || !timelinePlaying) {
-        elFootprintMapStage.classList.remove('is-controls-hidden');
+        setControlsHidden(false);
         return;
       }
       if (autoHideDelayMs === 0) {
-        elFootprintMapStage.classList.add('is-controls-hidden');
+        setControlsHidden(true);
         return;
       }
-      elFootprintMapStage.classList.remove('is-controls-hidden');
+      setControlsHidden(false);
       controlsAutoHideTimer = setTimeout(() => {
         if (isMapStageFullscreen() && timelinePlaying) {
-          elFootprintMapStage.classList.add('is-controls-hidden');
+          setControlsHidden(true);
         }
       }, autoHideDelayMs);
-    }
+    };
 
-    const controlsEl = elFootprintMapStage.querySelector('.timeline-video-controls');
     if (controlsEl) {
       controlsEl.addEventListener(
         'pointerdown',
