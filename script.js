@@ -107,7 +107,7 @@
         floral: '花藝',
         audio: '音響',
       },
-      galleryCardEyebrow: 'PRE-WEDDING · 婚紗寫真',
+      galleryCardEyebrow: 'Pre-Wedding Portraits',
       galleryCardTitle: '婚紗照片輪播',
       galleryCardDesc: '精選 Tom & Eunice 婚紗攝影作品，一起欣賞我們的幸福瞬間。',
       galleryCardCta: '欣賞婚紗照',
@@ -146,7 +146,7 @@
       shareStep1: '1. 點選下方按鈕打開 Google Photos 共享相簿',
       shareStep2: '2. 按一下「新增相片」就能直接上傳分享',
       shareLinkBtn: '打開婚禮 Google Photos 相簿 ↗',
-      galleryPanelEyebrow: 'PRE-WEDDING PORTRAITS · TOM & EUNICE',
+      galleryPanelEyebrow: 'Pre-Wedding Portraits · Tom & Eunice',
       galleryPanelTitle: '精選婚紗照片輪播',
       eraAll: '全部年份 (2014–2026)',
       era2014: '2014–2017 初識與校園',
@@ -231,7 +231,7 @@
         floral: 'Floral Design',
         audio: 'Audio & Sound',
       },
-      galleryCardEyebrow: 'PRE-WEDDING · GALLERY',
+      galleryCardEyebrow: 'Pre-Wedding Portraits',
       galleryCardTitle: 'Wedding Photo Carousel',
       galleryCardDesc: 'Browse a curated carousel of Tom & Eunice’s pre-wedding portraits.',
       galleryCardCta: 'View Wedding Photos',
@@ -270,7 +270,7 @@
       shareStep1: '1. Tap the button below to open our Google Photos album',
       shareStep2: '2. Select "Add photos" to share your favorite shots',
       shareLinkBtn: 'Open Shared Google Photos Album ↗',
-      galleryPanelEyebrow: 'PRE-WEDDING PORTRAITS · TOM & EUNICE',
+      galleryPanelEyebrow: 'Pre-Wedding Portraits · Tom & Eunice',
       galleryPanelTitle: 'Pre-Wedding Photo Carousel',
       eraAll: 'All Years (2014–2026)',
       era2014: '2014–2017 Campus Days',
@@ -759,7 +759,7 @@
   const PAST_PHOTOS_DATA = Array.from({ length: 61 }, (_unused, idx) => {
     const num = String(idx + 1).padStart(2, '0');
     return {
-      yearLabel: `PRE-WEDDING · ${num} / 61`,
+      yearLabel: `Pre-Wedding · ${num} / 61`,
       emoji: '💍',
       imageUrl: `photos/wedding-${num}.jpg`,
       title: {
@@ -6840,15 +6840,26 @@
     ctx2d.fillStyle = 'rgba(232, 223, 201, 0.75)';
     ctx2d.fillText(stepCountStr, w - 48, legendY + 5);
 
-    const euniceLegendX = w - 125;
-    ctx2d.fillStyle = '#f472b6';
-    ctx2d.fillText('━━ Eunice', euniceLegendX, legendY + 5);
-    drawAvatarCircle(ctx2d, 'eunice', euniceLegendX - 88, legendY, 10, '#f472b6', '#360e26');
+    const drawLegendRole = (role, label, color, bgFill, rightX) => {
+      ctx2d.fillStyle = color;
+      ctx2d.textAlign = 'right';
+      ctx2d.fillText(label, rightX, legendY + 5);
+      const labelW = role === 'eunice' ? 46 : 30;
+      const lineEndX = rightX - labelW - 8;
+      const lineStartX = lineEndX - 24;
+      ctx2d.strokeStyle = color;
+      ctx2d.lineWidth = 3;
+      ctx2d.lineCap = 'round';
+      ctx2d.beginPath();
+      ctx2d.moveTo(lineStartX, legendY);
+      ctx2d.lineTo(lineEndX, legendY);
+      ctx2d.stroke();
+      drawAvatarCircle(ctx2d, role, lineStartX - 16, legendY, 10, color, bgFill);
+      return lineStartX - 38;
+    };
 
-    const tomLegendX = euniceLegendX - 135;
-    ctx2d.fillStyle = '#38bdf8';
-    ctx2d.fillText('━━ Tom', tomLegendX, legendY + 5);
-    drawAvatarCircle(ctx2d, 'tom', tomLegendX - 73, legendY, 10, '#38bdf8', '#0a2034');
+    const tomRightX = drawLegendRole('eunice', 'Eunice', '#f472b6', '#360e26', w - 120);
+    drawLegendRole('tom', 'Tom', '#38bdf8', '#0a2034', tomRightX);
     ctx2d.restore();
 
     // 10. 底部象牙柔米白故事字幕卡 (Cinematic Subtitle Bar — 同步顯示兩人所在地與故事)
