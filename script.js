@@ -2303,7 +2303,6 @@
   const btnTimelineSpeed = document.getElementById('timeline-speed-btn');
   const btnTimelineReplay = document.getElementById('timeline-replay-btn');
   const btnTimelineBgm = document.getElementById('timeline-bgm-btn');
-  const btnTimelineRotate = document.getElementById('timeline-rotate-btn');
   const btnTimelineFullscreen = document.getElementById('timeline-fullscreen-btn');
   const elTimelineScrubberFill = document.getElementById('timeline-scrubber-fill');
 
@@ -3023,16 +3022,11 @@
     autoplayBtn.type = 'button';
     autoplayBtn.className = 'wedding-carousel-autoplay-btn';
 
-    const rotateBtn = document.createElement('button');
-    rotateBtn.type = 'button';
-    rotateBtn.className = 'wedding-carousel-rotate-btn';
-    rotateBtn.textContent = currentLang === 'en' ? '↻ Rotate' : '↻ 橫向';
-
     const fullscreenBtn = document.createElement('button');
     fullscreenBtn.type = 'button';
     fullscreenBtn.className = 'wedding-carousel-fullscreen-btn';
 
-    topBar.append(counterBadge, autoplayBtn, rotateBtn, fullscreenBtn);
+    topBar.append(counterBadge, autoplayBtn, fullscreenBtn);
 
     const prevBtn = document.createElement('button');
     prevBtn.type = 'button';
@@ -3095,7 +3089,6 @@
     function syncFullscreenUi() {
       const active = isCarouselFullscreen();
       if (!stage.classList.contains('is-css-fullscreen')) {
-        stage.classList.remove('is-rotated-90');
         restoreStageToCarousel();
       }
       fullscreenBtn.textContent = active
@@ -3161,9 +3154,6 @@
         stepSlide(1);
       }
     };
-    rotateBtn.addEventListener('click', () => {
-      stage.classList.toggle('is-rotated-90');
-    });
     fullscreenBtn.addEventListener('click', toggleCarouselFullscreen);
     document.addEventListener('fullscreenchange', syncFullscreenUi);
     document.addEventListener('webkitfullscreenchange', syncFullscreenUi);
@@ -6072,12 +6062,8 @@
     ctx2d.strokeStyle = glowColor;
     ctx2d.stroke();
 
-    // 2. 圓形婚紗頭像徽章
-    ctx2d.save();
-    ctx2d.shadowColor = primaryColor;
-    ctx2d.shadowBlur = 14;
+    // 2. 圓形婚紗頭像徽章（零 shadowBlur 高速繪製，避免手機端高斯模糊掉幀）
     drawAvatarCircle(ctx2d, role, x, y, 20, primaryColor, darkBg);
-    ctx2d.restore();
 
     // 3. 專屬膠囊名牌 (顯示角色名稱與當前所在城市)
     const badgeText = `${nameLabel} · ${cityText}`;
@@ -6189,6 +6175,69 @@
     ctx2d.restore();
   }
 
+  let timelineGradientsCache = null;
+
+  function ensurePolygonBboxes() {
+    if (WORLD_MAP_POLYGONS.length && WORLD_MAP_POLYGONS[0].bbox) return;
+    WORLD_MAP_POLYGONS.forEach((poly) => {
+      if (!poly.coords || !poly.coords.length) return;
+      let minLat = 90;
+      let maxLat = -90;
+      let minLng = 180;
+      let maxLng = -180;
+      poly.coords.forEach(([lat, lng]) => {
+        if (lat < minLat) minLat = lat;
+        if (lat > maxLat) maxLat = lat;
+        if (lng < minLng) minLng = lng;
+        if (lng > maxLng) maxLng = lng;
+      });
+      poly.bbox = { minLat, maxLat, minLng, maxLng };
+    });
+  }
+
+  function getTimelineGradients(ctx2d, w, h, mapLeft, mapTop, mapRight, mapBottom, mapW, mapH) {
+    const key = `${w}x${h}`;
+    if (timelineGradientsCache && timelineGradientsCache.key === key) {
+      return timelineGradientsCache;
+    }
+    const bgGrad = ctx2d.createLinearGradient(0, 0, w, h);
+    bgGrad.addColorStop(0, '#162c22');
+    bgGrad.addColorStop(0.55, '#214132');
+    bgGrad.addColorStop(1, '#14261e');
+
+    const sunGlow = ctx2d.createRadialGradient(w * 0.16, h * 0.14, 10, w * 0.16, h * 0.14, w * 0.55);
+    sunGlow.addColorStop(0, 'rgba(255, 226, 148, 0.14)');
+    sunGlow.addColorStop(1, 'rgba(255, 226, 148, 0)');
+
+    const seaGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapRight, mapBottom);
+    seaGrad.addColorStop(0, '#163f48');
+    seaGrad.addColorStop(0.5, '#1f545a');
+    seaGrad.addColorStop(1, '#13323b');
+
+    const seaSheen = ctx2d.createRadialGradient(
+      mapLeft + mapW * 0.35,
+      mapTop + mapH * 0.25,
+      20,
+      mapLeft + mapW * 0.35,
+      mapTop + mapH * 0.25,
+      mapW * 0.65
+    );
+    seaSheen.addColorStop(0, 'rgba(255, 234, 174, 0.11)');
+    seaSheen.addColorStop(1, 'rgba(255, 234, 174, 0)');
+
+    const landGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapLeft, mapBottom);
+    landGrad.addColorStop(0, 'rgba(148, 212, 146, 0.56)');
+    landGrad.addColorStop(0.55, 'rgba(116, 184, 124, 0.52)');
+    landGrad.addColorStop(1, 'rgba(84, 148, 102, 0.50)');
+
+    const taiwanGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapLeft, mapBottom);
+    taiwanGrad.addColorStop(0, 'rgba(176, 235, 160, 0.78)');
+    taiwanGrad.addColorStop(1, 'rgba(116, 198, 132, 0.72)');
+
+    timelineGradientsCache = { key, bgGrad, sunGlow, seaGrad, seaSheen, landGrad, taiwanGrad };
+    return timelineGradientsCache;
+  }
+
   function drawTimelineVideoFrame(progress) {
     if (!elTimelineVideoCanvas) return;
     const ctx2d = elTimelineVideoCanvas.getContext('2d');
@@ -6214,45 +6263,27 @@
     const mapH = mapBottom - mapTop;
     const mapBounds = { left: mapLeft, right: mapRight, top: mapTop, bottom: mapBottom };
 
-    // 1. 宮崎駿手繪故事書：溫潤森綠海洋與晨光漸層背景
-    const bgGrad = ctx2d.createLinearGradient(0, 0, w, h);
-    bgGrad.addColorStop(0, '#162c22');
-    bgGrad.addColorStop(0.55, '#214132');
-    bgGrad.addColorStop(1, '#14261e');
-    ctx2d.fillStyle = bgGrad;
+    ensurePolygonBboxes();
+    const grads = getTimelineGradients(ctx2d, w, h, mapLeft, mapTop, mapRight, mapBottom, mapW, mapH);
+
+    // 1. 宮崎駿手繪故事書：溫潤森綠海洋與晨光漸層背景（使用快取漸層）
+    ctx2d.fillStyle = grads.bgGrad;
     ctx2d.fillRect(0, 0, w, h);
 
     // 柔金色晨光暈染
-    const sunGlow = ctx2d.createRadialGradient(w * 0.16, h * 0.14, 10, w * 0.16, h * 0.14, w * 0.55);
-    sunGlow.addColorStop(0, 'rgba(255, 226, 148, 0.14)');
-    sunGlow.addColorStop(1, 'rgba(255, 226, 148, 0)');
-    ctx2d.fillStyle = sunGlow;
+    ctx2d.fillStyle = grads.sunGlow;
     ctx2d.fillRect(0, 0, w, h);
 
     // 地圖視窗外框與裁切區
     ctx2d.save();
     ctx2d.beginPath();
     ctx2d.roundRect(mapLeft, mapTop, mapW, mapH, 16);
-    const seaGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapRight, mapBottom);
-    seaGrad.addColorStop(0, '#163f48');
-    seaGrad.addColorStop(0.5, '#1f545a');
-    seaGrad.addColorStop(1, '#13323b');
-    ctx2d.fillStyle = seaGrad;
+    ctx2d.fillStyle = grads.seaGrad;
     ctx2d.fill();
     ctx2d.clip();
 
     // 海面陽光水彩暈染
-    const seaSheen = ctx2d.createRadialGradient(
-      mapLeft + mapW * 0.35,
-      mapTop + mapH * 0.25,
-      20,
-      mapLeft + mapW * 0.35,
-      mapTop + mapH * 0.25,
-      mapW * 0.65
-    );
-    seaSheen.addColorStop(0, 'rgba(255, 234, 174, 0.11)');
-    seaSheen.addColorStop(1, 'rgba(255, 234, 174, 0)');
-    ctx2d.fillStyle = seaSheen;
+    ctx2d.fillStyle = grads.seaSheen;
     ctx2d.fillRect(mapLeft, mapTop, mapW, mapH);
 
     // 手繪海面波紋
@@ -6309,20 +6340,25 @@
       ctx2d.restore();
     }
 
-    // 3. 繪製世界地圖各大洲與台灣高精度島嶼輪廓 (水彩漸層陸地 + 淺海珊瑚礁光暈 + 暖羊皮紙海岸線)
-    const landGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapLeft, mapBottom);
-    landGrad.addColorStop(0, 'rgba(148, 212, 146, 0.56)');
-    landGrad.addColorStop(0.55, 'rgba(116, 184, 124, 0.52)');
-    landGrad.addColorStop(1, 'rgba(84, 148, 102, 0.50)');
-
-    const taiwanGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapLeft, mapBottom);
-    taiwanGrad.addColorStop(0, 'rgba(176, 235, 160, 0.78)');
-    taiwanGrad.addColorStop(1, 'rgba(116, 198, 132, 0.72)');
-
+    // 3. 繪製世界地圖各大洲與台灣高精度島嶼輪廓 (視錐裁切 + 零 shadowBlur 高速繪製)
+    const cullPad = 28;
     const worldOffsets = [-360, 0, 360];
+    ctx2d.lineJoin = 'round';
     worldOffsets.forEach((lngOffset) => {
       WORLD_MAP_POLYGONS.forEach((poly) => {
         if (!poly.coords || poly.coords.length < 3) return;
+        if (poly.bbox) {
+          const nw = projectWithCamera(poly.bbox.maxLat, poly.bbox.minLng + lngOffset, cam, w, h);
+          const se = projectWithCamera(poly.bbox.minLat, poly.bbox.maxLng + lngOffset, cam, w, h);
+          if (
+            se.x < mapLeft - cullPad ||
+            nw.x > mapRight + cullPad ||
+            se.y < mapTop - cullPad ||
+            nw.y > mapBottom + cullPad
+          ) {
+            return;
+          }
+        }
         ctx2d.beginPath();
         poly.coords.forEach(([lat, lng], idx) => {
           const pt = projectWithCamera(lat, lng + lngOffset, cam, w, h);
@@ -6332,34 +6368,21 @@
         ctx2d.closePath();
 
         // 淺海海岸線柔光暈
-        ctx2d.save();
-        ctx2d.lineJoin = 'round';
         ctx2d.strokeStyle = poly.isHighlight ? 'rgba(255, 226, 138, 0.24)' : 'rgba(116, 214, 198, 0.14)';
         ctx2d.lineWidth = poly.isHighlight ? 11 : 8;
         ctx2d.stroke();
-        ctx2d.restore();
 
-        ctx2d.save();
-        ctx2d.lineJoin = 'round';
         if (poly.isHighlight) {
-          ctx2d.shadowColor = 'rgba(255, 226, 138, 0.48)';
-          ctx2d.shadowBlur = 12;
-          ctx2d.fillStyle = taiwanGrad;
+          ctx2d.fillStyle = grads.taiwanGrad;
           ctx2d.strokeStyle = 'rgba(253, 244, 214, 0.96)';
           ctx2d.lineWidth = cam.spanLng <= 20 ? 2.6 : 1.9;
         } else {
-          ctx2d.shadowColor = 'rgba(8, 22, 24, 0.35)';
-          ctx2d.shadowBlur = 6;
-          ctx2d.shadowOffsetY = 2;
-          ctx2d.fillStyle = landGrad;
+          ctx2d.fillStyle = grads.landGrad;
           ctx2d.strokeStyle = 'rgba(244, 234, 204, 0.74)';
           ctx2d.lineWidth = cam.spanLng <= 40 ? 1.8 : 1.3;
         }
         ctx2d.fill();
-        ctx2d.shadowBlur = 0;
-        ctx2d.shadowOffsetY = 0;
         ctx2d.stroke();
-        ctx2d.restore();
       });
     });
 
@@ -6518,7 +6541,7 @@
         const geoDist = Math.hypot(sB.lat - startNode.lat, dLngShort);
         if (geoDist < 0.015 && !sB.via && i !== segIdx) continue;
 
-        const steps = 32;
+        const steps = 18;
         const midSample = sampleRolePathLatLng(sA, sB, 0.5, liftSign);
         const shiftLng = unwrapNear(midSample.lng, cam.centerLng) - midSample.lng;
 
@@ -6547,10 +6570,6 @@
           ctx2d.save();
           ctx2d.strokeStyle = isCurrentLeg ? strokeActive : isRecentLeg ? strokeRecent : strokePast;
           ctx2d.lineWidth = isCurrentLeg ? 3.8 : isRecentLeg ? 2.5 : 1.7;
-          if (isCurrentLeg) {
-            ctx2d.shadowColor = shadowCol;
-            ctx2d.shadowBlur = 12;
-          }
           ctx2d.beginPath();
           for (let s = 0; s <= steps; s++) {
             const t = (s / steps) * tMax;
@@ -6666,8 +6685,6 @@
       ctx2d.strokeStyle = '#ffd166';
       ctx2d.lineWidth = 2.6;
       ctx2d.setLineDash([7, 6]);
-      ctx2d.shadowColor = 'rgba(255, 209, 102, 0.75)';
-      ctx2d.shadowBlur = 10;
       ctx2d.beginPath();
       ctx2d.moveTo(tomDrawX, tomDrawY);
       ctx2d.lineTo(euniceDrawX, euniceDrawY);
@@ -6700,12 +6717,9 @@
     ctx2d.fillStyle = isTogether ? 'rgba(42, 22, 34, 0.94)' : 'rgba(28, 36, 22, 0.94)';
     ctx2d.strokeStyle = '#ffd166';
     ctx2d.lineWidth = 1.8;
-    ctx2d.shadowColor = 'rgba(0, 0, 0, 0.45)';
-    ctx2d.shadowBlur = 8;
     ctx2d.beginPath();
     ctx2d.roundRect(clampedBadgeX - dBadgeW / 2, clampedBadgeY - dBadgeH / 2, dBadgeW, dBadgeH, 999);
     ctx2d.fill();
-    ctx2d.shadowBlur = 0;
     ctx2d.stroke();
 
     ctx2d.fillStyle = '#ffd166';
@@ -6981,7 +6995,6 @@
     const syncMapFullscreenUi = () => {
       const active = isMapStageFullscreen();
       if (!elFootprintMapStage.classList.contains('is-css-fullscreen')) {
-        elFootprintMapStage.classList.remove('is-rotated-90');
         restoreMapStage();
       }
       btnTimelineFullscreen.textContent = active
@@ -7027,11 +7040,6 @@
       syncMapFullscreenUi();
     };
 
-    if (btnTimelineRotate) {
-      btnTimelineRotate.addEventListener('click', () => {
-        elFootprintMapStage.classList.toggle('is-rotated-90');
-      });
-    }
     btnTimelineFullscreen.addEventListener('click', toggleMapFullscreen);
     document.addEventListener('fullscreenchange', syncMapFullscreenUi);
     document.addEventListener('webkitfullscreenchange', syncMapFullscreenUi);
