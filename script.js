@@ -740,76 +740,24 @@
    * 若放入實際照片檔案（例如 photos/2014.jpg）或圖片連結於 imageUrl 欄位，即會自動顯示照片
    */
   /**
-   * 精選婚紗照片輪播資料
-   * 若放入實際婚紗照片檔案（例如 photos/wedding-01.jpg）或圖片連結於 imageUrl 欄位，即會自動顯示於輪播中
+   * 精選婚紗照片輪播資料（來自 Google Drive prewed 資料夾，共 64 張最佳化實拍）
    */
-  const PAST_PHOTOS_DATA = [
-    {
-      yearLabel: 'LOOK 01 · CLASSIC WHITE GOWN',
+  const PAST_PHOTOS_DATA = Array.from({ length: 64 }, (_unused, idx) => {
+    const num = String(idx + 1).padStart(2, '0');
+    return {
+      yearLabel: `PRE-WEDDING · ${num} / 64`,
       emoji: '💍',
-      imageUrl: '',
+      imageUrl: `photos/wedding-${num}.jpg`,
       title: {
-        zh: '純白誓約 · 經典白紗',
-        en: 'Pure Vows · Classic White Gown',
+        zh: `Tom & Eunice 婚紗寫真 #${num}`,
+        en: `Tom & Eunice Pre-Wedding Portrait #${num}`,
       },
       caption: {
-        zh: '十二年的默契收進白紗與西裝裡，把最溫柔的笑容留給彼此。',
-        en: 'Twelve years of quiet understanding captured in timeless white and black.',
+        zh: '十二年的默契與笑容，定格在屬於我們的婚紗時刻。',
+        en: 'Twelve years of laughter and love captured in our pre-wedding portraits.',
       },
-    },
-    {
-      yearLabel: 'LOOK 02 · SUNLIT GARDEN',
-      emoji: '🌿',
-      imageUrl: '',
-      title: {
-        zh: '微風與光影 · 自然系婚紗',
-        en: 'Breeze & Sunlight · Garden Portraits',
-      },
-      caption: {
-        zh: '在柔和日光與綠意之間並肩散步，記錄最自然自在的我們。',
-        en: 'Walking side by side under warm sunlight and soft greenery.',
-      },
-    },
-    {
-      yearLabel: 'LOOK 03 · EVENING ROMANCE',
-      emoji: '🕯️',
-      imageUrl: '',
-      title: {
-        zh: '暮色星光 · 晚禮服時刻',
-        en: 'Twilight Romance · Evening Gown',
-      },
-      caption: {
-        zh: '夜色微涼、燈火微暖，牽著手走過屬於我們的浪漫瞬間。',
-        en: 'Warm evening lights and quiet moments hand in hand.',
-      },
-    },
-    {
-      yearLabel: 'LOOK 04 · PLAYFUL CANDID',
-      emoji: '💐',
-      imageUrl: '',
-      title: {
-        zh: '日常笑鬧 · 抓拍瞬間',
-        en: 'Playful Candid · Shared Laughter',
-      },
-      caption: {
-        zh: '不用刻意擺拍，只要對視就會忍不住笑出來的日常模樣。',
-        en: 'No posing needed—just the everyday laughter whenever our eyes meet.',
-      },
-    },
-    {
-      yearLabel: 'LOOK 05 · BRICK YARD 33 1/3',
-      emoji: '🥂',
-      imageUrl: '',
-      title: {
-        zh: '2026.11.29 · 期待與你相見',
-        en: '2026.11.29 · See You at Brick Yard 33 1/3',
-      },
-      caption: {
-        zh: '謝謝你來到陽明山美軍俱樂部，一起見證我們故事的新篇章。',
-        en: 'Thank you for celebrating this next chapter with us on Yangmingshan.',
-      },
-    },
-  ];
+    };
+  });
 
   /**
    * 婚宴座位表資料（依據 BY33 美軍俱樂部平面圖 12 大座位區與參加人名單配置，支援分類或賓客姓名即時搜尋高亮）
@@ -2353,8 +2301,53 @@
   const btnTimelineNext = document.getElementById('timeline-next-btn');
   const btnTimelineSpeed = document.getElementById('timeline-speed-btn');
   const btnTimelineReplay = document.getElementById('timeline-replay-btn');
-  const btnTimelineExport = document.getElementById('timeline-export-btn');
   const elTimelineScrubberFill = document.getElementById('timeline-scrubber-fill');
+
+  const FOOTPRINT_AVATAR_SRCS = {
+    tom: 'photos/avatar-tom.jpg',
+    eunice: 'photos/avatar-eunice.jpg',
+  };
+  const footprintAvatarImgs = {};
+  Object.keys(FOOTPRINT_AVATAR_SRCS).forEach((role) => {
+    const img = new Image();
+    img.onload = () => {
+      if (typeof drawTimelineVideoFrame === 'function' && typeof timelineProgress === 'number') {
+        drawTimelineVideoFrame(timelineProgress);
+      }
+    };
+    img.src = FOOTPRINT_AVATAR_SRCS[role];
+    footprintAvatarImgs[role] = img;
+  });
+
+  function setFootprintStatsContent(el, text) {
+    if (!el) return;
+    el.textContent = '';
+    const parts = String(text || '').split(/(🤵‍♂️|👰‍♀️)/gu);
+    parts.forEach((part) => {
+      if (part === '🤵‍♂️' || part === '👰‍♀️') {
+        const isTom = part === '🤵‍♂️';
+        const avatar = document.createElement('img');
+        avatar.className = `footprint-avatar-icon ${isTom ? 'is-tom-inline' : 'is-eunice-inline'}`;
+        avatar.src = FOOTPRINT_AVATAR_SRCS[isTom ? 'tom' : 'eunice'];
+        avatar.alt = isTom ? 'Tom' : 'Eunice';
+        el.append(avatar);
+      } else if (part) {
+        el.append(document.createTextNode(part));
+      }
+    });
+  }
+
+  function setFootprintRolePillContent(el, role, text) {
+    if (!el) return;
+    const isTom = role === 'tom';
+    const cleanText = String(text || '').replace(/^(🤵‍♂️|👰‍♀️)\s*/u, '');
+    el.textContent = '';
+    const avatar = document.createElement('img');
+    avatar.className = 'footprint-avatar-icon';
+    avatar.src = FOOTPRINT_AVATAR_SRCS[role];
+    avatar.alt = isTom ? 'Tom' : 'Eunice';
+    el.append(avatar, document.createTextNode(cleanText));
+  }
 
   const elSeatingSection = document.getElementById('seating-section');
   const elSeatingPanelEyebrow = document.getElementById('seating-panel-eyebrow');
@@ -2660,9 +2653,9 @@
 
     if (elFootprintsPanelEyebrow) elFootprintsPanelEyebrow.textContent = dict.footprintsPanelEyebrow;
     if (elFootprintsPanelTitle) elFootprintsPanelTitle.textContent = dict.footprintsPanelTitle;
-    if (elFootprintStats) elFootprintStats.textContent = dict.footprintStatsText;
-    if (elFootprintTrackTom) elFootprintTrackTom.textContent = dict.footprintTrackTom;
-    if (elFootprintTrackEunice) elFootprintTrackEunice.textContent = dict.footprintTrackEunice;
+    setFootprintStatsContent(elFootprintStats, dict.footprintStatsText);
+    setFootprintRolePillContent(elFootprintTrackTom, 'tom', dict.footprintTrackTom);
+    setFootprintRolePillContent(elFootprintTrackEunice, 'eunice', dict.footprintTrackEunice);
     if (btnTimelinePlay) {
       btnTimelinePlay.textContent = timelinePlaying ? dict.timelinePauseBtn : dict.timelinePlayBtn;
     }
@@ -2681,9 +2674,6 @@
       btnTimelineSpeed.setAttribute('aria-label', dict.timelineSpeedTitle);
     }
     if (btnTimelineReplay) btnTimelineReplay.textContent = dict.timelineReplayBtn;
-    if (btnTimelineExport && !timelineRecording) {
-      btnTimelineExport.textContent = dict.timelineExportBtn;
-    }
 
     if (elSeatingPanelEyebrow) elSeatingPanelEyebrow.textContent = dict.seatingPanelEyebrow;
     if (elSeatingPanelTitle) elSeatingPanelTitle.textContent = dict.seatingPanelTitle;
@@ -2969,6 +2959,7 @@
   let weddingCarouselIndex = 0;
   let weddingCarouselAutoplay = true;
   let weddingCarouselTimer = null;
+  let weddingCarouselFullscreenCleanup = null;
 
   function stopWeddingCarouselTimer() {
     if (weddingCarouselTimer !== null) {
@@ -2978,6 +2969,10 @@
   }
 
   function renderGallerySection() {
+    if (weddingCarouselFullscreenCleanup) {
+      weddingCarouselFullscreenCleanup();
+      weddingCarouselFullscreenCleanup = null;
+    }
     if (!elMemoryGalleryGrid) return;
     if (elGalleryEraBar) {
       elGalleryEraBar.classList.add('hidden');
@@ -3010,7 +3005,11 @@
     autoplayBtn.type = 'button';
     autoplayBtn.className = 'wedding-carousel-autoplay-btn';
 
-    topBar.append(counterBadge, autoplayBtn);
+    const fullscreenBtn = document.createElement('button');
+    fullscreenBtn.type = 'button';
+    fullscreenBtn.className = 'wedding-carousel-fullscreen-btn';
+
+    topBar.append(counterBadge, autoplayBtn, fullscreenBtn);
 
     const prevBtn = document.createElement('button');
     prevBtn.type = 'button';
@@ -3032,35 +3031,10 @@
     const yearTag = document.createElement('span');
     yearTag.className = 'memory-year-tag';
 
-    const titleEl = document.createElement('h4');
-    titleEl.className = 'memory-photo-title';
-
     const captionEl = document.createElement('p');
     captionEl.className = 'memory-photo-caption';
 
-    const linkBtn = document.createElement('a');
-    linkBtn.className = 'memory-photo-link hidden';
-    linkBtn.target = '_blank';
-    linkBtn.rel = 'noopener noreferrer';
-    linkBtn.textContent = dict.viewGooglePhotoBtn;
-
-    captionBar.append(yearTag, titleEl, captionEl, linkBtn);
-
-    const dotsWrap = document.createElement('div');
-    dotsWrap.className = 'wedding-carousel-dots';
-
-    const dotButtons = PAST_PHOTOS_DATA.map((_item, idx) => {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'wedding-carousel-dot';
-      dot.textContent = String(idx + 1).padStart(2, '0');
-      dot.addEventListener('click', () => {
-        weddingCarouselIndex = idx;
-        updateSlideView();
-      });
-      dotsWrap.append(dot);
-      return dot;
-    });
+    captionBar.append(yearTag, captionEl);
 
     function syncAutoplayUi() {
       autoplayBtn.textContent = weddingCarouselAutoplay
@@ -3072,10 +3046,95 @@
           : '▶ 繼續輪播';
     }
 
+    function isCarouselFullscreen() {
+      return (
+        document.fullscreenElement === stage ||
+        document.webkitFullscreenElement === stage ||
+        stage.classList.contains('is-css-fullscreen')
+      );
+    }
+
+    function syncFullscreenUi() {
+      const active = isCarouselFullscreen();
+      fullscreenBtn.textContent = active
+        ? currentLang === 'en'
+          ? '✕ Exit'
+          : '✕ 退出全螢幕'
+        : currentLang === 'en'
+          ? '⛶ Fullscreen'
+          : '⛶ 全螢幕';
+      fullscreenBtn.setAttribute(
+        'aria-label',
+        active
+          ? currentLang === 'en'
+            ? 'Exit fullscreen'
+            : '退出全螢幕'
+          : currentLang === 'en'
+            ? 'View fullscreen'
+            : '全螢幕瀏覽'
+      );
+      document.body.classList.toggle('carousel-fullscreen-open', active);
+    }
+
+    async function toggleCarouselFullscreen() {
+      if (isCarouselFullscreen()) {
+        stage.classList.remove('is-css-fullscreen');
+        if (document.fullscreenElement === stage && document.exitFullscreen) {
+          await document.exitFullscreen().catch(() => {});
+        } else if (document.webkitFullscreenElement === stage && document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+        syncFullscreenUi();
+        return;
+      }
+      if (stage.requestFullscreen) {
+        try {
+          await stage.requestFullscreen();
+          syncFullscreenUi();
+          return;
+        } catch (_err) {
+          // Fallback to CSS fullscreen below (e.g. iOS Safari)
+        }
+      } else if (stage.webkitRequestFullscreen) {
+        try {
+          stage.webkitRequestFullscreen();
+          syncFullscreenUi();
+          return;
+        } catch (_err) {
+          // Fallback to CSS fullscreen below
+        }
+      }
+      stage.classList.add('is-css-fullscreen');
+      syncFullscreenUi();
+    }
+
+    const handleKeydown = (e) => {
+      if (!isCarouselFullscreen()) return;
+      if (e.key === 'Escape' && stage.classList.contains('is-css-fullscreen')) {
+        stage.classList.remove('is-css-fullscreen');
+        syncFullscreenUi();
+      } else if (e.key === 'ArrowLeft') {
+        stepSlide(-1);
+      } else if (e.key === 'ArrowRight') {
+        stepSlide(1);
+      }
+    };
+    fullscreenBtn.addEventListener('click', toggleCarouselFullscreen);
+    document.addEventListener('fullscreenchange', syncFullscreenUi);
+    document.addEventListener('webkitfullscreenchange', syncFullscreenUi);
+    document.addEventListener('keydown', handleKeydown);
+    weddingCarouselFullscreenCleanup = () => {
+      document.removeEventListener('fullscreenchange', syncFullscreenUi);
+      document.removeEventListener('webkitfullscreenchange', syncFullscreenUi);
+      document.removeEventListener('keydown', handleKeydown);
+      document.body.classList.remove('carousel-fullscreen-open');
+    };
+    syncFullscreenUi();
+
     function updateSlideView() {
       const idx = weddingCarouselIndex;
       const item = PAST_PHOTOS_DATA[idx];
-      const { directImageUrl, shareLinkUrl } = resolveGooglePhotoConfig(item, idx);
+      const { directImageUrl } = resolveGooglePhotoConfig(item, idx);
 
       slideWrap.replaceChildren();
       const renderFallbackPlaceholder = () => {
@@ -3095,14 +3154,7 @@
         pTitle.className = 'wedding-carousel-placeholder-title';
         pTitle.textContent = item.title[currentLang];
 
-        const pHint = document.createElement('span');
-        pHint.className = 'wedding-carousel-placeholder-hint';
-        pHint.textContent =
-          currentLang === 'en'
-            ? `Wedding photo #${idx + 1} ready (add photos/wedding-0${idx + 1}.jpg in script.js)`
-            : `婚紗照 #${idx + 1} 展示版位（於 script.js 填入 photos/wedding-0${idx + 1}.jpg 即可顯示實拍）`;
-
-        placeholder.append(emojiSpan, tagSpan, pTitle, pHint);
+        placeholder.append(emojiSpan, tagSpan, pTitle);
         slideWrap.append(placeholder);
       };
 
@@ -3110,7 +3162,7 @@
         const img = document.createElement('img');
         img.src = directImageUrl;
         img.alt = item.title[currentLang];
-        img.loading = 'lazy';
+        img.loading = 'eager';
         img.referrerPolicy = 'no-referrer';
         img.addEventListener('error', renderFallbackPlaceholder);
         slideWrap.append(img);
@@ -3120,19 +3172,10 @@
 
       counterBadge.textContent = `${idx + 1} / ${total}`;
       yearTag.textContent = item.yearLabel;
-      titleEl.textContent = item.title[currentLang];
-      captionEl.textContent = item.caption[currentLang];
-
-      if (shareLinkUrl) {
-        linkBtn.href = shareLinkUrl;
-        linkBtn.classList.remove('hidden');
-      } else {
-        linkBtn.classList.add('hidden');
-      }
-
-      dotButtons.forEach((btn, dIdx) => {
-        btn.classList.toggle('is-active', dIdx === idx);
-      });
+      captionEl.textContent =
+        currentLang === 'en'
+          ? 'Swipe, use arrows, or tap Fullscreen to enjoy all 64 portraits.'
+          : '可左右切換、觸控滑動，或點右上角「全螢幕」完整欣賞 64 張婚紗寫真。';
     }
 
     function stepSlide(delta) {
@@ -3193,7 +3236,7 @@
     updateSlideView();
     restartTimer();
 
-    carousel.append(stage, captionBar, dotsWrap);
+    carousel.append(stage, captionBar);
     elMemoryGalleryGrid.replaceChildren(carousel);
   }
 
@@ -5432,11 +5475,11 @@
 
         const tomTag = document.createElement('span');
         tomTag.className = 'footprint-role-pill is-tom';
-        tomTag.textContent = `🤵‍♂️ Tom · ${item.tom.city[currentLang]}`;
+        setFootprintRolePillContent(tomTag, 'tom', `Tom · ${item.tom.city[currentLang]}`);
 
         const euniceTag = document.createElement('span');
         euniceTag.className = 'footprint-role-pill is-eunice';
-        euniceTag.textContent = `👰‍♀️ Eunice · ${item.eunice.city[currentLang]}`;
+        setFootprintRolePillContent(euniceTag, 'eunice', `Eunice · ${item.eunice.city[currentLang]}`);
 
         pairRow.append(tomTag, euniceTag);
         node.append(header, pairRow);
@@ -5927,57 +5970,74 @@
     };
   }
 
+  function drawAvatarCircle(ctx2d, role, cx, cy, radius, borderColor, bgFill) {
+    const img = footprintAvatarImgs[role];
+    const hasPhoto = img && img.complete && img.naturalWidth > 0;
+    ctx2d.save();
+    ctx2d.beginPath();
+    ctx2d.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx2d.fillStyle = bgFill || '#141c17';
+    ctx2d.fill();
+    if (hasPhoto) {
+      ctx2d.save();
+      ctx2d.beginPath();
+      ctx2d.arc(cx, cy, Math.max(1, radius - 1.2), 0, Math.PI * 2);
+      ctx2d.clip();
+      ctx2d.drawImage(img, cx - radius, cy - radius, radius * 2, radius * 2);
+      ctx2d.restore();
+    } else {
+      ctx2d.font = `${Math.round(radius)}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif`;
+      ctx2d.textAlign = 'center';
+      ctx2d.textBaseline = 'middle';
+      ctx2d.fillText(role === 'tom' ? '🤵‍♂️' : '👰‍♀️', cx, cy + 1);
+    }
+    ctx2d.beginPath();
+    ctx2d.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx2d.lineWidth = Math.max(1.5, radius * 0.13);
+    ctx2d.strokeStyle = borderColor;
+    ctx2d.stroke();
+    ctx2d.restore();
+  }
+
   /**
-   * 繪製單人專屬角色標記 (Tom 🤵‍♂️ 星空藍新郎標記 / Eunice 👰‍♀️ 玫瑰粉新娘標記 + 專屬城市名牌)
+   * 繪製單人專屬角色標記 (Tom 星空藍新郎頭像 / Eunice 玫瑰粉新娘頭像 + 專屬城市名牌)
    */
   function drawPersonMarker(ctx2d, role, x, y, cityText, mapBounds) {
     const isTom = role === 'tom';
     const primaryColor = isTom ? '#38bdf8' : '#f472b6';
     const darkBg = isTom ? 'rgba(10, 32, 52, 0.94)' : 'rgba(54, 14, 38, 0.94)';
     const glowColor = isTom ? 'rgba(56, 189, 248, 0.55)' : 'rgba(244, 114, 182, 0.55)';
-    const iconEmoji = isTom ? '🤵‍♂️' : '👰‍♀️';
     const nameLabel = isTom ? 'Tom' : 'Eunice';
 
     ctx2d.save();
 
     // 1. 外圈呼吸柔光環
     ctx2d.beginPath();
-    ctx2d.arc(x, y, 22, 0, Math.PI * 2);
+    ctx2d.arc(x, y, 27, 0, Math.PI * 2);
     ctx2d.fillStyle = isTom ? 'rgba(56, 189, 248, 0.18)' : 'rgba(244, 114, 182, 0.18)';
     ctx2d.fill();
     ctx2d.lineWidth = 1.6;
     ctx2d.strokeStyle = glowColor;
     ctx2d.stroke();
 
-    // 2. 圓形頭像徽章底座
-    ctx2d.beginPath();
-    ctx2d.arc(x, y, 15, 0, Math.PI * 2);
-    ctx2d.fillStyle = darkBg;
+    // 2. 圓形婚紗頭像徽章
+    ctx2d.save();
     ctx2d.shadowColor = primaryColor;
     ctx2d.shadowBlur = 14;
-    ctx2d.fill();
-    ctx2d.shadowBlur = 0;
-    ctx2d.lineWidth = 2.6;
-    ctx2d.strokeStyle = primaryColor;
-    ctx2d.stroke();
+    drawAvatarCircle(ctx2d, role, x, y, 20, primaryColor, darkBg);
+    ctx2d.restore();
 
-    // 3. 角色專屬 Icon
-    ctx2d.font = '16px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
-    ctx2d.textAlign = 'center';
-    ctx2d.textBaseline = 'middle';
-    ctx2d.fillText(iconEmoji, x, y + 1);
-
-    // 4. 專屬膠囊名牌 (顯示角色名稱與當前所在城市)
-    const badgeText = `${iconEmoji} ${nameLabel} · ${cityText}`;
+    // 3. 專屬膠囊名牌 (顯示角色名稱與當前所在城市)
+    const badgeText = `${nameLabel} · ${cityText}`;
     ctx2d.font = '700 13.5px "Noto Sans TC", sans-serif';
-    const pillW = ctx2d.measureText(badgeText).width + 20;
+    const pillW = ctx2d.measureText(badgeText).width + 22;
     const pillH = 25;
 
     let pillX = isTom ? x - pillW * 0.35 : x + pillW * 0.35;
-    let pillY = isTom ? y - 33 : y + 33;
+    let pillY = isTom ? y - 38 : y + 38;
 
-    if (pillY - pillH / 2 < mapBounds.top + 8) pillY = y + 33;
-    if (pillY + pillH / 2 > mapBounds.bottom - 8) pillY = y - 33;
+    if (pillY - pillH / 2 < mapBounds.top + 8) pillY = y + 38;
+    if (pillY + pillH / 2 > mapBounds.bottom - 8) pillY = y - 38;
     pillX = Math.max(mapBounds.left + pillW / 2 + 8, Math.min(mapBounds.right - pillW / 2 - 8, pillX));
 
     ctx2d.fillStyle = darkBg;
@@ -5993,6 +6053,87 @@
     ctx2d.textBaseline = 'middle';
     ctx2d.fillText(badgeText, pillX, pillY + 0.5);
 
+    ctx2d.restore();
+  }
+
+  function drawGhibliCloud(ctx2d, cx, cy, scale, alpha) {
+    ctx2d.save();
+    ctx2d.translate(cx, cy);
+    ctx2d.scale(scale, scale);
+    ctx2d.globalAlpha = alpha;
+    ctx2d.fillStyle = '#fdf7e7';
+    ctx2d.beginPath();
+    ctx2d.arc(-34, 8, 20, 0, Math.PI * 2);
+    ctx2d.arc(-10, -4, 28, 0, Math.PI * 2);
+    ctx2d.arc(20, -1, 24, 0, Math.PI * 2);
+    ctx2d.arc(42, 10, 17, 0, Math.PI * 2);
+    ctx2d.roundRect(-48, 8, 104, 18, 9);
+    ctx2d.fill();
+    ctx2d.restore();
+  }
+
+  function drawGhibliSootSprite(ctx2d, cx, cy, radius, phase) {
+    ctx2d.save();
+    ctx2d.translate(cx, cy);
+    // Fuzzy spikes
+    ctx2d.fillStyle = 'rgba(18, 20, 24, 0.86)';
+    ctx2d.beginPath();
+    const spikes = 14;
+    for (let i = 0; i < spikes * 2; i++) {
+      const ang = (i * Math.PI) / spikes + phase * 0.4;
+      const r = i % 2 === 0 ? radius * 1.24 : radius * 0.88;
+      const px = Math.cos(ang) * r;
+      const py = Math.sin(ang) * r;
+      if (i === 0) ctx2d.moveTo(px, py);
+      else ctx2d.lineTo(px, py);
+    }
+    ctx2d.closePath();
+    ctx2d.fill();
+    // Wide curious eyes
+    const eyeR = Math.max(1.8, radius * 0.25);
+    const eyeOffX = radius * 0.34;
+    const eyeOffY = -radius * 0.08;
+    ctx2d.fillStyle = '#fffdf7';
+    ctx2d.beginPath();
+    ctx2d.arc(-eyeOffX, eyeOffY, eyeR, 0, Math.PI * 2);
+    ctx2d.arc(eyeOffX, eyeOffY, eyeR, 0, Math.PI * 2);
+    ctx2d.fill();
+    ctx2d.fillStyle = '#111827';
+    ctx2d.beginPath();
+    ctx2d.arc(-eyeOffX + 0.5, eyeOffY, eyeR * 0.45, 0, Math.PI * 2);
+    ctx2d.arc(eyeOffX + 0.5, eyeOffY, eyeR * 0.45, 0, Math.PI * 2);
+    ctx2d.fill();
+    ctx2d.restore();
+  }
+
+  function drawGhibliCompassRose(ctx2d, cx, cy, r) {
+    ctx2d.save();
+    ctx2d.translate(cx, cy);
+    ctx2d.strokeStyle = 'rgba(248, 224, 158, 0.36)';
+    ctx2d.fillStyle = 'rgba(248, 224, 158, 0.28)';
+    ctx2d.lineWidth = 1.2;
+    ctx2d.beginPath();
+    ctx2d.arc(0, 0, r, 0, Math.PI * 2);
+    ctx2d.stroke();
+    ctx2d.beginPath();
+    ctx2d.arc(0, 0, r * 0.72, 0, Math.PI * 2);
+    ctx2d.stroke();
+    for (let i = 0; i < 4; i++) {
+      ctx2d.save();
+      ctx2d.rotate((i * Math.PI) / 2);
+      ctx2d.beginPath();
+      ctx2d.moveTo(0, -r * 0.92);
+      ctx2d.lineTo(r * 0.16, -r * 0.18);
+      ctx2d.lineTo(0, 0);
+      ctx2d.closePath();
+      ctx2d.fill();
+      ctx2d.restore();
+    }
+    ctx2d.font = '700 9px "Cormorant Garamond", serif';
+    ctx2d.textAlign = 'center';
+    ctx2d.textBaseline = 'middle';
+    ctx2d.fillStyle = 'rgba(248, 224, 158, 0.55)';
+    ctx2d.fillText('N', 0, -r - 7);
     ctx2d.restore();
   }
 
@@ -6021,21 +6162,48 @@
     const mapH = mapBottom - mapTop;
     const mapBounds = { left: mapLeft, right: mapRight, top: mapTop, bottom: mapBottom };
 
-    // 1. 深邃森林海洋漸層背景
+    // 1. 宮崎駿手繪故事書：溫潤森綠海洋與晨光漸層背景
     const bgGrad = ctx2d.createLinearGradient(0, 0, w, h);
-    bgGrad.addColorStop(0, '#0d1b15');
-    bgGrad.addColorStop(0.55, '#13281e');
-    bgGrad.addColorStop(1, '#0b1611');
+    bgGrad.addColorStop(0, '#162c22');
+    bgGrad.addColorStop(0.55, '#214132');
+    bgGrad.addColorStop(1, '#14261e');
     ctx2d.fillStyle = bgGrad;
+    ctx2d.fillRect(0, 0, w, h);
+
+    // 柔金色晨光暈染
+    const sunGlow = ctx2d.createRadialGradient(w * 0.16, h * 0.14, 10, w * 0.16, h * 0.14, w * 0.55);
+    sunGlow.addColorStop(0, 'rgba(255, 226, 148, 0.14)');
+    sunGlow.addColorStop(1, 'rgba(255, 226, 148, 0)');
+    ctx2d.fillStyle = sunGlow;
     ctx2d.fillRect(0, 0, w, h);
 
     // 地圖視窗外框與裁切區
     ctx2d.save();
     ctx2d.beginPath();
     ctx2d.roundRect(mapLeft, mapTop, mapW, mapH, 16);
-    ctx2d.fillStyle = 'rgba(11, 25, 19, 0.75)';
+    const seaGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapRight, mapBottom);
+    seaGrad.addColorStop(0, 'rgba(23, 58, 59, 0.88)');
+    seaGrad.addColorStop(0.55, 'rgba(29, 72, 68, 0.88)');
+    seaGrad.addColorStop(1, 'rgba(19, 46, 49, 0.90)');
+    ctx2d.fillStyle = seaGrad;
     ctx2d.fill();
     ctx2d.clip();
+
+    // 手繪海面波紋
+    ctx2d.save();
+    ctx2d.strokeStyle = 'rgba(248, 238, 210, 0.055)';
+    ctx2d.lineWidth = 1.2;
+    for (let row = 0; row < 7; row++) {
+      const wy = mapTop + 38 + row * (mapH / 7);
+      const wxShift = ((progress * 180 + row * 73) % 140) - 70;
+      for (let col = 0; col < 5; col++) {
+        const wx = mapLeft + 75 + col * (mapW / 4.8) + wxShift;
+        ctx2d.beginPath();
+        ctx2d.arc(wx, wy, 18, Math.PI * 0.15, Math.PI * 0.85);
+        ctx2d.stroke();
+      }
+    }
+    ctx2d.restore();
 
     // 2. 動態經緯度網格
     const gridStep = cam.spanLng <= 18 ? 2 : cam.spanLng <= 48 ? 5 : cam.spanLng <= 115 ? 15 : 30;
@@ -6089,12 +6257,12 @@
         ctx2d.closePath();
 
         if (poly.isHighlight) {
-          ctx2d.fillStyle = 'rgba(116, 198, 157, 0.42)';
-          ctx2d.strokeStyle = 'rgba(232, 223, 201, 0.92)';
+          ctx2d.fillStyle = 'rgba(154, 222, 146, 0.52)';
+          ctx2d.strokeStyle = 'rgba(248, 238, 210, 0.94)';
           ctx2d.lineWidth = cam.spanLng <= 20 ? 2.6 : 1.8;
         } else {
-          ctx2d.fillStyle = 'rgba(82, 138, 102, 0.28)';
-          ctx2d.strokeStyle = 'rgba(164, 216, 180, 0.50)';
+          ctx2d.fillStyle = 'rgba(122, 186, 128, 0.36)';
+          ctx2d.strokeStyle = 'rgba(235, 226, 196, 0.62)';
           ctx2d.lineWidth = cam.spanLng <= 40 ? 1.8 : 1.3;
         }
         ctx2d.fill();
@@ -6409,6 +6577,29 @@
     ctx2d.fillText(distBadgeText, clampedBadgeX, clampedBadgeY + 0.5);
     ctx2d.restore();
 
+    // 宮崎駿天空積雲、森林螢火微光、煤炭球與飛行羅盤裝飾
+    const cloudDrift = progress * 260;
+    drawGhibliCloud(ctx2d, mapLeft + ((140 + cloudDrift) % (mapW + 140)) - 70, mapTop + 46, 0.72, 0.14);
+    drawGhibliCloud(ctx2d, mapLeft + ((680 + cloudDrift * 0.7) % (mapW + 160)) - 80, mapTop + 62, 0.56, 0.12);
+    drawGhibliCloud(ctx2d, mapLeft + ((1020 - cloudDrift * 0.5 + 1200) % (mapW + 140)) - 70, mapBottom - 44, 0.5, 0.11);
+
+    // 森林微光粒子 (木靈 / 螢火)
+    ctx2d.save();
+    for (let i = 0; i < 14; i++) {
+      const fx = mapLeft + ((i * 97 + progress * 45) % mapW);
+      const fy = mapTop + ((i * 61 + Math.sin(progress * Math.PI * 4 + i) * 16 + mapH) % mapH);
+      ctx2d.fillStyle = i % 2 === 0 ? 'rgba(255, 226, 138, 0.32)' : 'rgba(176, 242, 182, 0.26)';
+      ctx2d.beginPath();
+      ctx2d.arc(fx, fy, i % 3 === 0 ? 2.4 : 1.6, 0, Math.PI * 2);
+      ctx2d.fill();
+    }
+    ctx2d.restore();
+
+    // 角落小煤炭球 & 飛行羅盤
+    drawGhibliSootSprite(ctx2d, mapRight - 34, mapTop + 32 + Math.sin(progress * Math.PI * 6) * 4, 8.5, progress * 6);
+    drawGhibliSootSprite(ctx2d, mapRight - 56, mapTop + 44 + Math.cos(progress * Math.PI * 6) * 3, 6.2, progress * 5 + 1);
+    drawGhibliCompassRose(ctx2d, mapLeft + 44, mapBottom - 44, 22);
+
     // 結束地圖裁切區並畫上精緻邊框
     ctx2d.restore();
     ctx2d.save();
@@ -6436,11 +6627,13 @@
 
     const euniceLegendX = w - 125;
     ctx2d.fillStyle = '#f472b6';
-    ctx2d.fillText('━━ 👰‍♀️ Eunice', euniceLegendX, legendY + 5);
+    ctx2d.fillText('━━ Eunice', euniceLegendX, legendY + 5);
+    drawAvatarCircle(ctx2d, 'eunice', euniceLegendX - 88, legendY, 10, '#f472b6', '#360e26');
 
     const tomLegendX = euniceLegendX - 135;
     ctx2d.fillStyle = '#38bdf8';
-    ctx2d.fillText('━━ 🤵‍♂️ Tom', tomLegendX, legendY + 5);
+    ctx2d.fillText('━━ Tom', tomLegendX, legendY + 5);
+    drawAvatarCircle(ctx2d, 'tom', tomLegendX - 73, legendY, 10, '#38bdf8', '#0a2034');
     ctx2d.restore();
 
     // 10. 底部象牙柔米白故事字幕卡 (Cinematic Subtitle Bar — 同步顯示兩人所在地與故事)
@@ -6468,13 +6661,19 @@
 
     ctx2d.font = '700 15.5px "Noto Sans TC", sans-serif';
     ctx2d.textAlign = 'right';
-    const eCityStr = `👰‍♀️ Eunice: ${currentItem.eunice.city[currentLang]}`;
-    const tCityStr = `🤵‍♂️ Tom: ${currentItem.tom.city[currentLang]}   `;
+    const eCityStr = `Eunice: ${currentItem.eunice.city[currentLang]}`;
+    const tCityStr = `Tom: ${currentItem.tom.city[currentLang]}`;
     const eCityW = ctx2d.measureText(eCityStr).width;
+    const tCityW = ctx2d.measureText(tCityStr).width;
+    const rightEdge = cardX + cardW - 26;
     ctx2d.fillStyle = '#be185d';
-    ctx2d.fillText(eCityStr, cardX + cardW - 26, cardY + 34);
+    ctx2d.fillText(eCityStr, rightEdge, cardY + 34);
+    drawAvatarCircle(ctx2d, 'eunice', rightEdge - eCityW - 14, cardY + 29, 9, '#f472b6', '#360e26');
+
+    const tomRightEdge = rightEdge - eCityW - 38;
     ctx2d.fillStyle = '#0369a1';
-    ctx2d.fillText(tCityStr, cardX + cardW - 26 - eCityW, cardY + 34);
+    ctx2d.fillText(tCityStr, tomRightEdge, cardY + 34);
+    drawAvatarCircle(ctx2d, 'tom', tomRightEdge - tCityW - 14, cardY + 29, 9, '#38bdf8', '#0a2034');
 
     ctx2d.textAlign = 'left';
     ctx2d.fillStyle = '#1f3024';
@@ -6554,101 +6753,11 @@
     togglePlayTimeline();
   }
 
-  function exportTimelineVideo() {
-    if (!elTimelineVideoCanvas || timelineRecording) return;
-    if (typeof elTimelineVideoCanvas.captureStream !== 'function' || typeof window.MediaRecorder === 'undefined') {
-      replayTimeline();
-      return;
-    }
-
-    const dict = t();
-    timelineRecording = true;
-    if (btnTimelineExport) {
-      btnTimelineExport.disabled = true;
-      btnTimelineExport.textContent = dict.timelineExportingBtn;
-    }
-
-    const resetExportState = () => {
-      timelineRecording = false;
-      if (btnTimelineExport) {
-        btnTimelineExport.disabled = false;
-        btnTimelineExport.textContent = t().timelineExportBtn;
-      }
-    };
-
-    let recorder;
-    let selectedMime = '';
-    try {
-      const stream = elTimelineVideoCanvas.captureStream(60);
-      const mimeCandidates = [
-        'video/webm;codecs=vp9',
-        'video/webm;codecs=vp8',
-        'video/webm',
-        'video/mp4',
-      ];
-      if (typeof MediaRecorder.isTypeSupported === 'function') {
-        selectedMime = mimeCandidates.find((m) => MediaRecorder.isTypeSupported(m)) || '';
-      }
-      const recOptions = selectedMime
-        ? { mimeType: selectedMime, videoBitsPerSecond: 6000000 }
-        : { videoBitsPerSecond: 6000000 };
-      recorder = new MediaRecorder(stream, recOptions);
-    } catch (_err) {
-      resetExportState();
-      replayTimeline();
-      return;
-    }
-
-    const chunks = [];
-
-    recorder.ondataavailable = (e) => {
-      if (e.data && e.data.size > 0) chunks.push(e.data);
-    };
-
-    recorder.onerror = () => {
-      resetExportState();
-    };
-
-    recorder.onstop = () => {
-      const actualType = recorder.mimeType || selectedMime || 'video/webm';
-      const ext = actualType.includes('mp4') ? 'mp4' : 'webm';
-      const blob = new Blob(chunks, { type: actualType });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `Tom-Eunice-Timeline-2014-2026.${ext}`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 5000);
-      resetExportState();
-    };
-
-    try {
-      recorder.start();
-    } catch (_err) {
-      resetExportState();
-      replayTimeline();
-      return;
-    }
-    replayTimeline();
-
-    const checkFinished = setInterval(() => {
-      if (!timelinePlaying || timelineProgress >= 1) {
-        clearInterval(checkFinished);
-        setTimeout(() => {
-          if (recorder.state === 'recording') recorder.stop();
-        }, 600);
-      }
-    }, 200);
-  }
-
   if (btnTimelinePlay) btnTimelinePlay.addEventListener('click', togglePlayTimeline);
   if (btnTimelinePrev) btnTimelinePrev.addEventListener('click', () => stepTimelineMilestone(-1));
   if (btnTimelineNext) btnTimelineNext.addEventListener('click', () => stepTimelineMilestone(1));
   if (btnTimelineSpeed) btnTimelineSpeed.addEventListener('click', cycleTimelineSpeed);
   if (btnTimelineReplay) btnTimelineReplay.addEventListener('click', replayTimeline);
-  if (btnTimelineExport) btnTimelineExport.addEventListener('click', exportTimelineVideo);
   if (elTimelineVideoCanvas) {
     elTimelineVideoCanvas.style.cursor = 'pointer';
     elTimelineVideoCanvas.addEventListener('click', togglePlayTimeline);

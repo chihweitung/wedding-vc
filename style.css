@@ -1633,9 +1633,8 @@ body.is-time-up .countdown-stage-wrap {
 
 /* Past Photos Memory Grid */
 .memory-gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
-  gap: 16px;
+  display: block;
+  width: 100%;
 }
 
 .memory-photo-card {
@@ -1758,12 +1757,11 @@ body.is-time-up .countdown-stage-wrap {
 .wedding-carousel-stage {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  max-height: 540px;
+  height: clamp(360px, 60vh, 620px);
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  background: linear-gradient(145deg, var(--surface-pill), var(--surface-subtle));
+  background: radial-gradient(circle at 50% 45%, #243028 0%, #141c17 100%);
   box-shadow: var(--shadow-card);
   display: flex;
   align-items: center;
@@ -1773,6 +1771,8 @@ body.is-time-up .countdown-stage-wrap {
 .wedding-carousel-slide {
   width: 100%;
   height: 100%;
+  min-width: 0;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1791,9 +1791,11 @@ body.is-time-up .countdown-stage-wrap {
 }
 
 .wedding-carousel-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   display: block;
 }
 
@@ -1884,7 +1886,8 @@ body.is-time-up .countdown-stage-wrap {
 }
 
 .wedding-carousel-counter,
-.wedding-carousel-autoplay-btn {
+.wedding-carousel-autoplay-btn,
+.wedding-carousel-fullscreen-btn {
   padding: 5px 11px;
   border-radius: 999px;
   background: rgba(24, 34, 28, 0.66);
@@ -1893,6 +1896,33 @@ body.is-time-up .countdown-stage-wrap {
   color: #f8fafc;
   font-size: 0.76rem;
   font-weight: 600;
+  cursor: pointer;
+}
+
+.wedding-carousel-stage:fullscreen,
+.wedding-carousel-stage:-webkit-full-screen,
+.wedding-carousel-stage.is-css-fullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  max-height: none;
+  aspect-ratio: auto;
+  border-radius: 0;
+  border: none;
+  z-index: 9999;
+  background: #0d130f;
+}
+
+.wedding-carousel-stage:fullscreen .wedding-carousel-slide img,
+.wedding-carousel-stage:-webkit-full-screen .wedding-carousel-slide img,
+.wedding-carousel-stage.is-css-fullscreen .wedding-carousel-slide img {
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+body.carousel-fullscreen-open {
+  overflow: hidden;
 }
 
 .wedding-carousel-autoplay-btn {
@@ -1905,14 +1935,22 @@ body.is-time-up .countdown-stage-wrap {
 }
 
 .wedding-carousel-caption-bar {
-  padding: 14px 18px;
-  border-radius: 16px;
+  padding: 10px 16px;
+  border-radius: 14px;
   background: var(--surface-pill);
   border: 1px solid var(--border-subtle);
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
   text-align: left;
+}
+
+.wedding-carousel-caption-bar .memory-photo-caption {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--text-secondary);
 }
 
 .wedding-carousel-dots {
@@ -1945,7 +1983,7 @@ body.is-time-up .countdown-stage-wrap {
 
 @media (max-width: 640px) {
   .wedding-carousel-stage {
-    aspect-ratio: 4 / 3;
+    height: clamp(260px, 68vw, 420px);
   }
   .wedding-carousel-nav {
     width: 36px;
@@ -3374,6 +3412,9 @@ body.is-time-up .countdown-stage-wrap {
 }
 
 .footprint-role-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-size: 0.84rem;
   font-weight: 600;
   line-height: 1.45;
@@ -3383,9 +3424,36 @@ body.is-time-up .countdown-stage-wrap {
   overflow-wrap: anywhere;
 }
 
+.footprint-avatar-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1.5px solid currentColor;
+}
+
+.footprint-avatar-icon.is-tom-inline {
+  width: 20px;
+  height: 20px;
+  border-color: #38bdf8;
+}
+
+.footprint-avatar-icon.is-eunice-inline {
+  width: 20px;
+  height: 20px;
+  border-color: #f472b6;
+}
+
 .footprint-pair-row .footprint-role-pill {
   font-size: 0.78rem;
   padding: 2px 10px;
+  gap: 5px;
+}
+
+.footprint-pair-row .footprint-avatar-icon {
+  width: 18px;
+  height: 18px;
 }
 
 .footprint-role-pill.is-tom {
@@ -3412,15 +3480,29 @@ body.is-time-up .countdown-stage-wrap {
   border-color: rgba(244, 114, 182, 0.45);
 }
 
+#footprints-section .feature-card-wide {
+  background:
+    radial-gradient(circle at 8% 4%, rgba(255, 224, 148, 0.14) 0%, transparent 42%),
+    radial-gradient(circle at 94% 90%, rgba(134, 198, 146, 0.14) 0%, transparent 46%),
+    var(--surface-card);
+  border-color: rgba(154, 186, 138, 0.42);
+}
+
 .footprint-video-player {
   width: 100%;
   border-radius: 18px;
-  background: var(--surface-pill);
-  border: 1px solid var(--border-subtle);
+  background: linear-gradient(155deg, rgba(248, 243, 226, 0.72), rgba(232, 240, 226, 0.56));
+  border: 1.5px solid rgba(154, 186, 138, 0.45);
+  box-shadow: 0 12px 28px -18px rgba(34, 65, 50, 0.35);
   padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+[data-theme="dark"] .footprint-video-player {
+  background: linear-gradient(155deg, rgba(24, 46, 36, 0.85), rgba(18, 34, 28, 0.85));
+  border-color: rgba(154, 198, 146, 0.28);
 }
 
 .timeline-canvas-wrap {
