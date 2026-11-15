@@ -2473,8 +2473,9 @@
   let renderedMediaKey = '';
 
   function isDebugUnlocked() {
-    return Boolean(window.__TE_DEBUG_AUTH__ === true);
+    return Boolean(window.__TE_DEBUG_AUTH__ === true || window.__TE_STAFF_AUTH__ === true);
   }
+  let seatingNeedsFilter = 'all';
 
   // Quiz State
   let quizStarted = false;
@@ -2859,6 +2860,12 @@
     if (btnTabFootprints) btnTabFootprints.classList.toggle('hidden', !isTimeUp);
   }
 
+  function scrollPageToTop() {
+    if (typeof window === 'undefined' || typeof window.scrollTo !== 'function') return;
+    window.scrollTo(0, 0);
+    requestAnimationFrame(() => window.scrollTo(0, 0));
+  }
+
   function showHubView(mode) {
     if (mode !== 'footprints' && timelinePlaying) {
       timelinePlaying = false;
@@ -2886,6 +2893,7 @@
         if (elSeatingSection) elSeatingSection.classList.add('hidden');
         if (elBanquetMenuSection) elBanquetMenuSection.classList.add('hidden');
         clearVideoIframe();
+        scrollPageToTop();
         return;
       }
       if (elCountdownStageWrap) elCountdownStageWrap.classList.add('hidden');
@@ -2903,6 +2911,7 @@
       if (elSeatingSection) elSeatingSection.classList.add('hidden');
       if (elBanquetMenuSection) elBanquetMenuSection.classList.add('hidden');
       clearVideoIframe();
+      scrollPageToTop();
       return;
     }
 
@@ -2948,6 +2957,7 @@
         renderBanquetMenuSection();
       }
     }
+    scrollPageToTop();
   }
 
   /**
@@ -3827,10 +3837,13 @@
       });
       const debugBanner = document.createElement('div');
       debugBanner.className = 'seating-debug-banner';
+      const isStaffOnly = window.__TE_STAFF_AUTH__ === true && window.__TE_DEBUG_AUTH__ !== true;
+      const bannerPrefixEn = isStaffOnly ? '📋 [Staff Totals]' : '🔧 [Debug Totals]';
+      const bannerPrefixZh = isStaffOnly ? '📋 [接待人員全場統計]' : '🔧 [Debug 全場統計]';
       debugBanner.textContent =
         currentLang === 'en'
-          ? `🔧 [Debug Totals] Guests: ${totalHeadcount} ｜ 🥗 Vegetarian: ${totalVeg} ｜ 🚼 Strollers: ${totalStroller} (🪑 High Chairs: ${totalChildSeat})`
-          : `🔧 [Debug 全場統計] 總人數：${totalHeadcount} 人 ｜ 🥗 素食人數：${totalVeg} 人 ｜ 🚼 嬰兒車人數：${totalStroller} 人（🪑 兒童椅：${totalChildSeat} 張）`;
+          ? `${bannerPrefixEn} Guests: ${totalHeadcount} ｜ 🥗 Vegetarian: ${totalVeg} ｜ 🚼 Strollers: ${totalStroller} (🪑 High Chairs: ${totalChildSeat})`
+          : `${bannerPrefixZh} 總人數：${totalHeadcount} 人 ｜ 🥗 素食人數：${totalVeg} 人 ｜ 🚼 嬰兒車人數：${totalStroller} 人（🪑 兒童椅：${totalChildSeat} 張）`;
       stageChildren.push(debugBanner);
     }
 
@@ -5123,10 +5136,70 @@
     elSeatingPhotoStage.classList.remove('hidden');
   }
 
+  function renderSeatingNeedsFilterBar(isDebugPage) {
+    if (!elSeatingPhotoStage || !elSeatingPhotoStage.parentNode) return;
+    let bar = document.getElementById('seating-needs-filter-bar');
+    if (!isDebugPage) {
+      if (bar) bar.remove();
+      return;
+    }
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.id = 'seating-needs-filter-bar';
+      bar.className = 'seating-needs-filter-bar';
+      elSeatingPhotoStage.parentNode.insertBefore(bar, elSeatingPhotoStage);
+    }
+
+    let totalChildSeat = 0;
+    let totalVeg = 0;
+    SEATING_TABLES_DATA.forEach((tItem) => {
+      if (tItem.debugStats) {
+        totalChildSeat += tItem.debugStats.childSeat || 0;
+        totalVeg += tItem.debugStats.veg || 0;
+      }
+    });
+
+    const options = [
+      {
+        id: 'all',
+        label: currentLang === 'en' ? 'All Tables' : '全部座位',
+      },
+      {
+        id: 'childSeat',
+        label:
+          currentLang === 'en'
+            ? `🪑 Needs High Chair (${totalChildSeat})`
+            : `🪑 找兒童椅位置 (${totalChildSeat})`,
+      },
+      {
+        id: 'veg',
+        label:
+          currentLang === 'en'
+            ? `🥗 Needs Vegetarian (${totalVeg})`
+            : `🥗 找素食位置 (${totalVeg})`,
+      },
+    ];
+
+    bar.replaceChildren();
+    options.forEach((opt) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `seating-needs-pill${seatingNeedsFilter === opt.id ? ' is-active' : ''}`;
+      btn.textContent = opt.label;
+      btn.addEventListener('click', () => {
+        seatingNeedsFilter = opt.id;
+        selectedSeatingZoneId = null;
+        renderSeatingSection();
+      });
+      bar.append(btn);
+    });
+  }
+
   function renderSeatingSection() {
     if (!elSeatingTablesGrid) return;
 
     const isDebugPage = isDebugUnlocked();
+    renderSeatingNeedsFilterBar(isDebugPage);
     const query = elSeatingSearchInput ? elSeatingSearchInput.value.trim().toLowerCase() : '';
     const highlightedIds = new Set();
     if (selectedSeatingZoneId) {
@@ -5213,6 +5286,19 @@
 
       if (query && !matchesTableTitle && !hasMatchingGuest) {
         return;
+      }
+
+      const matchesNeeds =
+        !isDebugPage ||
+        seatingNeedsFilter === 'all' ||
+        (seatingNeedsFilter === 'childSeat' && table.debugStats && table.debugStats.childSeat > 0) ||
+        (seatingNeedsFilter === 'veg' && table.debugStats && table.debugStats.veg > 0);
+
+      if (!matchesNeeds) {
+        return;
+      }
+      if (!selectedSeatingZoneId && isDebugPage && seatingNeedsFilter !== 'all') {
+        highlightedIds.add(table.id);
       }
 
       const matchedSlotSet = new Set(
@@ -5314,6 +5400,12 @@
         }
 
         card.append(statsBar);
+        if (table.debugStats.detail) {
+          const detailNote = document.createElement('div');
+          detailNote.className = 'seating-debug-detail';
+          detailNote.textContent = `📌 ${table.debugStats.detail}`;
+          card.append(detailNote);
+        }
       }
 
       if (isDebugPage) {
@@ -5431,6 +5523,10 @@
     }
     elSeatingTablesGrid.replaceChildren(...tableCards);
   }
+
+  window.__TE_ON_STAFF_UNLOCK__ = () => {
+    renderSeatingSection();
+  };
 
   function renderBanquetMenuSection() {
     if (!elBanquetCoursesList) return;
@@ -6833,32 +6929,32 @@
     ctx2d.fillText('TOM & EUNICE · LOVE FOOTPRINTS & DISTANCE TRACKER', 48, 42);
 
     const legendY = 36;
-    ctx2d.font = '600 13.5px "Noto Sans TC", sans-serif';
+    ctx2d.font = '700 16px "Noto Sans TC", sans-serif';
     ctx2d.textAlign = 'right';
 
     const stepCountStr = `${activeIdx + 1} / ${LOVE_FOOTPRINTS_DATA.length}`;
-    ctx2d.fillStyle = 'rgba(232, 223, 201, 0.75)';
-    ctx2d.fillText(stepCountStr, w - 48, legendY + 5);
+    ctx2d.fillStyle = 'rgba(232, 223, 201, 0.82)';
+    ctx2d.fillText(stepCountStr, w - 42, legendY + 6);
 
     const drawLegendRole = (role, label, color, bgFill, rightX) => {
       ctx2d.fillStyle = color;
       ctx2d.textAlign = 'right';
-      ctx2d.fillText(label, rightX, legendY + 5);
-      const labelW = role === 'eunice' ? 46 : 30;
-      const lineEndX = rightX - labelW - 8;
-      const lineStartX = lineEndX - 24;
+      ctx2d.fillText(label, rightX, legendY + 6);
+      const labelW = ctx2d.measureText(label).width;
+      const lineEndX = rightX - labelW - 10;
+      const lineStartX = lineEndX - 32;
       ctx2d.strokeStyle = color;
-      ctx2d.lineWidth = 3;
+      ctx2d.lineWidth = 4.5;
       ctx2d.lineCap = 'round';
       ctx2d.beginPath();
       ctx2d.moveTo(lineStartX, legendY);
       ctx2d.lineTo(lineEndX, legendY);
       ctx2d.stroke();
-      drawAvatarCircle(ctx2d, role, lineStartX - 16, legendY, 10, color, bgFill);
-      return lineStartX - 38;
+      drawAvatarCircle(ctx2d, role, lineStartX - 18, legendY, 11.5, color, bgFill);
+      return lineStartX - 44;
     };
 
-    const tomRightX = drawLegendRole('eunice', 'Eunice', '#f472b6', '#360e26', w - 120);
+    const tomRightX = drawLegendRole('eunice', 'Eunice', '#f472b6', '#360e26', w - 118);
     drawLegendRole('tom', 'Tom', '#38bdf8', '#0a2034', tomRightX);
     ctx2d.restore();
 

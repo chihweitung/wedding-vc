@@ -2183,6 +2183,54 @@ body.carousel-fullscreen-open {
   background: rgba(245, 158, 11, 0.16);
 }
 
+.seating-needs-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.seating-needs-pill {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-pill);
+  color: var(--text-secondary);
+  font-family: 'Noto Sans TC', 'Inter', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, background-color 0.16s ease, color 0.16s ease;
+}
+
+.seating-needs-pill:hover,
+.seating-needs-pill:active {
+  transform: translateY(-1px);
+  border-color: var(--border-highlight);
+}
+
+.seating-needs-pill.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.seating-debug-detail {
+  padding: 7px 11px;
+  border-radius: 10px;
+  background: rgba(217, 119, 6, 0.12);
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  color: #b45309;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+[data-theme="dark"] .seating-debug-detail {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.15);
+}
+
 .seating-map-hint-bar {
   display: flex;
   align-items: center;
@@ -3505,8 +3553,23 @@ body.carousel-fullscreen-open {
 .footprint-journey-strip {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 4px;
+}
+
+.footprint-journey-strip .footprint-role-pill {
+  font-size: 0.78rem;
+  padding: 4px 11px;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+@media (max-width: 680px) {
+  .footprint-journey-strip .footprint-role-pill {
+    font-size: clamp(0.65rem, 2.95vw, 0.76rem);
+    padding: 4px 9px;
+    gap: 5px;
+  }
 }
 
 .footprint-pair-row {
