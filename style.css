@@ -1404,6 +1404,94 @@ body.is-time-up .countdown-stage-wrap {
   opacity: 0.56;
 }
 
+/* 哈利波特顯形咒（Aparecium）密碼學線索 */
+.hp-cipher-spell-btn {
+  margin-bottom: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px dashed rgba(180, 130, 56, 0.55);
+  background: linear-gradient(135deg, rgba(254, 249, 231, 0.9), rgba(250, 240, 212, 0.85));
+  color: #7c5218;
+  font-family: 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 2px 10px -2px rgba(180, 130, 56, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.hp-cipher-spell-btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(180, 130, 56, 0.85);
+  box-shadow: 0 4px 14px -2px rgba(180, 130, 56, 0.32);
+}
+
+[data-theme="dark"] .hp-cipher-spell-btn {
+  background: linear-gradient(135deg, rgba(46, 36, 18, 0.85), rgba(32, 26, 14, 0.9));
+  border-color: rgba(250, 204, 21, 0.42);
+  color: #fde68a;
+}
+
+.hp-cipher-clue {
+  margin-bottom: 8px;
+  padding: 12px 16px;
+  max-width: 480px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(254, 250, 236, 0.95), rgba(248, 240, 214, 0.9));
+  border: 1px solid rgba(196, 150, 72, 0.45);
+  box-shadow: 0 6px 20px -6px rgba(160, 118, 42, 0.22), inset 0 0 18px rgba(250, 204, 21, 0.12);
+  color: #5c3d12;
+  font-family: 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.65;
+  text-align: center;
+  animation: hpInkReveal 0.65s ease forwards;
+}
+
+[data-theme="dark"] .hp-cipher-clue {
+  background: linear-gradient(180deg, rgba(38, 30, 16, 0.92), rgba(26, 22, 14, 0.92));
+  border-color: rgba(250, 204, 21, 0.38);
+  box-shadow: 0 6px 22px -6px rgba(0, 0, 0, 0.55), inset 0 0 18px rgba(250, 204, 21, 0.08);
+  color: #fef08a;
+}
+
+@keyframes hpInkReveal {
+  0% {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(4px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+.debug-score-preview-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.16);
+  font-size: 0.76rem;
+}
+
+.debug-score-select {
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(15, 23, 42, 0.72);
+  color: #f8fafc;
+  font-size: 0.76rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .sm-btn {
   min-height: 36px !important;
   padding: 6px 14px !important;

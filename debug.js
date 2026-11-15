@@ -456,7 +456,53 @@
       btnGroup.appendChild(btn);
     });
 
-    inner.append(headerRow, btnGroup);
+    const previewRow = document.createElement('div');
+    previewRow.className = 'debug-score-preview-row';
+
+    const previewLabel = document.createElement('span');
+    previewLabel.className = 'debug-desc';
+    previewLabel.textContent = '🧪 結算答對題數預覽：';
+
+    const scoreSelect = document.createElement('select');
+    scoreSelect.className = 'debug-score-select';
+    scoreSelect.id = 'dbg-score-select';
+    scoreSelect.setAttribute('aria-label', '選擇模擬答對題數');
+    for (let s = 0; s <= 11; s += 1) {
+      const opt = document.createElement('option');
+      opt.value = String(s);
+      opt.textContent = `${s} / 11 題`;
+      if (s === 7) opt.selected = true;
+      scoreSelect.appendChild(opt);
+    }
+
+    function previewQuizScore(scoreVal) {
+      offsetMs = REAL_TARGET_TIMESTAMP + 60000 - realDateNow();
+      scoreSelect.value = String(scoreVal);
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('te-debug-preview-score', { detail: { score: scoreVal } }));
+      }, 40);
+    }
+
+    scoreSelect.addEventListener('change', () => {
+      previewQuizScore(Number(scoreSelect.value));
+    });
+
+    const tierPresets = [
+      { score: 3, label: '3/11（麻瓜驅逐）' },
+      { score: 7, label: '7/11（顯形咒）' },
+      { score: 11, label: '11/11（全解鎖）' },
+    ];
+    previewRow.append(previewLabel, scoreSelect);
+    tierPresets.forEach((preset) => {
+      const pBtn = document.createElement('button');
+      pBtn.type = 'button';
+      pBtn.className = 'debug-btn';
+      pBtn.textContent = preset.label;
+      pBtn.addEventListener('click', () => previewQuizScore(preset.score));
+      previewRow.appendChild(pBtn);
+    });
+
+    inner.append(headerRow, btnGroup, previewRow);
     toolbar.replaceChildren(inner);
     window.dispatchEvent(new CustomEvent('te-debug-auth-change'));
 
@@ -577,6 +623,8 @@
           forceWatermarkOnce = true;
           const quizCard = document.getElementById('choose-quiz-card');
           if (quizCard) quizCard.click();
+          const startBtn = document.getElementById('quiz-start-btn');
+          if (startBtn) startBtn.click();
           for (let i = 0; i < 20; i++) {
             const summaryView = document.getElementById('quiz-summary-view');
             if (summaryView && !summaryView.classList.contains('hidden')) break;

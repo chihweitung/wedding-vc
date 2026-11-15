@@ -29,7 +29,7 @@
   const WEDDING_VIDEO_URL = 'https://www.youtube.com/watch?v=jfKfPfyJRdk';
 
   // Google Photos 婚禮現場共享相簿連結（賓客上傳與瀏覽當日照片）
-  const GOOGLE_PHOTOS_SHARE_URL = 'https://photos.google.com/';
+  const GOOGLE_PHOTOS_SHARE_URL = 'https://photos.app.goo.gl/zXY7gwRZHhWqndkr8';
 
   // Google Photos 新人過去回憶相簿連結（2014–2026 歲月寫真完整相簿）
   const GOOGLE_PHOTOS_MEMORIES_URL = 'https://photos.google.com/';
@@ -2466,6 +2466,8 @@
 
   const elSummarySealHint = document.getElementById('easter-watermark-hint');
   const elSummarySealCode = document.getElementById('easter-base64-code');
+  const elHpCipherSpellBtn = document.getElementById('hp-cipher-spell-btn');
+  const elHpCipherClue = document.getElementById('hp-cipher-clue');
 
   const SUMMARY_HINT_VECTORS = [
     73, 127, 216, 37, 1, 146, 15, 146, 182, 89, 178, 39, 253, 96, 27, 131,
@@ -6709,6 +6711,7 @@
     brideScore = 0;
     quizAnswered = false;
     lastSelectedOption = null;
+    cipherClueRevealed = false;
     renderQuizIntroLanguage();
     if (elQuizIntroView) elQuizIntroView.classList.remove('hidden');
     elQuizQuestionView.classList.add('hidden');
@@ -6724,6 +6727,7 @@
     brideScore = 0;
     quizAnswered = false;
     lastSelectedOption = null;
+    cipherClueRevealed = false;
     if (elQuizIntroView) elQuizIntroView.classList.add('hidden');
     elQuizSummaryView.classList.add('hidden');
     elQuizQuestionView.classList.remove('hidden');
@@ -7415,6 +7419,30 @@
   }
 
   let forcedSealWatermarkActive = false;
+  let cipherClueRevealed = false;
+
+  function updateCipherClueUi(showSealWatermark, autoRevealSealHint) {
+    if (elHpCipherSpellBtn) {
+      elHpCipherSpellBtn.textContent =
+        currentLang === 'en'
+          ? '🪄 Tap to cast Aparecium & reveal the cipher clue'
+          : '🪄 輕觸施展顯形咒（Aparecium）窺見解碼線索';
+    }
+    if (elHpCipherClue) {
+      elHpCipherClue.textContent =
+        currentLang === 'en'
+          ? '🔮 Wizarding Trivia: The day right after our Nov 29 wedding is International Computer Security Day (Nov 30)! Cryptography is the art of hiding plain truth inside scrambled runes—only those who reverse the encoding can awaken Platform 9¾ on this same device & browser.'
+          : '🔮 魔法冷知識：我們的婚禮 11/29 隔天正是「國際電腦安全日（11/30）」！自古以來，密碼學就是把真話藏進看似亂碼的神秘卷軸裡，唯有懂得還原編碼的人，才能在同一個裝置與瀏覽器喚醒隱藏的九又四分之三月台。';
+    }
+    if (!showSealWatermark) {
+      if (elHpCipherSpellBtn) elHpCipherSpellBtn.classList.add('hidden');
+      if (elHpCipherClue) elHpCipherClue.classList.add('hidden');
+      return;
+    }
+    const shouldReveal = autoRevealSealHint || cipherClueRevealed;
+    if (elHpCipherSpellBtn) elHpCipherSpellBtn.classList.toggle('hidden', shouldReveal);
+    if (elHpCipherClue) elHpCipherClue.classList.toggle('hidden', !shouldReveal);
+  }
 
   function showQuizSummary(triggerConfetti) {
     elQuizQuestionView.classList.add('hidden');
@@ -7441,6 +7469,7 @@
     const autoRevealSealHint = quizScore >= 10;
     const sealWrap = elSummarySealCode ? elSummarySealCode.closest('.easter-watermark-wrap') : null;
     if (sealWrap) sealWrap.classList.remove('hidden');
+    updateCipherClueUi(showSealWatermark, autoRevealSealHint);
     if (showSealWatermark) {
       if (elSummarySealHint) {
         elSummarySealHint.classList.toggle('is-auto-revealed', autoRevealSealHint);
@@ -7474,6 +7503,30 @@
   btnQuizNext.addEventListener('click', () => {
     quizIndex += 1;
     renderCurrentQuizQuestion();
+  });
+
+  if (elHpCipherSpellBtn) {
+    elHpCipherSpellBtn.addEventListener('click', () => {
+      cipherClueRevealed = true;
+      updateCipherClueUi(true, quizScore >= 10);
+    });
+  }
+
+  window.addEventListener('te-debug-preview-score', (ev) => {
+    if (window.__TE_DEBUG_AUTH__ !== true) return;
+    const targetScore = Number(ev && ev.detail && ev.detail.score);
+    if (!Number.isFinite(targetScore)) return;
+    const clamped = Math.max(0, Math.min(QUIZ_QUESTIONS.length, Math.round(targetScore)));
+    quizStarted = true;
+    quizIndex = QUIZ_QUESTIONS.length;
+    quizScore = clamped;
+    groomScore = Math.min(3, Math.round(clamped / 3));
+    brideScore = Math.min(3, Math.round(clamped / 3));
+    forcedSealWatermarkActive = false;
+    cipherClueRevealed = false;
+    if (elQuizIntroView) elQuizIntroView.classList.add('hidden');
+    showHubView('quiz');
+    showQuizSummary(false);
   });
 
   if (btnQuizStart) {

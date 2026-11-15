@@ -2544,8 +2544,8 @@
       lumosBarIndex = 0;
     }
 
-    // 尊重使用者主動按掉「琴簫」的靜音設定
-    if (userExplicitlyMutedBgm) {
+    // 僅在使用者已主動開啟「琴簫」按鈕時才切換配樂，絕不自動起音
+    if (!isChamberBgmPlaying || userExplicitlyMutedBgm) {
       syncModeBusGains(true);
       return;
     }
@@ -2555,11 +2555,6 @@
       if (!ctxAudio) return;
       primeChamberSilentUnlock(ctxAudio);
       syncModeBusGains(false);
-
-      if (!isChamberBgmPlaying) {
-        isChamberBgmPlaying = true;
-        syncChamberBgmUi();
-      }
 
       const triggerLumosStart = () => {
         if (
@@ -2615,8 +2610,8 @@
     chamberMusicMode = 'riddle';
     riddleBarIndex = 0;
 
-    // Respect explicit user mute if they turned 琴簫 off intentionally
-    if (userExplicitlyMutedBgm) {
+    // 僅在使用者已主動開啟「琴簫」按鈕時才切換懸疑配樂，絕不自動起音
+    if (!isChamberBgmPlaying || userExplicitlyMutedBgm) {
       syncModeBusGains(true);
       return;
     }
@@ -2624,11 +2619,6 @@
     const ctxAudio = ensureChamberAudio();
     if (!ctxAudio) return;
     syncModeBusGains(false);
-
-    if (!isChamberBgmPlaying) {
-      isChamberBgmPlaying = true;
-      syncChamberBgmUi();
-    }
 
     const triggerSuspenseStart = () => {
       if (!isRiddleModalOpen || !isChamberBgmPlaying || !chamberAudioCtx || chamberAudioCtx.state !== 'running') {
