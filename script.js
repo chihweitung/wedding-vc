@@ -129,7 +129,6 @@
       menuPanelTitle: '美軍俱樂部 · 百匯佳餚與特調菜單',
       menuExternalBtn: '開啟完整菜單相片 ↗',
       menuNoteText: '迎賓小提醒：戶外備有「雞尾酒點心吧」，吧台也為每位賓客準備了一杯「Bartender 現調調酒」；自助百匯區提供現切爐烤曼哈頓牛排、海陸熱饌與法式甜點（皆已標註素食／蛋奶素／含酒精），請慢慢享用！',
-      viewGooglePhotoBtn: '在 Google Photos 查看相片 ↗',
       sharePanelEyebrow: 'Shared Wedding Album',
       sharePanelTitle: '你鏡頭下的 Tom & Eunice',
       sharePanelDesc: '今天在現場拍下的照片或小短片，都很歡迎傳進這本 Google Photos 相簿，讓我們也能看見你眼裡的這一天。',
@@ -138,7 +137,6 @@
       shareLinkBtn: '打開婚禮 Google Photos 相簿 ↗',
       galleryPanelEyebrow: 'PRE-WEDDING PORTRAITS · TOM & EUNICE',
       galleryPanelTitle: '精選婚紗照片輪播',
-      galleryAlbumLinkBtn: '打開完整 Google 相簿 ↗',
       eraAll: '全部年份 (2014–2026)',
       era2014: '2014–2017 初識與校園',
       era2018: '2018–2021 跨洲遠距離',
@@ -158,8 +156,6 @@
       timelineNextTitle: '下一站',
       timelineSpeedTitle: '調整播放速度',
       timelineReplayBtn: '↺ 重播',
-      timelineExportBtn: '下載紀念影片',
-      timelineExportingBtn: '正在錄製影片中...',
       mediaBadgeYoutube: 'Our Wedding Film · 我們的影片',
       mediaBadgeShorts: 'YouTube Shorts · 我們的影片',
       mediaBadgeIgReel: 'Instagram Reel · 我們的影片',
@@ -246,7 +242,6 @@
       menuPanelTitle: 'Brick Yard 33 1/3 · Banquet & Cocktail Menu',
       menuExternalBtn: 'Open Full Menu Photo ↗',
       menuNoteText: 'Welcome Treats: Enjoy our Outdoor Cocktail & Canapé Bar plus one handcrafted Bartender cocktail per guest, alongside carved Manhattan steak, hot entrées & French patisserie (vegetarian, ovo-lacto vegetarian & alcohol-containing dishes are labeled).',
-      viewGooglePhotoBtn: 'View on Google Photos ↗',
       sharePanelEyebrow: 'Shared Wedding Album',
       sharePanelTitle: 'Tom & Eunice Through Your Lens',
       sharePanelDesc: 'We would love to see today through your eyes — feel free to upload any photos or clips you captured to our shared Google Photos album.',
@@ -255,7 +250,6 @@
       shareLinkBtn: 'Open Shared Google Photos Album ↗',
       galleryPanelEyebrow: 'PRE-WEDDING PORTRAITS · TOM & EUNICE',
       galleryPanelTitle: 'Pre-Wedding Photo Carousel',
-      galleryAlbumLinkBtn: 'Open Full Google Photos Album ↗',
       eraAll: 'All Years (2014–2026)',
       era2014: '2014–2017 Campus Days',
       era2018: '2018–2021 Across Time Zones',
@@ -275,8 +269,6 @@
       timelineNextTitle: 'Next Stop',
       timelineSpeedTitle: 'Playback Speed',
       timelineReplayBtn: '↺ Replay',
-      timelineExportBtn: 'Save Keepsake Video',
-      timelineExportingBtn: 'Recording Video...',
       mediaBadgeYoutube: 'Our Wedding Film',
       mediaBadgeShorts: 'YouTube Shorts · Our Film',
       mediaBadgeIgReel: 'Instagram Reel · Our Film',
@@ -2283,7 +2275,6 @@
   const elGallerySection = document.getElementById('gallery-section');
   const elGalleryPanelEyebrow = document.getElementById('gallery-panel-eyebrow');
   const elGalleryPanelTitle = document.getElementById('gallery-panel-title');
-  const elGooglePhotosMemoriesLink = document.getElementById('google-photos-memories-link');
   const elGalleryEraBar = document.getElementById('gallery-era-bar');
   const elMemoryGalleryGrid = document.getElementById('memory-gallery-grid');
 
@@ -2475,7 +2466,6 @@
   let selectedGalleryEra = 'all';
   let selectedFootprintYear = 'all';
   let timelinePlaying = false;
-  let timelineRecording = false;
   let timelineProgress = 0; // 預設從 2014 起點聚焦兩人距離，點播放或拖曳進度條可瀏覽 2014–2026 全程
   let timelineAnimId = null;
   let timelineLastTs = 0;
@@ -2649,10 +2639,6 @@
 
     if (elGalleryPanelEyebrow) elGalleryPanelEyebrow.textContent = dict.galleryPanelEyebrow;
     if (elGalleryPanelTitle) elGalleryPanelTitle.textContent = dict.galleryPanelTitle;
-    if (elGooglePhotosMemoriesLink) {
-      elGooglePhotosMemoriesLink.textContent = dict.galleryAlbumLinkBtn;
-      elGooglePhotosMemoriesLink.href = GOOGLE_PHOTOS_MEMORIES_URL;
-    }
 
     if (elFootprintsPanelEyebrow) elFootprintsPanelEyebrow.textContent = dict.footprintsPanelEyebrow;
     if (elFootprintsPanelTitle) elFootprintsPanelTitle.textContent = dict.footprintsPanelTitle;
@@ -2844,10 +2830,13 @@
   }
 
   function showHubView(mode) {
-    if (mode !== 'footprints' && timelinePlaying && !timelineRecording) {
+    if (mode !== 'footprints' && timelinePlaying) {
       timelinePlaying = false;
       if (timelineAnimId) cancelAnimationFrame(timelineAnimId);
       if (btnTimelinePlay) btnTimelinePlay.textContent = t().timelinePlayBtn;
+    }
+    if (mode !== 'footprints' && typeof stopFootprintGhibliBgm === 'function') {
+      stopFootprintGhibliBgm();
     }
 
     syncHubNavPermissions();
@@ -3210,6 +3199,17 @@
         renderFallbackPlaceholder();
       }
 
+      if (total > 1) {
+        const nextIdx = (idx + 1) % total;
+        const nextItem = PAST_PHOTOS_DATA[nextIdx];
+        const { directImageUrl: nextImageUrl } = resolveGooglePhotoConfig(nextItem, nextIdx);
+        if (nextImageUrl) {
+          const preloadImg = new Image();
+          preloadImg.referrerPolicy = 'no-referrer';
+          preloadImg.src = nextImageUrl;
+        }
+      }
+
       counterBadge.textContent = `${idx + 1} / ${total}`;
       yearTag.textContent = item.yearLabel;
       captionEl.textContent =
@@ -3227,11 +3227,13 @@
     nextBtn.addEventListener('click', () => stepSlide(1));
 
     let touchStartX = 0;
+    let touchStartY = 0;
     stage.addEventListener(
       'touchstart',
       (e) => {
         if (e.touches && e.touches[0]) {
           touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
         }
       },
       { passive: true }
@@ -3241,7 +3243,8 @@
       (e) => {
         if (!e.changedTouches || !e.changedTouches[0]) return;
         const dx = e.changedTouches[0].clientX - touchStartX;
-        if (Math.abs(dx) > 40) {
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) {
           stepSlide(dx < 0 ? 1 : -1);
         }
       },
@@ -6238,11 +6241,106 @@
     return timelineGradientsCache;
   }
 
+  let timelineCtx2d = null;
+  let timelineLastDrawTs = 0;
+  let timelineLastScrubberPct = -1;
+  let timelineDistWidthCache = { text: '', width: 0 };
+  let timelineCityWidthCache = { key: '', eCityW: 0, tCityW: 0 };
+  let timelineTrajectoryCache = null;
+
+  function isMobileFootprintPerf() {
+    if (typeof window === 'undefined') return false;
+    return (
+      (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ||
+      window.innerWidth <= 900
+    );
+  }
+
+  function sampleRolePathLatLng(sA, sB, t, liftSign) {
+    const startNode = sB.from || sA;
+    if (sB.via) {
+      const endLng = sB.lng;
+      const viaLng = unwrapNear(sB.via.lng, endLng);
+      const startLng = unwrapNear(startNode.lng, viaLng);
+      if (t <= 0.55) {
+        const u = t / 0.55;
+        const { midLat, midLng } = getGeoArcControl(startNode.lat, startLng, sB.via.lat, viaLng, liftSign);
+        return {
+          lat: (1 - u) * (1 - u) * startNode.lat + 2 * (1 - u) * u * midLat + u * u * sB.via.lat,
+          lng: (1 - u) * (1 - u) * startLng + 2 * (1 - u) * u * midLng + u * u * viaLng,
+        };
+      }
+      const u = (t - 0.55) / 0.45;
+      const { midLat, midLng } = getGeoArcControl(sB.via.lat, viaLng, sB.lat, endLng, liftSign);
+      return {
+        lat: (1 - u) * (1 - u) * sB.via.lat + 2 * (1 - u) * u * midLat + u * u * sB.lat,
+        lng: (1 - u) * (1 - u) * viaLng + 2 * (1 - u) * u * midLng + u * u * endLng,
+      };
+    }
+    const endLng = sB.lng;
+    const startLng = unwrapNear(startNode.lng, endLng);
+    const { midLat, midLng } = getGeoArcControl(startNode.lat, startLng, sB.lat, endLng, liftSign);
+    return {
+      lat: (1 - t) * (1 - t) * startNode.lat + 2 * (1 - t) * t * midLat + t * t * sB.lat,
+      lng: (1 - t) * (1 - t) * startLng + 2 * (1 - t) * t * midLng + t * t * endLng,
+    };
+  }
+
+  function getTimelineTrajectoryCache(totalSegs) {
+    if (timelineTrajectoryCache && timelineTrajectoryCache.totalSegs === totalSegs) {
+      return timelineTrajectoryCache;
+    }
+    const steps = 16;
+    const buildRole = (roleKey, liftSign) => {
+      const segs = [];
+      for (let i = 0; i < totalSegs; i++) {
+        const sA = LOVE_FOOTPRINTS_DATA[i][roleKey];
+        const sB = LOVE_FOOTPRINTS_DATA[i + 1][roleKey];
+        if (!sA || !sB) {
+          segs.push(null);
+          continue;
+        }
+        const startNode = sB.from || sA;
+        const dLngShort = Math.abs(unwrapNear(startNode.lng, sB.lng) - sB.lng);
+        const geoDist = Math.hypot(sB.lat - startNode.lat, dLngShort);
+        const isStatic = geoDist < 0.015 && !sB.via;
+        const points = [];
+        for (let s = 0; s <= steps; s++) {
+          points.push(sampleRolePathLatLng(sA, sB, s / steps, liftSign));
+        }
+        const midSample = points[steps >> 1];
+        segs.push({ sA, sB, isStatic, points, midLng: midSample.lng });
+      }
+      return segs;
+    };
+    timelineTrajectoryCache = {
+      totalSegs,
+      steps,
+      tom: buildRole('tom', 1),
+      eunice: buildRole('eunice', -1),
+    };
+    return timelineTrajectoryCache;
+  }
+
   function drawTimelineVideoFrame(progress) {
     if (!elTimelineVideoCanvas) return;
-    const ctx2d = elTimelineVideoCanvas.getContext('2d');
-    const w = elTimelineVideoCanvas.width;
-    const h = elTimelineVideoCanvas.height;
+    const isMobile = isMobileFootprintPerf();
+    const renderScale = isMobile ? 0.7 : 1;
+    const w = 1280;
+    const h = 720;
+    const targetW = Math.round(w * renderScale);
+    const targetH = Math.round(h * renderScale);
+    if (elTimelineVideoCanvas.width !== targetW || elTimelineVideoCanvas.height !== targetH) {
+      elTimelineVideoCanvas.width = targetW;
+      elTimelineVideoCanvas.height = targetH;
+      timelineCtx2d = null;
+    }
+    if (!timelineCtx2d) {
+      timelineCtx2d = elTimelineVideoCanvas.getContext('2d', { alpha: false }) || elTimelineVideoCanvas.getContext('2d');
+    }
+    const ctx2d = timelineCtx2d;
+    if (!ctx2d) return;
+    ctx2d.setTransform(renderScale, 0, 0, renderScale, 0, 0);
 
     const totalSegs = Math.max(1, LOVE_FOOTPRINTS_DATA.length - 1);
     const exactStep = Math.max(0, Math.min(totalSegs, progress * totalSegs));
@@ -6367,10 +6465,12 @@
         });
         ctx2d.closePath();
 
-        // 淺海海岸線柔光暈
-        ctx2d.strokeStyle = poly.isHighlight ? 'rgba(255, 226, 138, 0.24)' : 'rgba(116, 214, 198, 0.14)';
-        ctx2d.lineWidth = poly.isHighlight ? 11 : 8;
-        ctx2d.stroke();
+        // 淺海海岸線柔光暈（手機端僅保留台灣亮點光暈，減少全地圖雙倍 stroke 負擔）
+        if (!isMobile || poly.isHighlight) {
+          ctx2d.strokeStyle = poly.isHighlight ? 'rgba(255, 226, 138, 0.24)' : 'rgba(116, 214, 198, 0.14)';
+          ctx2d.lineWidth = poly.isHighlight ? 11 : 8;
+          ctx2d.stroke();
+        }
 
         if (poly.isHighlight) {
           ctx2d.fillStyle = grads.taiwanGrad;
@@ -6456,139 +6556,71 @@
       ctx2d.restore();
     }
 
-    // 4. 繪製雙人專屬顏色軌跡線（支援經美西/杜拜轉機 via 節點，台灣↔美西必走太平洋航線）：Tom (星空藍 #38bdf8) vs Eunice (玫瑰粉 #f472b6)
-    const sampleRolePathLatLng = (sA, sB, t, liftSign) => {
-      const startNode = sB.from || sA;
-      if (sB.via) {
-        // 兩段式航線：先從起點飛往轉機點 (如台灣 ➔ 太平洋 ➔ 美西)，再從轉機點飛往目的地 (如美西 ➔ 美東)
-        const endLng = sB.lng;
-        const viaLng = unwrapNear(sB.via.lng, endLng);
-        const startLng = unwrapNear(startNode.lng, viaLng);
-        if (t <= 0.55) {
-          const u = t / 0.55;
-          const { midLat, midLng } = getGeoArcControl(startNode.lat, startLng, sB.via.lat, viaLng, liftSign);
-          return {
-            lat: (1 - u) * (1 - u) * startNode.lat + 2 * (1 - u) * u * midLat + u * u * sB.via.lat,
-            lng: (1 - u) * (1 - u) * startLng + 2 * (1 - u) * u * midLng + u * u * viaLng,
-          };
-        }
-        const u = (t - 0.55) / 0.45;
-        const { midLat, midLng } = getGeoArcControl(sB.via.lat, viaLng, sB.lat, endLng, liftSign);
-        return {
-          lat: (1 - u) * (1 - u) * sB.via.lat + 2 * (1 - u) * u * midLat + u * u * sB.lat,
-          lng: (1 - u) * (1 - u) * viaLng + 2 * (1 - u) * u * midLng + u * u * endLng,
-        };
-      }
-      const endLng = sB.lng;
-      const startLng = unwrapNear(startNode.lng, endLng);
-      const { midLat, midLng } = getGeoArcControl(startNode.lat, startLng, sB.lat, endLng, liftSign);
-      return {
-        lat: (1 - t) * (1 - t) * startNode.lat + 2 * (1 - t) * t * midLat + t * t * sB.lat,
-        lng: (1 - t) * (1 - t) * startLng + 2 * (1 - t) * t * midLng + t * t * endLng,
-      };
-    };
+    // 4. 繪製雙人專屬顏色軌跡線（使用預先取樣快取，避免每幀重算貝茲曲線與頻繁 save/restore）
+    const trajCache = getTimelineTrajectoryCache(totalSegs);
 
-    const appendFocusFrameAndBadge = (layer, fb, label) => {
-      if (!fb) return;
-      const focusRect = document.createElementNS(svgNS, 'rect');
-      focusRect.setAttribute('x', String(fb.x));
-      focusRect.setAttribute('y', String(fb.y));
-      focusRect.setAttribute('width', String(fb.w));
-      focusRect.setAttribute('height', String(fb.h));
-      focusRect.setAttribute('rx', '22');
-      focusRect.setAttribute('ry', '22');
-      focusRect.setAttribute('class', 'seating-table-focus-frame');
-      layer.append(focusRect);
+    const drawRoleTrajectory = (roleKey, strokeActive, strokeRecent, strokePast, liftSign) => {
+      const segs = trajCache[roleKey];
+      const steps = trajCache.steps;
 
-      if (!label) return;
-      const badgeTextStr = `📍 ${label}`;
-      const badgeW = Math.max(150, Math.min(420, badgeTextStr.length * 30 + 44));
-      const badgeH = 54;
-      const badgeCx = Math.max(
-        badgeW / 2 + 18,
-        Math.min(2090 - badgeW / 2 - 18, Math.round(fb.x + fb.w / 2))
-      );
-      const badgeCy = fb.y < 86 ? fb.y + fb.h + 36 : fb.y - 34;
-
-      const badgeGroup = document.createElementNS(svgNS, 'g');
-      badgeGroup.setAttribute('class', 'seating-table-focus-badge');
-      const badgeBg = document.createElementNS(svgNS, 'rect');
-      badgeBg.setAttribute('x', String(Math.round(badgeCx - badgeW / 2)));
-      badgeBg.setAttribute('y', String(Math.round(badgeCy - badgeH / 2)));
-      badgeBg.setAttribute('width', String(badgeW));
-      badgeBg.setAttribute('height', String(badgeH));
-      badgeBg.setAttribute('rx', '27');
-      badgeBg.setAttribute('ry', '27');
-      badgeBg.setAttribute('class', 'seating-table-focus-badge-bg');
-      const badgeText = document.createElementNS(svgNS, 'text');
-      badgeText.setAttribute('x', String(badgeCx));
-      badgeText.setAttribute('y', String(Math.round(badgeCy + 11)));
-      badgeText.setAttribute('text-anchor', 'middle');
-      badgeText.setAttribute('class', 'seating-table-focus-badge-text');
-      badgeText.textContent = badgeTextStr;
-      badgeGroup.append(badgeBg, badgeText);
-      layer.append(badgeGroup);
-    };
-
-    const drawRoleTrajectory = (roleKey, strokeActive, strokeRecent, strokePast, shadowCol, liftSign) => {
+      // 未來航段淡虛線預覽（合併設定 lineDash）
+      ctx2d.strokeStyle = roleKey === 'tom' ? 'rgba(56, 189, 248, 0.13)' : 'rgba(244, 114, 182, 0.13)';
+      ctx2d.lineWidth = 1.3;
+      ctx2d.setLineDash([4, 6]);
       for (let i = 0; i < totalSegs; i++) {
-        const sA = LOVE_FOOTPRINTS_DATA[i][roleKey];
-        const sB = LOVE_FOOTPRINTS_DATA[i + 1][roleKey];
-        if (!sA || !sB) continue;
-
-        const startNode = sB.from || sA;
-        const dLngShort = Math.abs(unwrapNear(startNode.lng, sB.lng) - sB.lng);
-        const geoDist = Math.hypot(sB.lat - startNode.lat, dLngShort);
-        if (geoDist < 0.015 && !sB.via && i !== segIdx) continue;
-
-        const steps = 18;
-        const midSample = sampleRolePathLatLng(sA, sB, 0.5, liftSign);
-        const shiftLng = unwrapNear(midSample.lng, cam.centerLng) - midSample.lng;
-
-        // 未來航段淡虛線預覽
-        ctx2d.save();
-        ctx2d.strokeStyle = roleKey === 'tom' ? 'rgba(56, 189, 248, 0.13)' : 'rgba(244, 114, 182, 0.13)';
-        ctx2d.lineWidth = 1.3;
-        ctx2d.setLineDash([4, 6]);
+        const seg = segs[i];
+        if (!seg || (seg.isStatic && i !== segIdx)) continue;
+        const shiftLng = unwrapNear(seg.midLng, cam.centerLng) - seg.midLng;
         ctx2d.beginPath();
         for (let s = 0; s <= steps; s++) {
-          const t = s / steps;
-          const g = sampleRolePathLatLng(sA, sB, t, liftSign);
+          const g = seg.points[s];
           const pt = projectWithCamera(g.lat, g.lng + shiftLng, cam, w, h);
           if (s === 0) ctx2d.moveTo(pt.x, pt.y);
           else ctx2d.lineTo(pt.x, pt.y);
         }
         ctx2d.stroke();
-        ctx2d.restore();
+      }
+      ctx2d.setLineDash([]);
 
-        // 已走過的軌跡實線
-        if (i < segIdx || (i === segIdx && segFrac > 0.001)) {
-          const isCurrentLeg = i === segIdx && exactStep < totalSegs;
-          const isRecentLeg = segIdx - i <= 3 || progress >= 0.99;
-          const tMax = i < segIdx ? 1 : segFrac;
+      // 已走過的軌跡實線
+      for (let i = 0; i < totalSegs; i++) {
+        const seg = segs[i];
+        if (!seg || (seg.isStatic && i !== segIdx)) continue;
+        if (!(i < segIdx || (i === segIdx && segFrac > 0.001))) continue;
 
-          ctx2d.save();
-          ctx2d.strokeStyle = isCurrentLeg ? strokeActive : isRecentLeg ? strokeRecent : strokePast;
-          ctx2d.lineWidth = isCurrentLeg ? 3.8 : isRecentLeg ? 2.5 : 1.7;
-          ctx2d.beginPath();
+        const shiftLng = unwrapNear(seg.midLng, cam.centerLng) - seg.midLng;
+        const isCurrentLeg = i === segIdx && exactStep < totalSegs;
+        const isRecentLeg = segIdx - i <= 3 || progress >= 0.99;
+        const tMax = i < segIdx ? 1 : segFrac;
+
+        ctx2d.strokeStyle = isCurrentLeg ? strokeActive : isRecentLeg ? strokeRecent : strokePast;
+        ctx2d.lineWidth = isCurrentLeg ? 3.8 : isRecentLeg ? 2.5 : 1.7;
+        ctx2d.beginPath();
+        if (i < segIdx) {
           for (let s = 0; s <= steps; s++) {
-            const t = (s / steps) * tMax;
-            const g = sampleRolePathLatLng(sA, sB, t, liftSign);
+            const g = seg.points[s];
             const pt = projectWithCamera(g.lat, g.lng + shiftLng, cam, w, h);
             if (s === 0) ctx2d.moveTo(pt.x, pt.y);
             else ctx2d.lineTo(pt.x, pt.y);
           }
-          ctx2d.stroke();
-
-          // 若有美西/杜拜轉機節點且已飛過轉機點，標示一個小轉機圓點
-          if (sB.via && tMax >= 0.55) {
-            const vPt = projectWithCamera(sB.via.lat, unwrapNear(sB.via.lng, cam.centerLng), cam, w, h);
-            ctx2d.fillStyle = strokeActive;
-            ctx2d.beginPath();
-            ctx2d.arc(vPt.x, vPt.y, 3.5, 0, Math.PI * 2);
-            ctx2d.fill();
+        } else {
+          for (let s = 0; s <= steps; s++) {
+            const t = (s / steps) * tMax;
+            const g = sampleRolePathLatLng(seg.sA, seg.sB, t, liftSign);
+            const pt = projectWithCamera(g.lat, g.lng + shiftLng, cam, w, h);
+            if (s === 0) ctx2d.moveTo(pt.x, pt.y);
+            else ctx2d.lineTo(pt.x, pt.y);
           }
-          ctx2d.restore();
+        }
+        ctx2d.stroke();
+
+        // 若有美西/杜拜轉機節點且已飛過轉機點，標示一個小轉機圓點
+        if (seg.sB.via && tMax >= 0.55) {
+          const vPt = projectWithCamera(seg.sB.via.lat, unwrapNear(seg.sB.via.lng, cam.centerLng), cam, w, h);
+          ctx2d.fillStyle = strokeActive;
+          ctx2d.beginPath();
+          ctx2d.arc(vPt.x, vPt.y, 3.5, 0, Math.PI * 2);
+          ctx2d.fill();
         }
       }
     };
@@ -6599,7 +6631,6 @@
       const tPt = projectWithCamera(item.tom.lat, unwrapNear(item.tom.lng, cam.centerLng), cam, w, h);
       const ePt = projectWithCamera(item.eunice.lat, unwrapNear(item.eunice.lng, cam.centerLng), cam, w, h);
 
-      ctx2d.save();
       ctx2d.fillStyle = 'rgba(56, 189, 248, 0.65)';
       ctx2d.beginPath();
       ctx2d.arc(tPt.x, tPt.y, 4, 0, Math.PI * 2);
@@ -6609,7 +6640,6 @@
       ctx2d.beginPath();
       ctx2d.arc(ePt.x, ePt.y, 4, 0, Math.PI * 2);
       ctx2d.fill();
-      ctx2d.restore();
     });
 
     // 繪製 Tom (星空藍) 與 Eunice (玫瑰粉) 的軌跡弧線
@@ -6618,7 +6648,6 @@
       '#38bdf8',
       'rgba(56, 189, 248, 0.78)',
       'rgba(56, 189, 248, 0.34)',
-      'rgba(56, 189, 248, 0.75)',
       1
     );
     drawRoleTrajectory(
@@ -6626,7 +6655,6 @@
       '#f472b6',
       'rgba(244, 114, 182, 0.78)',
       'rgba(244, 114, 182, 0.34)',
-      'rgba(244, 114, 182, 0.75)',
       -1
     );
 
@@ -6709,7 +6737,13 @@
 
     ctx2d.save();
     ctx2d.font = '700 14px "JetBrains Mono", "Noto Sans TC", sans-serif';
-    const dBadgeW = ctx2d.measureText(distBadgeText).width + 24;
+    if (timelineDistWidthCache.text !== distBadgeText) {
+      timelineDistWidthCache = {
+        text: distBadgeText,
+        width: ctx2d.measureText(distBadgeText).width,
+      };
+    }
+    const dBadgeW = timelineDistWidthCache.width + 24;
     const dBadgeH = 28;
     const clampedBadgeX = Math.max(mapLeft + dBadgeW / 2 + 10, Math.min(mapRight - dBadgeW / 2 - 10, tetherMidX));
     const clampedBadgeY = Math.max(mapTop + dBadgeH / 2 + 10, Math.min(mapBottom - dBadgeH / 2 - 10, tetherMidY));
@@ -6814,8 +6848,16 @@
     ctx2d.textAlign = 'right';
     const eCityStr = `Eunice: ${currentItem.eunice.city[currentLang]}`;
     const tCityStr = `Tom: ${currentItem.tom.city[currentLang]}`;
-    const eCityW = ctx2d.measureText(eCityStr).width;
-    const tCityW = ctx2d.measureText(tCityStr).width;
+    const cityCacheKey = `${currentLang}:${activeIdx}`;
+    if (timelineCityWidthCache.key !== cityCacheKey) {
+      timelineCityWidthCache = {
+        key: cityCacheKey,
+        eCityW: ctx2d.measureText(eCityStr).width,
+        tCityW: ctx2d.measureText(tCityStr).width,
+      };
+    }
+    const eCityW = timelineCityWidthCache.eCityW;
+    const tCityW = timelineCityWidthCache.tCityW;
     const rightEdge = cardX + cardW - 26;
     ctx2d.fillStyle = '#be185d';
     ctx2d.fillText(eCityStr, rightEdge, cardY + 34);
@@ -6837,7 +6879,11 @@
     ctx2d.restore();
 
     if (elTimelineScrubberFill) {
-      elTimelineScrubberFill.style.width = `${Math.round(progress * 100)}%`;
+      const pct = Math.round(progress * 100);
+      if (pct !== timelineLastScrubberPct) {
+        timelineLastScrubberPct = pct;
+        elTimelineScrubberFill.style.width = `${pct}%`;
+      }
     }
   }
 
@@ -6907,7 +6953,11 @@
       return;
     }
 
-    drawTimelineVideoFrame(timelineProgress);
+    const minFrameMs = isMobileFootprintPerf() ? 33 : 0;
+    if (!timelineLastDrawTs || ts - timelineLastDrawTs >= minFrameMs) {
+      timelineLastDrawTs = ts;
+      drawTimelineVideoFrame(timelineProgress);
+    }
     timelineAnimId = requestAnimationFrame(stepTimelineAnimation);
   }
 
@@ -6925,6 +6975,7 @@
     }
     timelinePlaying = true;
     timelineLastTs = 0;
+    timelineLastDrawTs = 0;
     startFootprintGhibliBgm();
     if (btnTimelinePlay) btnTimelinePlay.textContent = dict.timelinePauseBtn;
     timelineAnimId = requestAnimationFrame(stepTimelineAnimation);

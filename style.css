@@ -1974,34 +1974,6 @@ body.carousel-fullscreen-open {
   color: var(--text-secondary);
 }
 
-.wedding-carousel-dots {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.wedding-carousel-dot {
-  min-width: 34px;
-  height: 30px;
-  padding: 0 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border-subtle);
-  background: var(--surface-pill);
-  color: var(--text-secondary);
-  font-size: 0.76rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-
-.wedding-carousel-dot.is-active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #ffffff;
-}
-
 @media (max-width: 640px) {
   .wedding-carousel-stage {
     height: clamp(260px, 68vw, 420px);
@@ -3624,53 +3596,6 @@ body.carousel-fullscreen-open {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-}
-
-.footprint-yt-mini-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 10px 14px;
-  border-radius: 14px;
-  background: rgba(20, 38, 29, 0.9);
-  border: 1px solid rgba(154, 186, 138, 0.35);
-  color: #f3efe2;
-}
-
-.footprint-yt-mini-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 0.84rem;
-}
-
-.footprint-yt-mini-title {
-  font-weight: 700;
-  color: #fde68a;
-}
-
-.footprint-yt-mini-hint {
-  font-size: 0.76rem;
-  color: rgba(243, 239, 226, 0.78);
-}
-
-.footprint-yt-mini-frame {
-  width: 240px;
-  height: 135px;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  flex-shrink: 0;
-  background: #000;
-}
-
-.footprint-yt-mini-frame iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  display: block;
 }
 
 .timeline-scrubber-wrap {
