@@ -16,28 +16,52 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261116f" />
-  <link rel="stylesheet" href="debug.css?v=20261116f" />
+  <link rel="stylesheet" href="style.css?v=20261116g" />
+  <link rel="stylesheet" href="debug.css?v=20261116g" />
 </head>
 <body class="debug-locked">
   <!-- Staff Login Gate -->
   <div id="staff-auth-gate" class="debug-auth-gate" role="dialog" aria-modal="true" aria-labelledby="staff-auth-title">
     <form id="staff-auth-form" class="debug-auth-card" autocomplete="off">
-      <div class="debug-auth-badge">STAFF ACCESS · 接待人員專用</div>
-      <h2 id="staff-auth-title" class="debug-auth-title">接待人員登入</h2>
-      <p class="debug-auth-desc">請輸入接待人員帳號與密碼，即可檢視完整賓客座位表與素食／兒童椅位置。</p>
-      <div class="debug-auth-fields">
-        <label class="debug-auth-label">
-          <span>帳號 Account</span>
-          <input type="text" id="staff-username" class="debug-auth-input" required autocomplete="username" />
-        </label>
-        <label class="debug-auth-label">
-          <span>密碼 Password</span>
-          <input type="password" id="staff-password" class="debug-auth-input" required autocomplete="current-password" />
-        </label>
+      <div class="debug-auth-badge">🌿 STAFF ACCESS · 接待人員專用</div>
+      <h1 id="staff-auth-title" class="debug-auth-title">接待人員登入</h1>
+      <p class="debug-auth-desc">
+        請輸入接待人員帳號與密碼，即可檢視完整賓客座位表、兒童椅、嬰兒車與素食位置。
+      </p>
+
+      <div class="debug-field-group">
+        <label class="debug-field-label" for="staff-username">帳號 Account</label>
+        <input
+          type="text"
+          id="staff-username"
+          class="debug-field-input"
+          placeholder="請輸入帳號"
+          required
+          autofocus
+          autocomplete="username"
+          autocapitalize="none"
+          spellcheck="false"
+        />
       </div>
+
+      <div class="debug-field-group">
+        <label class="debug-field-label" for="staff-password">密碼 Password</label>
+        <input
+          type="password"
+          id="staff-password"
+          class="debug-field-input"
+          placeholder="請輸入密碼"
+          required
+          autocomplete="current-password"
+        />
+      </div>
+
       <p id="staff-auth-error" class="debug-auth-error hidden">帳號或密碼錯誤，請重新輸入。</p>
-      <button type="submit" class="primary-btn debug-auth-submit">登入進入座位表</button>
+
+      <div class="debug-auth-actions">
+        <button type="submit" class="action-btn primary debug-submit-btn">登入進入座位表</button>
+        <a href="index.html" class="action-btn secondary debug-back-link">返回公開首頁</a>
+      </div>
     </form>
   </div>
   <canvas id="confetti-canvas" aria-hidden="true"></canvas>
@@ -684,7 +708,7 @@
     </footer>
   </div>
 
-  <script src="staff.js?v=20261116f"></script>
-  <script src="script.js?v=20261116f"></script>
+  <script src="staff.js?v=20261116g"></script>
+  <script src="script.js?v=20261116g"></script>
 </body>
 </html>
