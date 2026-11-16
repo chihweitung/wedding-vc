@@ -4928,7 +4928,7 @@
       svg.append(loupeGroup);
     };
 
-    if (focusLoupeSlots.length > 0 && focusLoupeSlots.length <= 4) {
+    if (seatingNeedsFilter === 'all' && focusLoupeSlots.length > 0 && focusLoupeSlots.length <= 4) {
       const firstItem = focusLoupeSlots[0];
       const firstSlot = firstItem.slot;
       const nearbySlots = focusLoupeSlots.filter(({ slot }) => {
@@ -5147,10 +5147,12 @@
     }
 
     let totalChildSeat = 0;
+    let totalStroller = 0;
     let totalVeg = 0;
     SEATING_TABLES_DATA.forEach((tItem) => {
       if (tItem.debugStats) {
         totalChildSeat += tItem.debugStats.childSeat || 0;
+        totalStroller += tItem.debugStats.stroller || 0;
         totalVeg += tItem.debugStats.veg || 0;
       }
     });
@@ -5166,6 +5168,13 @@
           currentLang === 'en'
             ? `🪑 Needs High Chair (${totalChildSeat})`
             : `🪑 找兒童椅位置 (${totalChildSeat})`,
+      },
+      {
+        id: 'stroller',
+        label:
+          currentLang === 'en'
+            ? `🚼 Needs Stroller (${totalStroller})`
+            : `🚼 找嬰兒車位置 (${totalStroller})`,
       },
       {
         id: 'veg',
@@ -5288,6 +5297,7 @@
         !isDebugPage ||
         seatingNeedsFilter === 'all' ||
         (seatingNeedsFilter === 'childSeat' && table.debugStats && table.debugStats.childSeat > 0) ||
+        (seatingNeedsFilter === 'stroller' && table.debugStats && table.debugStats.stroller > 0) ||
         (seatingNeedsFilter === 'veg' && table.debugStats && table.debugStats.veg > 0);
 
       if (!matchesNeeds) {
