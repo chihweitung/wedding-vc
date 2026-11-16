@@ -4398,6 +4398,55 @@
       svg.append(pinLayer);
     });
 
+    if (isDebugPage && seatingNeedsFilter !== 'all') {
+      SEATING_TABLES_DATA.forEach((table) => {
+        const ds = table.debugStats;
+        if (!ds || !table.box) return;
+        let count = 0;
+        let badgeLabel = '';
+        if (seatingNeedsFilter === 'childSeat') {
+          count = ds.childSeat || 0;
+          badgeLabel = currentLang === 'en' ? `🪑 ${count}` : `🪑 ${count} 張`;
+        } else if (seatingNeedsFilter === 'stroller') {
+          count = ds.stroller || 0;
+          badgeLabel = currentLang === 'en' ? `🚼 ${count}` : `🚼 ${count} 台`;
+        } else if (seatingNeedsFilter === 'veg') {
+          count = ds.veg || 0;
+          badgeLabel = currentLang === 'en' ? `🥗 ${count}` : `🥗 ${count} 人`;
+        }
+        if (count <= 0 || !badgeLabel) return;
+
+        const badgeCx = Math.round(table.box.x + table.box.w / 2);
+        const badgeCy = Math.round(table.box.y + table.box.h / 2);
+        const badgeW = Math.max(136, badgeLabel.length * 26 + 44);
+        const badgeH = 56;
+
+        const badgeGroup = document.createElementNS(svgNS, 'g');
+        badgeGroup.setAttribute('class', 'seating-table-focus-badge');
+        if (table.color) badgeGroup.style.setProperty('--zone-color', table.color);
+        if (table.darkColor) badgeGroup.style.setProperty('--zone-dark-color', table.darkColor);
+
+        const badgeBg = document.createElementNS(svgNS, 'rect');
+        badgeBg.setAttribute('x', String(Math.round(badgeCx - badgeW / 2)));
+        badgeBg.setAttribute('y', String(Math.round(badgeCy - badgeH / 2)));
+        badgeBg.setAttribute('width', String(badgeW));
+        badgeBg.setAttribute('height', String(badgeH));
+        badgeBg.setAttribute('rx', '28');
+        badgeBg.setAttribute('ry', '28');
+        badgeBg.setAttribute('class', 'seating-table-focus-badge-bg');
+
+        const badgeText = document.createElementNS(svgNS, 'text');
+        badgeText.setAttribute('x', String(badgeCx));
+        badgeText.setAttribute('y', String(Math.round(badgeCy + 11)));
+        badgeText.setAttribute('text-anchor', 'middle');
+        badgeText.setAttribute('class', 'seating-table-focus-badge-text');
+        badgeText.textContent = badgeLabel;
+
+        badgeGroup.append(badgeBg, badgeText);
+        svg.append(badgeGroup);
+      });
+    }
+
     // 3. 繪製大廳入口標籤、接待桌標示與可互動餐點區標示（取餐區 × 2）
     const entranceBadge = {
       cx: 941,
@@ -5065,7 +5114,7 @@
           });
         },
       });
-    } else if (freeSeatingLoupeTarget) {
+    } else if (seatingNeedsFilter === 'all' && freeSeatingLoupeTarget) {
       const { table: fTable, plan: fPlan, loupe: fLoupe, focusBox: fBox } = freeSeatingLoupeTarget;
       appendMagnifierLoupe({
         cx: fLoupe.cx,
