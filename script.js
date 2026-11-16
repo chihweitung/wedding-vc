@@ -1698,7 +1698,6 @@
       tom: {
         lat: 28.385,
         lng: 278.437,
-        from: { lat: 25.033, lng: 121.565 },
         via: { lat: 37.62, lng: 237.62 },
         city: { zh: '經美西 ➔ 奧蘭多迪士尼', en: 'Via US West ➔ Orlando' },
       },
@@ -1768,7 +1767,6 @@
       tom: {
         lat: 43.653,
         lng: 280.617,
-        from: { lat: 25.033, lng: 121.565 },
         via: { lat: 37.62, lng: 237.62 },
         city: { zh: '經美西 ➔ 多倫多＆尼加拉瀑布', en: 'Via US West ➔ Toronto' },
       },
@@ -2005,13 +2003,11 @@
       tom: {
         lat: 52.955,
         lng: -1.158,
-        from: { lat: 25.033, lng: 121.565 },
         city: { zh: '倫敦＆諾丁漢 ➔ 住柏林', en: 'London/Nottingham ➔ Berlin' },
       },
       eunice: {
         lat: 52.955,
         lng: -1.158,
-        from: { lat: 22.627, lng: 120.301 },
         city: { zh: '英國諾丁漢留學 🇬🇧', en: 'Nottingham, UK 🇬🇧' },
       },
       lat: 52.955,
