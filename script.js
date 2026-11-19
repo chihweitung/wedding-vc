@@ -1332,7 +1332,7 @@
       fillColor: 'rgba(124, 58, 237, 0.12)',
       darkColor: '#c084fc',
       darkFillColor: 'rgba(192, 132, 252, 0.16)',
-      debugStats: { headcount: 8, veg: 0, stroller: 0, childSeat: 0 },
+      debugStats: { headcount: 7, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新娘同事區（瑪黑）', en: "Bride's Colleagues (Marais)" },
       zone: { zh: '外廳左列下方區 · 瑪黑', en: 'Lower Hall Left Col · Lower (Marais)' },
       guests: [
@@ -1341,7 +1341,6 @@
         { zh: '陳泰元', en: '陳泰元' },
         { zh: '金耘瑞等二人', en: '金耘瑞 (2)' },
         { zh: '張世瑤 Anny', en: '張世瑤 Anny' },
-        { zh: '蔡青樺 Iris', en: '蔡青樺 Iris' },
         { zh: '沈堉綺', en: '沈堉綺' },
       ],
     },
