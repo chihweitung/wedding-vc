@@ -74,6 +74,13 @@
         if (errEl) errEl.classList.add('hidden');
         const userVal = userInput ? userInput.value.trim() : '';
         const passVal = passInput ? passInput.value : '';
+        if (!window.crypto || !window.crypto.subtle) {
+          if (errEl) {
+            errEl.textContent = '此瀏覽器環境不支援加密驗證，請改用 HTTPS 正式網址開啟。';
+            errEl.classList.remove('hidden');
+          }
+          return;
+        }
         try {
           const digest = await sha256Hex(`${userVal}:${passVal}`);
           if (constantTimeEqual(digest, STAFF_CREDENTIAL_HASH)) {
@@ -83,7 +90,10 @@
         } catch (_err) {
           // Ignore crypto error and show invalid credentials message
         }
-        if (errEl) errEl.classList.remove('hidden');
+        if (errEl) {
+          errEl.textContent = '帳號或密碼錯誤，請重新輸入。';
+          errEl.classList.remove('hidden');
+        }
         if (passInput) {
           passInput.value = '';
           passInput.focus();

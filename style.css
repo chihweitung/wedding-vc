@@ -2102,10 +2102,138 @@ body.carousel-fullscreen-open {
 }
 
 /* Wedding Seating Chart & Banquet Menu */
+.seating-search-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin: 4px 0 8px;
+}
+
+.seating-filter-selects {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.seating-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+
+.seating-filter-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding-left: 4px;
+}
+
+.seating-filter-select {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 38px 10px 14px;
+  border-radius: 14px;
+  background-color: var(--surface-card, #ffffff);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234f6f52' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-position: right 12px center;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1.5px solid color-mix(in srgb, var(--accent) 36%, var(--border-highlight));
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seating-filter-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
 .seating-search-bar {
   position: relative;
   width: 100%;
-  margin: 4px 0 6px;
+  margin: 0;
+}
+
+.seating-autocomplete-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 45;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  max-height: min(280px, 42vh);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  border-radius: 16px;
+  background: var(--surface-card, #ffffff);
+  border: 1.5px solid color-mix(in srgb, var(--accent) 42%, var(--border-highlight));
+  box-shadow: 0 14px 34px -8px rgba(15, 28, 19, 0.24);
+  text-align: left;
+}
+
+.seating-autocomplete-list.hidden {
+  display: none;
+}
+
+.seating-autocomplete-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 11px;
+  cursor: pointer;
+  font-size: 0.96rem;
+  color: var(--text-primary);
+  touch-action: manipulation;
+  transition: background 0.15s ease;
+}
+
+.seating-autocomplete-item:hover,
+.seating-autocomplete-item.is-active {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.seating-autocomplete-name {
+  font-weight: 600;
+}
+
+.seating-autocomplete-name mark {
+  background: color-mix(in srgb, var(--accent) 26%, transparent);
+  color: inherit;
+  border-radius: 4px;
+  padding: 0 2px;
+}
+
+.seating-autocomplete-zone {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 55%;
+}
+
+@media (max-width: 540px) {
+  .seating-filter-selects {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
 }
 
 .seating-search-icon {

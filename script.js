@@ -135,7 +135,7 @@
       seatingPanelEyebrow: 'Brick Yard 33 1/3 · Floor Plan',
       seatingPanelTitle: '美軍俱樂部 · 婚宴座位表',
       seatingExternalBtn: '開啟完整座位圖 ↗',
-      seatingSearchPlaceholder: '輸入名字或親友分類（例如：北藝、交大、謀智、瑪黑、Google、親戚）...',
+      seatingSearchPlaceholder: '輸入姓名（支援自動補全）或桌名...',
       menuPanelEyebrow: 'Brick Yard 33 1/3 · Banquet & Bar',
       menuPanelTitle: '美軍俱樂部 · 百匯佳餚與特調菜單',
       menuExternalBtn: '開啟完整菜單相片 ↗',
@@ -259,7 +259,7 @@
       seatingPanelEyebrow: 'Brick Yard 33 1/3 · Floor Plan',
       seatingPanelTitle: 'Brick Yard 33 1/3 · Seating Chart',
       seatingExternalBtn: 'Open Full Floor Plan ↗',
-      seatingSearchPlaceholder: 'Search your name or group (e.g., TNUA, NCTU, Mozilla, Marais, Google)...',
+      seatingSearchPlaceholder: 'Type a name (autocomplete) or table...',
       menuPanelEyebrow: 'Brick Yard 33 1/3 · Banquet & Bar',
       menuPanelTitle: 'Brick Yard 33 1/3 · Banquet & Cocktail Menu',
       menuExternalBtn: 'Open Full Menu Photo ↗',
@@ -792,7 +792,7 @@
         { zh: '蕭睦宸 Eunice (新娘)', en: 'Eunice Hsiao (Bride)' },
         { zh: '董煥新&徐淑明等二人', en: '董煥新 & 徐淑明 (2)' },
         { zh: '蕭能駿&傅郁淳等二人', en: '蕭能駿 & 傅郁淳 (2)' },
-        { zh: '婆婆', en: 'Grandmother (婆婆)' },
+        { zh: '賴翠香', en: '賴翠香 (Grandmother)' },
         { zh: '董素娟等二人', en: '董素娟 (2)' },
         { zh: '傅昭雄等二人', en: '傅昭雄 (2)' },
         { zh: '傅楷凌', en: '傅楷凌' },
@@ -840,7 +840,7 @@
           ],
           [
             { key: '傅昭雄', zh: '傅昭雄', en: '傅昭雄', match: '傅昭雄' },
-            { key: '婆婆', zh: '婆婆', en: 'Grandmother (婆婆)', match: '婆婆 grandmother' },
+            { key: '賴翠香', zh: '賴翠香', en: '賴翠香 (Grandmother)', match: '賴翠香 婆婆 grandmother' },
           ],
           [
             { key: '傅昭雄', zh: '傅昭雄', en: '傅昭雄', match: '傅昭雄' },
@@ -881,7 +881,7 @@
       fillColor: 'rgba(101, 163, 13, 0.11)',
       darkColor: '#a3e635',
       darkFillColor: 'rgba(163, 230, 53, 0.15)',
-      debugStats: { headcount: 73, veg: 0, stroller: 0, childSeat: 0 },
+      debugStats: { headcount: 74, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎爸媽朋友區', en: "Groom's Parents' Friends" },
       zone: { zh: '主廳上方 · 新郎爸媽朋友', en: "Main Hall North · Groom's Parents' Friends" },
       guests: [
@@ -908,7 +908,6 @@
         { zh: '高栢鈴等二人', en: '高栢鈴 (2)' },
         { zh: '黃寶瑛', en: '黃寶瑛' },
         { zh: '王仲瑛等二人', en: '王仲瑛 (2)' },
-        { zh: '蕭文瑜', en: '蕭文瑜' },
         { zh: '林緯謙等二人', en: '林緯謙 (2)' },
         { zh: '陳兆伸', en: '陳兆伸' },
         { zh: '吳逸楓', en: '吳逸楓' },
@@ -934,6 +933,7 @@
         { zh: '梁志遠等二人', en: '梁志遠 (2)' },
         { zh: '康裕傑等二人', en: '康裕傑 (2)' },
         { zh: '高增堯&張淑貞等二人', en: '高增堯 & 張淑貞 (2)' },
+        { zh: '蕭金柱 & 林小姐等二人', en: '蕭金柱 & 林小姐 (2)' },
       ],
       seatPlan: {
         subTables: [
@@ -964,7 +964,7 @@
                 { key: '廖惠生_林碧華', zh: '廖惠生', en: '廖惠生', match: '廖惠生 林碧華 碧華' },
               ],
               [
-                { key: '蕭文瑜', zh: '蕭文瑜', en: '蕭文瑜', match: '蕭文瑜' },
+                { key: '夏正德', zh: '夏正德', en: '夏正德', match: '夏正德' },
                 { key: '廖惠生_林碧華', zh: '林碧華', en: '林碧華', match: '廖惠生 林碧華 碧華' },
               ],
             ],
@@ -1032,28 +1032,24 @@
                 { key: '劉聰明_陳秋娥', zh: '陳秋娥', en: '陳秋娥', match: '劉聰明 陳秋娥' },
               ],
             ],
-            extraSeats: [
-              {
-                key: '夏正德',
-                side: 'center',
-                cx: 1114,
-                cy: 583,
-                pinText: '加',
-                zh: '夏正德（桌尾席）',
-                en: '夏正德 (End Seat)',
-                match: '夏正德',
-              },
-            ],
           },
           {
             title: { zh: '第 4 桌', en: 'Table 4' },
             leftX: 1244,
             rightX: 1350,
-            rowYs: [319, 360, 401, 452, 493, 535],
+            rowYs: [319, 360, 401, 452, 493, 535, 577],
             rows: [
+              [
+                { key: '吳逸楓', zh: '吳逸楓', en: '吳逸楓', match: '吳逸楓' },
+                { key: '蕭培元', zh: '蕭培元', en: '蕭培元', match: '蕭培元' },
+              ],
               [
                 { key: '高增堯_張淑貞', zh: '高增堯', en: '高增堯', match: '高增堯 張淑貞' },
                 { key: '高增堯_張淑貞', zh: '張淑貞', en: '張淑貞', match: '高增堯 張淑貞' },
+              ],
+              [
+                { key: '蕭金柱_林小姐', zh: '蕭金柱', en: '蕭金柱', match: '蕭金柱 林小姐' },
+                { key: '蕭金柱_林小姐', zh: '林小姐', en: '林小姐', match: '蕭金柱 林小姐' },
               ],
               [
                 { key: '劉子經_林貞吟', zh: '劉子經', en: '劉子經', match: '劉子經 林貞吟' },
@@ -1070,10 +1066,6 @@
               [
                 { key: '何義夫_何太太', zh: '何義夫', en: '何義夫', match: '何義夫 何毅夫 何太太 何夫人' },
                 { key: '何義夫_何太太', zh: '何太太', en: '何太太', match: '何義夫 何毅夫 何太太 何夫人' },
-              ],
-              [
-                { key: '吳逸楓', zh: '吳逸楓', en: '吳逸楓', match: '吳逸楓' },
-                { key: '蕭培元', zh: '蕭培元', en: '蕭培元', match: '蕭培元' },
               ],
             ],
           },
@@ -1204,7 +1196,7 @@
       fillColor: 'rgba(5, 150, 105, 0.12)',
       darkColor: '#34d399',
       darkFillColor: 'rgba(52, 211, 153, 0.16)',
-      debugStats: { headcount: 34, veg: 1, stroller: 0, childSeat: 1, detail: '徐玲明：素食1、兒童椅1' },
+      debugStats: { headcount: 34, veg: 1, stroller: 0, childSeat: 1, detail: '徐玲明：素食1；卓鈞恩：兒童椅1' },
       name: { zh: '新郎媽媽親戚區（徐家親戚）', en: "Groom's Mother's Relatives (Hsu Family)" },
       zone: { zh: '主廳右側 · 徐家親戚', en: 'Main Hall Right · Hsu Family Relatives' },
       guests: [
@@ -1224,6 +1216,98 @@
         { zh: '董智翔&陳哲雅等二人', en: '董智翔 & 陳哲雅 (2)' },
         { zh: '房滋寧&韓治瀾等二人', en: '房滋寧 & 韓治瀾 (2)' },
       ],
+      seatPlan: {
+        subTables: [
+          {
+            title: { zh: '徐家左桌', en: 'Hsu Left Table' },
+            leftX: 1409,
+            rightX: 1515,
+            rowYs: [802, 843, 884, 937, 979, 1020, 1071, 1112, 1153],
+            rows: [
+              [
+                { key: '徐明志', zh: '徐明志', en: '徐明志', match: '徐明志 明志' },
+                { key: '凱英', zh: '凱英', en: '凱英', match: '凱英' },
+              ],
+              [
+                { key: '徐平志', zh: '徐平志', en: '徐平志', match: '徐平志 平志' },
+                { key: '徐慧明', zh: '徐慧明', en: '徐慧明', match: '徐慧明 慧明' },
+              ],
+              [
+                { key: '徐宇志', zh: '徐宇志', en: '徐宇志', match: '徐宇志 宇志' },
+                { key: '羅芸', zh: '羅芸', en: '羅芸', match: '羅芸' },
+              ],
+              [
+                { key: '徐和志', zh: '徐和志', en: '徐和志', match: '徐和志 和志' },
+                { key: '許嵐音', zh: '許嵐音', en: '許嵐音', match: '許嵐音 嵐音' },
+              ],
+              [
+                { key: '韓治瀾', zh: '韓治瀾', en: '韓治瀾', match: '韓治瀾' },
+                { key: '房滋寧', zh: '房滋寧', en: '房滋寧', match: '房滋寧' },
+              ],
+              [
+                { key: '徐宇光', zh: '徐宇光', en: '徐宇光', match: '徐宇光 宇光' },
+                { key: '燕玲', zh: '燕玲', en: '燕玲', match: '燕玲' },
+              ],
+              [
+                { key: '徐若謙', zh: '徐若謙', en: '徐若謙', match: '徐若謙 若謙' },
+                { key: '徐芳明', zh: '徐芳明', en: '徐芳明', match: '徐芳明 芳明' },
+              ],
+              [
+                { key: '徐天泰', zh: '徐天泰', en: '徐天泰', match: '徐天泰 天泰' },
+                { key: '睦哲', zh: '睦哲', en: '睦哲', match: '睦哲' },
+              ],
+              [
+                { key: '徐乙芹', zh: '徐乙芹', en: '徐乙芹', match: '徐乙芹 乙芹' },
+                null,
+              ],
+            ],
+          },
+          {
+            title: { zh: '徐家右桌', en: 'Hsu Right Table' },
+            leftX: 1605,
+            rightX: 1711,
+            rowYs: [893, 934, 975, 1029, 1071, 1112, 1162, 1204, 1245],
+            rows: [
+              [
+                { key: '徐玲明', zh: '徐玲明', en: '徐玲明', match: '徐玲明 玲明' },
+                { key: '卓俊銘', zh: '卓俊銘', en: '卓俊銘', match: '卓俊銘 俊銘' },
+              ],
+              [
+                { key: '卓鈞恩', zh: '卓鈞恩', en: '卓鈞恩', match: '卓鈞恩 鈞恩' },
+                { key: '卓辰陽', zh: '卓辰陽', en: '卓辰陽', match: '卓辰陽 辰陽' },
+              ],
+              [
+                { key: '如鴈', zh: '如鴈', en: '如鴈', match: '如鴈' },
+                null,
+              ],
+              [
+                { key: 'Roxy', zh: 'Roxy', en: 'Roxy', match: 'Roxy' },
+                { key: '卓恆毅', zh: '卓恆毅', en: '卓恆毅', match: '卓恆毅 恆毅' },
+              ],
+              [
+                { key: '祥孟', zh: '祥孟', en: '祥孟', match: '祥孟' },
+                { key: '林哲正', zh: '林哲正', en: '林哲正', match: '林哲正 哲正' },
+              ],
+              [
+                { key: '徐紫櫻', zh: '徐紫櫻', en: '徐紫櫻', match: '徐紫櫻 紫櫻' },
+                { key: '徐雪櫻', zh: '徐雪櫻', en: '徐雪櫻', match: '徐雪櫻 雪櫻' },
+              ],
+              [
+                { key: '王展浩', zh: '王展浩', en: '王展浩', match: '王展浩 展浩' },
+                { key: '瑞宏', zh: '瑞宏', en: '瑞宏', match: '瑞宏' },
+              ],
+              [
+                { key: '陳啟武', zh: '陳啟武', en: '陳啟武', match: '陳啟武 啟武' },
+                { key: '文圓', zh: '文圓', en: '文圓', match: '文圓' },
+              ],
+              [
+                { key: '董智翔', zh: '董智翔', en: '董智翔', match: '董智翔 智翔' },
+                { key: '陳哲雅', zh: '陳哲雅', en: '陳哲雅', match: '陳哲雅 哲雅' },
+              ],
+            ],
+          },
+        ],
+      },
     },
     {
       id: 'zone-groom-highschool',
@@ -2363,7 +2447,12 @@
   const elSeatingPanelEyebrow = document.getElementById('seating-panel-eyebrow');
   const elSeatingPanelTitle = document.getElementById('seating-panel-title');
   const elSeatingExternalLink = document.getElementById('seating-external-link');
+  const elSeatingSideLabel = document.getElementById('seating-side-label');
+  const elSeatingSideSelect = document.getElementById('seating-side-select');
+  const elSeatingGroupLabel = document.getElementById('seating-group-label');
+  const elSeatingGroupSelect = document.getElementById('seating-group-select');
   const elSeatingSearchInput = document.getElementById('seating-search-input');
+  const elSeatingAutocompleteList = document.getElementById('seating-autocomplete-list');
   const elSeatingPhotoStage = document.getElementById('seating-photo-stage');
   const elSeatingTablesGrid = document.getElementById('seating-tables-grid');
 
@@ -2471,6 +2560,280 @@
     return Boolean(window.__TE_DEBUG_AUTH__ === true || window.__TE_STAFF_AUTH__ === true);
   }
   let seatingNeedsFilter = 'all';
+  let seatingSideFilter = 'all';
+  let seatingGroupFilter = 'all';
+  let seatingAutocompleteItems = [];
+  let seatingAutocompleteIndex = -1;
+
+  const SEATING_ZONE_META = {
+    'table-main': { sides: ['groom', 'bride'], groups: ['parents', 'dad', 'mom', 'bride-family'] },
+    'zone-bride-relatives': { sides: ['bride'], groups: ['parents', 'bride-family'] },
+    'zone-groom-parents-friends': { sides: ['groom'], groups: ['parents', 'parents-friends'] },
+    'zone-groom-dad-relatives': { sides: ['groom'], groups: ['parents', 'dad'] },
+    'zone-groom-mom-relatives': { sides: ['groom'], groups: ['parents', 'mom'] },
+    'zone-groom-highschool': { sides: ['groom'], groups: ['friends'] },
+    'zone-bride-highschool': { sides: ['bride'], groups: ['friends'] },
+    'zone-bride-colleagues': { sides: ['bride'], groups: ['friends'] },
+    'zone-groom-colleagues': { sides: ['groom'], groups: ['friends'] },
+    'zone-groom-nctu': { sides: ['groom'], groups: ['friends'] },
+    'zone-groom-moz': { sides: ['groom'], groups: ['friends'] },
+    'zone-bride-college': { sides: ['bride'], groups: ['friends'] },
+  };
+
+  function matchesSeatingSideAndGroup(tableId) {
+    const meta = SEATING_ZONE_META[tableId];
+    if (!meta) return true;
+    if (seatingSideFilter !== 'all' && !meta.sides.includes(seatingSideFilter)) {
+      return false;
+    }
+    if (seatingGroupFilter !== 'all' && !meta.groups.includes(seatingGroupFilter)) {
+      return false;
+    }
+    return true;
+  }
+
+  function syncSeatingFilterSelects() {
+    if (elSeatingSideLabel) {
+      elSeatingSideLabel.textContent = currentLang === 'en' ? "Groom's / Bride's Side" : '男方 / 女方';
+    }
+    if (elSeatingGroupLabel) {
+      elSeatingGroupLabel.textContent = currentLang === 'en' ? 'Parents / Group' : '父母 / 親友分類';
+    }
+    if (elSeatingSideSelect) {
+      const sideOpts =
+        currentLang === 'en'
+          ? [
+              { value: 'all', label: 'All (Groom & Bride)' },
+              { value: 'groom', label: "Groom's Side (Tom)" },
+              { value: 'bride', label: "Bride's Side (Eunice)" },
+            ]
+          : [
+              { value: 'all', label: '全部（男方＆女方）' },
+              { value: 'groom', label: '男方（新郎 Tom）' },
+              { value: 'bride', label: '女方（新娘 Eunice）' },
+            ];
+      elSeatingSideSelect.replaceChildren();
+      sideOpts.forEach((opt) => {
+        const o = document.createElement('option');
+        o.value = opt.value;
+        o.textContent = opt.label;
+        elSeatingSideSelect.append(o);
+      });
+      elSeatingSideSelect.value = seatingSideFilter;
+    }
+    if (elSeatingGroupSelect) {
+      let groupOpts;
+      if (seatingSideFilter === 'groom') {
+        groupOpts =
+          currentLang === 'en'
+            ? [
+                { value: 'all', label: "All Groom's Guests" },
+                { value: 'parents', label: 'Parents & All Relatives' },
+                { value: 'parents-friends', label: "Parents' Friends" },
+                { value: 'dad', label: "Father's Relatives (Tung)" },
+                { value: 'mom', label: "Mother's Relatives (Hsu)" },
+                { value: 'friends', label: "Groom's Friends & Colleagues" },
+              ]
+            : [
+                { value: 'all', label: '全部男方賓客' },
+                { value: 'parents', label: '父母親友（全部長輩＆親戚）' },
+                { value: 'parents-friends', label: '爸媽朋友' },
+                { value: 'dad', label: '爸爸親戚（董家）' },
+                { value: 'mom', label: '媽媽親戚（徐家）' },
+                { value: 'friends', label: '新郎朋友（大直／交大／Google／MOZ）' },
+              ];
+      } else if (seatingSideFilter === 'bride') {
+        groupOpts =
+          currentLang === 'en'
+            ? [
+                { value: 'all', label: "All Bride's Guests" },
+                { value: 'parents', label: "Parents & Bride's Relatives" },
+                { value: 'friends', label: "Bride's Friends & Colleagues" },
+              ]
+            : [
+                { value: 'all', label: '全部女方賓客' },
+                { value: 'parents', label: '父母親友（女方親戚）' },
+                { value: 'friends', label: '新娘朋友（雄女／北藝／瑪黑）' },
+              ];
+      } else {
+        groupOpts =
+          currentLang === 'en'
+            ? [
+                { value: 'all', label: 'All Groups' },
+                { value: 'parents', label: 'Parents & Relatives' },
+                { value: 'friends', label: 'Friends & Colleagues' },
+              ]
+            : [
+                { value: 'all', label: '全部親友' },
+                { value: 'parents', label: '父母親友（長輩＆親戚）' },
+                { value: 'friends', label: '新人朋友（同學＆同事）' },
+              ];
+      }
+      const validValues = new Set(groupOpts.map((g) => g.value));
+      if (!validValues.has(seatingGroupFilter)) {
+        seatingGroupFilter = 'all';
+      }
+      elSeatingGroupSelect.replaceChildren();
+      groupOpts.forEach((opt) => {
+        const o = document.createElement('option');
+        o.value = opt.value;
+        o.textContent = opt.label;
+        elSeatingGroupSelect.append(o);
+      });
+      elSeatingGroupSelect.value = seatingGroupFilter;
+    }
+  }
+
+  function closeSeatingAutocomplete() {
+    seatingAutocompleteItems = [];
+    seatingAutocompleteIndex = -1;
+    if (elSeatingAutocompleteList) {
+      elSeatingAutocompleteList.classList.add('hidden');
+      elSeatingAutocompleteList.replaceChildren();
+    }
+    if (elSeatingSearchInput) {
+      elSeatingSearchInput.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function getSeatingAutocompleteCandidates(rawQuery) {
+    const q = String(rawQuery || '').trim().toLowerCase();
+    if (!q) return [];
+    const results = [];
+    const seen = new Set();
+
+    const addCandidate = (displayName, insertValue, searchText, zoneLabel, tableId) => {
+      const cleanDisplay = String(displayName || '').trim();
+      const cleanInsert = String(insertValue || cleanDisplay).trim();
+      if (!cleanDisplay) return;
+      const dedupeKey = `${tableId}::${cleanInsert.toLowerCase()}`;
+      if (seen.has(dedupeKey)) return;
+      const hay = `${cleanDisplay} ${cleanInsert} ${searchText || ''}`.toLowerCase();
+      if (!hay.includes(q)) return;
+      seen.add(dedupeKey);
+      const lowerName = cleanDisplay.toLowerCase();
+      const score = lowerName.startsWith(q) ? 0 : lowerName.includes(q) ? 1 : 2;
+      results.push({
+        displayName: cleanDisplay,
+        insertValue: cleanInsert,
+        zoneLabel,
+        tableId,
+        score,
+      });
+    };
+
+    SEATING_TABLES_DATA.forEach((table) => {
+      if (!matchesSeatingSideAndGroup(table.id)) return;
+      const zoneTitle = (table.name[currentLang] || table.name.zh || '').replace(/[（(].*?[）)]/g, '').trim() || table.name.zh;
+      const sp = table.seatPlan;
+      if (sp && !sp.freeSeating) {
+        const plans = Array.isArray(sp.subTables) ? sp.subTables : [sp];
+        plans.forEach((plan) => {
+          const subTitle = plan && plan.title ? (plan.title[currentLang] || plan.title.zh) : '';
+          const fullZone = subTitle ? `${zoneTitle} · ${subTitle}` : zoneTitle;
+          const collectSeat = (s) => {
+            if (!s || s.isOtherZone) return;
+            const sName = (currentLang === 'en' ? s.en : s.zh) || s.zh || '';
+            const cleanInsert = sName.replace(/[（(].*?[）)]/g, '').trim() || sName;
+            addCandidate(sName, cleanInsert, s.match || '', fullZone, table.id);
+          };
+          (plan.sweetheartSeats || []).forEach(collectSeat);
+          (plan.rows || []).forEach((pair) => {
+            if (Array.isArray(pair)) pair.forEach(collectSeat);
+          });
+          (plan.extraSeats || []).forEach(collectSeat);
+        });
+      } else {
+        (table.guests || []).forEach((g) => {
+          const raw = (currentLang === 'en' ? g.en : g.zh) || g.zh || '';
+          const clean = raw
+            .replace(/等[一二三四五六七八九十\d]+人/g, '')
+            .replace(/[（(]\d+[)）]/g, '')
+            .trim();
+          addCandidate(clean || raw, clean || raw, `${g.zh || ''} ${g.en || ''}`, zoneTitle, table.id);
+        });
+      }
+    });
+
+    results.sort((a, b) => a.score - b.score || a.displayName.localeCompare(b.displayName, 'zh-Hant'));
+    return results.slice(0, 12);
+  }
+
+  function selectSeatingAutocompleteItem(item) {
+    if (!item || !elSeatingSearchInput) return;
+    elSeatingSearchInput.value = item.insertValue;
+    selectedSeatingZoneId = null;
+    if (seatingNeedsFilter !== 'all') {
+      seatingNeedsFilter = 'all';
+    }
+    closeSeatingAutocomplete();
+    elSeatingSearchInput.blur();
+    renderSeatingSection();
+    if (elSeatingPhotoStage && typeof elSeatingPhotoStage.scrollIntoView === 'function') {
+      elSeatingPhotoStage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function renderSeatingAutocomplete() {
+    if (!elSeatingAutocompleteList || !elSeatingSearchInput) return;
+    const rawQuery = elSeatingSearchInput.value.trim();
+    if (!rawQuery) {
+      closeSeatingAutocomplete();
+      return;
+    }
+    const items = getSeatingAutocompleteCandidates(rawQuery);
+    if (items.length === 0) {
+      closeSeatingAutocomplete();
+      return;
+    }
+    seatingAutocompleteItems = items;
+    if (seatingAutocompleteIndex >= items.length) {
+      seatingAutocompleteIndex = -1;
+    }
+
+    const qLower = rawQuery.toLowerCase();
+    elSeatingAutocompleteList.replaceChildren();
+    items.forEach((item, idx) => {
+      const li = document.createElement('li');
+      li.className = `seating-autocomplete-item${idx === seatingAutocompleteIndex ? ' is-active' : ''}`;
+      li.setAttribute('role', 'option');
+      li.setAttribute('aria-selected', idx === seatingAutocompleteIndex ? 'true' : 'false');
+
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'seating-autocomplete-name';
+      const matchPos = item.displayName.toLowerCase().indexOf(qLower);
+      if (matchPos >= 0) {
+        if (matchPos > 0) {
+          nameSpan.append(document.createTextNode(item.displayName.slice(0, matchPos)));
+        }
+        const mark = document.createElement('mark');
+        mark.textContent = item.displayName.slice(matchPos, matchPos + rawQuery.length);
+        nameSpan.append(mark);
+        if (matchPos + rawQuery.length < item.displayName.length) {
+          nameSpan.append(document.createTextNode(item.displayName.slice(matchPos + rawQuery.length)));
+        }
+      } else {
+        nameSpan.textContent = item.displayName;
+      }
+
+      const zoneSpan = document.createElement('span');
+      zoneSpan.className = 'seating-autocomplete-zone';
+      zoneSpan.textContent = item.zoneLabel;
+
+      li.append(nameSpan, zoneSpan);
+      li.addEventListener('mousedown', (e) => {
+        // 桌機滑鼠點擊時防止 input 先觸發 blur 關閉清單；手機觸控不攔截以便順暢滑動捲動
+        e.preventDefault();
+      });
+      li.addEventListener('click', () => {
+        selectSeatingAutocompleteItem(item);
+      });
+      elSeatingAutocompleteList.append(li);
+    });
+
+    elSeatingAutocompleteList.classList.remove('hidden');
+    elSeatingSearchInput.setAttribute('aria-expanded', 'true');
+  }
 
   // Quiz State
   let quizStarted = false;
@@ -3880,6 +4243,7 @@
       if (elSeatingSearchInput && elSeatingSearchInput.value.trim()) {
         elSeatingSearchInput.value = '';
       }
+      seatingNeedsFilter = 'all';
       selectedSeatingZoneId =
         wasOnlyHighlightedBySearch || selectedSeatingZoneId === facilityId ? null : facilityId;
       renderSeatingSection();
@@ -4105,7 +4469,9 @@
       if (!table.seatPlan) return;
       const sp = table.seatPlan;
       const matchedSlots = seatMarkersByZone ? seatMarkersByZone.get(table.id) : null;
-      const showFreeSeatingSeats = Boolean(sp.freeSeating && highlightedIds.has(table.id));
+      const showFreeSeatingSeats = Boolean(
+        seatingNeedsFilter === 'all' && sp.freeSeating && highlightedIds.has(table.id)
+      );
       const showAllDebugSeats =
         showFreeSeatingSeats ||
         (isDebugPage && selectedSeatingZoneId === table.id && (!matchedSlots || matchedSlots.length === 0));
@@ -5113,7 +5479,7 @@
           });
         },
       });
-    } else if (seatingNeedsFilter === 'all' && freeSeatingLoupeTarget) {
+    } else if (seatingNeedsFilter === 'all' && highlightedIds.size === 1 && freeSeatingLoupeTarget) {
       const { table: fTable, plan: fPlan, loupe: fLoupe, focusBox: fBox } = freeSeatingLoupeTarget;
       appendMagnifierLoupe({
         cx: fLoupe.cx,
@@ -5252,6 +5618,7 @@
     if (!elSeatingTablesGrid) return;
 
     const isDebugPage = isDebugUnlocked();
+    syncSeatingFilterSelects();
     renderSeatingNeedsFilterBar(isDebugPage);
     const query = elSeatingSearchInput ? elSeatingSearchInput.value.trim().toLowerCase() : '';
     const highlightedIds = new Set();
@@ -5306,7 +5673,11 @@
 
     const seatMarkersByZone = new Map();
     const tableCards = [];
+    const hasSideOrGroupFilter = seatingSideFilter !== 'all' || seatingGroupFilter !== 'all';
     SEATING_TABLES_DATA.forEach((table) => {
+      if (!matchesSeatingSideAndGroup(table.id)) {
+        return;
+      }
       const tName = table.name[currentLang] || table.name.zh;
       const tZone = table.zone[currentLang] || table.zone.zh;
       const matchesTableTitle =
@@ -5352,6 +5723,10 @@
         return;
       }
       if (!selectedSeatingZoneId && isDebugPage && seatingNeedsFilter !== 'all') {
+        highlightedIds.add(table.id);
+      }
+
+      if (!selectedSeatingZoneId && !query && hasSideOrGroupFilter && seatingNeedsFilter === 'all') {
         highlightedIds.add(table.id);
       }
 
@@ -5580,6 +5955,7 @@
 
   window.__TE_ON_STAFF_UNLOCK__ = () => {
     renderSeatingSection();
+    showHubView('seating');
   };
 
   function renderBanquetMenuSection() {
@@ -8429,13 +8805,69 @@
   if (btnTabMenu) {
     btnTabMenu.addEventListener('click', () => showHubView('banquet-menu'));
   }
+  if (elSeatingSideSelect) {
+    elSeatingSideSelect.addEventListener('change', () => {
+      seatingSideFilter = elSeatingSideSelect.value || 'all';
+      seatingGroupFilter = 'all';
+      selectedSeatingZoneId = null;
+      if (seatingNeedsFilter !== 'all') seatingNeedsFilter = 'all';
+      syncSeatingFilterSelects();
+      renderSeatingSection();
+      renderSeatingAutocomplete();
+    });
+  }
+  if (elSeatingGroupSelect) {
+    elSeatingGroupSelect.addEventListener('change', () => {
+      seatingGroupFilter = elSeatingGroupSelect.value || 'all';
+      selectedSeatingZoneId = null;
+      if (seatingNeedsFilter !== 'all') seatingNeedsFilter = 'all';
+      renderSeatingSection();
+      renderSeatingAutocomplete();
+    });
+  }
   if (elSeatingSearchInput) {
     const handleSeatingSearchChange = () => {
       selectedSeatingZoneId = null;
+      if (seatingNeedsFilter !== 'all') {
+        seatingNeedsFilter = 'all';
+      }
+      seatingAutocompleteIndex = -1;
       renderSeatingSection();
+      renderSeatingAutocomplete();
     };
     elSeatingSearchInput.addEventListener('input', handleSeatingSearchChange);
     elSeatingSearchInput.addEventListener('search', handleSeatingSearchChange);
+    elSeatingSearchInput.addEventListener('focus', () => {
+      if (elSeatingSearchInput.value.trim()) {
+        renderSeatingAutocomplete();
+      }
+    });
+    document.addEventListener('pointerdown', (e) => {
+      if (!elSeatingAutocompleteList || elSeatingAutocompleteList.classList.contains('hidden')) return;
+      const target = e.target;
+      if (target === elSeatingSearchInput || elSeatingAutocompleteList.contains(target)) return;
+      closeSeatingAutocomplete();
+    });
+    elSeatingSearchInput.addEventListener('keydown', (e) => {
+      if (!seatingAutocompleteItems.length) return;
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        seatingAutocompleteIndex = (seatingAutocompleteIndex + 1) % seatingAutocompleteItems.length;
+        renderSeatingAutocomplete();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        seatingAutocompleteIndex =
+          seatingAutocompleteIndex <= 0
+            ? seatingAutocompleteItems.length - 1
+            : seatingAutocompleteIndex - 1;
+        renderSeatingAutocomplete();
+      } else if (e.key === 'Enter' && seatingAutocompleteIndex >= 0) {
+        e.preventDefault();
+        selectSeatingAutocompleteItem(seatingAutocompleteItems[seatingAutocompleteIndex]);
+      } else if (e.key === 'Escape') {
+        closeSeatingAutocomplete();
+      }
+    });
   }
 
   window.addEventListener('te-debug-auth-change', () => {

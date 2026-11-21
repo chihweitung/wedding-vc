@@ -16,8 +16,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261118a" />
-  <link rel="stylesheet" href="debug.css?v=20261111n" />
+  <link rel="stylesheet" href="style.css?v=20261121j" />
+  <link rel="stylesheet" href="debug.css?v=20261121j" />
 </head>
 <body class="debug-locked">
   <canvas id="confetti-canvas" aria-hidden="true"></canvas>
@@ -627,18 +627,41 @@
               </a>
             </div>
 
-            <div class="seating-search-bar">
-              <svg class="seating-search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="11" cy="11" r="7.5"></circle>
-                <line x1="20" y1="20" x2="16.35" y2="16.35"></line>
-              </svg>
-              <input
-                type="search"
-                id="seating-search-input"
-                class="seating-search-input"
-                placeholder="輸入您的姓名、桌名或親友分類（例如：大學、Google、主桌）快速查詢..."
-                autocomplete="off"
-              />
+            <div class="seating-search-controls">
+              <div class="seating-filter-selects">
+                <label class="seating-filter-field">
+                  <span class="seating-filter-label" id="seating-side-label">男方 / 女方</span>
+                  <select id="seating-side-select" class="seating-filter-select">
+                    <option value="all">全部（男方＆女方）</option>
+                    <option value="groom">男方（新郎 Tom）</option>
+                    <option value="bride">女方（新娘 Eunice）</option>
+                  </select>
+                </label>
+                <label class="seating-filter-field">
+                  <span class="seating-filter-label" id="seating-group-label">父母 / 親友分類</span>
+                  <select id="seating-group-select" class="seating-filter-select">
+                    <option value="all">全部親友</option>
+                  </select>
+                </label>
+              </div>
+              <div class="seating-search-bar">
+                <svg class="seating-search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7.5"></circle>
+                  <line x1="20" y1="20" x2="16.35" y2="16.35"></line>
+                </svg>
+                <input
+                  type="search"
+                  id="seating-search-input"
+                  class="seating-search-input"
+                  placeholder="輸入姓名（支援自動補全）或桌名快速查詢..."
+                  autocomplete="off"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-controls="seating-autocomplete-list"
+                />
+                <ul id="seating-autocomplete-list" class="seating-autocomplete-list hidden" role="listbox"></ul>
+              </div>
             </div>
 
             <div class="embedded-photo-stage hidden" id="seating-photo-stage"></div>
@@ -688,7 +711,7 @@
     </footer>
   </div>
 
-  <script src="debug.js?v=20261118a"></script>
-  <script src="script.js?v=20261118a"></script>
+  <script src="debug.js?v=20261121j"></script>
+  <script src="script.js?v=20261121j"></script>
 </body>
 </html>

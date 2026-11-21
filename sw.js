@@ -1,14 +1,14 @@
 'use strict';
 
-const CACHE_NAME = 'te-wedding-20261129-v102';
+const CACHE_NAME = 'te-wedding-20261129-v112';
 const NETWORK_TIMEOUT_MS = 2500;
 
 // 僅預快取公開首頁必要資源（嚴格排除任何隱藏頁或測試頁檔案名稱）
 const PRECACHE_ASSETS = [
   './',
   './index.html',
-  './style.css?v=20261118a',
-  './script.js?v=20261118a',
+  './style.css?v=20261121j',
+  './script.js?v=20261121j',
   './seating-chart.jpg?v=20261112c',
   './photos/avatar-tom.jpg',
   './photos/avatar-eunice.jpg',
@@ -35,7 +35,9 @@ function isCacheablePublicAsset(urlObj) {
     p.endsWith('/index.html') ||
     p.endsWith('/style.css') ||
     p.endsWith('/script.js') ||
-    p.endsWith('/seating-chart.jpg')
+    p.endsWith('/seating-chart.jpg') ||
+    p.endsWith('/photos/avatar-tom.jpg') ||
+    p.endsWith('/photos/avatar-eunice.jpg')
   );
 }
 
