@@ -107,10 +107,10 @@
         floral: '花藝',
         audio: '音響',
       },
-      galleryCardEyebrow: 'Pre-Wedding Portraits',
-      galleryCardTitle: '婚紗照片輪播',
-      galleryCardDesc: '精選 Tom & Eunice 婚紗攝影作品，一起欣賞我們的幸福瞬間。',
-      galleryCardCta: '欣賞婚紗照',
+      galleryCardEyebrow: 'Wedding & Registration',
+      galleryCardTitle: '婚紗與登記寫真',
+      galleryCardDesc: '精選 Tom & Eunice 婚紗攝影與登記結婚紀念照，一起欣賞我們的幸福瞬間。',
+      galleryCardCta: '欣賞精選寫真',
       footprintsCardEyebrow: 'Across the Miles',
       footprintsCardTitle: '十二年足跡地圖',
       footprintsCardDesc: '把我們住過的城市與 9,100 公里的思念，畫成一張會動的地圖。',
@@ -130,7 +130,7 @@
       tabSeating: '座位表',
       tabMenu: '婚宴菜單',
       tabShare: '分享照片',
-      tabGallery: '💍 婚紗照',
+      tabGallery: '💍 婚紗＆登記',
       tabFootprints: '十二年足跡',
       seatingPanelEyebrow: 'Brick Yard 33 1/3 · Floor Plan',
       seatingPanelTitle: '美軍俱樂部 · 婚宴座位表',
@@ -146,8 +146,8 @@
       shareStep1: '1. 點選下方按鈕打開 Google Photos 共享相簿',
       shareStep2: '2. 按一下「新增相片」就能直接上傳分享',
       shareLinkBtn: '打開婚禮 Google Photos 相簿 ↗',
-      galleryPanelEyebrow: 'Pre-Wedding Portraits · Tom & Eunice',
-      galleryPanelTitle: '精選婚紗照片輪播',
+      galleryPanelEyebrow: 'Wedding & Registration · Tom & Eunice',
+      galleryPanelTitle: '精選婚紗與登記寫真',
       eraAll: '全部年份 (2014–2026)',
       era2014: '2014–2017 初識與校園',
       era2018: '2018–2021 跨洲遠距離',
@@ -231,9 +231,9 @@
         floral: 'Floral Design',
         audio: 'Audio & Sound',
       },
-      galleryCardEyebrow: 'Pre-Wedding Portraits',
-      galleryCardTitle: 'Wedding Photo Carousel',
-      galleryCardDesc: 'Browse a curated carousel of Tom & Eunice’s pre-wedding portraits.',
+      galleryCardEyebrow: 'Wedding & Registration',
+      galleryCardTitle: 'Wedding & Registration Photos',
+      galleryCardDesc: "Browse a curated carousel of Tom & Eunice's pre-wedding and registration portraits.",
       galleryCardCta: 'View Wedding Photos',
       footprintsCardEyebrow: 'Across the Miles',
       footprintsCardTitle: 'Twelve Years on the Map',
@@ -254,7 +254,7 @@
       tabSeating: 'Seating',
       tabMenu: 'Menu',
       tabShare: 'Share Photos',
-      tabGallery: '💍 Wedding Photos',
+      tabGallery: '💍 Portraits',
       tabFootprints: 'Our Map',
       seatingPanelEyebrow: 'Brick Yard 33 1/3 · Floor Plan',
       seatingPanelTitle: 'Brick Yard 33 1/3 · Seating Chart',
@@ -270,8 +270,8 @@
       shareStep1: '1. Tap the button below to open our Google Photos album',
       shareStep2: '2. Select "Add photos" to share your favorite shots',
       shareLinkBtn: 'Open Shared Google Photos Album ↗',
-      galleryPanelEyebrow: 'Pre-Wedding Portraits · Tom & Eunice',
-      galleryPanelTitle: 'Pre-Wedding Photo Carousel',
+      galleryPanelEyebrow: 'Wedding & Registration · Tom & Eunice',
+      galleryPanelTitle: 'Wedding & Registration Portraits',
       eraAll: 'All Years (2014–2026)',
       era2014: '2014–2017 Campus Days',
       era2018: '2018–2021 Across Time Zones',
@@ -763,11 +763,11 @@
       emoji: '💍',
       imageUrl: `photos/wedding-${num}.jpg`,
       title: {
-        zh: `Tom & Eunice 婚紗寫真 #${num}`,
-        en: `Tom & Eunice Pre-Wedding Portrait #${num}`,
+        zh: `Tom & Eunice 幸福寫真 #${num}`,
+        en: `Tom & Eunice Portrait #${num}`,
       },
       caption: {
-        zh: '十二年的默契與笑容，定格在屬於我們的婚紗時刻。',
+        zh: '十二年的默契與笑容，定格在屬於我們的婚紗與登記時刻。',
         en: 'Twelve years of laughter and love captured in our pre-wedding portraits.',
       },
     };
@@ -2150,18 +2150,28 @@
     {
       year: '2019',
       dateTag: '2019.12',
-      tom: { lat: 50.075, lng: 14.437, city: { zh: '柏林 ➔ 捷克布拉格', en: 'Berlin ➔ Prague' } },
-      eunice: { lat: 50.075, lng: 14.437, city: { zh: '柏林 ➔ 捷克布拉格', en: 'Berlin ➔ Prague' } },
+      tom: {
+        lat: 50.075,
+        lng: 14.437,
+        via: { lat: 52.52, lng: 13.405 },
+        city: { zh: '柏林 ➔ 捷克布拉格', en: 'Berlin ➔ Prague' },
+      },
+      eunice: {
+        lat: 50.075,
+        lng: 14.437,
+        via: { lat: 52.955, lng: -1.158 },
+        city: { zh: '諾丁漢 ➔ 柏林＆布拉格', en: 'Nottingham ➔ Berlin & Prague' },
+      },
       lat: 50.075,
       lng: 14.437,
       place: {
-        zh: '2019.12 · 柏林相聚 ＆ 捷克布拉格的聖誕市集',
-        en: 'Dec 2019 · Berlin Together & Christmas Markets in Prague',
+        zh: '2019.12 · 先回諾丁漢再飛柏林 · 捷克布拉格聖誕市集',
+        en: 'Dec 2019 · Back to Nottingham, Then Berlin & Prague Christmas Markets',
       },
       distanceLabel: { zh: '0 km · 柏林＆布拉格聖誕月 💕', en: '0 km · December in Berlin & Prague 💕' },
       desc: {
-        zh: '十二月 Eunice 飛來柏林，兩個人再一起搭車去捷克布拉格逛聖誕市集、喝熱紅酒。',
-        en: 'Eunice flew to Berlin in December and together we wandered through fairytale Christmas lights in Prague.',
+        zh: '十二月 Eunice 先回諾丁漢再飛來柏林，兩個人一起搭車去捷克布拉格逛聖誕市集、喝熱紅酒。',
+        en: 'After returning to Nottingham, Eunice flew to Berlin in December and together we wandered through fairytale Christmas lights in Prague.',
       },
       mapQuery: 'Prague,Czechia',
     },
@@ -2169,7 +2179,12 @@
       year: '2020',
       dateTag: '2020.02',
       tom: { lat: 52.52, lng: 13.405, city: { zh: '德國柏林 Berlin', en: 'Berlin, DE' } },
-      eunice: { lat: 52.52, lng: 13.405, city: { zh: '德國柏林 Berlin', en: 'Berlin, DE' } },
+      eunice: {
+        lat: 52.52,
+        lng: 13.405,
+        via: { lat: 52.955, lng: -1.158 },
+        city: { zh: '諾丁漢 ➔ 柏林相聚', en: 'Nottingham ➔ Berlin' },
+      },
       lat: 52.52,
       lng: 13.405,
       place: {
@@ -2185,19 +2200,42 @@
     },
     {
       year: '2020',
+      dateTag: '2020.03',
+      tom: { lat: 52.52, lng: 13.405, city: { zh: '德國柏林 Berlin', en: 'Berlin, DE' } },
+      eunice: { lat: 52.955, lng: -1.158, city: { zh: '英國諾丁漢 Nottingham', en: 'Nottingham, UK' } },
+      lat: 52.955,
+      lng: -1.158,
+      place: {
+        zh: '2020.03 · 歐洲疫情封城 · 柏林 ↔ 諾丁漢',
+        en: 'Mar 2020 · European Lockdown · Berlin ↔ Nottingham',
+      },
+      distanceLabel: { zh: '920 km · 柏林 ↔ 諾丁漢', en: '920 km · Berlin ↔ Nottingham' },
+      desc: {
+        zh: '三月歐洲遇上疫情封城，各自守在柏林與諾丁漢，每天視訊確認彼此一切平安。',
+        en: 'As lockdowns swept Europe in March, we stayed safe in Berlin and Nottingham, checking in on video calls every day.',
+      },
+      mapQuery: 'Nottingham,UK',
+    },
+    {
+      year: '2020',
       dateTag: '2020.03–04',
       tom: { lat: 52.52, lng: 13.405, city: { zh: '德國柏林 Berlin', en: 'Berlin, DE' } },
-      eunice: { lat: 22.627, lng: 120.301, city: { zh: '英國封城 ➔ 4月返高雄', en: 'UK Lockdown ➔ Kaohsiung' } },
+      eunice: {
+        lat: 22.627,
+        lng: 120.301,
+        via: { lat: 51.507, lng: -0.127 },
+        city: { zh: '諾丁漢 ➔ 經倫敦返高雄', en: 'Nottingham ➔ Via London ➔ Kaohsiung' },
+      },
       lat: 22.627,
       lng: 120.301,
       place: {
-        zh: '2020.03–04 · 歐洲封城時刻 · Eunice 平安飛回高雄',
-        en: 'Mar–Apr 2020 · UK Lockdown & Safe Return to Kaohsiung',
+        zh: '2020.03–04 · 歐洲封城時刻 · Eunice 從諾丁漢經倫敦飛回高雄',
+        en: 'Mar–Apr 2020 · Eunice Flew From Nottingham via London to Kaohsiung',
       },
       distanceLabel: { zh: '9,100 km · 疫情裡的跨洲牽掛', en: '9,100 km · Holding Close Through Lockdown' },
       desc: {
-        zh: '三月遇上疫情封城，四月 Eunice 平安飛回台灣高雄，與留在柏林的 Tom 隔海彼此牽掛守候。',
-        en: 'When COVID lockdowns hit Europe in March, Eunice flew safely home to Kaohsiung in April while Tom remained in Berlin.',
+        zh: '四月 Eunice 從諾丁漢搭車到倫敦平安飛回台灣高雄，與留在柏林的 Tom 隔海彼此牽掛守候。',
+        en: 'In April, Eunice traveled from Nottingham via London safely home to Kaohsiung while Tom remained in Berlin.',
       },
       mapQuery: 'Kaohsiung,Taiwan',
     },
@@ -2510,6 +2548,8 @@
   const elQuizCodeBlock = document.getElementById('quiz-code-block');
   const elQuizCodeContent = document.getElementById('quiz-code-content');
   const elQuizOptionsList = document.getElementById('quiz-options-list');
+  const elQuizSubmitWrap = document.getElementById('quiz-submit-wrap');
+  const btnQuizSubmit = document.getElementById('quiz-submit-btn');
   const elQuizExplanationBox = document.getElementById('quiz-explanation-box');
   const elQuizResultHeadline = document.getElementById('quiz-result-headline');
   const elQuizExplanationText = document.getElementById('quiz-explanation-text');
@@ -2865,6 +2905,7 @@
   let groomScore = 0;
   let brideScore = 0;
   let quizAnswered = false;
+  let pendingSelectedOption = null;
   let lastSelectedOption = null;
   let selectedGalleryEra = 'all';
   let selectedFootprintYear = 'all';
@@ -3444,13 +3485,13 @@
     const prevBtn = document.createElement('button');
     prevBtn.type = 'button';
     prevBtn.className = 'wedding-carousel-nav is-prev';
-    prevBtn.setAttribute('aria-label', currentLang === 'en' ? 'Previous photo' : '上一張婚紗照');
+    prevBtn.setAttribute('aria-label', currentLang === 'en' ? 'Previous photo' : '上一張照片');
     prevBtn.textContent = '‹';
 
     const nextBtn = document.createElement('button');
     nextBtn.type = 'button';
     nextBtn.className = 'wedding-carousel-nav is-next';
-    nextBtn.setAttribute('aria-label', currentLang === 'en' ? 'Next photo' : '下一張婚紗照');
+    nextBtn.setAttribute('aria-label', currentLang === 'en' ? 'Next photo' : '下一張照片');
     nextBtn.textContent = '›';
 
     stage.append(slideWrap, topBar, prevBtn, nextBtn);
@@ -3639,7 +3680,7 @@
       captionEl.textContent =
         currentLang === 'en'
           ? 'Swipe, use arrows, or tap Fullscreen to enjoy all 61 portraits.'
-          : '可左右切換、觸控滑動，或點右上角「全螢幕」完整欣賞 61 張婚紗寫真。';
+          : '可左右切換、觸控滑動，或點右上角「全螢幕」完整欣賞 61 張精選寫真。';
     }
 
     function stepSlide(delta) {
@@ -7927,6 +7968,7 @@
     groomScore = 0;
     brideScore = 0;
     quizAnswered = false;
+    pendingSelectedOption = null;
     lastSelectedOption = null;
     cipherClueRevealed = false;
     renderQuizIntroLanguage();
@@ -7943,6 +7985,7 @@
     groomScore = 0;
     brideScore = 0;
     quizAnswered = false;
+    pendingSelectedOption = null;
     lastSelectedOption = null;
     cipherClueRevealed = false;
     if (elQuizIntroView) elQuizIntroView.classList.add('hidden');
@@ -8316,6 +8359,7 @@
     }
 
     quizAnswered = false;
+    pendingSelectedOption = null;
     lastSelectedOption = null;
     elQuizExplanationBox.classList.add('hidden');
     refreshQuizLanguage();
@@ -8411,6 +8455,8 @@
         } else if (idx === lastSelectedOption) {
           btn.classList.add('is-wrong');
         }
+      } else if (idx === pendingSelectedOption) {
+        btn.classList.add('is-selected');
       }
 
       const prefix = document.createElement('span');
@@ -8431,6 +8477,12 @@
     });
 
     elQuizOptionsList.replaceChildren(...optionButtons);
+
+    if (elQuizSubmitWrap && btnQuizSubmit) {
+      elQuizSubmitWrap.classList.toggle('hidden', quizAnswered);
+      btnQuizSubmit.disabled = quizAnswered || pendingSelectedOption === null;
+      btnQuizSubmit.textContent = currentLang === 'en' ? 'Submit Answer' : '確認送出答案';
+    }
 
     if (quizAnswered) {
       const isCorrect = isOptionCorrect(q, lastSelectedOption);
@@ -8468,6 +8520,13 @@
 
   function handleSelectOption(selectedIndex) {
     if (quizAnswered) return;
+    pendingSelectedOption = selectedIndex;
+    refreshQuizLanguage();
+  }
+
+  function handleSubmitQuizOption() {
+    if (quizAnswered || pendingSelectedOption === null) return;
+    const selectedIndex = pendingSelectedOption;
     quizAnswered = true;
     lastSelectedOption = selectedIndex;
 
@@ -8715,6 +8774,10 @@
     if (triggerConfetti) {
       launchConfetti();
     }
+  }
+
+  if (btnQuizSubmit) {
+    btnQuizSubmit.addEventListener('click', handleSubmitQuizOption);
   }
 
   btnQuizNext.addEventListener('click', () => {

@@ -645,6 +645,8 @@
             if (summaryView && !summaryView.classList.contains('hidden')) break;
             const firstOpt = document.querySelector('#quiz-options-list .quiz-option-btn');
             if (firstOpt) firstOpt.click();
+            const submitBtn = document.getElementById('quiz-submit-btn');
+            if (submitBtn && !submitBtn.disabled) submitBtn.click();
             const nextBtn = document.getElementById('quiz-next-btn');
             if (nextBtn) nextBtn.click();
           }
@@ -702,6 +704,8 @@
             if (summaryView && !summaryView.classList.contains('hidden')) break;
             const firstOpt = document.querySelector('#quiz-options-list .quiz-option-btn');
             if (firstOpt) firstOpt.click();
+            const submitBtn = document.getElementById('quiz-submit-btn');
+            if (submitBtn && !submitBtn.disabled) submitBtn.click();
             const nextBtn = document.getElementById('quiz-next-btn');
             if (nextBtn) nextBtn.click();
           }

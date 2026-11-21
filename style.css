@@ -5625,3 +5625,37 @@ body.is-subview-active .main-stage {
     padding: 4px;
   }
 }
+
+.quiz-option-btn.is-selected {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface-card, #ffffff));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.quiz-option-btn.is-selected .quiz-option-prefix {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+.quiz-submit-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.quiz-submit-wrap.hidden {
+  display: none;
+}
+
+.quiz-submit-btn {
+  min-width: 180px;
+  min-height: 46px;
+}
+
+.quiz-submit-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
