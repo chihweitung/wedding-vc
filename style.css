@@ -153,6 +153,7 @@ a {
 .page-shell {
   min-height: 100vh;
   min-height: 100dvh;
+  min-height: 100dvh;
   max-width: 1140px;
   margin: 0 auto;
   padding-top: max(20px, env(safe-area-inset-top));
@@ -3871,6 +3872,7 @@ body.carousel-fullscreen-open {
   inset: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   height: var(--fs-vh, 100dvh);
   border-radius: 0;
   border: none;
@@ -4418,6 +4420,7 @@ body.hp-secret-theme {
   color: #f6e8c8;
   font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
   min-height: 100vh;
+  min-height: 100dvh;
   min-height: 100dvh;
   position: relative;
   overflow-x: hidden;
@@ -5200,6 +5203,7 @@ body.hp-lumos-on .hp-parchment-card,
   max-width: 620px;
   max-height: calc(100vh - 28px);
   max-height: calc(100dvh - 28px);
+  max-height: calc(100dvh - 28px);
   padding: 28px 26px 22px;
   border-radius: 20px;
   background:
@@ -5359,11 +5363,12 @@ body.hp-lumos-on .hp-parchment-card,
   text-align: center;
   font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
   font-variant-numeric: tabular-nums;
-  font-size: 1.05rem;
+  font-size: clamp(0.9rem, 3.6vw, 1.05rem);
   font-weight: 700;
   line-height: 1.75;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   white-space: pre-line;
+  overflow-wrap: anywhere;
   color: #fde047;
   text-shadow: 0 0 12px rgba(250, 204, 21, 0.45);
   user-select: all;
@@ -5514,6 +5519,7 @@ body.hp-lumos-on .hp-parchment-card,
 
   .hp-riddle-dialog {
     max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px);
     max-height: calc(100dvh - 24px);
     padding: 20px 16px 16px;
   }
