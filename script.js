@@ -57,6 +57,15 @@
   const WEDDING_MENU_IMAGE_URL = '';
   const WEDDING_MENU_LINK_URL = '';
 
+  // 問答排行榜 & 通關密語後端網址（將 leaderboard-apps-script.gs 部署為 Google Apps Script 網頁應用程式後貼到此處）
+  const LEADERBOARD_ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycby3Cs85ileMgZgMa0lWTHGyWDnoA_sxsldpeHrLMGPiFJznafbMfLuAovAuU4hN4OUcBA/exec';
+  const STORAGE_KEY_PLAYER_NAME = 'te_wedding_player_name_v1';
+  const SECRET_PASSCODE_SHA256_SET = new Set([
+    '721c2ce0de061fe5f0fb29ca1dc8125cab83bbe60043e334b4cfe29ed470c4bb',
+    '8350d70b29920e5bfc8ad2efbae71b53dfc8500a9cba1771bf745c083384777e',
+    'e505abe903e47c2e1c4ce67140c96fdf78ab8c4d4d099f7b726076f7071bbc26',
+  ]);
+
   // 雙語介面文字設定 (繁體中文 / English · 清新溫柔喜帖第一人稱口吻)
   const I18N = {
     zh: {
@@ -1254,7 +1263,7 @@
               ],
               [
                 { key: '徐天泰', zh: '徐天泰', en: '徐天泰', match: '徐天泰 天泰' },
-                { key: '睦哲', zh: '睦哲', en: '睦哲', match: '睦哲' },
+                { key: '徐乙芹', zh: '徐乙芹', en: '徐乙芹', match: '徐乙芹 乙芹' },
               ],
               [
                 { key: '徐乙芹', zh: '徐乙芹', en: '徐乙芹', match: '徐乙芹 乙芹' },
@@ -1277,7 +1286,7 @@
                 { key: '卓辰陽', zh: '卓辰陽', en: '卓辰陽', match: '卓辰陽 辰陽' },
               ],
               [
-                { key: '如鴈', zh: '如鴈', en: '如鴈', match: '如鴈' },
+                { key: '卓辰陽', zh: '卓辰陽', en: '卓辰陽', match: '卓辰陽 辰陽' },
                 null,
               ],
               [
@@ -2534,6 +2543,21 @@
   // Quiz Elements
   const elQuizSection = document.getElementById('quiz-section');
   const elQuizIntroView = document.getElementById('quiz-intro-view');
+  const elQuizHighscoreForm = document.getElementById('quiz-highscore-form');
+  const elQuizPlayerNameLabel = document.getElementById('quiz-player-name-label');
+  const elQuizPlayerNameInput = document.getElementById('quiz-player-name-input');
+  const btnQuizHighscoreSubmit = document.getElementById('quiz-highscore-submit-btn');
+  const elQuizPlayerNameError = document.getElementById('quiz-player-name-error');
+  const elQuizSubmitStatus = document.getElementById('quiz-submit-status');
+  const elPasscodeRedeemCard = document.getElementById('passcode-redeem-card');
+  const elPasscodeCardEyebrow = document.getElementById('passcode-card-eyebrow');
+  const elPasscodeCardTitle = document.getElementById('passcode-card-title');
+  const elPasscodeCardDesc = document.getElementById('passcode-card-desc');
+  const elPasscodeRedeemForm = document.getElementById('passcode-redeem-form');
+  const elPasscodeNameInput = document.getElementById('passcode-name-input');
+  const elPasscodeCodeInput = document.getElementById('passcode-code-input');
+  const btnPasscodeVerify = document.getElementById('passcode-verify-btn');
+  const elPasscodeFeedback = document.getElementById('passcode-feedback');
   const elQuizIntroEyebrow = document.getElementById('quiz-intro-eyebrow');
   const elQuizIntroTitle = document.getElementById('quiz-intro-title');
   const elQuizIntroDesc = document.getElementById('quiz-intro-desc');
@@ -2907,6 +2931,34 @@
   let quizAnswered = false;
   let pendingSelectedOption = null;
   let lastSelectedOption = null;
+  let currentPlayerName = safeGetStorage(STORAGE_KEY_PLAYER_NAME) || '';
+  let quizStartedAtMs = 0;
+  let currentQuizStartToken = '';
+  let quizStartTokenReqId = 0;
+
+  function getMonotonicNowMs() {
+    if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+      return performance.now();
+    }
+    return Date.now();
+  }
+
+  function requestQuizStartToken() {
+    currentQuizStartToken = '';
+    if (!LEADERBOARD_ENDPOINT_URL) return;
+    const reqId = ++quizStartTokenReqId;
+    const sep = LEADERBOARD_ENDPOINT_URL.includes('?') ? '&' : '?';
+    fetch(`${LEADERBOARD_ENDPOINT_URL}${sep}action=start`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (reqId === quizStartTokenReqId && data && data.ok && typeof data.startToken === 'string') {
+          currentQuizStartToken = data.startToken;
+        }
+      })
+      .catch(() => {});
+  }
+  let lastQuizDurationSec = null;
+  let hasSubmittedCurrentQuiz = false;
   let selectedGalleryEra = 'all';
   let selectedFootprintYear = 'all';
   let timelinePlaying = false;
@@ -7972,14 +8024,21 @@
     lastSelectedOption = null;
     cipherClueRevealed = false;
     renderQuizIntroLanguage();
+    syncPlayerNameAndPasscodeUi();
     if (elQuizIntroView) elQuizIntroView.classList.remove('hidden');
     elQuizQuestionView.classList.add('hidden');
     elQuizSummaryView.classList.add('hidden');
+    if (elPasscodeRedeemCard) elPasscodeRedeemCard.classList.remove('hidden');
+    renderAdminLeaderboardPanel();
   }
 
   function startQuiz() {
     shuffleQuestionOptions();
     quizStarted = true;
+    quizStartedAtMs = getMonotonicNowMs();
+    requestQuizStartToken();
+    lastQuizDurationSec = null;
+    hasSubmittedCurrentQuiz = false;
     quizIndex = 0;
     quizScore = 0;
     groomScore = 0;
@@ -7990,8 +8049,280 @@
     cipherClueRevealed = false;
     if (elQuizIntroView) elQuizIntroView.classList.add('hidden');
     elQuizSummaryView.classList.add('hidden');
+    if (elQuizHighscoreForm) elQuizHighscoreForm.classList.add('hidden');
+    if (elQuizSubmitStatus) elQuizSubmitStatus.classList.add('hidden');
+    if (elPasscodeRedeemCard) elPasscodeRedeemCard.classList.add('hidden');
     elQuizQuestionView.classList.remove('hidden');
     renderCurrentQuizQuestion();
+  }
+
+  function sanitizeGuestNameInput(raw) {
+    return String(raw || '')
+      .replace(/[\u0000-\u001f\u007f<>`"'\\;{}]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/^[=+\-@]+/, '')
+      .trim()
+      .slice(0, 40);
+  }
+
+  function setPlayerName(name) {
+    currentPlayerName = sanitizeGuestNameInput(name);
+    safeSetStorage(STORAGE_KEY_PLAYER_NAME, currentPlayerName);
+    if (elQuizPlayerNameInput && elQuizPlayerNameInput.value !== currentPlayerName) {
+      elQuizPlayerNameInput.value = currentPlayerName;
+    }
+    if (elPasscodeNameInput && elPasscodeNameInput.value !== currentPlayerName) {
+      elPasscodeNameInput.value = currentPlayerName;
+    }
+  }
+
+  function syncPlayerNameAndPasscodeUi() {
+    if (currentPlayerName) {
+      if (elQuizPlayerNameInput && !elQuizPlayerNameInput.value) {
+        elQuizPlayerNameInput.value = currentPlayerName;
+      }
+      if (elPasscodeNameInput && !elPasscodeNameInput.value) {
+        elPasscodeNameInput.value = currentPlayerName;
+      }
+    }
+    if (elQuizPlayerNameLabel) {
+      elQuizPlayerNameLabel.textContent =
+        currentLang === 'en'
+          ? '🏆 10+ Correct! Enter your name for the Leaderboard'
+          : '🏆 答對 10 題以上！輸入您的大名登上高分榜';
+    }
+    if (btnQuizHighscoreSubmit) {
+      btnQuizHighscoreSubmit.textContent = currentLang === 'en' ? 'Submit Score' : '登記成績';
+    }
+    if (elQuizPlayerNameInput) {
+      elQuizPlayerNameInput.placeholder =
+        currentLang === 'en' ? 'Your Name (e.g. Alex Chen)' : '您的大名（例如：王小明）';
+    }
+    if (elPasscodeCardEyebrow) {
+      elPasscodeCardEyebrow.textContent =
+        currentLang === 'en'
+          ? 'SECRET PASSCODE · OPTIONAL REGISTRATION'
+          : 'SECRET PASSCODE · 選填通關登記處';
+    }
+    if (elPasscodeCardTitle) {
+      elPasscodeCardTitle.textContent =
+        currentLang === 'en'
+          ? '🗝️ Found the Secret Chamber Passcode?'
+          : '🗝️ 已找到隱藏彩蛋的通關密語？';
+    }
+    if (elPasscodeCardDesc) {
+      elPasscodeCardDesc.textContent =
+        currentLang === 'en'
+          ? 'Enter your name and the passcode from the secret scroll to register on the hall of fame!'
+          : '輸入您的大名與從密卷找到的通關密語，驗證成功後將為您登記通關紀錄！';
+    }
+    if (elPasscodeNameInput) {
+      elPasscodeNameInput.placeholder =
+        currentLang === 'en' ? 'Your Name (e.g. Alex Chen)' : '您的大名（例如：王小明）';
+    }
+    if (elPasscodeCodeInput) {
+      elPasscodeCodeInput.placeholder =
+        currentLang === 'en' ? 'Paste or type the secret passcode...' : '請貼上或輸入通關密語...';
+    }
+    if (btnPasscodeVerify) {
+      btnPasscodeVerify.textContent =
+        currentLang === 'en' ? '🗝️ Verify & Register' : '🗝️ 驗證並登記通關';
+    }
+  }
+
+  async function sha256HexForPasscode(str) {
+    if (!window.crypto || !window.crypto.subtle) return '';
+    const buf = await window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function getLeaderboardDeviceId() {
+    const storageKey = 'te_device_seal_id';
+    let devId = safeGetStorage(storageKey);
+    if (!devId) {
+      if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+        const arr = new Uint8Array(12);
+        window.crypto.getRandomValues(arr);
+        devId = Array.from(arr, (b) => b.toString(16).padStart(2, '0')).join('');
+      } else {
+        devId = `${Math.random().toString(36).slice(2)}${Date.now().toString(36)}`;
+      }
+      safeSetStorage(storageKey, devId);
+    }
+    return devId;
+  }
+
+  async function postLeaderboardEvent(payload) {
+    if (!LEADERBOARD_ENDPOINT_URL) {
+      return { sent: false, reason: 'unconfigured' };
+    }
+    try {
+      const enriched = Object.assign({}, payload, { deviceId: getLeaderboardDeviceId() });
+      const res = await fetch(LEADERBOARD_ENDPOINT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(enriched),
+      });
+      if (!res.ok) return { sent: true, ok: false };
+      const data = await res.json().catch(() => ({ ok: true }));
+      if (data && data.name) {
+        setPlayerName(data.name);
+      }
+      return {
+        sent: true,
+        ok: Boolean(data && data.ok !== false),
+        error: (data && data.error) || '',
+        canonicalName: (data && data.name) || payload.name || '',
+        mergedByDevice: Boolean(data && data.mergedByDevice),
+      };
+    } catch (_err) {
+      return { sent: true, ok: false };
+    }
+  }
+
+  function isAdminOnlyUnlocked() {
+    return Boolean(window.__TE_DEBUG_AUTH__ === true);
+  }
+
+  function renderAdminLeaderboardPanel() {
+    if (!elQuizSection) return;
+    let panel = document.getElementById('admin-leaderboard-card');
+    if (!isAdminOnlyUnlocked()) {
+      if (panel) panel.remove();
+      return;
+    }
+    if (!panel) {
+      panel = document.createElement('div');
+      panel.id = 'admin-leaderboard-card';
+      panel.className = 'quiz-card admin-leaderboard-card';
+      elQuizSection.append(panel);
+    }
+
+    panel.replaceChildren();
+    const header = document.createElement('div');
+    header.className = 'admin-lb-header';
+    const title = document.createElement('h3');
+    title.className = 'passcode-card-title';
+    title.textContent = '🏆 後台即時排行榜（問答前幾名＆通關先鋒）';
+    const refreshBtn = document.createElement('button');
+    refreshBtn.type = 'button';
+    refreshBtn.className = 'secondary-btn admin-lb-refresh-btn';
+    refreshBtn.textContent = '🔄 重新整理排行';
+    header.append(title, refreshBtn);
+
+    const body = document.createElement('div');
+    body.className = 'admin-lb-body';
+    panel.append(header, body);
+
+    const loadData = async () => {
+      if (!LEADERBOARD_ENDPOINT_URL) {
+        const note = document.createElement('p');
+        note.className = 'passcode-card-desc';
+        note.textContent =
+          '尚未設定 Google Apps Script 網址。請先將 leaderboard-apps-script.gs 部署至 Google 試算表，並將網址填入 script.js 的 LEADERBOARD_ENDPOINT_URL 即可即時查看前幾名。';
+        body.replaceChildren(note);
+        return;
+      }
+      refreshBtn.disabled = true;
+      const loadingP = document.createElement('p');
+      loadingP.className = 'passcode-card-desc';
+      loadingP.textContent = '載入排行榜中...';
+      body.replaceChildren(loadingP);
+      try {
+        const res = await fetch(LEADERBOARD_ENDPOINT_URL);
+        const json = await res.json();
+        if (!json || !json.ok) throw new Error('bad_response');
+
+        const cols = document.createElement('div');
+        cols.className = 'admin-lb-columns';
+
+        const makeList = (headingText, items, formatter) => {
+          const box = document.createElement('div');
+          box.className = 'admin-lb-col';
+          const h4 = document.createElement('h4');
+          h4.className = 'admin-lb-col-title';
+          h4.textContent = headingText;
+          box.append(h4);
+          if (!items || items.length === 0) {
+            const empty = document.createElement('p');
+            empty.className = 'passcode-card-desc';
+            empty.textContent = '目前尚無紀錄';
+            box.append(empty);
+          } else {
+            const ol = document.createElement('ol');
+            ol.className = 'admin-lb-list';
+            items.forEach((item, idx) => {
+              const li = document.createElement('li');
+              li.className = 'admin-lb-item';
+              const rank = document.createElement('span');
+              rank.className = 'admin-lb-rank';
+              rank.textContent = `#${idx + 1}`;
+              const nameEl = document.createElement('span');
+              nameEl.className = 'admin-lb-name';
+              nameEl.textContent = item.name;
+              const meta = document.createElement('span');
+              meta.className = 'admin-lb-meta';
+              meta.textContent = formatter(item);
+              li.append(rank, nameEl, meta);
+              ol.append(li);
+            });
+            box.append(ol);
+          }
+          return box;
+        };
+
+        const formatTime = (isoStr) => {
+          if (!isoStr) return '';
+          const d = new Date(isoStr);
+          return Number.isNaN(d.getTime())
+            ? ''
+            : `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
+        };
+
+        const overallList = Array.isArray(json.topOverall) ? json.topOverall : [];
+        const overallBox = makeList(
+          `🏆 綜合總排行榜（👑 終極密語 ＞ 🗝️ 祝福密語 ＞ 🎯 10+ 答題｜共 ${json.totalPlayers || 0} 人）`,
+          overallList,
+          (it) => {
+            const parts = [it.tierLabel || (it.passcodeTier >= 2 ? '👑 終極密語' : it.passcodeTier === 1 ? '🗝️ 祝福密語' : '🎯 10+ 答題')];
+            if (it.score !== null && it.score !== undefined) {
+              const sec = it.durationSec !== null && it.durationSec !== undefined ? `/${it.durationSec}s` : '';
+              parts.push(`${it.score}/${it.total || 11}${sec}`);
+            }
+            const t = formatTime(it.unlockTime || it.firstTime);
+            if (t) parts.push(t);
+            return parts.join(' · ');
+          }
+        );
+        overallBox.style.gridColumn = '1 / -1';
+
+        cols.append(
+          overallBox,
+          makeList('🗝️ 通關密語先鋒榜（終極＞祝福）', json.topSecret, (it) => {
+            const badge = it.passcodeTier >= 2 ? '👑 終極密語' : '🗝️ 祝福密語';
+            const t = formatTime(it.unlockTime);
+            return t ? `${badge} · ${t}` : badge;
+          }),
+          makeList(`🎯 問答高分榜（10+ 題）`, json.topQuiz, (it) => {
+            const sec = it.durationSec !== null ? ` · ${it.durationSec}s` : '';
+            const egg = it.passcodeTier >= 2 ? ' · 👑' : it.unlockedSecret ? ' · 🗝️' : '';
+            return `${it.score}/${it.total}${sec}${egg}`;
+          })
+        );
+        body.replaceChildren(cols);
+      } catch (_err) {
+        const errP = document.createElement('p');
+        errP.className = 'passcode-feedback is-error';
+        errP.textContent = '無法讀取排行榜，請確認 Apps Script 已部署為「所有人可存取」。';
+        body.replaceChildren(errP);
+      } finally {
+        refreshBtn.disabled = false;
+      }
+    };
+
+    refreshBtn.addEventListener('click', loadData);
+    loadData();
   }
 
   function createSvgNode(tag, attrs) {
@@ -8771,9 +9102,158 @@
       }
     }
 
+    if (elPasscodeRedeemCard) elPasscodeRedeemCard.classList.remove('hidden');
+    syncPlayerNameAndPasscodeUi();
+    renderAdminLeaderboardPanel();
+
     if (triggerConfetti) {
       launchConfetti();
+      lastQuizDurationSec = quizStartedAtMs
+        ? Math.max(1, Math.round((getMonotonicNowMs() - quizStartedAtMs) / 1000))
+        : null;
     }
+
+    const qualifiesForLeaderboard = quizScore >= 10;
+    if (elQuizHighscoreForm) {
+      elQuizHighscoreForm.classList.toggle('hidden', !qualifiesForLeaderboard || hasSubmittedCurrentQuiz);
+    }
+    if (!qualifiesForLeaderboard && elQuizSubmitStatus) {
+      elQuizSubmitStatus.classList.add('hidden');
+    }
+  }
+
+  if (elQuizHighscoreForm) {
+    elQuizHighscoreForm.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      if (quizScore < 10) return;
+      const typedName = sanitizeGuestNameInput(elQuizPlayerNameInput ? elQuizPlayerNameInput.value : '');
+      if (!typedName) {
+        if (elQuizPlayerNameError) {
+          elQuizPlayerNameError.textContent =
+            currentLang === 'en' ? 'Please enter a valid name.' : '請先輸入有效的大名喔！';
+          elQuizPlayerNameError.classList.remove('hidden');
+        }
+        if (elQuizPlayerNameInput) elQuizPlayerNameInput.focus();
+        return;
+      }
+      if (elQuizPlayerNameError) elQuizPlayerNameError.classList.add('hidden');
+      setPlayerName(typedName);
+      if (btnQuizHighscoreSubmit) btnQuizHighscoreSubmit.disabled = true;
+
+      if (elQuizSubmitStatus) {
+        elQuizSubmitStatus.textContent =
+          currentLang === 'en'
+            ? `Saving ${typedName}'s score...`
+            : `正在登記 ${typedName} 的高分紀錄...`;
+        elQuizSubmitStatus.classList.remove('hidden');
+      }
+
+      const res = await postLeaderboardEvent({
+        action: 'quiz',
+        name: typedName,
+        score: quizScore,
+        total: QUIZ_QUESTIONS.length,
+        durationSec: lastQuizDurationSec,
+        startToken: currentQuizStartToken,
+      });
+
+      hasSubmittedCurrentQuiz = true;
+      if (btnQuizHighscoreSubmit) btnQuizHighscoreSubmit.disabled = false;
+      if (elQuizHighscoreForm) elQuizHighscoreForm.classList.add('hidden');
+
+      if (elQuizSubmitStatus) {
+        if (res.sent && res.ok) {
+          elQuizSubmitStatus.textContent =
+            currentLang === 'en'
+              ? `✅ Recorded ${typedName}'s score (${quizScore} / ${QUIZ_QUESTIONS.length}) on the Leaderboard!`
+              : `✅ 已成功登記「${typedName}」的高分成績（${quizScore} / ${QUIZ_QUESTIONS.length}）！`;
+          if (isDebugUnlocked()) renderAdminLeaderboardPanel();
+        } else if (res.error === 'event_not_open_yet') {
+          elQuizSubmitStatus.textContent =
+            currentLang === 'en'
+              ? '⏳ Leaderboard opens at 2026/11/29 12:30 (GMT+8). See you at the wedding!'
+              : '⏳ 排行榜將於 2026/11/29 12:30（台灣時間）婚禮正式開席後開放登記喔！';
+        } else {
+          elQuizSubmitStatus.textContent =
+            currentLang === 'en'
+              ? `🏆 High Scorer: ${typedName} (${quizScore} / ${QUIZ_QUESTIONS.length})`
+              : `🏆 高分挑戰者：${typedName}（答對 ${quizScore} / ${QUIZ_QUESTIONS.length} 題）`;
+        }
+      }
+    });
+  }
+
+  if (elPasscodeRedeemForm) {
+    elPasscodeRedeemForm.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      if (!elPasscodeFeedback) return;
+      elPasscodeFeedback.classList.remove('hidden', 'is-success', 'is-error');
+
+      const nameVal = sanitizeGuestNameInput(
+        elPasscodeNameInput ? elPasscodeNameInput.value : currentPlayerName
+      );
+      const codeVal = elPasscodeCodeInput ? elPasscodeCodeInput.value.trim().slice(0, 100) : '';
+
+      if (!nameVal) {
+        elPasscodeFeedback.classList.add('is-error');
+        elPasscodeFeedback.textContent =
+          currentLang === 'en' ? 'Please enter your name first.' : '請先輸入您的大名喔！';
+        if (elPasscodeNameInput) elPasscodeNameInput.focus();
+        return;
+      }
+      if (!codeVal) {
+        elPasscodeFeedback.classList.add('is-error');
+        elPasscodeFeedback.textContent =
+          currentLang === 'en' ? 'Please enter the secret passcode.' : '請輸入通關密語！';
+        if (elPasscodeCodeInput) elPasscodeCodeInput.focus();
+        return;
+      }
+
+      setPlayerName(nameVal);
+      const normCode = codeVal.replace(/[\s!！。.,，]+/g, '').toUpperCase();
+      const digest = await sha256HexForPasscode(normCode);
+      if (!digest || !SECRET_PASSCODE_SHA256_SET.has(digest)) {
+        elPasscodeFeedback.classList.add('is-error');
+        elPasscodeFeedback.textContent =
+          currentLang === 'en'
+            ? '❌ Passcode did not match. Please double-check the exact passcode from the secret scroll.'
+            : '❌ 通關密語不正確，請確認是否從彩蛋密卷完整複製喔！';
+        return;
+      }
+
+      launchConfetti();
+      elPasscodeFeedback.classList.add('is-success');
+      elPasscodeFeedback.textContent =
+        currentLang === 'en'
+          ? `🎉 Passcode verified! Registering ${nameVal}...`
+          : `🎉 通關密語驗證成功！正在為 ${nameVal} 登記通關...`;
+
+      const res = await postLeaderboardEvent({
+        action: 'passcode',
+        name: nameVal,
+        passcode: codeVal,
+      });
+
+      if (res.sent && res.ok) {
+        elPasscodeFeedback.textContent =
+          currentLang === 'en'
+            ? `🎉 Verified! ${nameVal} is now registered on the Secret Passcode Hall of Fame!`
+            : `🎉 通關密語正確！已成功登記「${nameVal}」為彩蛋通關勇者！`;
+        if (isDebugUnlocked()) renderAdminLeaderboardPanel();
+      } else if (res.error === 'event_not_open_yet') {
+        elPasscodeFeedback.classList.remove('is-success');
+        elPasscodeFeedback.classList.add('is-error');
+        elPasscodeFeedback.textContent =
+          currentLang === 'en'
+            ? '⏳ Leaderboard registration opens at 2026/11/29 12:30 (GMT+8).'
+            : '⏳ 排行榜將於 2026/11/29 12:30（台灣時間）婚禮正式開席後開放登記喔！';
+      } else {
+        elPasscodeFeedback.textContent =
+          currentLang === 'en'
+            ? `🎉 Passcode verified for ${nameVal}! Show this screen to the hosts!`
+            : `🎉 通關密語驗證成功！「${nameVal}」恭喜解鎖終極彩蛋！`;
+      }
+    });
   }
 
   if (btnQuizSubmit) {

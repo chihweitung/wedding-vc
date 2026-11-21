@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta
     http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.instagram.com https://www.google.com https://photos.google.com; img-src 'self' data: https://images.unsplash.com https://lh3.googleusercontent.com https://*.googleusercontent.com https://photos.google.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'self';"
+    content="default-src 'self'; script-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.instagram.com https://www.google.com https://photos.google.com; img-src 'self' data: https://images.unsplash.com https://lh3.googleusercontent.com https://*.googleusercontent.com https://photos.google.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self';"
   />
   <meta name="referrer" content="no-referrer" />
   <meta name="robots" content="noindex, nofollow, noarchive" />
@@ -16,8 +16,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261121w" />
-  <link rel="stylesheet" href="debug.css?v=20261121w" />
+  <link rel="stylesheet" href="style.css?v=20261121aj" />
+  <link rel="stylesheet" href="debug.css?v=20261121ag" />
 </head>
 <body class="debug-locked">
   <canvas id="confetti-canvas" aria-hidden="true"></canvas>
@@ -483,6 +483,26 @@
             <span class="choice-eyebrow" id="quiz-completed-eyebrow">QUIZ COMPLETED · 答題完成</span>
             <h3 class="quiz-summary-title" id="quiz-summary-title">感謝您的熱情參與！</h3>
             <div class="quiz-final-score" id="quiz-final-score">11 / 11</div>
+            <form class="quiz-highscore-box hidden" id="quiz-highscore-form" autocomplete="off">
+              <label class="quiz-player-name-label" for="quiz-player-name-input" id="quiz-player-name-label">
+                🏆 答對 10 題以上！輸入您的大名登上高分榜
+              </label>
+              <div class="quiz-highscore-row">
+                <input
+                  type="text"
+                  id="quiz-player-name-input"
+                  class="quiz-player-name-input"
+                  maxlength="40"
+                  placeholder="您的大名（例如：王小明）"
+                  autocomplete="name"
+                />
+                <button type="submit" class="primary-btn quiz-highscore-submit-btn" id="quiz-highscore-submit-btn">
+                  登記成績
+                </button>
+              </div>
+              <p class="quiz-player-name-error hidden" id="quiz-player-name-error"></p>
+            </form>
+            <p class="quiz-submit-status hidden" id="quiz-submit-status" aria-live="polite"></p>
             <div class="quiz-familiarity-badge" id="quiz-familiarity-badge"></div>
             <p class="quiz-summary-rank" id="quiz-summary-rank"></p>
 
@@ -499,6 +519,37 @@
               <button type="button" class="secondary-btn" id="quiz-restart-btn">重新挑戰一次</button>
               <button type="button" class="primary-btn" id="quiz-to-video-btn">🎬 前往觀賞新人影片</button>
             </div>
+          </div>
+
+          <!-- Secret Passcode Verification & Registration Card -->
+          <div class="quiz-card passcode-redeem-card" id="passcode-redeem-card">
+            <span class="choice-eyebrow" id="passcode-card-eyebrow">SECRET PASSCODE · 通關密語登記處</span>
+            <h3 class="passcode-card-title" id="passcode-card-title">🗝️ 已找到隱藏彩蛋的通關密語？</h3>
+            <p class="passcode-card-desc" id="passcode-card-desc">
+              輸入您的大名與從密卷找到的通關密語，驗證成功後將為您登記通關紀錄！
+            </p>
+            <form class="passcode-redeem-form" id="passcode-redeem-form" autocomplete="off">
+              <input
+                type="text"
+                id="passcode-name-input"
+                class="quiz-player-name-input"
+                maxlength="40"
+                placeholder="您的大名（例如：王小明）"
+                autocomplete="name"
+              />
+              <input
+                type="text"
+                id="passcode-code-input"
+                class="quiz-player-name-input"
+                maxlength="80"
+                placeholder="請貼上或輸入通關密語..."
+                autocomplete="off"
+              />
+              <button type="submit" class="primary-btn passcode-verify-btn" id="passcode-verify-btn">
+                🗝️ 驗證並登記通關
+              </button>
+            </form>
+            <p class="passcode-feedback hidden" id="passcode-feedback" aria-live="polite"></p>
           </div>
         </div>
 
@@ -715,7 +766,7 @@
     </footer>
   </div>
 
-  <script src="debug.js?v=20261121w"></script>
-  <script src="script.js?v=20261121w"></script>
+  <script src="debug.js?v=20261121ag"></script>
+  <script src="script.js?v=20261121ak"></script>
 </body>
 </html>

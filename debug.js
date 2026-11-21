@@ -697,6 +697,8 @@
           forceWatermarkOnce = true;
           const quizCard = document.getElementById('choose-quiz-card');
           if (quizCard) quizCard.click();
+          const nameInput = document.getElementById('quiz-player-name-input');
+          if (nameInput && !nameInput.value.trim()) nameInput.value = 'Debug Tester';
           const startBtn = document.getElementById('quiz-start-btn');
           if (startBtn) startBtn.click();
           for (let i = 0; i < 20; i++) {
