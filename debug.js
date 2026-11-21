@@ -437,13 +437,85 @@
     btnGroup.className = 'debug-btn-group';
     btnGroup.id = 'debug-btn-group';
 
+    const buildDeviceBoundSecretHref = (rawHref) => {
+      if (!rawHref) return 'index.html';
+      try {
+        const parsed = new URL(rawHref, window.location.href);
+        const masterKey = parsed.searchParams.get('k') || '';
+        if (!masterKey) return rawHref;
+        const SEAL_TIME_BUCKET_MS = 12 * 60 * 60 * 1000;
+        const storageKey = 'te_device_seal_id';
+        let devId = '';
+        try {
+          devId = window.localStorage.getItem(storageKey) || '';
+          if (!devId) {
+            if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+              const arr = new Uint8Array(12);
+              window.crypto.getRandomValues(arr);
+              devId = Array.from(arr, (b) => b.toString(16).padStart(2, '0')).join('');
+            } else {
+              devId = `${Math.random().toString(36).slice(2)}${realDateNow().toString(36)}`;
+            }
+            window.localStorage.setItem(storageKey, devId);
+          }
+        } catch (_e) {
+          devId = 'no-ls';
+        }
+        let tz = '';
+        try {
+          tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        } catch (_e) {
+          tz = '';
+        }
+        const scr = window.screen
+          ? `${window.screen.width}x${window.screen.height}x${window.screen.colorDepth}`
+          : '';
+        const timeBucket = Math.floor(realDateNow() / SEAL_TIME_BUCKET_MS);
+        const seedStr = [
+          devId,
+          navigator.userAgent || '',
+          navigator.language || '',
+          tz,
+          scr,
+          String(navigator.hardwareConcurrency || ''),
+          String(timeBucket),
+        ].join('|');
+        const rawBytes = new TextEncoder().encode(masterKey);
+        let h1 = 2166136261 >>> 0;
+        let h2 = 3735928559 >>> 0;
+        for (let i = 0; i < seedStr.length; i++) {
+          const ch = seedStr.charCodeAt(i);
+          h1 ^= ch;
+          h1 = Math.imul(h1, 16777619) >>> 0;
+          h2 = Math.imul(h2 ^ (ch + i), 2246822519) >>> 0;
+        }
+        const boundHex = Array.from(rawBytes, (b) => {
+          h1 = (Math.imul(h1, 1664525) + 1013904223) >>> 0;
+          h2 ^= h2 << 13;
+          h2 ^= h2 >>> 17;
+          h2 ^= h2 << 5;
+          h2 = h2 >>> 0;
+          const maskByte = ((h1 >>> 16) ^ (h2 >>> 8)) & 0xff;
+          return (b ^ maskByte).toString(16).padStart(2, '0');
+        }).join('');
+        parsed.searchParams.set('k', boundHex);
+        parsed.searchParams.set('t', String(timeBucket));
+        return `${parsed.pathname}${parsed.search}`;
+      } catch (_e) {
+        return rawHref;
+      }
+    };
+
     (config.buttons || []).forEach((btnDef) => {
       if (btnDef.isLink) {
         const link = document.createElement('a');
-        link.href = config.secretHref || 'index.html';
+        link.href = buildDeviceBoundSecretHref(config.secretHref || 'index.html');
         link.className = btnDef.cls;
         link.id = btnDef.id;
         link.textContent = '⚡ 直達 Secret 彩蛋頁 ↗';
+        link.addEventListener('click', () => {
+          link.href = buildDeviceBoundSecretHref(config.secretHref || 'index.html');
+        });
         btnGroup.appendChild(link);
         return;
       }

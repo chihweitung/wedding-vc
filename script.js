@@ -1846,6 +1846,29 @@
     },
     {
       year: '2016',
+      dateTag: '2016.06–07',
+      tom: {
+        lat: 25.033,
+        lng: 121.565,
+        via: { lat: 25.204, lng: 55.27 },
+        city: { zh: '經杜拜 ➔ 返抵台北', en: 'Via Dubai ➔ Back in Taipei' },
+      },
+      eunice: { lat: 22.627, lng: 120.301, city: { zh: '高雄 Kaohsiung', en: 'Kaohsiung' } },
+      lat: 25.033,
+      lng: 121.565,
+      place: {
+        zh: '2016.06–07 · 倫敦出差返台：台北 ↔ 高雄',
+        en: 'Jun–Jul 2016 · Back From London: Taipei ↔ Kaohsiung',
+      },
+      distanceLabel: { zh: '300 km · 台北 ↔ 高雄', en: '300 km · Taipei ↔ Kaohsiung' },
+      desc: {
+        zh: '結束倫敦出差經杜拜飛回台北短暫歇腳，整理好行李很快又準備再出發。',
+        en: 'Returned via Dubai to Taipei for a brief breather before packing up for the next trip across the Pacific.',
+      },
+      mapQuery: 'Taipei,Taiwan',
+    },
+    {
+      year: '2016',
       dateTag: '2016.07',
       tom: {
         lat: 43.653,
