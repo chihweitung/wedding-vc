@@ -71,7 +71,7 @@
       eyebrowCountdown: '2014 — 2026 · 婚禮邀請',
       eyebrowTimeUp: '2026.11.29 · 謝謝今天來見我們的你',
       eventTitle: '走過十二年四季，想邀請你來參與我們最重要的一天',
-      targetSubtitle: '2026 年 11 月 29 日（日）中午 12:30 · 陽明山美軍俱樂部 Brick Yard 33 1/3',
+      targetSubtitle: '2026 年 11 月 29 日（日）中午 12:30 · 陽明山美軍俱樂部 Brick\u00A0Yard\u00A033\u00A01/3',
       labelDays: '天',
       labelHours: '時',
       labelMinutes: '分',
@@ -135,7 +135,7 @@
       seatingPanelEyebrow: 'Brick Yard 33 1/3 · Floor Plan',
       seatingPanelTitle: '美軍俱樂部 · 婚宴座位表',
       seatingExternalBtn: '開啟完整座位圖 ↗',
-      seatingSearchPlaceholder: '輸入姓名（支援自動補全）或桌名...',
+      seatingSearchPlaceholder: '輸入姓名（自動補全）或桌名...',
       menuPanelEyebrow: 'Brick Yard 33 1/3 · Banquet & Bar',
       menuPanelTitle: '美軍俱樂部 · 百匯佳餚與特調菜單',
       menuExternalBtn: '開啟完整菜單相片 ↗',
@@ -194,8 +194,8 @@
       bgmPauseTitleDark: 'Pause 33⅓ Night Andante · Mozart Piano Concerto No. 21',
       eyebrowCountdown: '2014 — 2026 · Wedding Invitation',
       eyebrowTimeUp: 'Nov 29, 2026 · So Happy You Are Here With Us',
-      eventTitle: 'Twelve years of seasons together — we’d love for you to celebrate this day with us',
-      targetSubtitle: 'Sunday, November 29, 2026 · 12:30 PM · Brick Yard 33 1/3, Yangmingshan, Taipei',
+      eventTitle: "Twelve years of seasons together — we'd love for you to celebrate this day with us",
+      targetSubtitle: 'Sunday, November 29, 2026 · 12:30 PM · Brick\u00A0Yard\u00A033\u00A01/3, Yangmingshan, Taipei',
       labelDays: 'Days',
       labelHours: 'Hours',
       labelMinutes: 'Mins',
@@ -204,7 +204,7 @@
         prefix: 'Since February 28, 2014 in Taipei, we have walked through ',
         mid: ' days side by side and bridged ',
         km: '13,877',
-        suffix: ' km across time zones — now, we can’t wait to gather with you among the red bricks and mountain breeze of Yangmingshan.',
+        suffix: " km across time zones — now, we can't wait to gather with you among the red bricks and mountain breeze of Yangmingshan.",
       },
       loveSignature: 'With love, Tom & Eunice · 33⅓ RPM',
       videoCardEyebrow: 'Our Wedding Film',
@@ -2873,7 +2873,7 @@
   let timelineAnimId = null;
   let timelineLastTs = 0;
   let timelineSpeedMultiplier = 1.0; // 支援 0.5x / 1.0x / 1.5x / 2.0x 調整播放速度
-  const TIMELINE_DURATION_MS = 88000; // 88 秒從容播放 2014–2026 雙人軌跡與每站停留聚焦 (每站約 2.85 秒)
+  const TIMELINE_DURATION_MS = 72000; // 72 秒流暢播放 2014–2026 雙人軌跡與每站停留聚焦 (每站約 2.18 秒)
 
   // Formatters
   const twFormatter = new Intl.DateTimeFormat('zh-TW', {
@@ -3262,6 +3262,7 @@
     // 若倒數尚未結束，嚴格限制只能查看「座位表 (seating)」或「婚宴餐點 (banquet-menu)」，其餘一律返回倒數畫面
     if (!isTimeUp) {
       if (mode !== 'seating' && mode !== 'banquet-menu') {
+        document.body.classList.remove('is-subview-active');
         if (elCountdownStageWrap) elCountdownStageWrap.classList.remove('hidden');
         elTimeupHub.classList.add('hidden');
         elChoiceCardsGrid.classList.add('hidden');
@@ -3282,6 +3283,7 @@
     }
 
     if (mode === 'menu') {
+      document.body.classList.remove('is-subview-active');
       elChoiceCardsGrid.classList.remove('hidden');
       elHubNavBar.classList.add('hidden');
       elMediaSection.classList.add('hidden');
@@ -3296,6 +3298,7 @@
       return;
     }
 
+    document.body.classList.add('is-subview-active');
     elChoiceCardsGrid.classList.add('hidden');
     elHubNavBar.classList.remove('hidden');
 

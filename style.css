@@ -2135,14 +2135,14 @@ body.carousel-fullscreen-open {
   min-height: 46px;
   padding: 10px 38px 10px 14px;
   border-radius: 14px;
-  background-color: var(--surface-card, #ffffff);
+  background-color: #ffffff;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234f6f52' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   background-position: right 12px center;
   background-size: 16px 16px;
   background-repeat: no-repeat;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
   border: 1.5px solid color-mix(in srgb, var(--accent) 36%, var(--border-highlight));
   color: var(--text-primary);
   font-size: 1rem;
@@ -2152,6 +2152,11 @@ body.carousel-fullscreen-open {
   cursor: pointer;
   touch-action: manipulation;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+[data-theme="dark"] .seating-filter-select {
+  background-color: #141d17;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a7c4a0' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
 }
 
 .seating-filter-select:focus {
@@ -2165,12 +2170,17 @@ body.carousel-fullscreen-open {
   margin: 0;
 }
 
+[data-theme="dark"] .seating-search-input::-webkit-search-cancel-button {
+  filter: brightness(0) invert(0.88);
+  cursor: pointer;
+}
+
 .seating-autocomplete-list {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
   right: 0;
-  z-index: 45;
+  z-index: 60;
   list-style: none;
   margin: 0;
   padding: 6px;
@@ -2179,10 +2189,16 @@ body.carousel-fullscreen-open {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   border-radius: 16px;
-  background: var(--surface-card, #ffffff);
+  background: #ffffff;
   border: 1.5px solid color-mix(in srgb, var(--accent) 42%, var(--border-highlight));
-  box-shadow: 0 14px 34px -8px rgba(15, 28, 19, 0.24);
+  box-shadow: 0 18px 40px -8px rgba(15, 28, 19, 0.32);
   text-align: left;
+}
+
+[data-theme="dark"] .seating-autocomplete-list {
+  background: #141d17;
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border-subtle));
+  box-shadow: 0 18px 42px -6px rgba(0, 0, 0, 0.65);
 }
 
 .seating-autocomplete-list.hidden {
@@ -2193,7 +2209,7 @@ body.carousel-fullscreen-open {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 14px;
   min-height: 44px;
   padding: 10px 12px;
   border-radius: 11px;
@@ -2211,6 +2227,10 @@ body.carousel-fullscreen-open {
 
 .seating-autocomplete-name {
   font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .seating-autocomplete-name mark {
@@ -2226,7 +2246,8 @@ body.carousel-fullscreen-open {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 55%;
+  max-width: 50%;
+  flex-shrink: 0;
 }
 
 @media (max-width: 540px) {
@@ -5462,5 +5483,145 @@ body.hp-lumos-on .hp-parchment-card,
   .hp-riddle-close-btn {
     width: 100%;
     padding: 11px 18px;
+  }
+}
+
+/* ============================================================================
+   UI/UX Polish: Subview Compact Hero, Desktop Side-by-Side Seating,
+   Mobile Above-the-Fold & Touch Targets
+   ============================================================================ */
+body.is-subview-active .title-wrapper {
+  display: none;
+}
+
+body.is-subview-active .main-stage {
+  padding-top: 6px;
+  gap: 14px;
+}
+
+.event-title,
+.panel-title,
+.banquet-course-title {
+  text-wrap: balance;
+}
+
+.petal-btn {
+  min-height: 44px;
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seating-map-actions button {
+  min-height: 42px;
+  padding: 8px 14px;
+}
+
+[data-theme="dark"] .embedded-photo-stage .seating-map-interactive {
+  background: #141d17;
+  border-color: rgba(167, 196, 160, 0.25);
+}
+
+[data-theme="dark"] .embedded-photo-stage .seating-map-interactive img {
+  filter: brightness(0.92) contrast(1.03);
+}
+
+/* Desktop (1024px+): Align countdown widths, fit 1280x800 cleanly, and show Seating Chart side-by-side */
+@media (min-width: 1024px) {
+  .countdown-grid {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 14px;
+  }
+
+  .countdown-stage-wrap {
+    gap: 16px;
+  }
+
+  .title-wrapper {
+    margin-bottom: 4px;
+  }
+
+  .site-footer {
+    padding-top: 12px;
+    padding-bottom: 14px;
+  }
+
+  body.is-subview-active .timeup-hub {
+    max-width: 1120px;
+  }
+
+  #seating-section .seating-panel-card {
+    display: grid;
+    grid-template-columns: minmax(420px, 500px) minmax(0, 1fr);
+    column-gap: 24px;
+    row-gap: 14px;
+    align-items: start;
+  }
+
+  #seating-section .seating-panel-card > .panel-header,
+  #seating-section .seating-panel-card > .seating-search-controls,
+  #seating-section .seating-panel-card > .seating-needs-filter-bar {
+    grid-column: 1 / -1;
+  }
+
+  #seating-section .seating-panel-card > #seating-photo-stage {
+    grid-column: 1;
+    position: sticky;
+    top: 16px;
+  }
+
+  #seating-section .seating-panel-card > #seating-photo-stage .seating-map-interactive {
+    width: min(100%, calc((100vh - 210px) * 2090 / 3153));
+    margin: 0 auto;
+  }
+
+  #seating-section .seating-panel-card > #seating-tables-grid {
+    grid-column: 2;
+    grid-template-columns: 1fr;
+    margin-top: 0;
+  }
+}
+
+/* Mobile (<= 540px): Above-the-fold day-of buttons & wider floor plan */
+@media (max-width: 540px) {
+  .page-shell {
+    padding-top: 12px;
+    padding-bottom: 18px;
+  }
+
+  .title-wrapper {
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .countdown-stage-wrap {
+    gap: 12px;
+  }
+
+  .countdown-grid {
+    gap: 8px;
+  }
+
+  .time-card {
+    padding: 12px 6px;
+  }
+
+  .love-story-card {
+    padding: 12px 14px;
+  }
+
+  #seating-section .seating-panel-card {
+    padding: 14px 10px;
+  }
+
+  #seating-photo-stage {
+    padding: 8px 4px;
+  }
+
+  #seating-photo-stage .seating-map-interactive {
+    padding: 4px;
   }
 }
