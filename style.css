@@ -5472,6 +5472,78 @@ body.hp-lumos-on .hp-parchment-card,
   box-shadow: 0 0 20px rgba(251, 191, 36, 0.55);
 }
 
+.hp-riddle-lumos-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto 4px;
+  padding: 9px 16px;
+  min-height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(253, 224, 71, 0.58);
+  background: rgba(250, 204, 21, 0.14);
+  color: #fef08a;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.hp-riddle-lumos-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(250, 204, 21, 0.24);
+  box-shadow: 0 0 18px rgba(253, 224, 71, 0.4);
+}
+
+.hp-decree-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.hp-decree-return-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(253, 224, 71, 0.45);
+  background: rgba(28, 25, 23, 0.52);
+  color: #fde68a;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.hp-decree-return-link:hover,
+.hp-decree-return-link.is-highlighted {
+  background: rgba(250, 204, 21, 0.22);
+  border-color: #fde047;
+  color: #fffbeb;
+  box-shadow: 0 0 18px rgba(250, 204, 21, 0.45);
+}
+
+@media (max-height: 820px) and (min-width: 900px) {
+  .main-stage {
+    gap: 14px;
+    padding-top: 8px;
+    padding-bottom: 10px;
+  }
+
+  .love-note-card {
+    padding: 14px 20px;
+  }
+
+  .countdown-quick-links {
+    margin-top: 2px;
+  }
+}
+
 @media (max-width: 640px) {
   .hp-top-bar {
     justify-content: center;
@@ -5493,6 +5565,7 @@ body.hp-lumos-on .hp-parchment-card,
   }
 
   .hp-header-btn {
+    min-height: 40px;
     padding: 7px 12px;
     font-size: 0.8rem;
   }
@@ -5519,7 +5592,6 @@ body.hp-lumos-on .hp-parchment-card,
 
   .hp-riddle-dialog {
     max-height: calc(100vh - 24px);
-  max-height: calc(100dvh - 24px);
     max-height: calc(100dvh - 24px);
     padding: 20px 16px 16px;
   }

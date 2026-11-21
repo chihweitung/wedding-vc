@@ -787,6 +787,8 @@
   const elRiddleModalCipher = document.getElementById('hp-riddle-modal-cipher');
   const elRiddleModalMid = document.getElementById('hp-riddle-modal-mid');
   const elRiddleModalLumos = document.getElementById('hp-riddle-modal-lumos');
+  const btnRiddleLumos = document.getElementById('hp-riddle-lumos-btn');
+  const linkDecreeReturn = document.getElementById('hp-decree-return-link');
   const btnRiddleClose = document.getElementById('hp-riddle-close-btn');
   const btnRiddleTopClose = document.getElementById('hp-riddle-top-close-btn');
   const elDecreeEyebrow = document.getElementById('hp-decree-eyebrow');
@@ -2854,10 +2856,31 @@
     if (lumosActive && dict && dict.riddleLumos) {
       elRiddleModalLumos.textContent = dict.riddleLumos;
       elRiddleModalLumos.classList.remove('hidden');
+      if (btnRiddleLumos) btnRiddleLumos.classList.add('hidden');
     } else {
       elRiddleModalLumos.textContent = '';
       elRiddleModalLumos.classList.add('hidden');
+      if (btnRiddleLumos) {
+        btnRiddleLumos.textContent =
+          currentLang === 'en'
+            ? '✨ Cast Lumos (Reveal Hidden Clue)'
+            : '✨ 施展路摸思 Lumos（照亮暗記提示）';
+        btnRiddleLumos.classList.remove('hidden');
+      }
     }
+  }
+
+  if (btnRiddleLumos) {
+    btnRiddleLumos.addEventListener('click', () => {
+      toggleLumos(true);
+      const rect = btnRiddleLumos.getBoundingClientRect();
+      spawnSpellBurst(
+        rect.left + rect.width / 2,
+        rect.top + rect.height / 2,
+        ['#fffbeb', '#fde047', '#facc15'],
+        42
+      );
+    });
   }
 
   function openRiddleModal() {
@@ -2992,6 +3015,10 @@
     if (elDecreeEyebrow) elDecreeEyebrow.textContent = dict.decreeEyebrow;
     if (elSecretCodeText) elSecretCodeText.textContent = dict.secretCode;
     if (btnCopySpell) btnCopySpell.textContent = dict.copyBtnIdle;
+    if (linkDecreeReturn) {
+      linkDecreeReturn.textContent =
+        currentLang === 'en' ? 'Return to Register Passcode ↗' : '回主頁登記密語 ↗';
+    }
     if (elFooterMottoText) elFooterMottoText.textContent = dict.footerMotto;
   }
 
@@ -3190,6 +3217,7 @@
           await navigator.clipboard.writeText(code);
         }
         btnCopySpell.textContent = dict.copyBtnDone;
+        if (linkDecreeReturn) linkDecreeReturn.classList.add('is-highlighted');
         const rect = btnCopySpell.getBoundingClientRect();
         spawnSpellBurst(rect.left + rect.width / 2, rect.top, ['#ffd700', '#fef08a', '#34d399'], 48);
         setTimeout(() => {

@@ -4384,13 +4384,13 @@
       {
         id: RESTROOM_ZONE_ID,
         cls: 'seating-map-restroom-btn',
-        zh: '🚻 標示廁所位置',
+        zh: '🚻 標示廁所',
         en: '🚻 Restrooms',
       },
       {
         id: BAR_ZONE_ID,
         cls: 'seating-map-bar-btn',
-        zh: '🍹 標示吧台位置',
+        zh: '🍹 標示吧台',
         en: '🍹 Bar',
       },
     ];
@@ -8281,9 +8281,10 @@
       setAdminLbKey(keyInput.value);
       syncTestStatus(
         getAdminLbKey()
-          ? '✅ 測試金鑰已啟用（僅存於此分頁），現在可直接從上方表單送出測試資料！'
+          ? '✅ 測試金鑰已啟用（僅存於此分頁），正在載入排行榜並可送出測試資料！'
           : '已清除測試金鑰。'
       );
+      loadData();
     });
 
     const body = document.createElement('div');
@@ -8300,15 +8301,27 @@
         body.replaceChildren(note);
         return;
       }
+      const adminKey = getAdminLbKey();
+      if (!adminKey) {
+        const lockedNote = document.createElement('p');
+        lockedNote.className = 'passcode-card-desc';
+        lockedNote.textContent =
+          '🔒 排行榜 API 已加密上鎖：請在上方輸入測試管理金鑰並點「🔓 啟用測試」即可查看前 5 名。';
+        body.replaceChildren(lockedNote);
+        return;
+      }
       refreshBtn.disabled = true;
       const loadingP = document.createElement('p');
       loadingP.className = 'passcode-card-desc';
       loadingP.textContent = '載入排行榜中...';
       body.replaceChildren(loadingP);
       try {
-        const res = await fetch(LEADERBOARD_ENDPOINT_URL);
+        const sep = LEADERBOARD_ENDPOINT_URL.includes('?') ? '&' : '?';
+        const res = await fetch(`${LEADERBOARD_ENDPOINT_URL}${sep}adminKey=${encodeURIComponent(adminKey)}`);
         const json = await res.json();
-        if (!json || !json.ok) throw new Error('bad_response');
+        if (!json || !json.ok) {
+          throw new Error((json && json.error) || 'bad_response');
+        }
 
         const cols = document.createElement('div');
         cols.className = 'admin-lb-columns';
@@ -8432,10 +8445,13 @@
           )
         );
         body.replaceChildren(cols);
-      } catch (_err) {
+      } catch (err) {
         const errP = document.createElement('p');
         errP.className = 'passcode-feedback is-error';
-        errP.textContent = '無法讀取排行榜，請確認 Apps Script 已部署為「所有人可存取」。';
+        errP.textContent =
+          err && err.message === 'unauthorized'
+            ? '❌ 測試管理金鑰不正確，無法讀取排行榜。'
+            : '無法讀取排行榜，請確認 Apps Script 已部署為「所有人可存取」。';
         body.replaceChildren(errP);
       } finally {
         refreshBtn.disabled = false;
