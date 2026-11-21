@@ -4938,15 +4938,20 @@ body.hp-lumos-on .hp-parchment-card,
 
 /* Interactive Spell Bar */
 .hp-spell-bar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
   width: 100%;
 }
 
 .hp-spell-btn {
-  padding: 9px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 44px;
+  width: 100%;
+  padding: 9px 12px;
   border-radius: 999px;
   background: #2b1b10;
   border: 1px solid #b45309;
@@ -4955,7 +4960,23 @@ body.hp-lumos-on .hp-parchment-card,
   font-size: 0.84rem;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
   transition: transform 0.18s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+#hp-bgm-btn {
+  min-width: 78px;
+  justify-content: center;
+}
+
+#hp-lang-btn {
+  min-width: 54px;
+  justify-content: center;
+}
+
+#hp-lumos-toggle-btn {
+  min-width: 112px;
+  justify-content: center;
 }
 
 .hp-spell-btn:hover,
@@ -5460,11 +5481,14 @@ body.hp-lumos-on .hp-parchment-card,
   }
 
   .hp-spell-bar {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .hp-spell-btn {
     width: 100%;
+    white-space: normal;
+    line-height: 1.35;
+    min-height: 46px;
   }
 
   .hp-riddle-dialog {
