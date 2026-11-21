@@ -557,6 +557,7 @@ body.is-time-up .countdown-stage-wrap {
   color: var(--text-secondary);
   letter-spacing: 0.02em;
   line-height: 1.15;
+  text-wrap: balance;
 }
 
 /* Pre-Countdown Quick Access Links (Seating Chart & Banquet Menu) */
@@ -3641,6 +3642,18 @@ body.carousel-fullscreen-open {
   border-color: var(--border-highlight);
 }
 
+@media (min-width: 760px) {
+  .banquet-course-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+.event-subtitle,
+.feature-section h3,
+.seating-table-card h4 {
+  text-wrap: balance;
+}
+
 .banquet-course-num {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
@@ -4347,6 +4360,7 @@ body.carousel-fullscreen-open {
   .seating-map-actions {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
     width: 100%;
     gap: 8px;
   }
@@ -5903,7 +5917,77 @@ body.is-subview-active .main-stage {
 .admin-lb-meta {
   font-size: 0.82rem;
   color: var(--text-secondary);
+  white-space: normal;
+  text-align: right;
+  line-height: 1.35;
+}
+
+.admin-lb-test-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.admin-lb-key-input {
+  flex: 1 1 220px;
+  min-width: 0;
+  min-height: 40px;
+  padding: 8px 12px;
+  font-size: 0.86rem;
+}
+
+.admin-lb-action-btn {
+  min-height: 40px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
   white-space: nowrap;
+}
+
+.admin-lb-danger-btn {
+  border-color: color-mix(in srgb, #dc2626 55%, var(--border-highlight));
+  color: #dc2626;
+}
+
+[data-theme="dark"] .admin-lb-danger-btn {
+  border-color: color-mix(in srgb, #f87171 55%, var(--border-highlight));
+  color: #fca5a5;
+}
+
+.admin-lb-test-status {
+  margin: 0 0 14px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.admin-lb-del-btn {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, #dc2626 45%, var(--border-subtle));
+  background: transparent;
+  color: #dc2626;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.admin-lb-del-btn:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .admin-lb-del-btn {
+  color: #fca5a5;
+  border-color: color-mix(in srgb, #f87171 45%, var(--border-subtle));
 }
 
 @media (max-width: 640px) {

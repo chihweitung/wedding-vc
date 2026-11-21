@@ -57,7 +57,7 @@
   const WEDDING_MENU_IMAGE_URL = '';
   const WEDDING_MENU_LINK_URL = '';
 
-  // 問答排行榜 & 通關密語後端網址（將 leaderboard-apps-script.gs 部署為 Google Apps Script 網頁應用程式後貼到此處）
+  // 問答排行榜 & 密語後端網址（將 leaderboard-apps-script.gs 部署為 Google Apps Script 網頁應用程式後貼到此處）
   const LEADERBOARD_ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycby3Cs85ileMgZgMa0lWTHGyWDnoA_sxsldpeHrLMGPiFJznafbMfLuAovAuU4hN4OUcBA/exec';
   const STORAGE_KEY_PLAYER_NAME = 'te_wedding_player_name_v1';
   const SECRET_PASSCODE_SHA256_SET = new Set([
@@ -91,7 +91,7 @@
         km: '13,877',
         suffix: ' 公里的時差——這一次，想在陽明山的紅磚與微風裡，和最重要的你好好聚一聚。',
       },
-      loveSignature: 'With love, Tom & Eunice · 33⅓ RPM',
+      loveSignature: 'With love, Tom & Eunice · 33⅓\u00A0RPM',
       videoCardEyebrow: 'Our Wedding Film',
       videoCardTitle: '我們的影片',
       videoCardDesc: '把十二年來的日常、旅行與笑聲剪進這支影片裡，想和你一起看。',
@@ -144,7 +144,7 @@
       seatingPanelEyebrow: 'Brick Yard 33 1/3 · Floor Plan',
       seatingPanelTitle: '美軍俱樂部 · 婚宴座位表',
       seatingExternalBtn: '開啟完整座位圖 ↗',
-      seatingSearchPlaceholder: '輸入姓名（自動補全）或桌名...',
+      seatingSearchPlaceholder: '輸入姓名或桌名搜尋...',
       menuPanelEyebrow: 'Brick Yard 33 1/3 · Banquet & Bar',
       menuPanelTitle: '美軍俱樂部 · 百匯佳餚與特調菜單',
       menuExternalBtn: '開啟完整菜單相片 ↗',
@@ -215,7 +215,7 @@
         km: '13,877',
         suffix: " km across time zones — now, we can't wait to gather with you among the red bricks and mountain breeze of Yangmingshan.",
       },
-      loveSignature: 'With love, Tom & Eunice · 33⅓ RPM',
+      loveSignature: 'With love, Tom & Eunice · 33⅓\u00A0RPM',
       videoCardEyebrow: 'Our Wedding Film',
       videoCardTitle: 'Our Film',
       videoCardDesc: 'Twelve years of everyday moments, travels, and laughter gathered into one film for you.',
@@ -268,7 +268,7 @@
       seatingPanelEyebrow: 'Brick Yard 33 1/3 · Floor Plan',
       seatingPanelTitle: 'Brick Yard 33 1/3 · Seating Chart',
       seatingExternalBtn: 'Open Full Floor Plan ↗',
-      seatingSearchPlaceholder: 'Type a name (autocomplete) or table...',
+      seatingSearchPlaceholder: 'Search name or table...',
       menuPanelEyebrow: 'Brick Yard 33 1/3 · Banquet & Bar',
       menuPanelTitle: 'Brick Yard 33 1/3 · Banquet & Cocktail Menu',
       menuExternalBtn: 'Open Full Menu Photo ↗',
@@ -4373,25 +4373,25 @@
         id: RECEPTION_ZONE_ID,
         cls: 'seating-map-reception-btn',
         zh: '📋 標示接待桌',
-        en: '📋 Highlight Reception',
+        en: '📋 Reception',
       },
       {
         id: BUFFET_ZONE_ID,
         cls: 'seating-map-buffet-btn',
         zh: '🍽️ 標示餐點區',
-        en: '🍽️ Highlight Buffet',
+        en: '🍽️ Buffet',
       },
       {
         id: RESTROOM_ZONE_ID,
         cls: 'seating-map-restroom-btn',
         zh: '🚻 標示廁所位置',
-        en: '🚻 Highlight Restrooms',
+        en: '🚻 Restrooms',
       },
       {
         id: BAR_ZONE_ID,
         cls: 'seating-map-bar-btn',
         zh: '🍹 標示吧台位置',
-        en: '🍹 Highlight Bar',
+        en: '🍹 Bar',
       },
     ];
     facilityButtonDefs.forEach((fDef) => {
@@ -8109,13 +8109,13 @@
       elPasscodeCardTitle.textContent =
         currentLang === 'en'
           ? '🗝️ Found the Secret Chamber Passcode?'
-          : '🗝️ 已找到隱藏彩蛋的通關密語？';
+          : '🗝️ 已找到隱藏彩蛋的密語？';
     }
     if (elPasscodeCardDesc) {
       elPasscodeCardDesc.textContent =
         currentLang === 'en'
           ? 'Enter your name and the passcode from the secret scroll to register on the hall of fame!'
-          : '輸入您的大名與從密卷找到的通關密語，驗證成功後將為您登記通關紀錄！';
+          : '輸入您的大名與從密卷找到的密語，驗證成功後將為您登記通關紀錄！';
     }
     if (elPasscodeNameInput) {
       elPasscodeNameInput.placeholder =
@@ -8123,7 +8123,7 @@
     }
     if (elPasscodeCodeInput) {
       elPasscodeCodeInput.placeholder =
-        currentLang === 'en' ? 'Paste or type the secret passcode...' : '請貼上或輸入通關密語...';
+        currentLang === 'en' ? 'Paste or type the secret passcode...' : '請貼上或輸入密語...';
     }
     if (btnPasscodeVerify) {
       btnPasscodeVerify.textContent =
@@ -8153,12 +8153,44 @@
     return devId;
   }
 
+  const ADMIN_LB_KEY_SESSION = 'te_admin_lb_key';
+
+  function getAdminLbKey() {
+    try {
+      return window.sessionStorage.getItem(ADMIN_LB_KEY_SESSION) || '';
+    } catch (_e) {
+      return '';
+    }
+  }
+
+  function setAdminLbKey(val) {
+    try {
+      const cleaned = String(val || '').trim().slice(0, 128);
+      if (cleaned) {
+        window.sessionStorage.setItem(ADMIN_LB_KEY_SESSION, cleaned);
+      } else {
+        window.sessionStorage.removeItem(ADMIN_LB_KEY_SESSION);
+      }
+    } catch (_e) {
+      // Ignore storage error
+    }
+  }
+
   async function postLeaderboardEvent(payload) {
     if (!LEADERBOARD_ENDPOINT_URL) {
       return { sent: false, reason: 'unconfigured' };
     }
     try {
       const enriched = Object.assign({}, payload, { deviceId: getLeaderboardDeviceId() });
+      if (isAdminOnlyUnlocked()) {
+        const adminKey = getAdminLbKey();
+        if (adminKey) {
+          enriched.adminKey = adminKey;
+          if (enriched.action === 'quiz' || enriched.action === 'passcode') {
+            enriched.isTest = true;
+          }
+        }
+      }
       const res = await fetch(LEADERBOARD_ENDPOINT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -8173,6 +8205,7 @@
         sent: true,
         ok: Boolean(data && data.ok !== false),
         error: (data && data.error) || '',
+        deletedCount: typeof data.deletedCount === 'number' ? data.deletedCount : 0,
         canonicalName: (data && data.name) || payload.name || '',
         mergedByDevice: Boolean(data && data.mergedByDevice),
       };
@@ -8211,9 +8244,52 @@
     refreshBtn.textContent = '🔄 重新整理排行';
     header.append(title, refreshBtn);
 
+    // 後台測試工具列（僅存在於 debug.html，金鑰僅存於本次分頁 sessionStorage）
+    const testBar = document.createElement('div');
+    testBar.className = 'admin-lb-test-bar';
+    const keyInput = document.createElement('input');
+    keyInput.type = 'password';
+    keyInput.className = 'quiz-player-name-input admin-lb-key-input';
+    keyInput.placeholder = '🔑 輸入測試管理金鑰（啟用提前送出＆刪除測試資料）';
+    keyInput.autocomplete = 'off';
+    keyInput.value = getAdminLbKey();
+
+    const saveKeyBtn = document.createElement('button');
+    saveKeyBtn.type = 'button';
+    saveKeyBtn.className = 'secondary-btn admin-lb-action-btn';
+    saveKeyBtn.textContent = '🔓 啟用測試';
+
+    const clearTestsBtn = document.createElement('button');
+    clearTestsBtn.type = 'button';
+    clearTestsBtn.className = 'secondary-btn admin-lb-action-btn admin-lb-danger-btn';
+    clearTestsBtn.textContent = '🧹 清除全部測試資料';
+
+    const testStatus = document.createElement('p');
+    testStatus.className = 'admin-lb-test-status';
+    const syncTestStatus = (customMsg) => {
+      if (customMsg) {
+        testStatus.textContent = customMsg;
+        return;
+      }
+      testStatus.textContent = getAdminLbKey()
+        ? '✅ 測試模式已啟用：在此頁送出的問答／密語將標記為測試資料（test_），不受開榜時間限制，並可隨時清除。'
+        : 'ℹ️ 輸入測試管理金鑰後，即可在 2026/11/29 前從 debug.html 送出測試資料或刪除測試紀錄。';
+    };
+    syncTestStatus();
+
+    saveKeyBtn.addEventListener('click', () => {
+      setAdminLbKey(keyInput.value);
+      syncTestStatus(
+        getAdminLbKey()
+          ? '✅ 測試金鑰已啟用（僅存於此分頁），現在可直接從上方表單送出測試資料！'
+          : '已清除測試金鑰。'
+      );
+    });
+
     const body = document.createElement('div');
     body.className = 'admin-lb-body';
-    panel.append(header, body);
+    testBar.append(keyInput, saveKeyBtn, clearTestsBtn);
+    panel.append(header, testBar, testStatus, body);
 
     const loadData = async () => {
       if (!LEADERBOARD_ENDPOINT_URL) {
@@ -8237,7 +8313,7 @@
         const cols = document.createElement('div');
         cols.className = 'admin-lb-columns';
 
-        const makeList = (headingText, items, formatter) => {
+        const makeList = (headingText, items, formatter, allowDelete = false) => {
           const box = document.createElement('div');
           box.className = 'admin-lb-col';
           const h4 = document.createElement('h4');
@@ -8260,11 +8336,43 @@
               rank.textContent = `#${idx + 1}`;
               const nameEl = document.createElement('span');
               nameEl.className = 'admin-lb-name';
-              nameEl.textContent = item.name;
+              nameEl.textContent = item.isTest ? `🧪 ${item.name}` : item.name;
               const meta = document.createElement('span');
               meta.className = 'admin-lb-meta';
               meta.textContent = formatter(item);
               li.append(rank, nameEl, meta);
+              if (allowDelete) {
+                const delBtn = document.createElement('button');
+                delBtn.type = 'button';
+                delBtn.className = 'admin-lb-del-btn';
+                delBtn.title = `刪除「${item.name}」`;
+                delBtn.textContent = '✕';
+                delBtn.addEventListener('click', async () => {
+                  if (!getAdminLbKey()) {
+                    syncTestStatus('⚠️ 請先在上方輸入測試管理金鑰再執行刪除。');
+                    keyInput.focus();
+                    return;
+                  }
+                  if (!window.confirm(`確定要從試算表刪除「${item.name}」這筆紀錄嗎？`)) return;
+                  delBtn.disabled = true;
+                  const delRes = await postLeaderboardEvent({
+                    action: 'delete_entry',
+                    name: item.name,
+                  });
+                  if (delRes.ok) {
+                    syncTestStatus(`🗑️ 已刪除「${item.name}」（共 ${delRes.deletedCount} 筆）。`);
+                    loadData();
+                  } else {
+                    delBtn.disabled = false;
+                    syncTestStatus(
+                      delRes.error === 'unauthorized'
+                        ? '❌ 測試管理金鑰不正確，刪除遭拒絕。'
+                        : '❌ 刪除失敗，請稍後再試。'
+                    );
+                  }
+                });
+                li.append(delBtn);
+              }
               ol.append(li);
             });
             box.append(ol);
@@ -8274,15 +8382,19 @@
 
         const formatTime = (isoStr) => {
           if (!isoStr) return '';
-          const d = new Date(isoStr);
+          const s = String(isoStr).trim();
+          if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/.test(s)) {
+            return s.slice(11, 19);
+          }
+          const d = new Date(s);
           return Number.isNaN(d.getTime())
             ? ''
             : `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
         };
 
-        const overallList = Array.isArray(json.topOverall) ? json.topOverall : [];
+        const overallList = Array.isArray(json.topOverall) ? json.topOverall.slice(0, 5) : [];
         const overallBox = makeList(
-          `🏆 綜合總排行榜（👑 終極密語 ＞ 🗝️ 祝福密語 ＞ 🎯 10+ 答題｜共 ${json.totalPlayers || 0} 人）`,
+          `🏆 綜合總排行榜 Top 5（👑 終極密語 ＞ 🗝️ 祝福密語 ＞ 🎯 10+ 答題｜共 ${json.totalPlayers || 0} 人）`,
           overallList,
           (it) => {
             const parts = [it.tierLabel || (it.passcodeTier >= 2 ? '👑 終極密語' : it.passcodeTier === 1 ? '🗝️ 祝福密語' : '🎯 10+ 答題')];
@@ -8293,22 +8405,31 @@
             const t = formatTime(it.unlockTime || it.firstTime);
             if (t) parts.push(t);
             return parts.join(' · ');
-          }
+          },
+          true
         );
         overallBox.style.gridColumn = '1 / -1';
 
         cols.append(
           overallBox,
-          makeList('🗝️ 通關密語先鋒榜（終極＞祝福）', json.topSecret, (it) => {
-            const badge = it.passcodeTier >= 2 ? '👑 終極密語' : '🗝️ 祝福密語';
-            const t = formatTime(it.unlockTime);
-            return t ? `${badge} · ${t}` : badge;
-          }),
-          makeList(`🎯 問答高分榜（10+ 題）`, json.topQuiz, (it) => {
-            const sec = it.durationSec !== null ? ` · ${it.durationSec}s` : '';
-            const egg = it.passcodeTier >= 2 ? ' · 👑' : it.unlockedSecret ? ' · 🗝️' : '';
-            return `${it.score}/${it.total}${sec}${egg}`;
-          })
+          makeList(
+            '🗝️ 密語先鋒榜 Top 5（終極＞祝福）',
+            Array.isArray(json.topSecret) ? json.topSecret.slice(0, 5) : [],
+            (it) => {
+              const badge = it.passcodeTier >= 2 ? '👑 終極密語' : '🗝️ 祝福密語';
+              const t = formatTime(it.unlockTime);
+              return t ? `${badge} · ${t}` : badge;
+            }
+          ),
+          makeList(
+            '🎯 問答高分榜 Top 5（10+ 題）',
+            Array.isArray(json.topQuiz) ? json.topQuiz.slice(0, 5) : [],
+            (it) => {
+              const sec = it.durationSec !== null ? ` · ${it.durationSec}s` : '';
+              const egg = it.passcodeTier >= 2 ? ' · 👑' : it.unlockedSecret ? ' · 🗝️' : '';
+              return `${it.score}/${it.total}${sec}${egg}`;
+            }
+          )
         );
         body.replaceChildren(cols);
       } catch (_err) {
@@ -8320,6 +8441,28 @@
         refreshBtn.disabled = false;
       }
     };
+
+    clearTestsBtn.addEventListener('click', async () => {
+      if (!getAdminLbKey()) {
+        syncTestStatus('⚠️ 請先輸入測試管理金鑰再清除測試資料。');
+        keyInput.focus();
+        return;
+      }
+      if (!window.confirm('確定要一鍵清除所有標記為測試資料（test_）的紀錄嗎？（不會影響真實賓客資料）')) return;
+      clearTestsBtn.disabled = true;
+      const res = await postLeaderboardEvent({ action: 'delete_test' });
+      clearTestsBtn.disabled = false;
+      if (res.ok) {
+        syncTestStatus(`🧹 已清除 ${res.deletedCount} 筆測試資料！`);
+        loadData();
+      } else {
+        syncTestStatus(
+          res.error === 'unauthorized'
+            ? '❌ 測試管理金鑰不正確，清除遭拒絕。'
+            : '❌ 清除失敗，請稍後再試。'
+        );
+      }
+    });
 
     refreshBtn.addEventListener('click', loadData);
     loadData();
@@ -9157,27 +9300,31 @@
         startToken: currentQuizStartToken,
       });
 
-      hasSubmittedCurrentQuiz = true;
       if (btnQuizHighscoreSubmit) btnQuizHighscoreSubmit.disabled = false;
-      if (elQuizHighscoreForm) elQuizHighscoreForm.classList.add('hidden');
 
-      if (elQuizSubmitStatus) {
-        if (res.sent && res.ok) {
+      if (res.sent && res.ok) {
+        hasSubmittedCurrentQuiz = true;
+        if (elQuizHighscoreForm) elQuizHighscoreForm.classList.add('hidden');
+        if (elQuizSubmitStatus) {
           elQuizSubmitStatus.textContent =
             currentLang === 'en'
               ? `✅ Recorded ${typedName}'s score (${quizScore} / ${QUIZ_QUESTIONS.length}) on the Leaderboard!`
               : `✅ 已成功登記「${typedName}」的高分成績（${quizScore} / ${QUIZ_QUESTIONS.length}）！`;
-          if (isDebugUnlocked()) renderAdminLeaderboardPanel();
-        } else if (res.error === 'event_not_open_yet') {
+        }
+        if (isAdminOnlyUnlocked()) renderAdminLeaderboardPanel();
+      } else if (res.error === 'event_not_open_yet') {
+        if (elQuizSubmitStatus) {
           elQuizSubmitStatus.textContent =
             currentLang === 'en'
               ? '⏳ Leaderboard opens at 2026/11/29 12:30 (GMT+8). See you at the wedding!'
               : '⏳ 排行榜將於 2026/11/29 12:30（台灣時間）婚禮正式開席後開放登記喔！';
-        } else {
+        }
+      } else {
+        if (elQuizSubmitStatus) {
           elQuizSubmitStatus.textContent =
             currentLang === 'en'
-              ? `🏆 High Scorer: ${typedName} (${quizScore} / ${QUIZ_QUESTIONS.length})`
-              : `🏆 高分挑戰者：${typedName}（答對 ${quizScore} / ${QUIZ_QUESTIONS.length} 題）`;
+              ? '⚠️ Network busy — please tap Submit again to retry.'
+              : '⚠️ 網路忙碌中，尚未寫入排行榜，請再按一次「登記上榜」重試喔！';
         }
       }
     });
@@ -9204,42 +9351,48 @@
       if (!codeVal) {
         elPasscodeFeedback.classList.add('is-error');
         elPasscodeFeedback.textContent =
-          currentLang === 'en' ? 'Please enter the secret passcode.' : '請輸入通關密語！';
+          currentLang === 'en' ? 'Please enter the secret passcode.' : '請輸入密語！';
         if (elPasscodeCodeInput) elPasscodeCodeInput.focus();
         return;
       }
 
       setPlayerName(nameVal);
-      const normCode = codeVal.replace(/[\s!！。.,，]+/g, '').toUpperCase();
+      const normCode = codeVal.replace(/[\s!！。.,，「」『』“”"']+/g, '').toUpperCase();
       const digest = await sha256HexForPasscode(normCode);
       if (!digest || !SECRET_PASSCODE_SHA256_SET.has(digest)) {
         elPasscodeFeedback.classList.add('is-error');
         elPasscodeFeedback.textContent =
           currentLang === 'en'
             ? '❌ Passcode did not match. Please double-check the exact passcode from the secret scroll.'
-            : '❌ 通關密語不正確，請確認是否從彩蛋密卷完整複製喔！';
+            : '❌ 密語不正確，請確認是否從彩蛋密卷完整複製喔！';
         return;
       }
 
       launchConfetti();
+      if (btnPasscodeVerify) btnPasscodeVerify.disabled = true;
       elPasscodeFeedback.classList.add('is-success');
       elPasscodeFeedback.textContent =
         currentLang === 'en'
           ? `🎉 Passcode verified! Registering ${nameVal}...`
-          : `🎉 通關密語驗證成功！正在為 ${nameVal} 登記通關...`;
+          : `🎉 密語驗證成功！正在為 ${nameVal} 登記通關...`;
 
-      const res = await postLeaderboardEvent({
-        action: 'passcode',
-        name: nameVal,
-        passcode: codeVal,
-      });
+      let res = { sent: false, ok: false };
+      try {
+        res = await postLeaderboardEvent({
+          action: 'passcode',
+          name: nameVal,
+          passcode: codeVal,
+        });
+      } finally {
+        if (btnPasscodeVerify) btnPasscodeVerify.disabled = false;
+      }
 
       if (res.sent && res.ok) {
         elPasscodeFeedback.textContent =
           currentLang === 'en'
             ? `🎉 Verified! ${nameVal} is now registered on the Secret Passcode Hall of Fame!`
-            : `🎉 通關密語正確！已成功登記「${nameVal}」為彩蛋通關勇者！`;
-        if (isDebugUnlocked()) renderAdminLeaderboardPanel();
+            : `🎉 密語正確！已成功登記「${nameVal}」為彩蛋通關勇者！`;
+        if (isAdminOnlyUnlocked()) renderAdminLeaderboardPanel();
       } else if (res.error === 'event_not_open_yet') {
         elPasscodeFeedback.classList.remove('is-success');
         elPasscodeFeedback.classList.add('is-error');
@@ -9251,7 +9404,7 @@
         elPasscodeFeedback.textContent =
           currentLang === 'en'
             ? `🎉 Passcode verified for ${nameVal}! Show this screen to the hosts!`
-            : `🎉 通關密語驗證成功！「${nameVal}」恭喜解鎖終極彩蛋！`;
+            : `🎉 密語驗證成功！「${nameVal}」恭喜解鎖終極彩蛋！`;
       }
     });
   }
