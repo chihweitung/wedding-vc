@@ -155,8 +155,8 @@
       footprintsPanelEyebrow: '2014 — 2026 · Across the Miles',
       footprintsPanelTitle: '十二年相戀足跡',
       footprintStatsText: '✈️ 最遠相隔 13,877 km（奧蘭多 ↔ 高雄）· 跨洲遠距 9,100 km（柏林 ↔ 高雄）',
-      footprintTrackTom: '🤵‍♂️ Tom Tung · 台北 ➔ 新竹 ➔ 柏林 ➔ 板橋 ➔ 台北',
-      footprintTrackEunice: '👰‍♀️ Eunice Hsiao · 高雄 ➔ 諾丁漢 ➔ 高雄 ➔ 板橋 ➔ 台北',
+      footprintTrackTom: '🤵‍♂️ Tom Tung · 新竹 ➔ 台北 ➔ 柏林 ➔ 新北 ➔ 台北',
+      footprintTrackEunice: '👰‍♀️ Eunice Hsiao · 台北 ➔ 高雄 ➔ 諾丁漢 ➔ 新北 ➔ 台北',
       yearAll: '全部足跡',
       openMapBtn: '在 Google Maps 查看地點 ↗',
       timelinePlayBtn: '▶ 播放足跡動畫',
@@ -279,8 +279,8 @@
       footprintsPanelEyebrow: '2014 — 2026 · Across the Miles',
       footprintsPanelTitle: 'Twelve Years on the Map',
       footprintStatsText: '✈️ Furthest Apart: 13,877 km (Orlando ↔ Kaohsiung) · Long-Distance: 9,100 km (Berlin ↔ Kaohsiung)',
-      footprintTrackTom: '🤵‍♂️ Tom Tung · Taipei ➔ Hsinchu ➔ Berlin ➔ Banqiao ➔ Taipei',
-      footprintTrackEunice: '👰‍♀️ Eunice Hsiao · Kaohsiung ➔ Nottingham ➔ Kaohsiung ➔ Banqiao ➔ Taipei',
+      footprintTrackTom: '🤵‍♂️ Tom Tung · Hsinchu ➔ Taipei ➔ Berlin ➔ New Taipei ➔ Taipei',
+      footprintTrackEunice: '👰‍♀️ Eunice Hsiao · Taipei ➔ Kaohsiung ➔ Nottingham ➔ New Taipei ➔ Taipei',
       yearAll: 'All Stops',
       openMapBtn: 'View on Google Maps ↗',
       timelinePlayBtn: '▶ Play Journey',
@@ -933,7 +933,7 @@
         { zh: '梁志遠等二人', en: '梁志遠 (2)' },
         { zh: '康裕傑等二人', en: '康裕傑 (2)' },
         { zh: '高增堯&張淑貞等二人', en: '高增堯 & 張淑貞 (2)' },
-        { zh: '蕭金柱 & 林小姐等二人', en: '蕭金柱 & 林小姐 (2)' },
+        { zh: '蕭金柱等二人', en: '蕭金柱 (2)' },
       ],
       seatPlan: {
         subTables: [
@@ -1048,8 +1048,8 @@
                 { key: '高增堯_張淑貞', zh: '張淑貞', en: '張淑貞', match: '高增堯 張淑貞' },
               ],
               [
-                { key: '蕭金柱_林小姐', zh: '蕭金柱', en: '蕭金柱', match: '蕭金柱 林小姐' },
-                { key: '蕭金柱_林小姐', zh: '林小姐', en: '林小姐', match: '蕭金柱 林小姐' },
+                { key: '蕭金柱', zh: '蕭金柱', en: '蕭金柱', match: '蕭金柱' },
+                { key: '蕭金柱', zh: '蕭金柱', en: '蕭金柱', match: '蕭金柱' },
               ],
               [
                 { key: '劉子經_林貞吟', zh: '劉子經', en: '劉子經', match: '劉子經 林貞吟' },
@@ -1064,8 +1064,8 @@
                 { key: '夏智弘', zh: '夏智弘', en: '夏智弘', match: '夏智弘' },
               ],
               [
-                { key: '何義夫_何太太', zh: '何義夫', en: '何義夫', match: '何義夫 何毅夫 何太太 何夫人' },
-                { key: '何義夫_何太太', zh: '何太太', en: '何太太', match: '何義夫 何毅夫 何太太 何夫人' },
+                { key: '何義夫', zh: '何義夫', en: '何義夫', match: '何義夫 何毅夫' },
+                { key: '何義夫', zh: '何義夫', en: '何義夫', match: '何義夫 何毅夫' },
               ],
             ],
           },
@@ -1285,7 +1285,7 @@
                 { key: '卓恆毅', zh: '卓恆毅', en: '卓恆毅', match: '卓恆毅 恆毅' },
               ],
               [
-                { key: '祥孟', zh: '祥孟', en: '祥孟', match: '祥孟' },
+                { key: '林哲正', zh: '林哲正', en: '林哲正', match: '林哲正 哲正' },
                 { key: '林哲正', zh: '林哲正', en: '林哲正', match: '林哲正 哲正' },
               ],
               [
@@ -1294,11 +1294,11 @@
               ],
               [
                 { key: '王展浩', zh: '王展浩', en: '王展浩', match: '王展浩 展浩' },
-                { key: '瑞宏', zh: '瑞宏', en: '瑞宏', match: '瑞宏' },
+                { key: '高瑞宏', zh: '高瑞宏', en: '高瑞宏', match: '高瑞宏 瑞宏' },
               ],
               [
                 { key: '陳啟武', zh: '陳啟武', en: '陳啟武', match: '陳啟武 啟武' },
-                { key: '文圓', zh: '文圓', en: '文圓', match: '文圓' },
+                { key: '杜文圓', zh: '杜文圓', en: '杜文圓', match: '杜文圓 文圓' },
               ],
               [
                 { key: '董智翔', zh: '董智翔', en: '董智翔', match: '董智翔 智翔' },
