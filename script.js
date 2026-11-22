@@ -8569,9 +8569,17 @@
       loadingP.textContent = '載入排行榜中...';
       body.replaceChildren(loadingP);
       try {
-        const sep = LEADERBOARD_ENDPOINT_URL.includes('?') ? '&' : '?';
-        const res = await fetch(`${LEADERBOARD_ENDPOINT_URL}${sep}adminKey=${encodeURIComponent(adminKey)}`);
-        const json = await res.json();
+        let res = await fetch(LEADERBOARD_ENDPOINT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'leaderboard', adminKey }),
+        });
+        let json = await res.json();
+        if (json && json.error === 'invalid_action') {
+          const sep = LEADERBOARD_ENDPOINT_URL.includes('?') ? '&' : '?';
+          res = await fetch(`${LEADERBOARD_ENDPOINT_URL}${sep}adminKey=${encodeURIComponent(adminKey)}`);
+          json = await res.json();
+        }
         if (!json || !json.ok) {
           throw new Error((json && json.error) || 'bad_response');
         }

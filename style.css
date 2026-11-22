@@ -6011,9 +6011,9 @@ body.is-subview-active .main-stage {
 .admin-lb-key-input {
   flex: 1 1 220px;
   min-width: 0;
-  min-height: 40px;
+  min-height: 44px;
   padding: 8px 12px;
-  font-size: 0.86rem;
+  font-size: 1rem;
 }
 
 .admin-lb-action-btn {
