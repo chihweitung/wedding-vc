@@ -1621,13 +1621,12 @@
       fillColor: 'rgba(8, 145, 178, 0.12)',
       darkColor: '#22d3ee',
       darkFillColor: 'rgba(34, 211, 238, 0.16)',
-      debugStats: { headcount: 6, veg: 0, stroller: 0, childSeat: 1, detail: '曾祥信：兒童椅1' },
+      debugStats: { headcount: 5, veg: 0, stroller: 0, childSeat: 1, detail: '曾祥信：兒童椅1' },
       name: { zh: '新郎 MOZ 區 · 謀智（第 15 桌）', en: 'Groom · MOZ / Mozilla (Table 15)' },
       zone: { zh: '外廳右列中段區 · 謀智', en: 'Lower Hall Right Col · Middle (MOZ)' },
       guests: [
         { zh: 'Ethan Tseng 曾祥信等三人', en: 'Ethan Tseng 曾祥信 (3)' },
         { zh: 'Shawn Huang等二人', en: 'Shawn Huang (2)' },
-        { zh: '陳亮亨 Gary Chen', en: '陳亮亨 Gary Chen' },
       ],
     },
     {
@@ -4400,6 +4399,21 @@
       } else {
         elSeatingExternalLink.classList.add('hidden');
       }
+      if (elSeatingExternalLink.parentNode) {
+        let venueMapLink = document.getElementById('seating-venue-map-link');
+        if (!venueMapLink) {
+          venueMapLink = document.createElement('a');
+          venueMapLink.id = 'seating-venue-map-link';
+          venueMapLink.className = elSeatingExternalLink.className.replace(/\bhidden\b/g, '').trim();
+          venueMapLink.href =
+            'https://www.google.com/maps/search/?api=1&query=Brick+Yard+33+1%2F3+%E7%BE%8E%E8%BB%8D%E4%BF%B1%E6%A8%82%E9%83%A8+%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A3%AB%E6%9E%97%E5%8D%80%E5%87%B1%E6%97%8B%E8%B7%AF49%E8%99%9F';
+          venueMapLink.target = '_blank';
+          venueMapLink.rel = 'noopener noreferrer';
+          elSeatingExternalLink.parentNode.insertBefore(venueMapLink, elSeatingExternalLink.nextSibling);
+        }
+        venueMapLink.textContent =
+          currentLang === 'en' ? '📍 Brick Yard 33 1/3 Map ↗' : '📍 美軍俱樂部導航 ↗';
+      }
     }
 
     if (!safeImg) {
@@ -5892,6 +5906,10 @@
     }
     if (elSeatingTablesGrid) {
       elSeatingTablesGrid.classList.toggle('hidden', shouldShow);
+    }
+    const filterSelectsWrap = elSeatingSideSelect ? elSeatingSideSelect.closest('.seating-filter-selects') : null;
+    if (filterSelectsWrap) {
+      filterSelectsWrap.classList.toggle('hidden', shouldShow);
     }
     if (!shouldShow) {
       if (card) card.remove();
@@ -7855,7 +7873,7 @@
     }
   }
 
-  const FOOTPRINT_BGM_SRC = 'audio/music.mp3';
+  const FOOTPRINT_BGM_SRC = 'audio/music.m4a';
   let footprintGhibliEnabled = false;
   let footprintGhibliPlaying = false;
   let footprintAudioEl = null;

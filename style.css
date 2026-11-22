@@ -6203,6 +6203,22 @@ body.is-subview-active .main-stage {
   background: var(--border-subtle);
 }
 
+@media (min-width: 720px) {
+  .countdown-transit-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+  }
+
+  .countdown-transit-divider {
+    width: 1px;
+    height: 100%;
+    min-height: 56px;
+  }
+}
+
 .countdown-transit-text {
   margin: 0;
   font-size: 0.9rem;
