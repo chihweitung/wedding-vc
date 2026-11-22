@@ -793,7 +793,7 @@
       fillColor: 'rgba(245, 158, 11, 0.12)',
       darkColor: '#fbbf24',
       darkFillColor: 'rgba(251, 191, 36, 0.16)',
-      debugStats: { headcount: 14, veg: 0, stroller: 0, childSeat: 0 },
+      debugStats: { headcount: 14, veg: 0, stroller: 0, childSeat: 0, shuttle: 2, shuttleDetail: '董素娟(2)' },
       name: { zh: '主桌 · 新人與雙方主婚人區（M 桌）', en: 'Main Table · Newlyweds, Parents & Family Elders (Table M)' },
       zone: { zh: '主廳中央 · 主桌', en: 'Main Hall Center · Main Table' },
       guests: [
@@ -890,7 +890,7 @@
       fillColor: 'rgba(101, 163, 13, 0.11)',
       darkColor: '#a3e635',
       darkFillColor: 'rgba(163, 230, 53, 0.15)',
-      debugStats: { headcount: 74, veg: 0, stroller: 0, childSeat: 0 },
+      debugStats: { headcount: 74, veg: 0, stroller: 0, childSeat: 0, shuttle: 33, shuttleDetail: '吳淑芸、楊文、張愛卿、林鳳姿、李素幸、李旻貞、許惠珍、鄭瑋玲、劉子經(2)、呂淑貞、龔紹興(2)、林本芬、劉東皋、高栢鈴(2)、王仲瑛(2)、蕭文瑜、陳兆伸、吳逸楓、廖美鸞、曾智聰(2)、何毅夫/何夫人(2)、楊哲彰/余鳳琴(2)、劉園德/張金鳳(2)、高增堯/張淑貞(2)' },
       name: { zh: '新郎爸媽朋友區（第 1–6 桌）', en: "Groom's Parents' Friends (Tables 1–6)" },
       zone: { zh: '主廳上方 · 新郎爸媽朋友', en: "Main Hall North · Groom's Parents' Friends" },
       guests: [
@@ -1152,7 +1152,7 @@
       fillColor: 'rgba(180, 83, 9, 0.12)',
       darkColor: '#f59e0b',
       darkFillColor: 'rgba(245, 158, 11, 0.16)',
-      debugStats: { headcount: 11, veg: 0, stroller: 0, childSeat: 0 },
+      debugStats: { headcount: 11, veg: 0, stroller: 0, childSeat: 0, shuttle: 3, shuttleDetail: '陳振揚、董素芬(2)' },
       name: { zh: '新郎爸爸親戚區 · 董家（第 7 桌）', en: "Groom's Father's Relatives · Tung (Table 7)" },
       zone: { zh: '主廳左側 · 董家親戚（鄰近左側取餐區）', en: 'Main Hall Left · Tung Family Relatives' },
       guests: [
@@ -1205,11 +1205,11 @@
       fillColor: 'rgba(5, 150, 105, 0.12)',
       darkColor: '#34d399',
       darkFillColor: 'rgba(52, 211, 153, 0.16)',
-      debugStats: { headcount: 34, veg: 1, stroller: 0, childSeat: 1, detail: '徐玲明：素食1；卓鈞恩：兒童椅1' },
+      debugStats: { headcount: 33, veg: 1, stroller: 0, childSeat: 1, shuttle: 18, detail: '徐玲明：素食1；卓鈞恩：兒童椅1', shuttleDetail: '徐玲明(5)、徐和志/許嵐音(2)、徐平志、徐慧明、徐宇志(3)、徐雪櫻(2)、徐紫櫻/王展浩(2)、房滋寧/韓治瀾(2)' },
       name: { zh: '新郎媽媽親戚區 · 徐家（第 9–10 桌）', en: "Groom's Mother's Relatives · Hsu (Tables 9–10)" },
       zone: { zh: '主廳右側 · 徐家親戚', en: 'Main Hall Right · Hsu Family Relatives' },
       guests: [
-        { zh: '徐玲明等六人', en: '徐玲明 (6)' },
+        { zh: '徐玲明等五人', en: '徐玲明 (5)' },
         { zh: '徐和志、許嵐音等二人', en: '徐和志 & 許嵐音 (2)' },
         { zh: '徐平志', en: '徐平志' },
         { zh: '林哲正等二人', en: '林哲正 (2)' },
@@ -1279,7 +1279,7 @@
             rows: [
               [
                 { key: '徐玲明', zh: '徐玲明', en: '徐玲明', match: '徐玲明 玲明' },
-                { key: '卓俊銘', zh: '卓俊銘', en: '卓俊銘', match: '卓俊銘 俊銘' },
+                null,
               ],
               [
                 { key: '卓鈞恩', zh: '卓鈞恩', en: '卓鈞恩', match: '卓鈞恩 鈞恩' },
@@ -1327,7 +1327,7 @@
       fillColor: 'rgba(220, 38, 38, 0.12)',
       darkColor: '#f87171',
       darkFillColor: 'rgba(248, 113, 113, 0.16)',
-      debugStats: { headcount: 15, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1（大直區自由入座共 15 席，含第 8 排左席）' },
+      debugStats: { headcount: 15, veg: 0, stroller: 0, childSeat: 1, shuttle: 5, detail: '施傑耀：兒童椅1（大直區自由入座共 15 席，含第 8 排左席）', shuttleDetail: '鄭兆珍、林品賢(2)、何弋柏、周駿逸' },
       name: { zh: '新郎高中區 · 大直（第 11 桌）', en: "Groom's High School · Dazhi (Table 11)" },
       zone: { zh: '外廳左列上方區 · 大直', en: 'Lower Hall Left Col · Upper (Dazhi HS)' },
       guests: [
@@ -1383,7 +1383,7 @@
       fillColor: 'rgba(37, 99, 235, 0.12)',
       darkColor: '#60a5fa',
       darkFillColor: 'rgba(96, 165, 250, 0.16)',
-      debugStats: { headcount: 5, veg: 1, stroller: 0, childSeat: 0, detail: '王淑菁：素食1（左上1席供大直區使用，本區共5席）' },
+      debugStats: { headcount: 5, veg: 1, stroller: 0, childSeat: 0, shuttle: 5, detail: '王淑菁：素食1（左上1席供大直區使用，本區共5席）', shuttleDetail: '張恬恬、林佳儒(2)、張辰、王淑菁' },
       name: { zh: '新娘高中區 · 雄女（第 14 桌）', en: "Bride's High School · KGHS (Table 14)" },
       zone: { zh: '外廳左列中段區 · 雄女', en: 'Lower Hall Left Col · Middle (KGHS)' },
       guests: [
@@ -1444,7 +1444,7 @@
       fillColor: 'rgba(234, 88, 12, 0.12)',
       darkColor: '#fb923c',
       darkFillColor: 'rgba(251, 146, 60, 0.16)',
-      debugStats: { headcount: 23, veg: 0, stroller: 0, childSeat: 0 },
+      debugStats: { headcount: 23, veg: 0, stroller: 0, childSeat: 0, shuttle: 6, shuttleDetail: 'Harry Lu、張均銘(2)、ANH PHAN(2)、葛家聿' },
       name: { zh: '新郎同事區 · Google（第 12、17 桌）', en: "Groom's Colleagues · Google (Tables 12 & 17)" },
       zone: { zh: '外廳中列長桌區 · Google', en: 'Lower Hall Center Col · Google' },
       guests: [
@@ -1517,7 +1517,7 @@
       fillColor: 'rgba(234, 179, 8, 0.13)',
       darkColor: '#fde047',
       darkFillColor: 'rgba(253, 224, 71, 0.16)',
-      debugStats: { headcount: 12, veg: 0, stroller: 1, childSeat: 1, detail: '林煜峯：嬰兒車1、兒童椅1' },
+      debugStats: { headcount: 12, veg: 0, stroller: 1, childSeat: 1, shuttle: 2, detail: '林煜峯：嬰兒車1、兒童椅1', shuttleDetail: 'Allan Sun、張家瑋' },
       name: { zh: '新郎交大區 · 交大（第 13 桌）', en: "Groom's College · NCTU (Table 13)" },
       zone: { zh: '外廳右列上方區 · 交大', en: 'Lower Hall Right Col · Upper (NCTU)' },
       guests: [
@@ -1553,7 +1553,7 @@
       fillColor: 'rgba(219, 39, 119, 0.12)',
       darkColor: '#f472b6',
       darkFillColor: 'rgba(244, 114, 182, 0.16)',
-      debugStats: { headcount: 6, veg: 0, stroller: 0, childSeat: 0 },
+      debugStats: { headcount: 6, veg: 0, stroller: 0, childSeat: 0, shuttle: 3, shuttleDetail: '陳品心、雷廷萱、戴嘉謙' },
       name: { zh: '新娘大學區 · 北藝（第 18 桌）', en: "Bride's College · TNUA (Table 18)" },
       zone: { zh: '外廳右列下方區 · 北藝', en: 'Lower Hall Right Col · Lower (TNUA)' },
       guests: [
@@ -5682,11 +5682,13 @@
     let totalChildSeat = 0;
     let totalStroller = 0;
     let totalVeg = 0;
+    let totalShuttle = 0;
     SEATING_TABLES_DATA.forEach((tItem) => {
       if (tItem.debugStats) {
         totalChildSeat += tItem.debugStats.childSeat || 0;
         totalStroller += tItem.debugStats.stroller || 0;
         totalVeg += tItem.debugStats.veg || 0;
+        totalShuttle += tItem.debugStats.shuttle || 0;
       }
     });
 
@@ -5694,6 +5696,13 @@
       {
         id: 'all',
         label: currentLang === 'en' ? 'All Tables' : '全部座位',
+      },
+      {
+        id: 'shuttle',
+        label:
+          currentLang === 'en'
+            ? `🚌 Shuttle Bus (${totalShuttle})`
+            : `🚌 小巴接駁名單 (${totalShuttle})`,
       },
       {
         id: 'childSeat',
@@ -5834,6 +5843,7 @@
       const matchesNeeds =
         !isDebugPage ||
         seatingNeedsFilter === 'all' ||
+        (seatingNeedsFilter === 'shuttle' && table.debugStats && table.debugStats.shuttle > 0) ||
         (seatingNeedsFilter === 'childSeat' && table.debugStats && table.debugStats.childSeat > 0) ||
         (seatingNeedsFilter === 'stroller' && table.debugStats && table.debugStats.stroller > 0) ||
         (seatingNeedsFilter === 'veg' && table.debugStats && table.debugStats.veg > 0);
@@ -5947,12 +5957,31 @@
           statsBar.append(pillChair);
         }
 
+        if (table.debugStats.shuttle > 0) {
+          const pillShuttle = document.createElement('span');
+          pillShuttle.className = 'seating-debug-pill has-value';
+          pillShuttle.textContent =
+            currentLang === 'en'
+              ? `🚌 Shuttle: ${table.debugStats.shuttle}`
+              : `🚌 小巴接駁：${table.debugStats.shuttle} 人`;
+          statsBar.append(pillShuttle);
+        }
+
         card.append(statsBar);
         if (table.debugStats.detail) {
           const detailNote = document.createElement('div');
           detailNote.className = 'seating-debug-detail';
           detailNote.textContent = `📌 ${table.debugStats.detail}`;
           card.append(detailNote);
+        }
+        if (table.debugStats.shuttleDetail) {
+          const shuttleNote = document.createElement('div');
+          shuttleNote.className = 'seating-debug-detail';
+          shuttleNote.textContent =
+            currentLang === 'en'
+              ? `🚌 Shuttle (10:30 Jiantan): ${table.debugStats.shuttleDetail}`
+              : `🚌 小巴接駁（10:30 劍潭站）：${table.debugStats.shuttleDetail}`;
+          card.append(shuttleNote);
         }
       }
 
