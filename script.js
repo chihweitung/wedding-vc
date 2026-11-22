@@ -3726,6 +3726,9 @@
       );
       document.documentElement.classList.toggle('carousel-fullscreen-open', active);
       document.body.classList.toggle('carousel-fullscreen-open', active);
+      if (active && weddingCarouselAutoplay) {
+        restartTimer();
+      }
     }
 
     async function toggleCarouselFullscreen() {
@@ -3900,7 +3903,11 @@
     }
 
     if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      stage.addEventListener('mouseenter', stopWeddingCarouselTimer);
+      stage.addEventListener('mouseenter', () => {
+        if (!isCarouselFullscreen()) {
+          stopWeddingCarouselTimer();
+        }
+      });
       stage.addEventListener('mouseleave', restartTimer);
     }
 
