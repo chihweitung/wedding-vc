@@ -5925,6 +5925,30 @@ body.is-subview-active .main-stage {
   color: #fca5a5;
 }
 
+@keyframes passcodeShake {
+  0%, 100% { transform: translateX(0); }
+  18% { transform: translateX(-7px); }
+  36% { transform: translateX(6px); }
+  54% { transform: translateX(-5px); }
+  72% { transform: translateX(4px); }
+  88% { transform: translateX(-2px); }
+}
+
+.passcode-shake {
+  animation: passcodeShake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes passcodeUnlockGlow {
+  0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.55); }
+  60% { box-shadow: 0 0 0 14px rgba(212, 175, 55, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+
+.passcode-redeem-card.passcode-unlocked {
+  border-color: rgba(212, 175, 55, 0.65);
+  animation: passcodeUnlockGlow 0.9s ease-out;
+}
+
 .admin-leaderboard-card {
   margin-top: 0;
   text-align: left;

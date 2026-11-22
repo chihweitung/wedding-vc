@@ -8248,6 +8248,19 @@
     }
   }
 
+  const STORAGE_KEY_QUIZ_BEST_SCORE = 'te_wedding_quiz_best_score_v1';
+
+  function getBestQuizScore() {
+    const raw = Number(safeGetStorage(STORAGE_KEY_QUIZ_BEST_SCORE) || 0);
+    return Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 0;
+  }
+
+  function recordBestQuizScore(score) {
+    const num = Number(score);
+    if (!Number.isFinite(num) || num <= getBestQuizScore()) return;
+    safeSetStorage(STORAGE_KEY_QUIZ_BEST_SCORE, String(Math.floor(num)));
+  }
+
   function showQuizIntro() {
     quizStarted = false;
     quizIndex = 0;
@@ -8263,7 +8276,9 @@
     if (elQuizIntroView) elQuizIntroView.classList.remove('hidden');
     elQuizQuestionView.classList.add('hidden');
     elQuizSummaryView.classList.add('hidden');
-    if (elPasscodeRedeemCard) elPasscodeRedeemCard.classList.remove('hidden');
+    if (elPasscodeRedeemCard) {
+      elPasscodeRedeemCard.classList.toggle('hidden', getBestQuizScore() < 6);
+    }
     renderAdminLeaderboardPanel();
   }
 
@@ -8349,8 +8364,8 @@
     if (elPasscodeCardDesc) {
       elPasscodeCardDesc.textContent =
         currentLang === 'en'
-          ? 'Enter your name and the passcode from the secret scroll to register on the hall of fame!'
-          : '輸入您的大名與從密卷找到的密語，驗證成功後將為您登記通關紀錄！';
+          ? 'Enter your name and the secret passcode to register on the hall of fame!'
+          : '輸入您的大名與神秘密語，驗證成功後將為您登記通關紀錄！';
     }
     if (elPasscodeNameInput) {
       elPasscodeNameInput.placeholder =
@@ -9522,7 +9537,12 @@
       }
     }
 
-    if (elPasscodeRedeemCard) elPasscodeRedeemCard.classList.remove('hidden');
+    if (triggerConfetti && quizScore >= 6) {
+      recordBestQuizScore(quizScore);
+    }
+    if (elPasscodeRedeemCard) {
+      elPasscodeRedeemCard.classList.toggle('hidden', quizScore < 6);
+    }
     syncPlayerNameAndPasscodeUi();
     renderAdminLeaderboardPanel();
 
@@ -9607,6 +9627,87 @@
     });
   }
 
+  let passcodeWrongAttempts = 0;
+
+  function triggerPasscodeShake(el) {
+    if (!el) return;
+    el.classList.remove('passcode-shake');
+    void el.offsetWidth;
+    el.classList.add('passcode-shake');
+    if (navigator && typeof navigator.vibrate === 'function') {
+      try {
+        navigator.vibrate([40, 30, 40]);
+      } catch (_e) {}
+    }
+  }
+
+  function getPlayfulWrongPasscodeReply(normCode, attemptNum, lang) {
+    const isEn = lang === 'en';
+    // 1. 趣味彩蛋關鍵字互動（不洩漏真實答案與彩蛋機制）
+    if (
+      /^(LUMOS|ALOHOMORA|EXPELLIARMUS|EXPECTOPATRONUM|AVADAKEDAVRA|WINGARDIUMLEVIOSA|NOX|路摸思|阿囉哈姆拉|去去武器走|疾疾護法現身|嘶嘶聲)$/.test(
+        normCode
+      )
+    ) {
+      return isEn
+        ? "✨ Your wand flickered briefly... but that spell won't open this lock! Try another phrase."
+        : '✨ 魔杖微微發亮了一下…但這句咒語打不開這道鎖喔，再試試看別的密語！';
+    }
+    if (/^(芝麻開門|OPENSESAME|SESAME)$/.test(normCode)) {
+      return isEn
+        ? '🚪 A soft chuckle echoes from behind the door — "Not Ali Baba\'s cave!" Try again.'
+        : '🚪 門後只傳來一聲輕笑——「這不是阿里巴巴的山洞喔～」再想想看！';
+    }
+    if (/^(1234|123456|0000|PASSWORD|PASSCODE|SECRET|TEST|ADMIN|密語|通關密語)$/.test(normCode)) {
+      return isEn
+        ? "🕵️ Hmm... that looks like a wild guess! The lock didn't even budge."
+        : '🕵️ 嗯…這看起來像是隨手猜的密碼，鎖頭完全沒有動靜呢！';
+    }
+    if (
+      /(新婚快樂|百年好合|永浴愛河|早生貴子|白頭偕老|永遠幸福|恭喜|CONGRATS|CONGRATULATIONS|HAPPY|WEDDING|LOVE|FOREVER|TOM|EUNICE)/.test(
+        normCode
+      )
+    ) {
+      return isEn
+        ? '💌 Sweet message received! The lock is still waiting for the exact secret phrase though~'
+        : '💌 收到滿滿的祝福了！不過這道鎖還在等那句特別的密語喔～';
+    }
+
+    // 2. 依嘗試次數輪播神秘互動台詞（完全不暴雷）
+    if (attemptNum === 1) {
+      return isEn
+        ? '🔐 The lock rattled slightly — not quite the magic words yet!'
+        : '🔐 鎖頭輕輕晃了一下，似乎還差一點靈感喔！';
+    }
+    if (attemptNum === 2) {
+      return isEn
+        ? "🤔 Still locked... could there be a tiny detail you haven't noticed?"
+        : '🤔 還是沒打開呢…仔細想想有沒有漏掉什麼小細節？';
+    }
+    if (attemptNum === 3) {
+      return isEn
+        ? '🕯️ A faint glow shimmers inside the keyhole, waiting for the right phrase...'
+        : '🕯️ 鎖孔裡透出一絲神秘微光，但這不是它在等的答案～';
+    }
+    if (attemptNum === 4) {
+      return isEn
+        ? '🦉 An owl tilts its head at you as if to say, "Maybe explore around a bit more?"'
+        : '🦉 貓頭鷹歪著頭看著你，彷彿在說「再多逛逛這個網站看看？」';
+    }
+    const cyclingZh = [
+      `🗝️ 越挫越勇！已嘗試第 ${attemptNum} 次——真正的線索往往藏在意想不到的角落喔！`,
+      `✨ 鎖頭發出「喀噠」一聲又彈回去了（第 ${attemptNum} 次嘗試），換個角度再來挑戰吧！`,
+      `🎩 魔術師守則第一條：好戲通常藏在大家容易滑過去的地方～（第 ${attemptNum} 次嘗試）`,
+    ];
+    const cyclingEn = [
+      `🗝️ Attempt #${attemptNum} — love the persistence! Clues often hide in unexpected corners.`,
+      `✨ Click... and it snapped back shut (attempt #${attemptNum}). Try looking from a fresh angle!`,
+      `🎩 Magician's Rule #1: the best secrets hide right where people scroll past~ (attempt #${attemptNum})`,
+    ];
+    const pool = isEn ? cyclingEn : cyclingZh;
+    return pool[(attemptNum - 5) % pool.length];
+  }
+
   if (elPasscodeRedeemForm) {
     elPasscodeRedeemForm.addEventListener('submit', async (ev) => {
       ev.preventDefault();
@@ -9622,6 +9723,7 @@
         elPasscodeFeedback.classList.add('is-error');
         elPasscodeFeedback.textContent =
           currentLang === 'en' ? 'Please enter your name first.' : '請先輸入您的大名喔！';
+        triggerPasscodeShake(elPasscodeNameInput);
         if (elPasscodeNameInput) elPasscodeNameInput.focus();
         return;
       }
@@ -9629,6 +9731,7 @@
         elPasscodeFeedback.classList.add('is-error');
         elPasscodeFeedback.textContent =
           currentLang === 'en' ? 'Please enter the secret passcode.' : '請輸入密語！';
+        triggerPasscodeShake(elPasscodeCodeInput);
         if (elPasscodeCodeInput) elPasscodeCodeInput.focus();
         return;
       }
@@ -9637,14 +9740,28 @@
       const normCode = codeVal.replace(/[\s!！。.,，「」『』“”"']+/g, '').toUpperCase();
       const digest = await sha256HexForPasscode(normCode);
       if (!digest || !SECRET_PASSCODE_SHA256_SET.has(digest)) {
+        passcodeWrongAttempts += 1;
         elPasscodeFeedback.classList.add('is-error');
-        elPasscodeFeedback.textContent =
-          currentLang === 'en'
-            ? '❌ Passcode did not match. Please double-check the exact passcode from the secret scroll.'
-            : '❌ 密語不正確，請確認是否從彩蛋密卷完整複製喔！';
+        elPasscodeFeedback.textContent = getPlayfulWrongPasscodeReply(
+          normCode,
+          passcodeWrongAttempts,
+          currentLang
+        );
+        triggerPasscodeShake(elPasscodeCodeInput);
         return;
       }
 
+      passcodeWrongAttempts = 0;
+      if (elPasscodeRedeemCard) {
+        elPasscodeRedeemCard.classList.remove('passcode-unlocked');
+        void elPasscodeRedeemCard.offsetWidth;
+        elPasscodeRedeemCard.classList.add('passcode-unlocked');
+      }
+      if (navigator && typeof navigator.vibrate === 'function') {
+        try {
+          navigator.vibrate([30, 40, 80]);
+        } catch (_e) {}
+      }
       launchConfetti();
       if (btnPasscodeVerify) btnPasscodeVerify.disabled = true;
       elPasscodeFeedback.classList.add('is-success');
