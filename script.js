@@ -49,10 +49,12 @@
   // 新人影片清單（兩支獨立嵌入，播完第 1 支自動接續第 2 支，同時提供一鍵切換按鈕，不公開影片也 100% 穩定播放）
   const WEDDING_VIDEOS = [
     {
-      url: 'https://youtu.be/pbgZ4qa9qCY',
+      type: 'local-video',
+      url: 'video/wedding-video-1.mp4',
       label: { zh: '🎬 影片 1：婚禮影片', en: '🎬 Video 1: Wedding Film' },
     },
     {
+      type: 'embed',
       url: 'https://youtu.be/cXCqbNGfTww',
       label: { zh: '💍 影片 2：登記側錄', en: '💍 Video 2: Registration Film' },
     },
@@ -3443,7 +3445,21 @@
       }
     }
 
-    // 2. Instagram 白名單網域
+    // 2. Google Drive 白名單網域（影片預覽嵌入）
+    if (host === 'drive.google.com') {
+      const m = path.match(/^\/file\/d\/([a-zA-Z0-9_-]{10,80})(?:\/(?:view|preview))?\/?$/);
+      if (m) {
+        const safeFileId = encodeURIComponent(m[1]);
+        return {
+          provider: currentLang === 'en' ? 'OUR WEDDING FILM' : 'OUR WEDDING FILM · 新人影片',
+          embedUrl: `https://drive.google.com/file/d/${safeFileId}/preview`,
+          aspectClass: 'ratio-16-9',
+          isVertical: false,
+        };
+      }
+    }
+
+    // 3. Instagram 白名單網域
     if (host === 'instagram.com' || host === 'instagr.am') {
       const match = path.match(/^\/(?:[a-zA-Z0-9._]{1,30}\/)?(p|reel|reels|tv)\/([a-zA-Z0-9_-]{5,35})\/?$/);
       if (match) {
@@ -3526,22 +3542,52 @@
 
   function renderVideoIframe(forceAutoplay = false) {
     const activeVideo = WEDDING_VIDEOS[currentWeddingVideoIndex] || WEDDING_VIDEOS[0];
-    const info = parseMediaUrl(activeVideo ? activeVideo.url : WEDDING_VIDEO_URL, forceAutoplay);
-    if (!info) return;
 
-    elMediaBadge.textContent = info.provider;
     if (elMediaSoundNotice) {
       elMediaSoundNotice.textContent =
         currentLang === 'en'
           ? '🎧 Friendly reminder: This video has sound — please lower your volume or wear headphones!'
           : '🎧 溫馨提醒：影片含有聲音，建議調小音量或佩戴耳機觀看喔！';
     }
-    if (document.getElementById('media-playlist-tabs')) {
-      renderWeddingVideoTabs();
-    }
     renderWeddingVideoTabs();
     bindYoutubeAutoAdvanceListener();
 
+    if (activeVideo && activeVideo.type === 'local-video') {
+      elMediaBadge.textContent =
+        currentLang === 'en' ? 'OUR WEDDING FILM' : 'OUR WEDDING FILM · 新人影片';
+      elMediaCard.classList.toggle('is-vertical', false);
+      elMediaFrameWrap.className = 'media-frame-wrap ratio-16-9';
+      const mediaKey = `local:${activeVideo.url}`;
+      if (renderedMediaKey !== mediaKey) {
+        renderedMediaKey = mediaKey;
+        activeMediaIframe = null;
+        const video = document.createElement('video');
+        video.src = activeVideo.url;
+        video.controls = true;
+        video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        video.setAttribute('controlsList', 'nodownload');
+        video.preload = 'metadata';
+        video.addEventListener('ended', () => {
+          if (currentWeddingVideoIndex < WEDDING_VIDEOS.length - 1) {
+            currentWeddingVideoIndex += 1;
+            renderVideoIframe(true);
+          }
+        });
+        elMediaFrameWrap.replaceChildren(video);
+        if (forceAutoplay) {
+          const p = video.play();
+          if (p && typeof p.catch === 'function') p.catch(() => {});
+        }
+      }
+      return;
+    }
+
+    const info = parseMediaUrl(activeVideo ? activeVideo.url : WEDDING_VIDEO_URL, forceAutoplay);
+    if (!info) return;
+
+    elMediaBadge.textContent = info.provider;
     elMediaCard.classList.toggle('is-vertical', info.isVertical);
     elMediaFrameWrap.className = `media-frame-wrap ${info.aspectClass}`;
 
@@ -3569,6 +3615,14 @@
   }
 
   function clearVideoIframe() {
+    const existingVideo = elMediaFrameWrap ? elMediaFrameWrap.querySelector('video') : null;
+    if (existingVideo) {
+      try {
+        existingVideo.pause();
+        existingVideo.removeAttribute('src');
+        existingVideo.load();
+      } catch (_e) {}
+    }
     elMediaFrameWrap.replaceChildren();
     activeMediaIframe = null;
     renderedMediaKey = '';

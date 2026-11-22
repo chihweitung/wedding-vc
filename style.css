@@ -1025,11 +1025,14 @@ body.is-time-up .countdown-stage-wrap {
   background: #fff;
 }
 
-.media-frame-wrap iframe {
+.media-frame-wrap iframe,
+.media-frame-wrap video {
   width: 100%;
   height: 100%;
   border: 0;
   display: block;
+  object-fit: contain;
+  background: #000;
 }
 
 .media-frame-wrap.ratio-ig iframe {

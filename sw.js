@@ -1,14 +1,14 @@
 'use strict';
 
-const CACHE_NAME = 'te-wedding-20261129-v188';
+const CACHE_NAME = 'te-wedding-20261129-v190';
 const NETWORK_TIMEOUT_MS = 2500;
 
 // 僅預快取公開首頁必要資源（嚴格排除任何隱藏頁或測試頁檔案名稱）
 const PRECACHE_ASSETS = [
   './',
   './index.html',
-  './style.css?v=20261122u',
-  './script.js?v=20261122ak',
+  './style.css?v=20261122v',
+  './script.js?v=20261122am',
   './seating-chart.jpg?v=20261122m',
   './photos/avatar-tom.jpg',
   './photos/avatar-eunice.jpg',
@@ -95,12 +95,14 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 音訊與 Range 請求（例如 iOS Safari 串流 music.mp3）交由瀏覽器原生網路層處理，避免 SW 2.5s 超時或 206 Partial Content 例外
+  // 影音與 Range 請求（例如 iOS Safari 串流 music.m4a / wedding-video-1.mp4）交由瀏覽器原生網路層處理，避免 SW 2.5s 超時或 206 Partial Content 例外
   if (
     request.headers.has('range') ||
     urlObj.pathname.endsWith('.mp3') ||
     urlObj.pathname.endsWith('.m4a') ||
-    urlObj.pathname.includes('/audio/')
+    urlObj.pathname.endsWith('.mp4') ||
+    urlObj.pathname.includes('/audio/') ||
+    urlObj.pathname.includes('/video/')
   ) {
     return;
   }
