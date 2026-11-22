@@ -9834,6 +9834,14 @@
               ? '⏳ Leaderboard opens at 2026/11/29 12:20 (GMT+8). See you at the wedding!'
               : '⏳ 排行榜將於 2026/11/29 12:20（台灣時間）婚禮正式開席後開放登記喔！';
         }
+      } else if (res.error === 'event_closed') {
+        if (elQuizHighscoreForm) elQuizHighscoreForm.classList.add('hidden');
+        if (elQuizSubmitStatus) {
+          elQuizSubmitStatus.textContent =
+            currentLang === 'en'
+              ? '💐 Live leaderboard registration has wrapped up—thank you for playing and celebrating with us!'
+              : '💐 婚禮現場排行榜登記已圓滿截止，感謝您的參與與祝福！';
+        }
       } else {
         if (elQuizSubmitStatus) {
           elQuizSubmitStatus.textContent =
@@ -9911,9 +9919,58 @@
         ? '🙈 Oops! You pasted a URL into the passcode box—open it in your browser instead!'
         : '🙈 欸！你把網址直接貼進密語框了啦～那個要用瀏覽器「打開」喔！';
     }
+    if (/^(ALOHOMORA|阿囉哈姆拉|阿咯哈姆拉|開鎖咒)$/.test(compactCode)) {
+      return isEn
+        ? "🔓 Alohomora! The lock clicked... nice try, it's charmed against unlocking spells!"
+        : '🔓 阿囉哈姆拉！鎖頭「喀噠」一聲差點開了…可惜這道鎖施了防開鎖咒喔！';
+    }
+    if (/^(AVADAKEDAVRA|阿瓦達索命|索命咒)$/.test(compactCode)) {
+      return isEn
+        ? '💚 Hey!! Unforgivable Curses are strictly banned at this wedding—Aurors are on their way!'
+        : '💚 喂！！婚禮現場禁止使用不赦咒啦！魔法部正氣師已在趕往美軍俱樂部的路上！';
+    }
+    if (/^(CRUCIO|IMPERIO|酷刑咒|蠻橫咒|鑽心剜骨|奪魂咒)$/.test(compactCode)) {
+      return isEn
+        ? "🚨 Unforgivable Curse detected! Keep that up and you're dining in Azkaban—try the real passcode!"
+        : '🚨 不赦咒警告！再亂唸就要送去阿茲卡班吃喜酒囉～請輸入真正的密語！';
+    }
+    if (/^(EXPECTOPATRONUM|疾疾護法現身|護法咒)$/.test(compactCode)) {
+      return isEn
+        ? '🦌 A silver Patronus leaps from the screen! Beautiful memory, still not the secret passcode~'
+        : '🦌 銀白色的守護神躍出了螢幕！現場充滿了幸福的回憶，不過這不是正確密語喔～';
+    }
+    if (/^(EXPELLIARMUS|去去武器走|繳械咒)$/.test(compactCode)) {
+      return isEn
+        ? '⚡ Expelliarmus! Careful—your phone nearly flew out of your hand! Still locked though.'
+        : '⚡ 去去武器走！你的手機差點飛出去了（請抓好），這道鎖還是沒打開喔！';
+    }
+    if (/^(WINGARDIUMLEVIOSA|LEVIOSA|溫咖癲啦唯啊薩|飄浮咒)$/.test(compactCode)) {
+      return isEn
+        ? '🪶 Hermione says: "It\'s Levi-O-sa, not Levio-SA!" (Still won\'t unlock this though!)'
+        : '🪶 妙麗提醒你：是 Levi-O-sa，不是 Levio-SA～（但唸對了還是打不開這道鎖喔！）';
+    }
+    if (/^(OBLIVIATE|空空遺忘|遺忘咒)$/.test(compactCode)) {
+      return isEn
+        ? '💨 Obliviate! ...Wait, did you just wipe the real passcode from your own memory?'
+        : '💨 空空遺忘！…等等，你剛剛是不是把自己找到的密語也忘掉了？';
+    }
+    if (/^(ACCIO|ACCIOPASSCODE|ACCIOSECRET|速速前|召喚咒)/.test(compactCode)) {
+      return isEn
+        ? "🧲 Accio Passcode! Nice try, summoning charms don't work on wedding secrets~"
+        : '🧲 速速前！召喚術對婚禮密語無效喔，得自己找到它才行～';
+    }
     if (
-      /^(LUMOS|ALOHOMORA|EXPELLIARMUS|EXPECTOPATRONUM|AVADAKEDAVRA|WINGARDIUMLEVIOSA|NOX|路摸思|阿囉哈姆拉|去去武器走|疾疾護法現身|嘶嘶聲)$/.test(
-        normCode
+      /^(ISOLEMNLYSWEARTHATIAMUPTONOGOOD|MISCHIEFMANAGED|我莊嚴發誓我沒幹好事|我莊嚴宣誓我沒幹好事|惡作劇完成)$/.test(
+        compactCode
+      )
+    ) {
+      return isEn
+        ? "🗺️ The Marauder's Map flickers! Sadly Moony, Wormtail, Padfoot & Prongs are busy at the buffet~"
+        : '🗺️ 劫盜地圖微微亮了一下！可惜月影、蟲尾、獸足與鹿角正在取餐區排隊，沒空幫你解鎖喔～';
+    }
+    if (
+      /^(LUMOS|LUMOSMAXIMA|NOX|APARECIUM|RIDDIKULUS|STUPEFY|PETRIFICUSTOTALUS|SECTUMSEMPRA|PROTEGO|REPARO|INCENDIO|AGUAMENTI|CONFUNDO|路摸思|吶克斯|顯形咒|叱叱荒唐|昏昏倒地|整整石化|神鋒無影|破心護|復復修|嘶嘶聲)$/.test(
+        compactCode
       )
     ) {
       return isEn
@@ -10075,6 +10132,11 @@
           currentLang === 'en'
             ? '⏳ Leaderboard registration opens at 2026/11/29 12:20 (GMT+8).'
             : '⏳ 排行榜將於 2026/11/29 12:20（台灣時間）婚禮正式開席後開放登記喔！';
+      } else if (res.error === 'event_closed') {
+        elPasscodeFeedback.textContent =
+          currentLang === 'en'
+            ? `🎉 Passcode verified! Live leaderboard registration has wrapped up—congrats, ${nameVal}!`
+            : `🎉 密語正確！婚禮現場排行榜登記已圓滿截止，恭喜「${nameVal}」成功解開彩蛋！`;
       } else {
         elPasscodeFeedback.textContent =
           currentLang === 'en'
