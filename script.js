@@ -9911,13 +9911,14 @@
         ? "🕵️ Hmm... that looks like a wild guess! The lock didn't even budge."
         : '🕵️ 嗯…這看起來像是隨手猜的密碼，鎖頭完全沒有動靜呢！';
     }
+    const normWithoutNames = normCode.replace(/EUNICE|TOM/g, '');
     if (
       /(好帥|超帥|最帥|很帥|真帥|大帥哥|帥哥|好美|超美|最美|很美|真美|大美女|美女|好漂亮|超漂亮|很漂亮|最漂亮|好可愛|超可愛|最可愛|好正|超正|男神|女神|天生一對|好登對|超登對|郎才女貌|神仙眷侶|HANDSOME|BEAUTIFUL|GORGEOUS|STUNNING|PRETTY|CUTE|LOVELY|BESTCOUPLE)/.test(
-        normCode
+        normWithoutNames
       ) ||
       (/(新郎|新娘|董董|董哥|老董|智瑋|羽涵|涵姐|TOM|EUNICE)/.test(normCode) &&
-        /(帥|美|漂亮|正|可愛|讚|棒|優秀|溫柔|聰明|厲害|NICE|COOL|GREAT|AWESOME|AMAZING|SWEET|PERFECT|BEST)/.test(
-          normCode
+        /(帥|美|漂亮|正|可愛|讚|棒|優秀|溫柔|聰明|厲害|COOL|GREAT|AWESOME|AMAZING|SWEET|PERFECT|BEST)/.test(
+          normWithoutNames
         ))
     ) {
       return isEn
