@@ -51,6 +51,7 @@
     {
       type: 'local-video',
       url: 'video/wedding-video-1.mp4',
+      poster: 'video/wedding-video-1-poster.jpg',
       label: { zh: '🎬 影片 1：婚禮影片', en: '🎬 Video 1: Wedding Film' },
     },
     {
@@ -2960,6 +2961,8 @@
   function selectSeatingAutocompleteItem(item) {
     if (!item || !elSeatingSearchInput) return;
     elSeatingSearchInput.value = item.insertValue;
+    const clearBtnEl = document.getElementById('seating-search-clear-btn');
+    if (clearBtnEl) clearBtnEl.classList.toggle('hidden', !elSeatingSearchInput.value.trim());
     selectedSeatingZoneId = null;
     if (seatingNeedsFilter !== 'all') {
       seatingNeedsFilter = 'all';
@@ -3504,6 +3507,18 @@
       });
       tabsEl.append(btn);
     });
+
+    let hintEl = document.getElementById('media-playlist-hint');
+    if (!hintEl) {
+      hintEl = document.createElement('p');
+      hintEl.id = 'media-playlist-hint';
+      hintEl.className = 'media-playlist-hint';
+      elMediaCard.insertBefore(hintEl, elMediaFrameWrap);
+    }
+    hintEl.textContent =
+      currentLang === 'en'
+        ? '✨ Video 2 will play automatically after Video 1 finishes'
+        : '✨ 播完影片 1 將自動接續播放影片 2';
   }
 
   function bindYoutubeAutoAdvanceListener() {
@@ -3563,6 +3578,9 @@
         activeMediaIframe = null;
         const video = document.createElement('video');
         video.src = activeVideo.url;
+        if (activeVideo.poster) {
+          video.poster = activeVideo.poster;
+        }
         video.controls = true;
         video.playsInline = true;
         video.setAttribute('playsinline', '');
@@ -3707,6 +3725,24 @@
     if (btnTabFootprints) btnTabFootprints.classList.toggle('active', mode === 'footprints');
     if (btnTabSeating) btnTabSeating.classList.toggle('active', mode === 'seating');
     if (btnTabMenu) btnTabMenu.classList.toggle('active', mode === 'banquet-menu');
+
+    const activeTabMap = {
+      video: btnTabVideo,
+      quiz: btnTabQuiz,
+      share: btnTabSharePhotos,
+      gallery: btnTabGallery,
+      footprints: btnTabFootprints,
+      seating: btnTabSeating,
+      'banquet-menu': btnTabMenu,
+    };
+    const activeTabEl = activeTabMap[mode];
+    if (activeTabEl && typeof activeTabEl.scrollIntoView === 'function') {
+      requestAnimationFrame(() => {
+        try {
+          activeTabEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        } catch (_e) {}
+      });
+    }
 
     elMediaSection.classList.toggle('hidden', mode !== 'video');
     elQuizSection.classList.toggle('hidden', mode !== 'quiz');
@@ -4615,6 +4651,20 @@
         }
         venueMapLink.textContent =
           currentLang === 'en' ? '📍 Brick Yard 33 1/3 Map ↗' : '📍 美軍俱樂部導航 ↗';
+
+        let zoomBtn = document.getElementById('seating-zoom-map-btn');
+        if (!zoomBtn && safeImg) {
+          zoomBtn = document.createElement('button');
+          zoomBtn.type = 'button';
+          zoomBtn.id = 'seating-zoom-map-btn';
+          zoomBtn.className = elSeatingExternalLink.className.replace(/\bhidden\b/g, '').trim();
+          zoomBtn.addEventListener('click', () => openSeatingZoomLightbox(safeImg));
+          elSeatingExternalLink.parentNode.insertBefore(zoomBtn, venueMapLink.nextSibling);
+        }
+        if (zoomBtn) {
+          zoomBtn.textContent =
+            currentLang === 'en' ? '🔍 Zoom Seating Map' : '🔍 放大檢視座位圖';
+        }
       }
     }
 
@@ -11343,8 +11393,130 @@
     }
   }
 
+  function openSeatingZoomLightbox(imgSrc) {
+    if (!imgSrc) return;
+    let box = document.getElementById('seating-zoom-lightbox');
+    if (!box) {
+      box = document.createElement('div');
+      box.id = 'seating-zoom-lightbox';
+      box.className = 'seating-zoom-lightbox hidden';
+      box.setAttribute('role', 'dialog');
+      box.setAttribute('aria-modal', 'true');
+
+      const toolbar = document.createElement('div');
+      toolbar.className = 'seating-zoom-toolbar';
+      const tip = document.createElement('span');
+      tip.id = 'seating-zoom-tip';
+      const closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.id = 'seating-zoom-close-btn';
+      closeBtn.className = 'seating-zoom-close-btn';
+      closeBtn.addEventListener('click', () => box.classList.add('hidden'));
+      toolbar.append(tip, closeBtn);
+
+      const scrollWrap = document.createElement('div');
+      scrollWrap.className = 'seating-zoom-scroll';
+      const img = document.createElement('img');
+      img.id = 'seating-zoom-img';
+      img.className = 'seating-zoom-img';
+      scrollWrap.append(img);
+
+      box.append(toolbar, scrollWrap);
+      box.addEventListener('click', (ev) => {
+        if (ev.target === box || ev.target === scrollWrap) {
+          box.classList.add('hidden');
+        }
+      });
+      document.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Escape' && !box.classList.contains('hidden')) {
+          box.classList.add('hidden');
+        }
+      });
+      document.body.append(box);
+    }
+    const tipEl = document.getElementById('seating-zoom-tip');
+    const closeEl = document.getElementById('seating-zoom-close-btn');
+    const imgEl = document.getElementById('seating-zoom-img');
+    if (tipEl) {
+      tipEl.textContent =
+        currentLang === 'en'
+          ? 'Pinch to zoom · Tap outside to close'
+          : '支援雙指放大檢視 · 點擊空白處關閉';
+    }
+    if (closeEl) {
+      closeEl.textContent = currentLang === 'en' ? '✕ Close' : '✕ 關閉';
+    }
+    if (imgEl) {
+      imgEl.src = imgSrc;
+      imgEl.alt = currentLang === 'en' ? 'Seating Floor Plan' : '婚宴座位平面圖';
+    }
+    box.classList.remove('hidden');
+  }
+
+  function initSeatingSearchClearBtn() {
+    if (!elSeatingSearchInput || !elSeatingSearchInput.parentNode) return;
+    if (document.getElementById('seating-search-clear-btn')) return;
+    const clearBtn = document.createElement('button');
+    clearBtn.type = 'button';
+    clearBtn.id = 'seating-search-clear-btn';
+    clearBtn.className = 'seating-search-clear-btn hidden';
+    clearBtn.setAttribute('aria-label', 'Clear search');
+    clearBtn.textContent = '✕';
+    const syncClearVisibility = () => {
+      clearBtn.classList.toggle('hidden', !elSeatingSearchInput.value.trim());
+    };
+    clearBtn.addEventListener('click', () => {
+      elSeatingSearchInput.value = '';
+      selectedSeatingZoneId = null;
+      closeSeatingAutocomplete();
+      syncClearVisibility();
+      renderSeatingSection();
+      elSeatingSearchInput.focus();
+    });
+    elSeatingSearchInput.addEventListener('input', syncClearVisibility);
+    elSeatingSearchInput.addEventListener('change', syncClearVisibility);
+    elSeatingSearchInput.parentNode.append(clearBtn);
+    syncClearVisibility();
+  }
+
+  function initBackToTopButton() {
+    if (document.getElementById('back-to-top-btn')) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'back-to-top-btn';
+    btn.className = 'back-to-top-btn';
+    btn.setAttribute('aria-label', 'Back to top');
+    btn.textContent = '↑';
+    btn.addEventListener('click', () => {
+      try {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (_e) {
+        window.scrollTo(0, 0);
+      }
+    });
+    document.body.append(btn);
+    let ticking = false;
+    const syncVisibility = () => {
+      ticking = false;
+      btn.classList.toggle('is-visible', window.scrollY > 400);
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(syncVisibility);
+        }
+      },
+      { passive: true }
+    );
+    syncVisibility();
+  }
+
   // Initialize
   initPreferences();
+  initSeatingSearchClearBtn();
+  initBackToTopButton();
   ensureConfettiLoop();
   ensureCountdownTickLoop();
   applyDeepLinkFromUrl();
@@ -11357,7 +11529,7 @@
     !document.getElementById('debug-auth-gate')
   ) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js?v=20261111n').catch(() => {});
+      navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).catch(() => {});
     });
   }
 })();

@@ -1001,6 +1001,14 @@ body.is-time-up .countdown-stage-wrap {
   color: #ffffff;
 }
 
+.media-playlist-hint {
+  margin: -4px 0 12px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.4;
+}
+
 .media-frame-wrap {
   position: relative;
   width: 100%;
@@ -2321,7 +2329,7 @@ body.carousel-fullscreen-open {
 .seating-search-input {
   width: 100%;
   min-height: 52px;
-  padding: 12px 18px 12px 46px;
+  padding: 12px 44px 12px 46px;
   border-radius: 16px;
   background: var(--surface-card, #ffffff);
   border: 2px solid color-mix(in srgb, var(--accent) 52%, var(--border-highlight));
@@ -4365,14 +4373,24 @@ body.carousel-fullscreen-open {
 
   .hub-tabs-group {
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
     gap: 6px;
+    padding-bottom: 2px;
+  }
+
+  .hub-tabs-group::-webkit-scrollbar {
+    display: none;
   }
 
   .hub-tab-pill {
-    width: 100%;
-    padding: 8px 10px;
+    flex: 0 0 auto;
+    width: auto;
+    white-space: nowrap;
+    padding: 8px 13px;
     font-size: 0.82rem;
     text-align: center;
   }
@@ -6085,6 +6103,134 @@ body.is-subview-active .main-stage {
   min-height: 44px;
   padding: 8px 12px;
   font-size: 1rem;
+}
+
+.seating-search-clear-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 0;
+  background: color-mix(in srgb, var(--text-muted) 18%, transparent);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.seating-search-clear-btn:hover {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  color: var(--text-primary);
+}
+
+.seating-search-clear-btn.hidden {
+  display: none;
+}
+
+.seating-zoom-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(12, 16, 14, 0.92);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: max(16px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+
+.seating-zoom-lightbox.hidden {
+  display: none;
+}
+
+.seating-zoom-toolbar {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: #f3f6f4;
+  font-size: 0.85rem;
+}
+
+.seating-zoom-close-btn {
+  min-width: 40px;
+  min-height: 40px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.seating-zoom-scroll {
+  width: 100%;
+  flex: 1 1 auto;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.seating-zoom-img {
+  display: block;
+  width: min(100%, 860px);
+  height: auto;
+  border-radius: 12px;
+  background: #ffffff;
+  touch-action: pinch-zoom pan-x pan-y;
+}
+
+.back-to-top-btn {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 880;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-highlight);
+  background: color-mix(in srgb, var(--surface-card, #ffffff) 88%, transparent);
+  backdrop-filter: blur(10px);
+  color: var(--accent);
+  font-size: 1.15rem;
+  font-weight: 700;
+  box-shadow: 0 8px 20px -6px rgba(32, 46, 38, 0.28);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.22s ease, transform 0.22s ease, background-color 0.18s ease;
+}
+
+.back-to-top-btn.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.back-to-top-btn:hover {
+  background: var(--accent);
+  color: #ffffff;
 }
 
 .admin-lb-action-btn {
