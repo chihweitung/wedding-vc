@@ -957,6 +957,18 @@ body.is-time-up .countdown-stage-wrap {
   color: var(--accent);
 }
 
+.media-sound-notice {
+  margin: 0 0 12px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: var(--surface-pill);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
 .media-frame-wrap {
   position: relative;
   width: 100%;

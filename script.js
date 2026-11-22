@@ -2624,6 +2624,7 @@
   const elMediaSection = document.getElementById('media-section');
   const elMediaCard = document.getElementById('media-card');
   const elMediaBadge = document.getElementById('media-badge');
+  const elMediaSoundNotice = document.getElementById('media-sound-notice');
   const elMediaFrameWrap = document.getElementById('media-frame-wrap');
 
   // Quiz Elements
@@ -3147,6 +3148,12 @@
     document.title = dict.pageTitle;
 
     elLangBtnLabel.textContent = dict.langBtnLabel;
+    if (elMediaSoundNotice) {
+      elMediaSoundNotice.textContent =
+        currentLang === 'en'
+          ? '🎧 Friendly reminder: This video has sound — please lower your volume or wear headphones!'
+          : '🎧 溫馨提醒：影片含有聲音，建議調小音量或佩戴耳機觀看喔！';
+    }
     if (btnLang) {
       btnLang.setAttribute('title', dict.langBtnTitle);
       btnLang.setAttribute('aria-label', dict.langBtnTitle);
@@ -3385,7 +3392,7 @@
         const autoParams = autoplay ? '&autoplay=1&playsinline=1' : '&playsinline=1';
         return {
           provider: dict.mediaBadgeYoutube,
-          embedUrl: `https://www.youtube-nocookie.com/embed/videoseries?list=${safeList}&rel=0${autoParams}`,
+          embedUrl: `https://www.youtube-nocookie.com/embed/videoseries?list=${safeList}&rel=0&cc_load_policy=0${autoParams}`,
           aspectClass: 'ratio-16-9',
           isVertical: false,
         };
@@ -3410,7 +3417,7 @@
         const autoParams = autoplay ? '&autoplay=1&playsinline=1' : '&playsinline=1';
         return {
           provider: isVertical ? dict.mediaBadgeShorts : dict.mediaBadgeYoutube,
-          embedUrl: `https://www.youtube-nocookie.com/embed/${safeId}?rel=0${autoParams}`,
+          embedUrl: `https://www.youtube-nocookie.com/embed/${safeId}?rel=0&cc_load_policy=0${autoParams}`,
           aspectClass: isVertical ? 'ratio-9-16' : 'ratio-16-9',
           isVertical,
         };
@@ -3440,6 +3447,12 @@
     if (!info) return;
 
     elMediaBadge.textContent = info.provider;
+    if (elMediaSoundNotice) {
+      elMediaSoundNotice.textContent =
+        currentLang === 'en'
+          ? '🎧 Friendly reminder: This video has sound — please lower your volume or wear headphones!'
+          : '🎧 溫馨提醒：影片含有聲音，建議調小音量或佩戴耳機觀看喔！';
+    }
     elMediaCard.classList.toggle('is-vertical', info.isVertical);
     elMediaFrameWrap.className = `media-frame-wrap ${info.aspectClass}`;
 
@@ -3447,7 +3460,7 @@
       renderedMediaKey = info.embedUrl;
       const iframe = document.createElement('iframe');
       iframe.src = info.embedUrl;
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
       iframe.sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
       iframe.allowFullscreen = true;
       iframe.loading = 'lazy';
@@ -11157,10 +11170,31 @@
 
   btnCelebrate.addEventListener('click', launchConfetti);
 
+  function applyDeepLinkFromUrl() {
+    if (document.body.classList.contains('debug-locked')) return;
+    let target = '';
+    try {
+      const params = new URLSearchParams(window.location.search);
+      target = (params.get('tab') || '').trim().toLowerCase();
+    } catch (_e) {
+      target = '';
+    }
+    if (!target && window.location.hash) {
+      target = window.location.hash.replace(/^#/, '').trim().toLowerCase();
+    }
+    if (target === 'seating' || target === 'seat' || target === 'seats') {
+      showHubView('seating');
+    } else if (target === 'menu' || target === 'banquet-menu') {
+      showHubView('banquet-menu');
+    }
+  }
+
   // Initialize
   initPreferences();
   ensureConfettiLoop();
   ensureCountdownTickLoop();
+  applyDeepLinkFromUrl();
+  window.addEventListener('hashchange', applyDeepLinkFromUrl);
 
   // Register Offline Service Worker (Network-First + Zero Easter Egg Spoiler)
   if (
