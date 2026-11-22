@@ -872,7 +872,7 @@
   const SEATING_TABLES_DATA = [
     {
       id: 'table-main',
-      box: { x: 912, y: 807, w: 366, h: 330 },
+      box: { x: 908, y: 812, w: 366, h: 322 },
       color: '#d97706',
       fillColor: 'rgba(245, 158, 11, 0.12)',
       darkColor: '#fbbf24',
@@ -901,8 +901,8 @@
           {
             key: 'tom',
             side: 'left',
-            cx: 1185,
-            cy: 840,
+            cx: 1194,
+            cy: 839,
             pinText: '♥',
             zh: '董智瑋 Tom',
             en: 'Tom Tung',
@@ -912,16 +912,16 @@
             key: 'eunice',
             side: 'right',
             cx: 1236,
-            cy: 840,
+            cy: 839,
             pinText: '♥',
             zh: '蕭睦宸 Eunice',
             en: 'Eunice Hsiao',
             match: '蕭睦宸 eunice hsiao 新娘 bride',
           },
         ],
-        leftX: 938,
-        rightX: 1045,
-        rowYs: [842, 894, 946, 998, 1050, 1102],
+        leftX: 932,
+        rightX: 1046,
+        rowYs: [844, 896, 946, 998, 1052, 1104],
         rows: [
           [
             { key: '蕭能駿_傅郁淳', zh: '蕭能駿', en: '蕭能駿', match: '蕭能駿 傅郁淳' },
@@ -952,7 +952,7 @@
     },
     {
       id: 'zone-bride-relatives',
-      box: { x: 723, y: 807, w: 156, h: 330 },
+      box: { x: 718, y: 812, w: 162, h: 322 },
       color: '#e11d48',
       fillColor: 'rgba(225, 29, 72, 0.12)',
       darkColor: '#fb7185',
@@ -962,14 +962,21 @@
       zone: { zh: '主廳中左側 · 新娘親戚（主桌左側）', en: "Main Hall Center-Left · Bride's Relatives" },
       guests: [
         { zh: '傅宥錡', en: '傅宥錡' },
-        { zh: '傅裕耀等三人', en: '傅裕耀 (3)' },
-        { zh: '傅詩晴等四人', en: '傅詩晴 (4)' },
-        { zh: '蔡沐桓等三人', en: '蔡沐桓 (3)' },
+        { zh: '傅裕耀', en: '傅裕耀' },
+        { zh: '徐佩祺', en: '徐佩祺' },
+        { zh: '傅煦幃', en: '傅煦幃' },
+        { zh: '傅詩晴', en: '傅詩晴' },
+        { zh: '張朝翔', en: '張朝翔' },
+        { zh: '張耘睿', en: '張耘睿' },
+        { zh: '張耘嫣', en: '張耘嫣' },
+        { zh: '蔡沐桓', en: '蔡沐桓' },
+        { zh: '蔡依宸', en: '蔡依宸' },
+        { zh: '魏子皓', en: '魏子皓' },
       ],
     },
     {
       id: 'zone-groom-parents-friends',
-      box: { x: 678, y: 186, w: 1110, h: 300 },
+      box: { x: 675, y: 192, w: 1116, h: 288 },
       color: '#4d7c0f',
       fillColor: 'rgba(101, 163, 13, 0.11)',
       darkColor: '#a3e635',
@@ -1032,9 +1039,9 @@
         subTables: [
           {
             title: { zh: '第 1 桌（最左）', en: 'Table 1 (Far Left)' },
-            leftX: 704,
-            rightX: 808,
-            rowYs: [221, 267, 313, 359, 405, 451],
+            leftX: 699,
+            rightX: 811,
+            rowYs: [224, 267, 310, 363, 406, 449],
             rows: [
               [
                 { key: '梁光華_韋雪華', zh: '梁光華', en: '梁光華', match: '梁光華 韋雪華' },
@@ -1064,9 +1071,9 @@
           },
           {
             title: { zh: '第 2 桌', en: 'Table 2' },
-            leftX: 896,
-            rightX: 1000,
-            rowYs: [221, 267, 313, 359, 405, 451],
+            leftX: 890,
+            rightX: 1001,
+            rowYs: [224, 267, 310, 363, 406, 449],
             rows: [
               [
                 { key: '龔紹興_嬉吟', zh: '龔紹興', en: '龔紹興', match: '龔紹興 嬉吟' },
@@ -1096,9 +1103,9 @@
           },
           {
             title: { zh: '第 3 桌', en: 'Table 3' },
-            leftX: 1088,
-            rightX: 1192,
-            rowYs: [221, 267, 313, 359, 405, 451],
+            leftX: 1084,
+            rightX: 1194,
+            rowYs: [224, 267, 310, 363, 406, 449],
             rows: [
               [
                 { key: '王仲瑛_蘇超瑋', zh: '蘇超瑋', en: '蘇超瑋', match: '王仲瑛 蘇超瑋' },
@@ -1128,9 +1135,9 @@
           },
           {
             title: { zh: '第 4 桌', en: 'Table 4' },
-            leftX: 1277,
+            leftX: 1267,
             rightX: 1384,
-            rowYs: [221, 267, 313, 359, 405, 451, 492],
+            rowYs: [224, 267, 310, 363, 406, 449, 490],
             rows: [
               [
                 { key: '吳逸楓', zh: '吳逸楓', en: '吳逸楓', match: '吳逸楓' },
@@ -1164,9 +1171,9 @@
           },
           {
             title: { zh: '第 5 桌', en: 'Table 5' },
-            leftX: 1469,
-            rightX: 1570,
-            rowYs: [221, 267, 313, 359, 405, 451],
+            leftX: 1463,
+            rightX: 1574,
+            rowYs: [224, 267, 310, 363, 406, 449],
             rows: [
               [
                 { key: '楊哲彰_余鳳琴', zh: '楊哲彰', en: '楊哲彰', match: '楊哲彰 余鳳琴' },
@@ -1196,9 +1203,9 @@
           },
           {
             title: { zh: '第 6 桌（最右）', en: 'Table 6 (Far Right)' },
-            leftX: 1658,
-            rightX: 1762,
-            rowYs: [221, 267, 313, 359, 405, 451],
+            leftX: 1655,
+            rightX: 1766,
+            rowYs: [224, 267, 310, 363, 406, 449],
             rows: [
               [
                 { key: '許天和_陳聞禮', zh: '許天和', en: '許天和', match: '許天和 陳聞禮' },
@@ -1231,7 +1238,7 @@
     },
     {
       id: 'zone-groom-dad-relatives',
-      box: { x: 537, y: 807, w: 156, h: 330 },
+      box: { x: 533, y: 812, w: 162, h: 322 },
       color: '#b45309',
       fillColor: 'rgba(180, 83, 9, 0.12)',
       darkColor: '#f59e0b',
@@ -1251,9 +1258,9 @@
         { zh: '陳振揚', en: '陳振揚' },
       ],
       seatPlan: {
-        leftX: 563,
-        rightX: 667,
-        rowYs: [842, 894, 946, 998, 1050, 1102],
+        leftX: 557,
+        rightX: 671,
+        rowYs: [844, 896, 946, 998, 1052, 1104],
         rows: [
           [
             { key: '董素芬_陳建和', zh: '董素芬', en: '董素芬', match: '董素芬 陳建和' },
@@ -1284,7 +1291,7 @@
     },
     {
       id: 'zone-groom-mom-relatives',
-      box: { x: 1425, y: 690, w: 360, h: 531 },
+      box: { x: 1422, y: 696, w: 368, h: 516 },
       color: '#059669',
       fillColor: 'rgba(5, 150, 105, 0.12)',
       darkColor: '#34d399',
@@ -1310,93 +1317,85 @@
         { zh: '房滋寧&韓治瀾等二人', en: '房滋寧 & 韓治瀾 (2)' },
       ],
       seatPlan: {
+        freeSeating: true,
+        hideSeatGrid: true,
         subTables: [
           {
+            freeSeating: true,
             title: { zh: '第 9 桌 · 徐家左桌', en: 'Table 9 · Hsu Left' },
-            leftX: 1451,
-            rightX: 1555,
-            rowYs: [725, 772, 819, 865, 912, 959, 1005, 1052, 1099],
+            groupMatch: [
+              '徐明志',
+              '陳凱英',
+              '徐平志',
+              '徐慧明',
+              '徐宇志',
+              '羅芸',
+              '徐和志',
+              '許嵐音',
+              '韓治瀾',
+              '房滋寧',
+              '徐宇光',
+              '鍾燕玲',
+              '徐若謙',
+              '徐芳明',
+              '徐天泰',
+              '徐乙芹',
+            ],
+            freeSeatingNote: {
+              zh: '✨ 第 9 桌（徐家左桌）自由入座（共 17 席）',
+              en: '✨ Open seating at Table 9 · Hsu Left (17 seats)',
+            },
+            leftX: 1446,
+            rightX: 1558,
+            rowYs: [725, 769, 811, 868, 910, 954, 1006, 1050, 1092],
             rows: [
-              [
-                { key: '徐明志', zh: '徐明志', en: '徐明志', match: '徐明志 明志' },
-                { key: '陳凱英', zh: '陳凱英', en: '陳凱英', match: '陳凱英 凱英' },
-              ],
-              [
-                { key: '徐平志', zh: '徐平志', en: '徐平志', match: '徐平志 平志' },
-                { key: '徐慧明', zh: '徐慧明', en: '徐慧明', match: '徐慧明 慧明' },
-              ],
-              [
-                { key: '徐宇志', zh: '徐宇志', en: '徐宇志', match: '徐宇志 宇志' },
-                { key: '羅芸', zh: '羅芸', en: '羅芸', match: '羅芸' },
-              ],
-              [
-                { key: '徐和志', zh: '徐和志', en: '徐和志', match: '徐和志 和志' },
-                { key: '許嵐音', zh: '許嵐音', en: '許嵐音', match: '許嵐音 嵐音' },
-              ],
-              [
-                { key: '韓治瀾', zh: '韓治瀾', en: '韓治瀾', match: '韓治瀾' },
-                { key: '房滋寧', zh: '房滋寧', en: '房滋寧', match: '房滋寧' },
-              ],
-              [
-                { key: '徐宇光', zh: '徐宇光', en: '徐宇光', match: '徐宇光 宇光' },
-                { key: '鍾燕玲', zh: '鍾燕玲', en: '鍾燕玲', match: '鍾燕玲 燕玲' },
-              ],
-              [
-                { key: '徐若謙', zh: '徐若謙', en: '徐若謙', match: '徐若謙 若謙' },
-                { key: '徐芳明', zh: '徐芳明', en: '徐芳明', match: '徐芳明 芳明' },
-              ],
-              [
-                { key: '徐天泰', zh: '徐天泰', en: '徐天泰', match: '徐天泰 天泰' },
-                { key: '徐乙芹', zh: '徐乙芹', en: '徐乙芹', match: '徐乙芹 乙芹' },
-              ],
-              [
-                { key: '徐乙芹', zh: '徐乙芹', en: '徐乙芹', match: '徐乙芹 乙芹' },
-                null,
-              ],
+              [{ zh: '徐家左桌', en: 'Hsu Left' }, { zh: '徐家左桌', en: 'Hsu Left' }],
+              [{ zh: '徐家左桌', en: 'Hsu Left' }, { zh: '徐家左桌', en: 'Hsu Left' }],
+              [{ zh: '徐家左桌', en: 'Hsu Left' }, { zh: '徐家左桌', en: 'Hsu Left' }],
+              [{ zh: '徐家左桌', en: 'Hsu Left' }, { zh: '徐家左桌', en: 'Hsu Left' }],
+              [{ zh: '徐家左桌', en: 'Hsu Left' }, { zh: '徐家左桌', en: 'Hsu Left' }],
+              [{ zh: '徐家左桌', en: 'Hsu Left' }, { zh: '徐家左桌', en: 'Hsu Left' }],
+              [{ zh: '徐家左桌', en: 'Hsu Left' }, { zh: '徐家左桌', en: 'Hsu Left' }],
+              [{ zh: '徐家左桌', en: 'Hsu Left' }, { zh: '徐家左桌', en: 'Hsu Left' }],
+              [{ zh: '徐家左桌', en: 'Hsu Left' }, null],
             ],
           },
           {
+            freeSeating: true,
             title: { zh: '第 10 桌 · 徐家右桌', en: 'Table 10 · Hsu Right' },
-            leftX: 1658,
-            rightX: 1759,
-            rowYs: [815, 861, 908, 954, 1001, 1047, 1093, 1140, 1186],
+            groupMatch: [
+              '徐玲明',
+              '卓鈞恩',
+              '卓辰陽',
+              'Roxy',
+              '卓恆毅',
+              '林哲正',
+              '徐紫櫻',
+              '徐雪櫻',
+              '王展浩',
+              '高瑞宏',
+              '陳啟武',
+              '杜文圓',
+              '董智翔',
+              '陳哲雅',
+            ],
+            freeSeatingNote: {
+              zh: '✨ 第 10 桌（徐家右桌）自由入座（共 16 席）',
+              en: '✨ Open seating at Table 10 · Hsu Right (16 seats)',
+            },
+            leftX: 1655,
+            rightX: 1766,
+            rowYs: [815, 857, 900, 957, 999, 1043, 1095, 1138, 1181],
             rows: [
-              [
-                { key: '徐玲明', zh: '徐玲明', en: '徐玲明', match: '徐玲明 玲明' },
-                null,
-              ],
-              [
-                { key: '卓鈞恩', zh: '卓鈞恩', en: '卓鈞恩', match: '卓鈞恩 鈞恩' },
-                { key: '卓辰陽', zh: '卓辰陽', en: '卓辰陽', match: '卓辰陽 辰陽' },
-              ],
-              [
-                { key: '卓辰陽', zh: '卓辰陽', en: '卓辰陽', match: '卓辰陽 辰陽' },
-                null,
-              ],
-              [
-                { key: 'Roxy', zh: 'Roxy', en: 'Roxy', match: 'Roxy' },
-                { key: '卓恆毅', zh: '卓恆毅', en: '卓恆毅', match: '卓恆毅 恆毅' },
-              ],
-              [
-                { key: '林哲正', zh: '林哲正', en: '林哲正', match: '林哲正 哲正' },
-                { key: '林哲正', zh: '林哲正', en: '林哲正', match: '林哲正 哲正' },
-              ],
-              [
-                { key: '徐紫櫻', zh: '徐紫櫻', en: '徐紫櫻', match: '徐紫櫻 紫櫻' },
-                { key: '徐雪櫻', zh: '徐雪櫻', en: '徐雪櫻', match: '徐雪櫻 雪櫻' },
-              ],
-              [
-                { key: '王展浩', zh: '王展浩', en: '王展浩', match: '王展浩 展浩' },
-                { key: '高瑞宏', zh: '高瑞宏', en: '高瑞宏', match: '高瑞宏 瑞宏' },
-              ],
-              [
-                { key: '陳啟武', zh: '陳啟武', en: '陳啟武', match: '陳啟武 啟武' },
-                { key: '杜文圓', zh: '杜文圓', en: '杜文圓', match: '杜文圓 文圓' },
-              ],
-              [
-                { key: '董智翔', zh: '董智翔', en: '董智翔', match: '董智翔 智翔' },
-                { key: '陳哲雅', zh: '陳哲雅', en: '陳哲雅', match: '陳哲雅 哲雅' },
-              ],
+              [{ zh: '徐家右桌', en: 'Hsu Right' }, null],
+              [{ zh: '徐家右桌', en: 'Hsu Right' }, { zh: '徐家右桌', en: 'Hsu Right' }],
+              [{ zh: '徐家右桌', en: 'Hsu Right' }, null],
+              [{ zh: '徐家右桌', en: 'Hsu Right' }, { zh: '徐家右桌', en: 'Hsu Right' }],
+              [{ zh: '徐家右桌', en: 'Hsu Right' }, { zh: '徐家右桌', en: 'Hsu Right' }],
+              [{ zh: '徐家右桌', en: 'Hsu Right' }, { zh: '徐家右桌', en: 'Hsu Right' }],
+              [{ zh: '徐家右桌', en: 'Hsu Right' }, { zh: '徐家右桌', en: 'Hsu Right' }],
+              [{ zh: '徐家右桌', en: 'Hsu Right' }, { zh: '徐家右桌', en: 'Hsu Right' }],
+              [{ zh: '徐家右桌', en: 'Hsu Right' }, { zh: '徐家右桌', en: 'Hsu Right' }],
             ],
           },
         ],
@@ -1404,9 +1403,9 @@
     },
     {
       id: 'zone-groom-highschool',
-      box: { x: 1131, y: 1572, w: 156, h: 441 },
+      box: { x: 1126, y: 1584, w: 165, h: 423 },
       svgPath:
-        'M 1120 1609 L 1244 1609 Q 1260 1609 1260 1625 L 1260 1966 Q 1260 1978 1248 1978 L 1178 1978 Q 1168 1978 1168 1988 L 1168 2010 Q 1168 2020 1158 2020 L 1118 2020 Q 1104 2020 1104 2006 L 1104 1625 Q 1104 1609 1120 1609 Z',
+        'M 1142 1584 L 1275 1584 Q 1291 1584 1291 1600 L 1291 1942 Q 1291 1954 1279 1954 L 1216 1954 Q 1206 1954 1206 1964 L 1206 1995 Q 1206 2007 1194 2007 L 1140 2007 Q 1126 2007 1126 1993 L 1126 1600 Q 1126 1584 1142 1584 Z',
       color: '#dc2626',
       fillColor: 'rgba(220, 38, 38, 0.12)',
       darkColor: '#f87171',
@@ -1443,9 +1442,9 @@
             en: 'Dazhi 15 seats | Row 8 Left only',
           },
         },
-        leftX: 1157,
-        rightX: 1261,
-        rowYs: [1612, 1664, 1716, 1768, 1820, 1872, 1924, 1976],
+        leftX: 1150,
+        rightX: 1267,
+        rowYs: [1614, 1666, 1718, 1770, 1824, 1877, 1930, 1982],
         rows: [
           [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
           [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
@@ -1460,9 +1459,9 @@
     },
     {
       id: 'zone-bride-highschool',
-      box: { x: 1131, y: 2010, w: 156, h: 110 },
+      box: { x: 1126, y: 2010, w: 165, h: 104 },
       svgPath:
-        'M 1186 1982 L 1246 1982 Q 1260 1982 1260 1996 L 1260 2120 Q 1260 2134 1246 2134 L 1118 2134 Q 1104 2134 1104 2120 L 1104 2036 Q 1104 2024 1116 2024 L 1164 2024 Q 1174 2024 1174 2014 L 1174 1994 Q 1174 1982 1186 1982 Z',
+        'M 1222 1958 L 1277 1958 Q 1291 1958 1291 1972 L 1291 2098 Q 1291 2110 1279 2110 L 1140 2110 Q 1126 2110 1126 2096 L 1126 2024 Q 1126 2012 1138 2012 L 1200 2012 Q 1210 2012 1210 2002 L 1210 1970 Q 1210 1958 1222 1958 Z',
       color: '#2563eb',
       fillColor: 'rgba(37, 99, 235, 0.12)',
       darkColor: '#60a5fa',
@@ -1492,9 +1491,9 @@
             en: 'KGHS 5 seats | Row 1 Right + 2 rows below',
           },
         },
-        leftX: 1157,
-        rightX: 1261,
-        rowYs: [2025, 2065, 2105],
+        leftX: 1150,
+        rightX: 1267,
+        rowYs: [1982, 2034, 2086],
         rows: [
           [{ isOtherZone: true, zh: '（大直區）', en: '(Dazhi)' }, { zh: '雄女可入座', en: 'Available' }],
           [{ zh: '雄女可入座', en: 'Available' }, { zh: '雄女可入座', en: 'Available' }],
@@ -1504,7 +1503,7 @@
     },
     {
       id: 'zone-bride-colleagues',
-      box: { x: 1131, y: 2118, w: 156, h: 219 },
+      box: { x: 1126, y: 2116, w: 165, h: 210 },
       color: '#7c3aed',
       fillColor: 'rgba(124, 58, 237, 0.12)',
       darkColor: '#c084fc',
@@ -1523,7 +1522,7 @@
     },
     {
       id: 'zone-groom-colleagues',
-      box: { x: 1407, y: 1602, w: 159, h: 732 },
+      box: { x: 1404, y: 1608, w: 162, h: 716 },
       color: '#ea580c',
       fillColor: 'rgba(234, 88, 12, 0.12)',
       darkColor: '#fb923c',
@@ -1559,9 +1558,9 @@
               zh: '✨ Google 上桌自由入座（共 12 席）',
               en: '✨ Open seating at Google Upper Table (12 seats)',
             },
-            leftX: 1433,
-            rightX: 1540,
-            rowYs: [1640, 1692, 1744, 1796, 1848, 1900],
+            leftX: 1428,
+            rightX: 1541,
+            rowYs: [1636, 1689, 1741, 1795, 1846, 1898],
             rows: [
               [{ zh: 'Google 上桌', en: 'Upper Table' }, { zh: 'Google 上桌', en: 'Upper Table' }],
               [{ zh: 'Google 上桌', en: 'Upper Table' }, { zh: 'Google 上桌', en: 'Upper Table' }],
@@ -1579,9 +1578,9 @@
               zh: '✨ Google 下桌自由入座（共 11 席）',
               en: '✨ Open seating at Google Lower Table (11 seats)',
             },
-            leftX: 1433,
-            rightX: 1540,
-            rowYs: [2036, 2088, 2140, 2192, 2244, 2296],
+            leftX: 1428,
+            rightX: 1541,
+            rowYs: [2032, 2084, 2137, 2190, 2242, 2294],
             rows: [
               [{ zh: 'Google 下桌', en: 'Lower Table' }, { zh: 'Google 下桌', en: 'Lower Table' }],
               [{ zh: 'Google 下桌', en: 'Lower Table' }, { zh: 'Google 下桌', en: 'Lower Table' }],
@@ -1596,7 +1595,7 @@
     },
     {
       id: 'zone-groom-nctu',
-      box: { x: 1635, y: 1602, w: 159, h: 336 },
+      box: { x: 1630, y: 1608, w: 162, h: 320 },
       color: '#ca8a04',
       fillColor: 'rgba(234, 179, 8, 0.13)',
       darkColor: '#fde047',
@@ -1616,7 +1615,7 @@
     },
     {
       id: 'zone-groom-moz',
-      box: { x: 1635, y: 1956, w: 159, h: 180 },
+      box: { x: 1630, y: 1966, w: 162, h: 160 },
       color: '#0891b2',
       fillColor: 'rgba(8, 145, 178, 0.12)',
       darkColor: '#22d3ee',
@@ -1631,7 +1630,7 @@
     },
     {
       id: 'zone-bride-college',
-      box: { x: 1635, y: 2154, w: 159, h: 180 },
+      box: { x: 1630, y: 2164, w: 162, h: 160 },
       color: '#db2777',
       fillColor: 'rgba(219, 39, 119, 0.12)',
       darkColor: '#f472b6',
@@ -2917,6 +2916,19 @@
           (plan.extraSeats || []).forEach(collectSeat);
         });
       } else {
+        if (sp && sp.freeSeating && Array.isArray(sp.subTables)) {
+          sp.subTables.forEach((sub) => {
+            if (!sub || !Array.isArray(sub.groupMatch)) return;
+            const subTitle = sub.title ? (sub.title[currentLang] || sub.title.zh) : '';
+            const fullZone = subTitle ? `${zoneTitle} · ${subTitle}` : zoneTitle;
+            sub.groupMatch.forEach((kw) => {
+              const s = String(kw || '').trim();
+              if (s.length >= 2 && !/^[a-z\s]+$/.test(s)) {
+                addCandidate(s, s, s, fullZone, table.id);
+              }
+            });
+          });
+        }
         (table.guests || []).forEach((g) => {
           const raw = (currentLang === 'en' ? g.en : g.zh) || g.zh || '';
           const clean = raw
@@ -3218,7 +3230,7 @@
       elCountdownShuttleMapLink.textContent =
         currentLang === 'en'
           ? '📍 Shuttle Pickup: MRT Jiantan Exit 2 (Jihe Rd.) ↗'
-          : '📍 小巴上車點：劍潭站 2 號出口（基河路）↗';
+          : '📍 小巴上車點：劍潭站 2 號出口 ↗';
     }
     if (elCountdownVenueNotice) {
       elCountdownVenueNotice.textContent =
@@ -3974,8 +3986,8 @@
   const BUFFET_ZONE_META = {
     id: BUFFET_ZONE_ID,
     boxes: [
-      { x: 324, y: 186, w: 81, h: 663 },
-      { x: 1383, y: 1269, w: 447, h: 78 },
+      { x: 328, y: 190, w: 73, h: 655 },
+      { x: 1387, y: 1273, w: 439, h: 70 },
     ],
     color: '#0d9488',
     fillColor: 'rgba(13, 148, 136, 0.26)',
@@ -3985,7 +3997,7 @@
   const RECEPTION_ZONE_ID = 'facility-reception';
   const RECEPTION_ZONE_META = {
     id: RECEPTION_ZONE_ID,
-    box: { x: 1077, y: 2520, w: 81, h: 297 },
+    box: { x: 1080, y: 2522, w: 75, h: 292 },
     color: '#0369a1',
     fillColor: 'rgba(3, 105, 161, 0.26)',
     name: { zh: '📋 接待桌（迎賓簽到 ＆ 收禮處）', en: '📋 Reception & Check-In Desk' },
@@ -5133,44 +5145,6 @@
       `seating-zone-hotspot seating-reception-hotspot${isReceptionHighlighted ? ' is-highlighted' : ''}`
     );
     receptionGroup.append(rRect);
-
-    const receptionBadge = {
-      cx: 1095,
-      cy: 2663,
-      bw: 72,
-      bh: 236,
-      fontSize: 34,
-      lineStep: 45,
-      lines: currentLang === 'en' ? ['📋', 'D', 'E', 'S', 'K'] : ['📋', '接', '待', '桌'],
-    };
-    const recBg = document.createElementNS(svgNS, 'rect');
-    recBg.setAttribute('x', String(Math.round(receptionBadge.cx - receptionBadge.bw / 2)));
-    recBg.setAttribute('y', String(Math.round(receptionBadge.cy - receptionBadge.bh / 2)));
-    recBg.setAttribute('width', String(receptionBadge.bw));
-    recBg.setAttribute('height', String(receptionBadge.bh));
-    recBg.setAttribute('rx', '16');
-    recBg.setAttribute('ry', '16');
-    recBg.setAttribute('class', 'seating-reception-badge-bg');
-
-    const recText = document.createElementNS(svgNS, 'text');
-    recText.setAttribute('x', String(receptionBadge.cx));
-    recText.setAttribute('text-anchor', 'middle');
-    recText.setAttribute('class', 'seating-reception-badge-text');
-    recText.style.fontSize = `${receptionBadge.fontSize}px`;
-
-    const recFirstY =
-      receptionBadge.cy -
-      ((receptionBadge.lines.length - 1) * receptionBadge.lineStep) / 2 +
-      receptionBadge.fontSize * 0.34;
-    receptionBadge.lines.forEach((lineStr, idx) => {
-      const tspan = document.createElementNS(svgNS, 'tspan');
-      tspan.setAttribute('x', String(receptionBadge.cx));
-      tspan.setAttribute('y', String(Math.round(recFirstY + idx * receptionBadge.lineStep)));
-      tspan.textContent = lineStr;
-      recText.append(tspan);
-    });
-
-    receptionGroup.append(recBg, recText);
     receptionGroup.addEventListener('click', (e) => toggleFacilityZone(RECEPTION_ZONE_ID, e));
     svg.append(receptionGroup);
 
@@ -5201,54 +5175,6 @@
         `seating-zone-hotspot seating-buffet-hotspot${isBuffetHighlighted ? ' is-highlighted' : ''}`
       );
       buffetGroup.append(bRect);
-    });
-
-    const buffetBadges = [
-      {
-        cx: 383,
-        cy: 619,
-        bw: 82,
-        bh: currentLang === 'en' ? 276 : 248,
-        fontSize: currentLang === 'en' ? 32 : 36,
-        lineStep: currentLang === 'en' ? 43 : 48,
-        lines: currentLang === 'en' ? ['🍽️', 'F', 'O', 'O', 'D'] : ['🍽️', '取', '餐', '區'],
-      },
-      {
-        cx: 1563,
-        cy: 1362,
-        bw: 268,
-        bh: 58,
-        fontSize: 34,
-        lineStep: 38,
-        lines: currentLang === 'en' ? ['🍽️ Buffet'] : ['🍽️ 取餐區'],
-      },
-    ];
-    buffetBadges.forEach((bb) => {
-      const bBg = document.createElementNS(svgNS, 'rect');
-      bBg.setAttribute('x', String(Math.round(bb.cx - bb.bw / 2)));
-      bBg.setAttribute('y', String(Math.round(bb.cy - bb.bh / 2)));
-      bBg.setAttribute('width', String(bb.bw));
-      bBg.setAttribute('height', String(bb.bh));
-      bBg.setAttribute('rx', '16');
-      bBg.setAttribute('ry', '16');
-      bBg.setAttribute('class', 'seating-buffet-badge-bg');
-
-      const bText = document.createElementNS(svgNS, 'text');
-      bText.setAttribute('x', String(bb.cx));
-      bText.setAttribute('text-anchor', 'middle');
-      bText.setAttribute('class', 'seating-buffet-badge-text');
-      bText.style.fontSize = `${bb.fontSize}px`;
-
-      const firstY = bb.cy - ((bb.lines.length - 1) * bb.lineStep) / 2 + bb.fontSize * 0.34;
-      bb.lines.forEach((lineStr, idx) => {
-        const tspan = document.createElementNS(svgNS, 'tspan');
-        tspan.setAttribute('x', String(bb.cx));
-        tspan.setAttribute('y', String(Math.round(firstY + idx * bb.lineStep)));
-        tspan.textContent = lineStr;
-        bText.append(tspan);
-      });
-
-      buffetGroup.append(bBg, bText);
     });
 
     buffetGroup.addEventListener('click', (e) => toggleFacilityZone(BUFFET_ZONE_ID, e));
@@ -6113,10 +6039,12 @@
         (table.name.en && table.name.en.toLowerCase().includes(query));
 
       const seatMatch = findMatchingSeatSlots(table, query, isDebugPage);
+      const freeSubMatches = findMatchingFreeSeatingSubIndices(table, query, isDebugPage);
       const canMatchGuestByQuery = isDebugPage ? Boolean(query) : query.length >= 2;
       const hasMatchingGuest =
         canMatchGuestByQuery &&
         (seatMatch.slots.length > 0 ||
+          freeSubMatches.length > 0 ||
           table.guests.some((g) =>
             isDebugPage
               ? (g.zh && g.zh.toLowerCase().includes(query)) ||

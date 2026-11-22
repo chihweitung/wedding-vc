@@ -2507,7 +2507,7 @@ body.carousel-fullscreen-open {
   position: relative;
   width: min(100%, 580px);
   margin: 0 auto;
-  aspect-ratio: 2090 / 3153;
+  aspect-ratio: 728 / 1024;
   user-select: none;
 }
 
@@ -2515,7 +2515,7 @@ body.carousel-fullscreen-open {
 .seating-map-interactive img {
   width: 100%;
   height: auto;
-  aspect-ratio: 2090 / 3153;
+  aspect-ratio: 728 / 1024;
   max-height: none;
   object-fit: fill;
   display: block;
@@ -5697,7 +5697,7 @@ body.is-subview-active .main-stage {
   }
 
   #seating-section .seating-panel-card > #seating-photo-stage .seating-map-interactive {
-    width: min(100%, calc((100vh - 210px) * 2090 / 3153));
+    width: min(100%, calc((100vh - 210px) * 728 / 1024));
     margin: 0 auto;
   }
 
@@ -5745,7 +5745,7 @@ body.is-subview-active .main-stage {
   }
 
   #seating-photo-stage .seating-map-interactive {
-    padding: 4px;
+    padding: 0;
   }
 }
 
