@@ -3046,6 +3046,10 @@
   let pendingSelectedOption = null;
   let lastSelectedOption = null;
   let currentPlayerName = safeGetStorage(STORAGE_KEY_PLAYER_NAME) || '';
+  if (currentPlayerName === '測試賓客' || currentPlayerName === 'Debug Tester') {
+    currentPlayerName = '';
+    safeSetStorage(STORAGE_KEY_PLAYER_NAME, '');
+  }
   let quizStartedAtMs = 0;
   let currentQuizStartToken = '';
   let quizStartTokenReqId = 0;
@@ -8439,15 +8443,15 @@
       const tiers = isEn
         ? [
             {
-              score: '✨ Secret Easter Egg',
-              desc: 'The more questions you get right, the clearer the hidden clue and hints will be at the end!',
+              score: '✨ Little Surprise',
+              desc: 'Rumor has it a high score unlocks an unexpected surprise at the end...',
               hi: true,
             },
           ]
         : [
             {
-              score: '✨ 隱藏秘密彩蛋',
-              desc: '答對越多題，結算時浮現的彩蛋線索與提示會越清楚喔！',
+              score: '✨ 神秘小驚喜',
+              desc: '聽說高分通關，結算時會出現意想不到的小驚喜喔…',
               hi: true,
             },
           ];
