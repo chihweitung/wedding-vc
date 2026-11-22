@@ -1,6 +1,27 @@
 (() => {
   'use strict';
 
+  // 在公開版 index.html 上立即鎖死 __TE_DEBUG_AUTH__ 與 __TE_STAFF_AUTH__ 為唯讀 false，
+  // 防止賓客透過 DevTools Console 手動設為 true 窺探工作人員座位詳情、小巴名單或後台排行榜面板
+  if (typeof window !== 'undefined') {
+    if (!Object.prototype.hasOwnProperty.call(window, '__TE_DEBUG_AUTH__')) {
+      Object.defineProperty(window, '__TE_DEBUG_AUTH__', {
+        value: false,
+        writable: false,
+        configurable: false,
+        enumerable: false,
+      });
+    }
+    if (!Object.prototype.hasOwnProperty.call(window, '__TE_STAFF_AUTH__')) {
+      Object.defineProperty(window, '__TE_STAFF_AUTH__', {
+        value: false,
+        writable: false,
+        configurable: false,
+        enumerable: false,
+      });
+    }
+  }
+
   // Polyfill CanvasRenderingContext2D.prototype.roundRect for older iPadOS / iOS Safari (< 15.4)
   if (
     typeof CanvasRenderingContext2D !== 'undefined' &&
