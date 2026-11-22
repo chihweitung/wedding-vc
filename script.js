@@ -9882,6 +9882,25 @@
         ? '🙅‍♂️ Wakanda Forever! ...Wait, wrong cinematic universe—try again!'
         : '🙅‍♂️ 瓦干達 Forever！…欸不對，這不是正確密語喔，再猜猜看！';
     }
+    if (compactCode === 'HOWDOYOUTURNTHISON') {
+      return isEn
+        ? '🚗 Vroom! A Cobra Car just spawned at Brick Yard 33 1/3—still not the wedding passcode though, 11!'
+        : '🚗 轟隆隆——一台藍色眼鏡蛇跑車開進美軍俱樂部了！但這不是婚禮密語喔，11！';
+    }
+    if (compactCode === 'WOLOLO') {
+      return isEn
+        ? '🧙‍♂️ Wololo! Your outfit just turned from blue to red... but the lock resisted conversion!'
+        : '🧙‍♂️ Wololo！你的衣服從藍色變成紅色了…但鎖頭還沒被招降喔，再試試看！';
+    }
+    if (
+      /^(ROBINHOOD|LUMBERJACK|ROCKON|CHEESESTEAKJIMMYS|MARCO|POLO|AEGIS|IRWINNER|BLACKDEATH|FURIOUSTHEMONKEYBOY|TOSMITHEREENS|WHOSYOURDADDY|GREEDISGOOD|SHOWMETHEMONEY|POWEROVERWHELMING)$/.test(
+        compactCode
+      )
+    ) {
+      return isEn
+        ? '⚔️ Classic gamer spotted! Cheat codes are disabled at this wedding—try the real passcode, 11!'
+        : '⚔️ 世紀帝國／暴雪老玩家現身！婚禮現場禁止開外掛加資源喔，請用真正的密語破關，11！';
+    }
     if (compactCode.startsWith('AHR0CHM6') || compactCode.startsWith('AHR0CDOV')) {
       return isEn
         ? "😏 Nice try—pasting raw encoded gibberish straight in won't work! Decode it first~"
