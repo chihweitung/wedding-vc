@@ -6073,3 +6073,101 @@ body.is-subview-active .main-stage {
     grid-template-columns: 1fr;
   }
 }
+
+.shuttle-roster-card {
+  width: 100%;
+  margin: 4px 0 12px;
+  padding: 18px 18px 20px;
+  border-radius: 20px;
+  background: var(--surface-card);
+  border: 1.5px solid color-mix(in srgb, var(--accent) 38%, var(--border-highlight));
+  box-shadow: var(--shadow-card);
+  text-align: left;
+}
+
+.shuttle-roster-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.shuttle-roster-title {
+  margin: 0 0 4px;
+  font-size: 1.02rem;
+  color: var(--text-primary);
+}
+
+.shuttle-roster-sub {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.shuttle-roster-reset-btn {
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.shuttle-roster-group {
+  margin-top: 14px;
+}
+
+.shuttle-roster-group:first-of-type {
+  margin-top: 4px;
+}
+
+.shuttle-group-title {
+  margin: 0 0 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.shuttle-roster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  gap: 8px;
+}
+
+.shuttle-roster-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 10px 12px;
+  min-height: 52px;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-pill);
+  color: var(--text-primary);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.16s ease, background 0.16s ease, transform 0.14s ease;
+}
+
+.shuttle-roster-chip:hover {
+  border-color: var(--accent);
+}
+
+.shuttle-roster-chip.is-boarded {
+  background: color-mix(in srgb, #16a34a 14%, var(--surface-pill));
+  border-color: color-mix(in srgb, #16a34a 55%, var(--border-subtle));
+}
+
+.shuttle-chip-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.shuttle-chip-meta {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+}

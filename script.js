@@ -59,6 +59,7 @@
 
   // 問答排行榜 & 密語後端網址（將 leaderboard-apps-script.gs 部署為 Google Apps Script 網頁應用程式後貼到此處）
   const LEADERBOARD_ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycby3Cs85ileMgZgMa0lWTHGyWDnoA_sxsldpeHrLMGPiFJznafbMfLuAovAuU4hN4OUcBA/exec';
+  const LEADERBOARD_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1v0_PPieFd2kcAO74o0QhEvkEuG4nOVuYuq_BVD7JFB8/edit';
   const STORAGE_KEY_PLAYER_NAME = 'te_wedding_player_name_v1';
   const SECRET_PASSCODE_SHA256_SET = new Set([
     '721c2ce0de061fe5f0fb29ca1dc8125cab83bbe60043e334b4cfe29ed470c4bb',
@@ -785,6 +786,68 @@
   /**
    * 婚宴座位表資料（依據 BY33 美軍俱樂部平面圖 12 大座位區與參加人名單配置，支援分類或賓客姓名即時搜尋高亮）
    */
+  // 小巴接駁名單（11:00 劍潭站發車，僅於 staff.html / debug.html 顯示，不與座位綁定）
+  const SHUTTLE_PASSENGERS = [
+    // 新郎爸媽朋友（24 組／33 人）
+    { name: '吳淑芸', count: 1, group: '新郎爸媽朋友' },
+    { name: '楊文', count: 1, group: '新郎爸媽朋友' },
+    { name: '張愛卿', count: 1, group: '新郎爸媽朋友' },
+    { name: '林鳳姿', count: 1, group: '新郎爸媽朋友' },
+    { name: '李素幸', count: 1, group: '新郎爸媽朋友' },
+    { name: '李旻貞', count: 1, group: '新郎爸媽朋友' },
+    { name: '許惠珍', count: 1, group: '新郎爸媽朋友' },
+    { name: '鄭瑋玲', count: 1, group: '新郎爸媽朋友' },
+    { name: '劉子經', count: 2, group: '新郎爸媽朋友' },
+    { name: '呂淑貞', count: 1, group: '新郎爸媽朋友' },
+    { name: '龔紹興', count: 2, group: '新郎爸媽朋友' },
+    { name: '林本芬', count: 1, group: '新郎爸媽朋友' },
+    { name: '劉東皋', count: 1, group: '新郎爸媽朋友' },
+    { name: '高栢鈴', count: 2, group: '新郎爸媽朋友' },
+    { name: '王仲瑛', count: 2, group: '新郎爸媽朋友' },
+    { name: '蕭文瑜', count: 1, group: '新郎爸媽朋友' },
+    { name: '陳兆伸', count: 1, group: '新郎爸媽朋友' },
+    { name: '吳逸楓', count: 1, group: '新郎爸媽朋友' },
+    { name: '廖美鸞', count: 1, group: '新郎爸媽朋友' },
+    { name: '曾智聰', count: 2, group: '新郎爸媽朋友' },
+    { name: '何毅夫/何夫人', count: 2, group: '新郎爸媽朋友' },
+    { name: '楊哲彰/余鳳琴', count: 2, group: '新郎爸媽朋友' },
+    { name: '劉園德/張金鳳', count: 2, group: '新郎爸媽朋友' },
+    { name: '高增堯/張淑貞', count: 2, group: '新郎爸媽朋友' },
+    // 新郎媽媽親戚（8 組／18 人）
+    { name: '徐玲明', count: 5, group: '新郎媽媽親戚' },
+    { name: '徐和志、許嵐音', count: 2, group: '新郎媽媽親戚' },
+    { name: '徐平志', count: 1, group: '新郎媽媽親戚' },
+    { name: '徐慧明', count: 1, group: '新郎媽媽親戚' },
+    { name: '徐宇志', count: 3, group: '新郎媽媽親戚' },
+    { name: '徐雪櫻', count: 2, group: '新郎媽媽親戚' },
+    { name: '徐紫櫻 王展浩', count: 2, group: '新郎媽媽親戚' },
+    { name: '房滋寧/韓治瀾', count: 2, group: '新郎媽媽親戚' },
+    // 新郎爸爸親戚（3 組／5 人）
+    { name: '董素娟', count: 2, group: '新郎爸爸親戚' },
+    { name: '陳振揚', count: 1, group: '新郎爸爸親戚' },
+    { name: '董素芬', count: 2, group: '新郎爸爸親戚' },
+    // 新郎同學＆老師（6 組／7 人）
+    { name: '鄭兆珍', count: 1, group: '新郎同學＆老師' },
+    { name: '林品賢', count: 2, group: '新郎同學＆老師' },
+    { name: '何弋柏', count: 1, group: '新郎同學＆老師' },
+    { name: '周駿逸', count: 1, group: '新郎同學＆老師' },
+    { name: 'Allan Sun', count: 1, group: '新郎同學＆老師' },
+    { name: '張家瑋', count: 1, group: '新郎同學＆老師' },
+    // 新郎同事（4 組／6 人）
+    { name: 'Harry Lu', count: 1, group: '新郎同事' },
+    { name: '張均銘', count: 2, group: '新郎同事' },
+    { name: 'ANH PHAN', count: 2, group: '新郎同事' },
+    { name: '葛家聿', count: 1, group: '新郎同事' },
+    // 新娘同學（7 組／8 人）
+    { name: '陳品心', count: 1, group: '新娘同學' },
+    { name: '雷廷萱', count: 1, group: '新娘同學' },
+    { name: '戴嘉謙', count: 1, group: '新娘同學' },
+    { name: '張恬恬', count: 1, group: '新娘同學' },
+    { name: '林佳儒', count: 2, group: '新娘同學' },
+    { name: '張辰', count: 1, group: '新娘同學' },
+    { name: '王淑菁', count: 1, group: '新娘同學' },
+  ];
+
   const SEATING_TABLES_DATA = [
     {
       id: 'table-main',
@@ -793,7 +856,7 @@
       fillColor: 'rgba(245, 158, 11, 0.12)',
       darkColor: '#fbbf24',
       darkFillColor: 'rgba(251, 191, 36, 0.16)',
-      debugStats: { headcount: 14, veg: 0, stroller: 0, childSeat: 0, shuttle: 2, shuttleDetail: '董素娟(2)' },
+      debugStats: { headcount: 14, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '主桌 · 新人與雙方主婚人區（M 桌）', en: 'Main Table · Newlyweds, Parents & Family Elders (Table M)' },
       zone: { zh: '主廳中央 · 主桌', en: 'Main Hall Center · Main Table' },
       guests: [
@@ -890,7 +953,7 @@
       fillColor: 'rgba(101, 163, 13, 0.11)',
       darkColor: '#a3e635',
       darkFillColor: 'rgba(163, 230, 53, 0.15)',
-      debugStats: { headcount: 74, veg: 0, stroller: 0, childSeat: 0, shuttle: 33, shuttleDetail: '吳淑芸、楊文、張愛卿、林鳳姿、李素幸、李旻貞、許惠珍、鄭瑋玲、劉子經(2)、呂淑貞、龔紹興(2)、林本芬、劉東皋、高栢鈴(2)、王仲瑛(2)、蕭文瑜、陳兆伸、吳逸楓、廖美鸞、曾智聰(2)、何毅夫/何夫人(2)、楊哲彰/余鳳琴(2)、劉園德/張金鳳(2)、高增堯/張淑貞(2)' },
+      debugStats: { headcount: 74, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎爸媽朋友區（第 1–6 桌）', en: "Groom's Parents' Friends (Tables 1–6)" },
       zone: { zh: '主廳上方 · 新郎爸媽朋友', en: "Main Hall North · Groom's Parents' Friends" },
       guests: [
@@ -1152,7 +1215,7 @@
       fillColor: 'rgba(180, 83, 9, 0.12)',
       darkColor: '#f59e0b',
       darkFillColor: 'rgba(245, 158, 11, 0.16)',
-      debugStats: { headcount: 11, veg: 0, stroller: 0, childSeat: 0, shuttle: 3, shuttleDetail: '陳振揚、董素芬(2)' },
+      debugStats: { headcount: 11, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎爸爸親戚區 · 董家（第 7 桌）', en: "Groom's Father's Relatives · Tung (Table 7)" },
       zone: { zh: '主廳左側 · 董家親戚（鄰近左側取餐區）', en: 'Main Hall Left · Tung Family Relatives' },
       guests: [
@@ -1205,7 +1268,7 @@
       fillColor: 'rgba(5, 150, 105, 0.12)',
       darkColor: '#34d399',
       darkFillColor: 'rgba(52, 211, 153, 0.16)',
-      debugStats: { headcount: 33, veg: 1, stroller: 0, childSeat: 1, shuttle: 18, detail: '徐玲明：素食1；卓鈞恩：兒童椅1', shuttleDetail: '徐玲明(5)、徐和志/許嵐音(2)、徐平志、徐慧明、徐宇志(3)、徐雪櫻(2)、徐紫櫻/王展浩(2)、房滋寧/韓治瀾(2)' },
+      debugStats: { headcount: 33, veg: 1, stroller: 0, childSeat: 1, detail: '徐玲明：素食1；卓鈞恩：兒童椅1' },
       name: { zh: '新郎媽媽親戚區 · 徐家（第 9–10 桌）', en: "Groom's Mother's Relatives · Hsu (Tables 9–10)" },
       zone: { zh: '主廳右側 · 徐家親戚', en: 'Main Hall Right · Hsu Family Relatives' },
       guests: [
@@ -1327,7 +1390,7 @@
       fillColor: 'rgba(220, 38, 38, 0.12)',
       darkColor: '#f87171',
       darkFillColor: 'rgba(248, 113, 113, 0.16)',
-      debugStats: { headcount: 15, veg: 0, stroller: 0, childSeat: 1, shuttle: 5, detail: '施傑耀：兒童椅1（大直區自由入座共 15 席，含第 8 排左席）', shuttleDetail: '鄭兆珍、林品賢(2)、何弋柏、周駿逸' },
+      debugStats: { headcount: 15, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1（大直區自由入座共 15 席，含第 8 排左席）' },
       name: { zh: '新郎高中區 · 大直（第 11 桌）', en: "Groom's High School · Dazhi (Table 11)" },
       zone: { zh: '外廳左列上方區 · 大直', en: 'Lower Hall Left Col · Upper (Dazhi HS)' },
       guests: [
@@ -1383,7 +1446,7 @@
       fillColor: 'rgba(37, 99, 235, 0.12)',
       darkColor: '#60a5fa',
       darkFillColor: 'rgba(96, 165, 250, 0.16)',
-      debugStats: { headcount: 5, veg: 1, stroller: 0, childSeat: 0, shuttle: 5, detail: '王淑菁：素食1（左上1席供大直區使用，本區共5席）', shuttleDetail: '張恬恬、林佳儒(2)、張辰、王淑菁' },
+      debugStats: { headcount: 5, veg: 1, stroller: 0, childSeat: 0, detail: '王淑菁：素食1（左上1席供大直區使用，本區共5席）' },
       name: { zh: '新娘高中區 · 雄女（第 14 桌）', en: "Bride's High School · KGHS (Table 14)" },
       zone: { zh: '外廳左列中段區 · 雄女', en: 'Lower Hall Left Col · Middle (KGHS)' },
       guests: [
@@ -1444,7 +1507,7 @@
       fillColor: 'rgba(234, 88, 12, 0.12)',
       darkColor: '#fb923c',
       darkFillColor: 'rgba(251, 146, 60, 0.16)',
-      debugStats: { headcount: 23, veg: 0, stroller: 0, childSeat: 0, shuttle: 6, shuttleDetail: 'Harry Lu、張均銘(2)、ANH PHAN(2)、葛家聿' },
+      debugStats: { headcount: 23, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎同事區 · Google（第 12、17 桌）', en: "Groom's Colleagues · Google (Tables 12 & 17)" },
       zone: { zh: '外廳中列長桌區 · Google', en: 'Lower Hall Center Col · Google' },
       guests: [
@@ -1517,7 +1580,7 @@
       fillColor: 'rgba(234, 179, 8, 0.13)',
       darkColor: '#fde047',
       darkFillColor: 'rgba(253, 224, 71, 0.16)',
-      debugStats: { headcount: 12, veg: 0, stroller: 1, childSeat: 1, shuttle: 2, detail: '林煜峯：嬰兒車1、兒童椅1', shuttleDetail: 'Allan Sun、張家瑋' },
+      debugStats: { headcount: 12, veg: 0, stroller: 1, childSeat: 1, detail: '林煜峯：嬰兒車1、兒童椅1' },
       name: { zh: '新郎交大區 · 交大（第 13 桌）', en: "Groom's College · NCTU (Table 13)" },
       zone: { zh: '外廳右列上方區 · 交大', en: 'Lower Hall Right Col · Upper (NCTU)' },
       guests: [
@@ -1553,7 +1616,7 @@
       fillColor: 'rgba(219, 39, 119, 0.12)',
       darkColor: '#f472b6',
       darkFillColor: 'rgba(244, 114, 182, 0.16)',
-      debugStats: { headcount: 6, veg: 0, stroller: 0, childSeat: 0, shuttle: 3, shuttleDetail: '陳品心、雷廷萱、戴嘉謙' },
+      debugStats: { headcount: 6, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新娘大學區 · 北藝（第 18 桌）', en: "Bride's College · TNUA (Table 18)" },
       zone: { zh: '外廳右列下方區 · 北藝', en: 'Lower Hall Right Col · Lower (TNUA)' },
       guests: [
@@ -5682,13 +5745,12 @@
     let totalChildSeat = 0;
     let totalStroller = 0;
     let totalVeg = 0;
-    let totalShuttle = 0;
+    const totalShuttle = SHUTTLE_PASSENGERS.reduce((sum, item) => sum + item.count, 0);
     SEATING_TABLES_DATA.forEach((tItem) => {
       if (tItem.debugStats) {
         totalChildSeat += tItem.debugStats.childSeat || 0;
         totalStroller += tItem.debugStats.stroller || 0;
         totalVeg += tItem.debugStats.veg || 0;
-        totalShuttle += tItem.debugStats.shuttle || 0;
       }
     });
 
@@ -5740,6 +5802,165 @@
       });
       bar.append(btn);
     });
+
+    if (LEADERBOARD_SHEET_URL) {
+      const sheetLink = document.createElement('a');
+      sheetLink.href = LEADERBOARD_SHEET_URL;
+      sheetLink.target = '_blank';
+      sheetLink.rel = 'noopener noreferrer';
+      sheetLink.className = 'seating-needs-pill';
+      sheetLink.style.textDecoration = 'none';
+      sheetLink.textContent =
+        currentLang === 'en' ? '📊 Leaderboard Sheet ↗' : '📊 排行榜試算表 ↗';
+      bar.append(sheetLink);
+    }
+  }
+
+  const SHUTTLE_BOARDED_STORAGE_KEY = 'te_staff_shuttle_boarded_v1';
+
+  function loadShuttleBoardedSet() {
+    try {
+      const raw = window.localStorage.getItem(SHUTTLE_BOARDED_STORAGE_KEY);
+      const arr = raw ? JSON.parse(raw) : [];
+      return new Set(Array.isArray(arr) ? arr : []);
+    } catch (_e) {
+      return new Set();
+    }
+  }
+
+  function saveShuttleBoardedSet(setObj) {
+    try {
+      window.localStorage.setItem(SHUTTLE_BOARDED_STORAGE_KEY, JSON.stringify(Array.from(setObj)));
+    } catch (_e) {
+      // Ignore storage error
+    }
+  }
+
+  function renderShuttleRosterCard(isDebugPage) {
+    let card = document.getElementById('seating-shuttle-roster-card');
+    const shouldShow = Boolean(isDebugPage && seatingNeedsFilter === 'shuttle');
+    if (elSeatingPhotoStage) {
+      elSeatingPhotoStage.classList.toggle('hidden', shouldShow);
+    }
+    if (elSeatingTablesGrid) {
+      elSeatingTablesGrid.classList.toggle('hidden', shouldShow);
+    }
+    if (!shouldShow) {
+      if (card) card.remove();
+      return false;
+    }
+    if (!elSeatingPhotoStage || !elSeatingPhotoStage.parentNode) return false;
+    if (!card) {
+      card = document.createElement('section');
+      card.id = 'seating-shuttle-roster-card';
+      card.className = 'shuttle-roster-card';
+      elSeatingPhotoStage.parentNode.insertBefore(card, elSeatingPhotoStage);
+    }
+
+    const query = elSeatingSearchInput ? elSeatingSearchInput.value.trim().toLowerCase() : '';
+    const boardedSet = loadShuttleBoardedSet();
+    const totalPassengers = SHUTTLE_PASSENGERS.reduce((sum, p) => sum + p.count, 0);
+    const boardedCount = SHUTTLE_PASSENGERS.reduce(
+      (sum, p) => sum + (boardedSet.has(p.name) ? p.count : 0),
+      0
+    );
+
+    card.replaceChildren();
+    const header = document.createElement('div');
+    header.className = 'shuttle-roster-header';
+
+    const titleWrap = document.createElement('div');
+    const title = document.createElement('h4');
+    title.className = 'shuttle-roster-title';
+    title.textContent =
+      currentLang === 'en'
+        ? `🚌 Shuttle Bus Roster (11:00 AM Jiantan · ${SHUTTLE_PASSENGERS.length} groups / ${totalPassengers} guests)`
+        : `🚌 小巴接駁名單（11:00 劍潭站發車 · 共 ${SHUTTLE_PASSENGERS.length} 組／${totalPassengers} 人）`;
+    const sub = document.createElement('p');
+    sub.className = 'shuttle-roster-sub';
+    sub.textContent =
+      currentLang === 'en'
+        ? `Tap a name to check off boarding (${boardedCount} / ${totalPassengers} boarded on this device).`
+        : `點擊人名可勾選已上車點名（本機已點名：${boardedCount} / ${totalPassengers} 人，可直接用上方搜尋欄找人）。`;
+    titleWrap.append(title, sub);
+
+    const resetBtn = document.createElement('button');
+    resetBtn.type = 'button';
+    resetBtn.className = 'secondary-btn shuttle-roster-reset-btn';
+    resetBtn.textContent = currentLang === 'en' ? 'Reset Check-ins' : '重設點名';
+    resetBtn.addEventListener('click', () => {
+      if (boardedSet.size === 0) return;
+      if (!window.confirm('確定要清除本機全部小巴點名紀錄嗎？')) return;
+      saveShuttleBoardedSet(new Set());
+      renderShuttleRosterCard(isDebugPage);
+    });
+    header.append(titleWrap, resetBtn);
+    card.append(header);
+
+    const filtered = SHUTTLE_PASSENGERS.filter(
+      (p) => !query || p.name.toLowerCase().includes(query) || p.group.toLowerCase().includes(query)
+    );
+
+    if (filtered.length === 0) {
+      const empty = document.createElement('p');
+      empty.className = 'shuttle-roster-sub';
+      empty.textContent = currentLang === 'en' ? 'No matching shuttle passenger.' : '查無符合的小巴接駁賓客。';
+      card.append(empty);
+      return true;
+    }
+
+    const groupsMap = new Map();
+    filtered.forEach((p) => {
+      if (!groupsMap.has(p.group)) groupsMap.set(p.group, []);
+      groupsMap.get(p.group).push(p);
+    });
+
+    groupsMap.forEach((items, groupName) => {
+      const groupTotal = items.reduce((sum, p) => sum + p.count, 0);
+      const groupBoarded = items.reduce((sum, p) => sum + (boardedSet.has(p.name) ? p.count : 0), 0);
+
+      const section = document.createElement('div');
+      section.className = 'shuttle-roster-group';
+
+      const groupTitle = document.createElement('h5');
+      groupTitle.className = 'shuttle-group-title';
+      groupTitle.textContent = `${groupName}（${groupBoarded} / ${groupTotal} 人）`;
+      section.append(groupTitle);
+
+      const grid = document.createElement('div');
+      grid.className = 'shuttle-roster-grid';
+      items.forEach((p) => {
+        const isBoarded = boardedSet.has(p.name);
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = `shuttle-roster-chip${isBoarded ? ' is-boarded' : ''}`;
+        chip.setAttribute('aria-pressed', String(isBoarded));
+
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'shuttle-chip-name';
+        nameSpan.textContent = `${isBoarded ? '✅ ' : ''}${p.name}`;
+
+        const metaSpan = document.createElement('span');
+        metaSpan.className = 'shuttle-chip-meta';
+        metaSpan.textContent = `${p.count} 人`;
+
+        chip.append(nameSpan, metaSpan);
+        chip.addEventListener('click', () => {
+          const next = loadShuttleBoardedSet();
+          if (next.has(p.name)) {
+            next.delete(p.name);
+          } else {
+            next.add(p.name);
+          }
+          saveShuttleBoardedSet(next);
+          renderShuttleRosterCard(isDebugPage);
+        });
+        grid.append(chip);
+      });
+      section.append(grid);
+      card.append(section);
+    });
+    return true;
   }
 
   function renderSeatingSection() {
@@ -5748,6 +5969,9 @@
     const isDebugPage = isDebugUnlocked();
     syncSeatingFilterSelects();
     renderSeatingNeedsFilterBar(isDebugPage);
+    if (renderShuttleRosterCard(isDebugPage)) {
+      return;
+    }
     const query = elSeatingSearchInput ? elSeatingSearchInput.value.trim().toLowerCase() : '';
     const highlightedIds = new Set();
     if (selectedSeatingZoneId) {
@@ -5957,31 +6181,12 @@
           statsBar.append(pillChair);
         }
 
-        if (table.debugStats.shuttle > 0) {
-          const pillShuttle = document.createElement('span');
-          pillShuttle.className = 'seating-debug-pill has-value';
-          pillShuttle.textContent =
-            currentLang === 'en'
-              ? `🚌 Shuttle: ${table.debugStats.shuttle}`
-              : `🚌 小巴接駁：${table.debugStats.shuttle} 人`;
-          statsBar.append(pillShuttle);
-        }
-
         card.append(statsBar);
         if (table.debugStats.detail) {
           const detailNote = document.createElement('div');
           detailNote.className = 'seating-debug-detail';
           detailNote.textContent = `📌 ${table.debugStats.detail}`;
           card.append(detailNote);
-        }
-        if (table.debugStats.shuttleDetail) {
-          const shuttleNote = document.createElement('div');
-          shuttleNote.className = 'seating-debug-detail';
-          shuttleNote.textContent =
-            currentLang === 'en'
-              ? `🚌 Shuttle (10:30 Jiantan): ${table.debugStats.shuttleDetail}`
-              : `🚌 小巴接駁（10:30 劍潭站）：${table.debugStats.shuttleDetail}`;
-          card.append(shuttleNote);
         }
       }
 
@@ -8267,11 +8472,29 @@
     const title = document.createElement('h3');
     title.className = 'passcode-card-title';
     title.textContent = '🏆 後台即時排行榜（問答前幾名＆通關先鋒）';
+    const headerActions = document.createElement('div');
+    headerActions.style.display = 'flex';
+    headerActions.style.flexWrap = 'wrap';
+    headerActions.style.gap = '8px';
+    headerActions.style.alignItems = 'center';
+
+    if (LEADERBOARD_SHEET_URL) {
+      const sheetBtn = document.createElement('a');
+      sheetBtn.href = LEADERBOARD_SHEET_URL;
+      sheetBtn.target = '_blank';
+      sheetBtn.rel = 'noopener noreferrer';
+      sheetBtn.className = 'secondary-btn admin-lb-refresh-btn';
+      sheetBtn.style.textDecoration = 'none';
+      sheetBtn.textContent = '📊 開啟試算表 ↗';
+      headerActions.append(sheetBtn);
+    }
+
     const refreshBtn = document.createElement('button');
     refreshBtn.type = 'button';
     refreshBtn.className = 'secondary-btn admin-lb-refresh-btn';
     refreshBtn.textContent = '🔄 重新整理排行';
-    header.append(title, refreshBtn);
+    headerActions.append(refreshBtn);
+    header.append(title, headerActions);
 
     // 後台測試工具列（僅存在於 debug.html，金鑰僅存於本次分頁 sessionStorage）
     const testBar = document.createElement('div');
