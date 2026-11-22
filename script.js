@@ -73,8 +73,8 @@
   ];
 
   // 婚宴座位表與菜單的 Google Photos / 圖片連結（若填入圖片網址會直接顯示於頁面頂部，填入分享連結會顯示開啟按鈕）
-  const SEATING_CHART_IMAGE_URL = 'seating-chart.jpg?v=20261121w';
-  const SEATING_CHART_LINK_URL = 'seating-chart.jpg?v=20261121w';
+  const SEATING_CHART_IMAGE_URL = 'seating-chart.jpg?v=20261122m';
+  const SEATING_CHART_LINK_URL = 'seating-chart.jpg?v=20261122m';
   const WEDDING_MENU_IMAGE_URL = '';
   const WEDDING_MENU_LINK_URL = '';
 
@@ -872,7 +872,7 @@
   const SEATING_TABLES_DATA = [
     {
       id: 'table-main',
-      box: { x: 890, y: 890, w: 359, h: 315 },
+      box: { x: 912, y: 807, w: 366, h: 330 },
       color: '#d97706',
       fillColor: 'rgba(245, 158, 11, 0.12)',
       darkColor: '#fbbf24',
@@ -901,8 +901,8 @@
           {
             key: 'tom',
             side: 'left',
-            cx: 1158,
-            cy: 911,
+            cx: 1185,
+            cy: 840,
             pinText: '♥',
             zh: '董智瑋 Tom',
             en: 'Tom Tung',
@@ -911,17 +911,17 @@
           {
             key: 'eunice',
             side: 'right',
-            cx: 1209,
-            cy: 911,
+            cx: 1236,
+            cy: 840,
             pinText: '♥',
             zh: '蕭睦宸 Eunice',
             en: 'Eunice Hsiao',
             match: '蕭睦宸 eunice hsiao 新娘 bride',
           },
         ],
-        leftX: 916,
-        rightX: 1025,
-        rowYs: [916, 967, 1015, 1065, 1116, 1167],
+        leftX: 938,
+        rightX: 1045,
+        rowYs: [842, 894, 946, 998, 1050, 1102],
         rows: [
           [
             { key: '蕭能駿_傅郁淳', zh: '蕭能駿', en: '蕭能駿', match: '蕭能駿 傅郁淳' },
@@ -952,7 +952,7 @@
     },
     {
       id: 'zone-bride-relatives',
-      box: { x: 712, y: 890, w: 156, h: 316 },
+      box: { x: 723, y: 807, w: 156, h: 330 },
       color: '#e11d48',
       fillColor: 'rgba(225, 29, 72, 0.12)',
       darkColor: '#fb7185',
@@ -969,7 +969,7 @@
     },
     {
       id: 'zone-groom-parents-friends',
-      box: { x: 640, y: 288, w: 1113, h: 314 },
+      box: { x: 678, y: 186, w: 1110, h: 300 },
       color: '#4d7c0f',
       fillColor: 'rgba(101, 163, 13, 0.11)',
       darkColor: '#a3e635',
@@ -1032,9 +1032,9 @@
         subTables: [
           {
             title: { zh: '第 1 桌（最左）', en: 'Table 1 (Far Left)' },
-            leftX: 695,
-            rightX: 802,
-            rowYs: [319, 360, 401, 452, 493, 535],
+            leftX: 704,
+            rightX: 808,
+            rowYs: [221, 267, 313, 359, 405, 451],
             rows: [
               [
                 { key: '梁光華_韋雪華', zh: '梁光華', en: '梁光華', match: '梁光華 韋雪華' },
@@ -1064,9 +1064,9 @@
           },
           {
             title: { zh: '第 2 桌', en: 'Table 2' },
-            leftX: 878,
-            rightX: 985,
-            rowYs: [319, 360, 401, 452, 493, 535],
+            leftX: 896,
+            rightX: 1000,
+            rowYs: [221, 267, 313, 359, 405, 451],
             rows: [
               [
                 { key: '龔紹興_嬉吟', zh: '龔紹興', en: '龔紹興', match: '龔紹興 嬉吟' },
@@ -1096,9 +1096,9 @@
           },
           {
             title: { zh: '第 3 桌', en: 'Table 3' },
-            leftX: 1061,
-            rightX: 1167,
-            rowYs: [319, 360, 401, 452, 493, 535],
+            leftX: 1088,
+            rightX: 1192,
+            rowYs: [221, 267, 313, 359, 405, 451],
             rows: [
               [
                 { key: '王仲瑛_蘇超瑋', zh: '蘇超瑋', en: '蘇超瑋', match: '王仲瑛 蘇超瑋' },
@@ -1128,9 +1128,9 @@
           },
           {
             title: { zh: '第 4 桌', en: 'Table 4' },
-            leftX: 1244,
-            rightX: 1350,
-            rowYs: [319, 360, 401, 452, 493, 535, 577],
+            leftX: 1277,
+            rightX: 1384,
+            rowYs: [221, 267, 313, 359, 405, 451, 492],
             rows: [
               [
                 { key: '吳逸楓', zh: '吳逸楓', en: '吳逸楓', match: '吳逸楓' },
@@ -1164,9 +1164,9 @@
           },
           {
             title: { zh: '第 5 桌', en: 'Table 5' },
-            leftX: 1427,
-            rightX: 1533,
-            rowYs: [319, 360, 401, 452, 493, 535],
+            leftX: 1469,
+            rightX: 1570,
+            rowYs: [221, 267, 313, 359, 405, 451],
             rows: [
               [
                 { key: '楊哲彰_余鳳琴', zh: '楊哲彰', en: '楊哲彰', match: '楊哲彰 余鳳琴' },
@@ -1196,9 +1196,9 @@
           },
           {
             title: { zh: '第 6 桌（最右）', en: 'Table 6 (Far Right)' },
-            leftX: 1610,
-            rightX: 1716,
-            rowYs: [319, 360, 401, 452, 493, 535],
+            leftX: 1658,
+            rightX: 1762,
+            rowYs: [221, 267, 313, 359, 405, 451],
             rows: [
               [
                 { key: '許天和_陳聞禮', zh: '許天和', en: '許天和', match: '許天和 陳聞禮' },
@@ -1231,7 +1231,7 @@
     },
     {
       id: 'zone-groom-dad-relatives',
-      box: { x: 534, y: 890, w: 156, h: 316 },
+      box: { x: 537, y: 807, w: 156, h: 330 },
       color: '#b45309',
       fillColor: 'rgba(180, 83, 9, 0.12)',
       darkColor: '#f59e0b',
@@ -1251,9 +1251,9 @@
         { zh: '陳振揚', en: '陳振揚' },
       ],
       seatPlan: {
-        leftX: 557,
-        rightX: 666,
-        rowYs: [916, 967, 1015, 1065, 1116, 1167],
+        leftX: 563,
+        rightX: 667,
+        rowYs: [842, 894, 946, 998, 1050, 1102],
         rows: [
           [
             { key: '董素芬_陳建和', zh: '董素芬', en: '董素芬', match: '董素芬 陳建和' },
@@ -1284,7 +1284,7 @@
     },
     {
       id: 'zone-groom-mom-relatives',
-      box: { x: 1384, y: 741, w: 352, h: 554 },
+      box: { x: 1425, y: 690, w: 360, h: 531 },
       color: '#059669',
       fillColor: 'rgba(5, 150, 105, 0.12)',
       darkColor: '#34d399',
@@ -1313,9 +1313,9 @@
         subTables: [
           {
             title: { zh: '第 9 桌 · 徐家左桌', en: 'Table 9 · Hsu Left' },
-            leftX: 1409,
-            rightX: 1515,
-            rowYs: [802, 843, 884, 937, 979, 1020, 1071, 1112, 1153],
+            leftX: 1451,
+            rightX: 1555,
+            rowYs: [725, 772, 819, 865, 912, 959, 1005, 1052, 1099],
             rows: [
               [
                 { key: '徐明志', zh: '徐明志', en: '徐明志', match: '徐明志 明志' },
@@ -1357,9 +1357,9 @@
           },
           {
             title: { zh: '第 10 桌 · 徐家右桌', en: 'Table 10 · Hsu Right' },
-            leftX: 1605,
-            rightX: 1711,
-            rowYs: [893, 934, 975, 1029, 1071, 1112, 1162, 1204, 1245],
+            leftX: 1658,
+            rightX: 1759,
+            rowYs: [815, 861, 908, 954, 1001, 1047, 1093, 1140, 1186],
             rows: [
               [
                 { key: '徐玲明', zh: '徐玲明', en: '徐玲明', match: '徐玲明 玲明' },
@@ -1404,7 +1404,7 @@
     },
     {
       id: 'zone-groom-highschool',
-      box: { x: 1104, y: 1609, w: 156, h: 411 },
+      box: { x: 1131, y: 1572, w: 156, h: 441 },
       svgPath:
         'M 1120 1609 L 1244 1609 Q 1260 1609 1260 1625 L 1260 1966 Q 1260 1978 1248 1978 L 1178 1978 Q 1168 1978 1168 1988 L 1168 2010 Q 1168 2020 1158 2020 L 1118 2020 Q 1104 2020 1104 2006 L 1104 1625 Q 1104 1609 1120 1609 Z',
       color: '#dc2626',
@@ -1434,7 +1434,7 @@
           en: '✨ Open seating in Dazhi zone (15 seats: Rows 1–7 both sides + Row 8 Left; Row 8 Right is KGHS)',
         },
         freeSeatingLoupe: {
-          cx: 1182,
+          cx: 1209,
           cy: 1965,
           zoomScale: 1.75,
           dimNeighborIds: ['zone-bride-highschool'],
@@ -1443,9 +1443,9 @@
             en: 'Dazhi 15 seats | Row 8 Left only',
           },
         },
-        leftX: 1127,
-        rightX: 1236,
-        rowYs: [1654, 1705, 1755, 1805, 1855, 1906, 1956, 2007],
+        leftX: 1157,
+        rightX: 1261,
+        rowYs: [1612, 1664, 1716, 1768, 1820, 1872, 1924, 1976],
         rows: [
           [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
           [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
@@ -1460,7 +1460,7 @@
     },
     {
       id: 'zone-bride-highschool',
-      box: { x: 1104, y: 1982, w: 156, h: 152 },
+      box: { x: 1131, y: 2010, w: 156, h: 110 },
       svgPath:
         'M 1186 1982 L 1246 1982 Q 1260 1982 1260 1996 L 1260 2120 Q 1260 2134 1246 2134 L 1118 2134 Q 1104 2134 1104 2120 L 1104 2036 Q 1104 2024 1116 2024 L 1164 2024 Q 1174 2024 1174 2014 L 1174 1994 Q 1174 1982 1186 1982 Z',
       color: '#2563eb',
@@ -1483,7 +1483,7 @@
           en: '✨ Open seating in KGHS zone (5 seats: Row 1 Right + Rows 2–3 both sides; Row 1 Left is Dazhi)',
         },
         freeSeatingLoupe: {
-          cx: 1182,
+          cx: 1209,
           cy: 2055,
           zoomScale: 1.85,
           dimNeighborIds: ['zone-groom-highschool'],
@@ -1492,9 +1492,9 @@
             en: 'KGHS 5 seats | Row 1 Right + 2 rows below',
           },
         },
-        leftX: 1127,
-        rightX: 1236,
-        rowYs: [2007, 2057, 2107],
+        leftX: 1157,
+        rightX: 1261,
+        rowYs: [2025, 2065, 2105],
         rows: [
           [{ isOtherZone: true, zh: '（大直區）', en: '(Dazhi)' }, { zh: '雄女可入座', en: 'Available' }],
           [{ zh: '雄女可入座', en: 'Available' }, { zh: '雄女可入座', en: 'Available' }],
@@ -1504,7 +1504,7 @@
     },
     {
       id: 'zone-bride-colleagues',
-      box: { x: 1104, y: 2136, w: 156, h: 216 },
+      box: { x: 1131, y: 2118, w: 156, h: 219 },
       color: '#7c3aed',
       fillColor: 'rgba(124, 58, 237, 0.12)',
       darkColor: '#c084fc',
@@ -1523,7 +1523,7 @@
     },
     {
       id: 'zone-groom-colleagues',
-      box: { x: 1368, y: 1608, w: 156, h: 745 },
+      box: { x: 1407, y: 1602, w: 159, h: 732 },
       color: '#ea580c',
       fillColor: 'rgba(234, 88, 12, 0.12)',
       darkColor: '#fb923c',
@@ -1559,9 +1559,9 @@
               zh: '✨ Google 上桌自由入座（共 12 席）',
               en: '✨ Open seating at Google Upper Table (12 seats)',
             },
-            leftX: 1391,
-            rightX: 1499,
-            rowYs: [1657, 1708, 1758, 1808, 1859, 1911],
+            leftX: 1433,
+            rightX: 1540,
+            rowYs: [1640, 1692, 1744, 1796, 1848, 1900],
             rows: [
               [{ zh: 'Google 上桌', en: 'Upper Table' }, { zh: 'Google 上桌', en: 'Upper Table' }],
               [{ zh: 'Google 上桌', en: 'Upper Table' }, { zh: 'Google 上桌', en: 'Upper Table' }],
@@ -1579,9 +1579,9 @@
               zh: '✨ Google 下桌自由入座（共 11 席）',
               en: '✨ Open seating at Google Lower Table (11 seats)',
             },
-            leftX: 1391,
-            rightX: 1499,
-            rowYs: [2053, 2103, 2155, 2205, 2256, 2306],
+            leftX: 1433,
+            rightX: 1540,
+            rowYs: [2036, 2088, 2140, 2192, 2244, 2296],
             rows: [
               [{ zh: 'Google 下桌', en: 'Lower Table' }, { zh: 'Google 下桌', en: 'Lower Table' }],
               [{ zh: 'Google 下桌', en: 'Lower Table' }, { zh: 'Google 下桌', en: 'Lower Table' }],
@@ -1596,7 +1596,7 @@
     },
     {
       id: 'zone-groom-nctu',
-      box: { x: 1589, y: 1609, w: 156, h: 342 },
+      box: { x: 1635, y: 1602, w: 159, h: 336 },
       color: '#ca8a04',
       fillColor: 'rgba(234, 179, 8, 0.13)',
       darkColor: '#fde047',
@@ -1616,7 +1616,7 @@
     },
     {
       id: 'zone-groom-moz',
-      box: { x: 1589, y: 1990, w: 156, h: 164 },
+      box: { x: 1635, y: 1956, w: 159, h: 180 },
       color: '#0891b2',
       fillColor: 'rgba(8, 145, 178, 0.12)',
       darkColor: '#22d3ee',
@@ -1631,7 +1631,7 @@
     },
     {
       id: 'zone-bride-college',
-      box: { x: 1589, y: 2188, w: 156, h: 165 },
+      box: { x: 1635, y: 2154, w: 159, h: 180 },
       color: '#db2777',
       fillColor: 'rgba(219, 39, 119, 0.12)',
       darkColor: '#f472b6',
@@ -3948,7 +3948,7 @@
   const RESTROOM_ZONE_ID = 'facility-restroom';
   const RESTROOM_ZONE_META = {
     id: RESTROOM_ZONE_ID,
-    box: { x: 332, y: 1320, w: 386, h: 432 },
+    box: { x: 330, y: 1260, w: 390, h: 435 },
     color: '#0284c7',
     fillColor: 'rgba(2, 132, 199, 0.22)',
     name: { zh: '🚻 廁所 / 洗手間區域', en: '🚻 Restrooms (Men & Women)' },
@@ -3957,7 +3957,7 @@
   const BAR_ZONE_ID = 'facility-bar';
   const BAR_ZONE_META = {
     id: BAR_ZONE_ID,
-    box: { x: 586, y: 1766, w: 204, h: 730 },
+    box: { x: 588, y: 1740, w: 210, h: 744 },
     color: '#be185d',
     fillColor: 'rgba(190, 24, 93, 0.22)',
     name: { zh: '🍹 吧台區 (A02)', en: '🍹 Bar Counter (A02)' },
@@ -3967,8 +3967,8 @@
   const BUFFET_ZONE_META = {
     id: BUFFET_ZONE_ID,
     boxes: [
-      { x: 335, y: 286, w: 96, h: 666 },
-      { x: 1356, y: 1328, w: 414, h: 68 },
+      { x: 324, y: 186, w: 81, h: 663 },
+      { x: 1383, y: 1269, w: 447, h: 78 },
     ],
     color: '#0d9488',
     fillColor: 'rgba(13, 148, 136, 0.26)',
@@ -3978,7 +3978,7 @@
   const RECEPTION_ZONE_ID = 'facility-reception';
   const RECEPTION_ZONE_META = {
     id: RECEPTION_ZONE_ID,
-    box: { x: 1055, y: 2520, w: 80, h: 286 },
+    box: { x: 1077, y: 2520, w: 81, h: 297 },
     color: '#0369a1',
     fillColor: 'rgba(3, 105, 161, 0.26)',
     name: { zh: '📋 接待桌（迎賓簽到 ＆ 收禮處）', en: '📋 Reception & Check-In Desk' },
@@ -3987,7 +3987,7 @@
   const KITCHEN_ZONE_ID = 'facility-kitchen';
   const KITCHEN_ZONE_META = {
     id: KITCHEN_ZONE_ID,
-    box: { x: 332, y: 1766, w: 240, h: 730 },
+    box: { x: 330, y: 1740, w: 240, h: 744 },
     color: '#4f46e5',
     fillColor: 'rgba(99, 102, 241, 0.22)',
     name: { zh: '👨‍🍳 廚房（後場備餐作業區）', en: '👨‍🍳 Kitchen (Culinary Prep Area)' },
@@ -4559,7 +4559,7 @@
 
     const svgNS = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('viewBox', '0 0 2090 3153');
+    svg.setAttribute('viewBox', '0 0 2184 3072');
     svg.setAttribute('class', 'seating-map-svg');
     svg.setAttribute('aria-label', dict.seatingPanelTitle);
 
@@ -4685,7 +4685,7 @@
       const badgeH = 54;
       const badgeCx = Math.max(
         badgeW / 2 + 18,
-        Math.min(2090 - badgeW / 2 - 18, Math.round(fb.x + fb.w / 2))
+        Math.min(2184 - badgeW / 2 - 18, Math.round(fb.x + fb.w / 2))
       );
       const badgeCy = fb.y < 86 ? fb.y + fb.h + 36 : fb.y - 34;
 
@@ -5444,9 +5444,9 @@
       const loupeR = 215;
       const fb = focusBox || { x: cx - 120, y: cy - 160, w: 240, h: 320 };
       const minLx = loupeR + 30;
-      const maxLx = 2090 - loupeR - 115;
+      const maxLx = 2184 - loupeR - 115;
       const minLy = loupeR + 40;
-      const maxLy = 3153 - loupeR - 130;
+      const maxLy = 3072 - loupeR - 130;
       const clampX = (v) => Math.max(minLx, Math.min(maxLx, Math.round(v)));
       const clampY = (v) => Math.max(minLy, Math.min(maxLy, Math.round(v)));
 
@@ -5521,8 +5521,8 @@
       zoomedImg.setAttribute('href', safeImg);
       zoomedImg.setAttribute('x', '0');
       zoomedImg.setAttribute('y', '0');
-      zoomedImg.setAttribute('width', '2090');
-      zoomedImg.setAttribute('height', '3153');
+      zoomedImg.setAttribute('width', '2184');
+      zoomedImg.setAttribute('height', '3072');
       zoomedImg.setAttribute('transform', zoomTransform);
       clippedContent.append(zoomedImg);
 
@@ -5552,7 +5552,7 @@
 
       const capW = Math.max(260, Math.min(680, captionStr.length * 26 + 52));
       const capH = 58;
-      const capX = Math.max(capW / 2 + 18, Math.min(2090 - capW / 2 - 18, lx));
+      const capX = Math.max(capW / 2 + 18, Math.min(2184 - capW / 2 - 18, lx));
       const capY = ly + loupeR + 44 <= 3115 ? ly + loupeR + 44 : ly - loupeR - 44;
 
       const capBg = document.createElementNS(svgNS, 'rect');
