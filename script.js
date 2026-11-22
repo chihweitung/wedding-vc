@@ -46,8 +46,8 @@
   const REAL_TARGET_ISO = '2026-11-29T12:20:00+08:00';
   const REAL_TARGET_TIMESTAMP = new Date(REAL_TARGET_ISO).getTime();
 
-  // 新人影片網址（當您提供正式的 YouTube 或 Instagram 連結時，直接替換此處即可）
-  const WEDDING_VIDEO_URL = 'https://www.youtube.com/watch?v=jfKfPfyJRdk';
+  // 新人影片網址（支援單支 YouTube 影片、YouTube 播放清單或 Instagram 連結）
+  const WEDDING_VIDEO_URL = 'https://www.youtube.com/playlist?list=PLRp4a54bnZ1Y';
 
   // Google Photos 婚禮現場共享相簿連結（賓客上傳與瀏覽當日照片）
   const GOOGLE_PHOTOS_SHARE_URL = 'https://photos.app.goo.gl/zXY7gwRZHhWqndkr8';
@@ -2678,8 +2678,8 @@
   const elHpCipherClue = document.getElementById('hp-cipher-clue');
 
   const SUMMARY_HINT_VECTORS = [
-    73, 127, 216, 37, 1, 146, 15, 146, 182, 89, 178, 39, 253, 96, 27, 131,
-    171, 84, 209, 20, 65, 95, 170, 183, 139, 209, 255, 31, 193,
+    161, 92, 131, 203, 134, 164, 198, 239, 13, 230, 176, 151, 158, 132, 214, 246,
+    202, 150, 45, 176, 70, 74, 90, 190, 85, 97, 5, 65, 10,
   ];
 
   const SUMMARY_SEAL_VECTORS = [
@@ -3375,6 +3375,22 @@
 
     // 1. YouTube 白名單網域
     if (host === 'youtube.com' || host === 'm.youtube.com' || host === 'youtu.be') {
+      const listId = urlObj.searchParams.get('list');
+      if (
+        (path === '/playlist' || path === '/embed/videoseries') &&
+        listId &&
+        /^[a-zA-Z0-9_-]{8,64}$/.test(listId)
+      ) {
+        const safeList = encodeURIComponent(listId);
+        const autoParams = autoplay ? '&autoplay=1&playsinline=1' : '&playsinline=1';
+        return {
+          provider: dict.mediaBadgeYoutube,
+          embedUrl: `https://www.youtube-nocookie.com/embed/videoseries?list=${safeList}&rel=0${autoParams}`,
+          aspectClass: 'ratio-16-9',
+          isVertical: false,
+        };
+      }
+
       let videoId = null;
       let isVertical = false;
 
@@ -6309,6 +6325,7 @@
 
   window.__TE_ON_STAFF_UNLOCK__ = () => {
     renderSeatingSection();
+    renderAdminLeaderboardPanel();
     showHubView('seating');
   };
 
@@ -8277,7 +8294,7 @@
     elQuizQuestionView.classList.add('hidden');
     elQuizSummaryView.classList.add('hidden');
     if (elPasscodeRedeemCard) {
-      elPasscodeRedeemCard.classList.toggle('hidden', getBestQuizScore() < 6);
+      elPasscodeRedeemCard.classList.toggle('hidden', getBestQuizScore() <= 6);
     }
     renderAdminLeaderboardPanel();
   }
@@ -8468,13 +8485,18 @@
     return Boolean(window.__TE_DEBUG_AUTH__ === true);
   }
 
+  function isStaffOrDebugUnlocked() {
+    return Boolean(window.__TE_DEBUG_AUTH__ === true || window.__TE_STAFF_AUTH__ === true);
+  }
+
   function renderAdminLeaderboardPanel() {
     if (!elQuizSection) return;
     let panel = document.getElementById('admin-leaderboard-card');
-    if (!isAdminOnlyUnlocked()) {
+    if (!isStaffOrDebugUnlocked()) {
       if (panel) panel.remove();
       return;
     }
+    const isDebugAdmin = isAdminOnlyUnlocked();
     if (!panel) {
       panel = document.createElement('div');
       panel.id = 'admin-leaderboard-card';
@@ -8557,8 +8579,12 @@
 
     const body = document.createElement('div');
     body.className = 'admin-lb-body';
-    testBar.append(keyInput, saveKeyBtn, clearTestsBtn);
-    panel.append(header, testBar, testStatus, body);
+    if (isDebugAdmin) {
+      testBar.append(keyInput, saveKeyBtn, clearTestsBtn);
+      panel.append(header, testBar, testStatus, body);
+    } else {
+      panel.append(header, body);
+    }
 
     const loadData = async () => {
       if (!LEADERBOARD_ENDPOINT_URL) {
@@ -8569,32 +8595,18 @@
         body.replaceChildren(note);
         return;
       }
-      const adminKey = getAdminLbKey();
-      if (!adminKey) {
-        const lockedNote = document.createElement('p');
-        lockedNote.className = 'passcode-card-desc';
-        lockedNote.textContent =
-          '🔒 排行榜 API 已加密上鎖：請在上方輸入測試管理金鑰並點「🔓 啟用測試」即可查看前 5 名。';
-        body.replaceChildren(lockedNote);
-        return;
-      }
       refreshBtn.disabled = true;
       const loadingP = document.createElement('p');
       loadingP.className = 'passcode-card-desc';
       loadingP.textContent = '載入排行榜中...';
       body.replaceChildren(loadingP);
       try {
-        let res = await fetch(LEADERBOARD_ENDPOINT_URL, {
+        const res = await fetch(LEADERBOARD_ENDPOINT_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'leaderboard', adminKey }),
+          body: JSON.stringify({ action: 'leaderboard' }),
         });
-        let json = await res.json();
-        if (json && json.error === 'invalid_action') {
-          const sep = LEADERBOARD_ENDPOINT_URL.includes('?') ? '&' : '?';
-          res = await fetch(`${LEADERBOARD_ENDPOINT_URL}${sep}adminKey=${encodeURIComponent(adminKey)}`);
-          json = await res.json();
-        }
+        const json = await res.json();
         if (!json || !json.ok) {
           throw new Error((json && json.error) || 'bad_response');
         }
@@ -8695,7 +8707,7 @@
             if (t) parts.push(t);
             return parts.join(' · ');
           },
-          true
+          isDebugAdmin
         );
         overallBox.style.gridColumn = '1 / -1';
 
@@ -9537,11 +9549,11 @@
       }
     }
 
-    if (triggerConfetti && quizScore >= 6) {
+    if (triggerConfetti && quizScore > 6) {
       recordBestQuizScore(quizScore);
     }
     if (elPasscodeRedeemCard) {
-      elPasscodeRedeemCard.classList.toggle('hidden', quizScore < 6);
+      elPasscodeRedeemCard.classList.toggle('hidden', quizScore <= 6);
     }
     syncPlayerNameAndPasscodeUi();
     renderAdminLeaderboardPanel();
