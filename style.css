@@ -6171,3 +6171,65 @@ body.is-subview-active .main-stage {
   font-size: 0.76rem;
   color: var(--text-secondary);
 }
+
+.countdown-transit-card {
+  width: 100%;
+  max-width: 680px;
+  margin: 12px auto 0;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-highlight);
+  box-shadow: var(--shadow-card);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  text-align: center;
+}
+
+.countdown-transit-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.countdown-transit-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.countdown-transit-text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
+.countdown-map-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border-highlight));
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface-pill));
+  color: var(--accent);
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.16s ease, background 0.16s ease, border-color 0.16s ease;
+}
+
+.countdown-map-link:hover {
+  transform: translateY(-1px);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}

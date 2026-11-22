@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const REAL_TARGET_TIMESTAMP = new Date('2026-11-29T12:30:00+08:00').getTime();
+  const REAL_TARGET_TIMESTAMP = new Date('2026-11-29T12:20:00+08:00').getTime();
   const realDateNow = Date.now.bind(Date);
 
   // 未通過帳密驗證前，預設為 0（不啟動任何模擬時間偏移）

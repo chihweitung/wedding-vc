@@ -22,7 +22,7 @@
   // ============================================================================
   // 1. 基本設定：目標時間、新人影片網址、雙語介面字典、以及「暖身題 + 10 題問答」題目庫
   // ============================================================================
-  const REAL_TARGET_ISO = '2026-11-29T12:30:00+08:00';
+  const REAL_TARGET_ISO = '2026-11-29T12:20:00+08:00';
   const REAL_TARGET_TIMESTAMP = new Date(REAL_TARGET_ISO).getTime();
 
   // 新人影片網址（當您提供正式的 YouTube 或 Instagram 連結時，直接替換此處即可）
@@ -2446,6 +2446,10 @@
   const elCountdownSeatingSub = document.getElementById('countdown-seating-sub');
   const elCountdownMenuTitle = document.getElementById('countdown-menu-title');
   const elCountdownMenuSub = document.getElementById('countdown-menu-sub');
+  const elCountdownShuttleNotice = document.getElementById('countdown-shuttle-notice');
+  const elCountdownShuttleMapLink = document.getElementById('countdown-shuttle-map-link');
+  const elCountdownVenueNotice = document.getElementById('countdown-venue-notice');
+  const elCountdownVenueMapLink = document.getElementById('countdown-venue-map-link');
 
   const elTimeupHub = document.getElementById('timeup-hub');
   const elChoiceCardsGrid = document.getElementById('choice-cards-grid');
@@ -2660,8 +2664,7 @@
   ];
 
   const SUMMARY_SEAL_VECTORS = [
-    239, 78, 69, 230, 229, 58, 131, 162, 185, 187, 230, 99, 8, 226, 181, 123,
-    118, 216, 220, 140, 254, 34, 69, 203, 213, 220, 205, 108, 235, 202, 125, 47, 42,
+    7, 194, 53, 81, 191, 0, 41, 3, 188, 74, 18, 92, 127, 202, 98, 124, 11, 127, 162, 251, 64, 107, 170, 92, 228, 212, 115, 89, 24, 182, 105, 247, 142,
   ];
 
   function safeGetStorage(key) {
@@ -3185,6 +3188,30 @@
     if (elCountdownSeatingSub) elCountdownSeatingSub.textContent = dict.seatingCardCta;
     if (elCountdownMenuTitle) elCountdownMenuTitle.textContent = dict.menuCardTitle;
     if (elCountdownMenuSub) elCountdownMenuSub.textContent = dict.menuCardCta;
+    if (elCountdownShuttleNotice) {
+      elCountdownShuttleNotice.textContent =
+        currentLang === 'en'
+          ? '🚌 Reserved the shuttle bus? Departs promptly at 11:00 AM from MRT Jiantan Station Exit 2 (Jihe Rd.).'
+          : '🚌 若您有預約接駁小巴：11:00 準時從捷運劍潭站 2 號出口（基河路）發車';
+    }
+    if (elCountdownShuttleMapLink) {
+      elCountdownShuttleMapLink.textContent =
+        currentLang === 'en'
+          ? '📍 Shuttle Pickup: MRT Jiantan Exit 2 (Jihe Rd.) ↗'
+          : '📍 小巴上車點：劍潭站 2 號出口（基河路）↗';
+    }
+    if (elCountdownVenueNotice) {
+      elCountdownVenueNotice.textContent =
+        currentLang === 'en'
+          ? '🚗 Heading directly to the wedding venue (No. 49, Kaixuan Rd., Shilin Dist., Taipei)'
+          : '🚗 自行前往婚宴會場（台北市士林區凱旋路 49 號）';
+    }
+    if (elCountdownVenueMapLink) {
+      elCountdownVenueMapLink.textContent =
+        currentLang === 'en'
+          ? '📍 Wedding Venue: Brick Yard 33 1/3 ↗'
+          : '📍 婚宴會場：陽明山美軍俱樂部 ↗';
+    }
 
     btnTabBackHub.textContent = isTimeUp ? dict.tabBackHub : dict.tabBackCountdown;
     btnTabVideo.textContent = dict.tabVideo;
@@ -9584,8 +9611,8 @@
         if (elQuizSubmitStatus) {
           elQuizSubmitStatus.textContent =
             currentLang === 'en'
-              ? '⏳ Leaderboard opens at 2026/11/29 12:30 (GMT+8). See you at the wedding!'
-              : '⏳ 排行榜將於 2026/11/29 12:30（台灣時間）婚禮正式開席後開放登記喔！';
+              ? '⏳ Leaderboard opens at 2026/11/29 12:20 (GMT+8). See you at the wedding!'
+              : '⏳ 排行榜將於 2026/11/29 12:20（台灣時間）婚禮正式開席後開放登記喔！';
         }
       } else {
         if (elQuizSubmitStatus) {
@@ -9666,8 +9693,8 @@
         elPasscodeFeedback.classList.add('is-error');
         elPasscodeFeedback.textContent =
           currentLang === 'en'
-            ? '⏳ Leaderboard registration opens at 2026/11/29 12:30 (GMT+8).'
-            : '⏳ 排行榜將於 2026/11/29 12:30（台灣時間）婚禮正式開席後開放登記喔！';
+            ? '⏳ Leaderboard registration opens at 2026/11/29 12:20 (GMT+8).'
+            : '⏳ 排行榜將於 2026/11/29 12:20（台灣時間）婚禮正式開席後開放登記喔！';
       } else {
         elPasscodeFeedback.textContent =
           currentLang === 'en'

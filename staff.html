@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261122f" />
+  <link rel="stylesheet" href="style.css?v=20261122h" />
   <link rel="stylesheet" href="debug.css?v=20261121ag" />
 </head>
 <body class="debug-locked">
@@ -220,6 +220,39 @@
             </span>
           </button>
         </section>
+
+        <!-- Shuttle Bus & Venue Google Maps Info -->
+        <aside class="countdown-transit-card" id="countdown-transit-card" aria-label="Shuttle & Venue Map">
+          <div class="countdown-transit-item">
+            <p class="countdown-transit-text" id="countdown-shuttle-notice">
+              🚌 若您有預約接駁小巴：11:00 準時從捷運劍潭站 2 號出口（基河路）發車
+            </p>
+            <a
+              href="https://maps.app.goo.gl/G7yS7SjiycTa3Xw8A"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="countdown-map-link"
+              id="countdown-shuttle-map-link"
+            >
+              📍 小巴上車點：劍潭站 2 號出口（基河路）↗
+            </a>
+          </div>
+          <div class="countdown-transit-divider" aria-hidden="true"></div>
+          <div class="countdown-transit-item">
+            <p class="countdown-transit-text" id="countdown-venue-notice">
+              🚗 自行前往婚宴會場（台北市士林區凱旋路 49 號）
+            </p>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Brick+Yard+33+1%2F3+%E7%BE%8E%E8%BB%8D%E4%BF%B1%E6%A8%82%E9%83%A8+%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A3%AB%E6%9E%97%E5%8D%80%E5%87%B1%E6%97%8B%E8%B7%AF49%E8%99%9F"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="countdown-map-link"
+              id="countdown-venue-map-link"
+            >
+              📍 婚宴會場：陽明山美軍俱樂部 ↗
+            </a>
+          </div>
+        </aside>
       </div>
 
       <!-- 2. Time-Up Hub: Wedding Celebration Hub (Shown when countdown reaches 00:00:00) -->
@@ -787,6 +820,6 @@
   </div>
 
   <script src="staff.js?v=20261121ag"></script>
-  <script src="script.js?v=20261122f"></script>
+  <script src="script.js?v=20261122i"></script>
 </body>
 </html>
