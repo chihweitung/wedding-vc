@@ -46,8 +46,18 @@
   const REAL_TARGET_ISO = '2026-11-29T12:20:00+08:00';
   const REAL_TARGET_TIMESTAMP = new Date(REAL_TARGET_ISO).getTime();
 
-  // 新人影片網址（支援單支 YouTube 影片、YouTube 播放清單或 Instagram 連結）
-  const WEDDING_VIDEO_URL = 'https://www.youtube.com/playlist?list=PLRp4a54bnZ1Y';
+  // 新人影片清單（兩支獨立嵌入，播完第 1 支自動接續第 2 支，同時提供一鍵切換按鈕，不公開影片也 100% 穩定播放）
+  const WEDDING_VIDEOS = [
+    {
+      url: 'https://youtu.be/pbgZ4qa9qCY',
+      label: { zh: '🎬 影片 1：婚禮影片', en: '🎬 Video 1: Wedding Film' },
+    },
+    {
+      url: 'https://youtu.be/cXCqbNGfTww',
+      label: { zh: '💍 影片 2：登記側錄', en: '💍 Video 2: Registration Film' },
+    },
+  ];
+  const WEDDING_VIDEO_URL = WEDDING_VIDEOS[0].url;
 
   // Google Photos 婚禮現場共享相簿連結（賓客上傳與瀏覽當日照片）
   const GOOGLE_PHOTOS_SHARE_URL = 'https://photos.app.goo.gl/zXY7gwRZHhWqndkr8';
@@ -3154,6 +3164,9 @@
           ? '🎧 Friendly reminder: This video has sound — please lower your volume or wear headphones!'
           : '🎧 溫馨提醒：影片含有聲音，建議調小音量或佩戴耳機觀看喔！';
     }
+    if (document.getElementById('media-playlist-tabs')) {
+      renderWeddingVideoTabs();
+    }
     if (btnLang) {
       btnLang.setAttribute('title', dict.langBtnTitle);
       btnLang.setAttribute('aria-label', dict.langBtnTitle);
@@ -3415,9 +3428,15 @@
       if (videoId && /^[a-zA-Z0-9_-]{6,15}$/.test(videoId)) {
         const safeId = encodeURIComponent(videoId);
         const autoParams = autoplay ? '&autoplay=1&playsinline=1' : '&playsinline=1';
+        const originParam =
+          typeof window !== 'undefined' &&
+          window.location &&
+          /^https?:\/\//.test(window.location.origin)
+            ? `&origin=${encodeURIComponent(window.location.origin)}`
+            : '';
         return {
           provider: isVertical ? dict.mediaBadgeShorts : dict.mediaBadgeYoutube,
-          embedUrl: `https://www.youtube-nocookie.com/embed/${safeId}?rel=0&cc_load_policy=0${autoParams}`,
+          embedUrl: `https://www.youtube-nocookie.com/embed/${safeId}?rel=0&cc_load_policy=0&enablejsapi=1${originParam}${autoParams}`,
           aspectClass: isVertical ? 'ratio-9-16' : 'ratio-16-9',
           isVertical,
         };
@@ -3442,8 +3461,72 @@
     return null;
   }
 
-  function renderVideoIframe() {
-    const info = parseMediaUrl(WEDDING_VIDEO_URL, true);
+  let currentWeddingVideoIndex = 0;
+  let activeMediaIframe = null;
+  let ytPostMessageBound = false;
+
+  function renderWeddingVideoTabs() {
+    if (!elMediaCard || !elMediaFrameWrap || WEDDING_VIDEOS.length <= 1) return;
+    let tabsEl = document.getElementById('media-playlist-tabs');
+    if (!tabsEl) {
+      tabsEl = document.createElement('div');
+      tabsEl.id = 'media-playlist-tabs';
+      tabsEl.className = 'media-playlist-tabs';
+      elMediaCard.insertBefore(tabsEl, elMediaFrameWrap);
+    }
+    tabsEl.replaceChildren();
+    WEDDING_VIDEOS.forEach((vid, idx) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `media-playlist-tab${idx === currentWeddingVideoIndex ? ' is-active' : ''}`;
+      btn.textContent = currentLang === 'en' ? vid.label.en : vid.label.zh;
+      btn.setAttribute('aria-pressed', idx === currentWeddingVideoIndex ? 'true' : 'false');
+      btn.addEventListener('click', () => {
+        if (currentWeddingVideoIndex === idx) return;
+        currentWeddingVideoIndex = idx;
+        renderVideoIframe(true);
+      });
+      tabsEl.append(btn);
+    });
+  }
+
+  function bindYoutubeAutoAdvanceListener() {
+    if (ytPostMessageBound) return;
+    ytPostMessageBound = true;
+    window.addEventListener('message', (ev) => {
+      if (
+        ev.origin !== 'https://www.youtube-nocookie.com' &&
+        ev.origin !== 'https://www.youtube.com'
+      ) {
+        return;
+      }
+      if (!activeMediaIframe || ev.source !== activeMediaIframe.contentWindow) return;
+      let msg = ev.data;
+      if (typeof msg === 'string') {
+        try {
+          msg = JSON.parse(msg);
+        } catch (_e) {
+          return;
+        }
+      }
+      if (!msg || typeof msg !== 'object') return;
+      const state =
+        msg.event === 'onStateChange'
+          ? msg.info
+          : msg.event === 'infoDelivery' && msg.info && typeof msg.info.playerState === 'number'
+            ? msg.info.playerState
+            : null;
+      // YouTube playerState === 0 代表播畢：自動接續下一支影片
+      if (state === 0 && currentWeddingVideoIndex < WEDDING_VIDEOS.length - 1) {
+        currentWeddingVideoIndex += 1;
+        renderVideoIframe(true);
+      }
+    });
+  }
+
+  function renderVideoIframe(forceAutoplay = false) {
+    const activeVideo = WEDDING_VIDEOS[currentWeddingVideoIndex] || WEDDING_VIDEOS[0];
+    const info = parseMediaUrl(activeVideo ? activeVideo.url : WEDDING_VIDEO_URL, forceAutoplay);
     if (!info) return;
 
     elMediaBadge.textContent = info.provider;
@@ -3453,24 +3536,41 @@
           ? '🎧 Friendly reminder: This video has sound — please lower your volume or wear headphones!'
           : '🎧 溫馨提醒：影片含有聲音，建議調小音量或佩戴耳機觀看喔！';
     }
+    if (document.getElementById('media-playlist-tabs')) {
+      renderWeddingVideoTabs();
+    }
+    renderWeddingVideoTabs();
+    bindYoutubeAutoAdvanceListener();
+
     elMediaCard.classList.toggle('is-vertical', info.isVertical);
     elMediaFrameWrap.className = `media-frame-wrap ${info.aspectClass}`;
 
     if (renderedMediaKey !== info.embedUrl) {
       renderedMediaKey = info.embedUrl;
       const iframe = document.createElement('iframe');
-      iframe.src = info.embedUrl;
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
-      iframe.sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
       iframe.allowFullscreen = true;
       iframe.loading = 'lazy';
-      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.src = info.embedUrl;
+      iframe.addEventListener('load', () => {
+        try {
+          if (iframe.contentWindow) {
+            iframe.contentWindow.postMessage(
+              JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }),
+              'https://www.youtube-nocookie.com'
+            );
+          }
+        } catch (_e) {}
+      });
+      activeMediaIframe = iframe;
       elMediaFrameWrap.replaceChildren(iframe);
     }
   }
 
   function clearVideoIframe() {
     elMediaFrameWrap.replaceChildren();
+    activeMediaIframe = null;
     renderedMediaKey = '';
   }
 

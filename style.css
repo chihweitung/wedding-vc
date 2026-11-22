@@ -969,6 +969,38 @@ body.is-time-up .countdown-stage-wrap {
   text-align: center;
 }
 
+.media-playlist-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.media-playlist-tab {
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-pill);
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.media-playlist-tab:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.media-playlist-tab.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
 .media-frame-wrap {
   position: relative;
   width: 100%;
