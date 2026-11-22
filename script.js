@@ -9643,7 +9643,22 @@
 
   function getPlayfulWrongPasscodeReply(normCode, attemptNum, lang) {
     const isEn = lang === 'en';
+    const compactCode = normCode.replace(/[-－—_~～]/g, '');
     // 1. 趣味彩蛋關鍵字互動（不洩漏真實答案與彩蛋機制）
+    if (
+      /^(BILIBILIMEROMEROCHUCHU|逼哩逼哩咩嚕咩嚕啾啾|嗶哩嗶哩咩嚕咩嚕啾啾)$/.test(
+        compactCode
+      )
+    ) {
+      return isEn
+        ? '😂 Great answer — please never answer that again!'
+        : '😂 答的很好，下次不要再答了！';
+    }
+    if (compactCode === 'TOMEUNICE4EVER') {
+      return isEn
+        ? "😆 I know you're in a hurry, but don't rush!"
+        : '😆 我知道你很急，但不要急！';
+    }
     if (
       /^(LUMOS|ALOHOMORA|EXPELLIARMUS|EXPECTOPATRONUM|AVADAKEDAVRA|WINGARDIUMLEVIOSA|NOX|路摸思|阿囉哈姆拉|去去武器走|疾疾護法現身|嘶嘶聲)$/.test(
         normCode
