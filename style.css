@@ -2342,6 +2342,12 @@ body.carousel-fullscreen-open {
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
+.seating-search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
 .seating-search-input::placeholder {
   color: var(--text-secondary);
   opacity: 0.88;

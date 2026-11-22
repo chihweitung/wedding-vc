@@ -4631,26 +4631,11 @@
     const safeLink = sanitizeSafeUrl(SEATING_CHART_LINK_URL, false) || safeImg;
 
     if (elSeatingExternalLink) {
-      if (safeLink) {
-        elSeatingExternalLink.href = safeLink;
-        elSeatingExternalLink.classList.remove('hidden');
-      } else {
-        elSeatingExternalLink.classList.add('hidden');
-      }
+      // 已有「放大檢視座位圖」燈箱功能，隱藏原本另開原圖連結避免按鈕重複
+      elSeatingExternalLink.classList.add('hidden');
       if (elSeatingExternalLink.parentNode) {
-        let venueMapLink = document.getElementById('seating-venue-map-link');
-        if (!venueMapLink) {
-          venueMapLink = document.createElement('a');
-          venueMapLink.id = 'seating-venue-map-link';
-          venueMapLink.className = elSeatingExternalLink.className.replace(/\bhidden\b/g, '').trim();
-          venueMapLink.href =
-            'https://www.google.com/maps/search/?api=1&query=Brick+Yard+33+1%2F3+%E7%BE%8E%E8%BB%8D%E4%BF%B1%E6%A8%82%E9%83%A8+%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A3%AB%E6%9E%97%E5%8D%80%E5%87%B1%E6%97%8B%E8%B7%AF49%E8%99%9F';
-          venueMapLink.target = '_blank';
-          venueMapLink.rel = 'noopener noreferrer';
-          elSeatingExternalLink.parentNode.insertBefore(venueMapLink, elSeatingExternalLink.nextSibling);
-        }
-        venueMapLink.textContent =
-          currentLang === 'en' ? '📍 Brick Yard 33 1/3 Map ↗' : '📍 美軍俱樂部導航 ↗';
+        const oldVenueMapLink = document.getElementById('seating-venue-map-link');
+        if (oldVenueMapLink) oldVenueMapLink.remove();
 
         let zoomBtn = document.getElementById('seating-zoom-map-btn');
         if (!zoomBtn && safeImg) {
@@ -4659,7 +4644,7 @@
           zoomBtn.id = 'seating-zoom-map-btn';
           zoomBtn.className = elSeatingExternalLink.className.replace(/\bhidden\b/g, '').trim();
           zoomBtn.addEventListener('click', () => openSeatingZoomLightbox(safeImg));
-          elSeatingExternalLink.parentNode.insertBefore(zoomBtn, venueMapLink.nextSibling);
+          elSeatingExternalLink.parentNode.insertBefore(zoomBtn, elSeatingExternalLink.nextSibling);
         }
         if (zoomBtn) {
           zoomBtn.textContent =
