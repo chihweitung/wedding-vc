@@ -9877,6 +9877,16 @@
         ? "😆 I know you're in a hurry, but don't rush!"
         : '😆 我知道你很急，但不要急！';
     }
+    if (compactCode.startsWith('AHR0CHM6') || compactCode.startsWith('AHR0CDOV')) {
+      return isEn
+        ? "😏 Nice try—pasting raw encoded gibberish straight in won't work! Decode it first~"
+        : '😏 喂～這串編碼直接複製貼上可不行喔！先解碼看看裡面藏了什麼吧～';
+    }
+    if (/^HTTPS?:\/\//.test(normCode)) {
+      return isEn
+        ? '🙈 Oops! You pasted a URL into the passcode box—open it in your browser instead!'
+        : '🙈 欸！你把網址直接貼進密語框了啦～那個要用瀏覽器「打開」喔！';
+    }
     if (
       /^(LUMOS|ALOHOMORA|EXPELLIARMUS|EXPECTOPATRONUM|AVADAKEDAVRA|WINGARDIUMLEVIOSA|NOX|路摸思|阿囉哈姆拉|去去武器走|疾疾護法現身|嘶嘶聲)$/.test(
         normCode
