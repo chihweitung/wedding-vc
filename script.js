@@ -9877,6 +9877,11 @@
         ? "😆 I know you're in a hurry, but don't rush!"
         : '😆 我知道你很急，但不要急！';
     }
+    if (compactCode === 'TOMANDEUNICE4EVER' || compactCode === 'TOM&EUNICE4EVER') {
+      return isEn
+        ? '🙅‍♂️ Wakanda Forever! ...Wait, wrong cinematic universe—try again!'
+        : '🙅‍♂️ 瓦干達 Forever！…欸不對，這不是正確密語喔，再猜猜看！';
+    }
     if (compactCode.startsWith('AHR0CHM6') || compactCode.startsWith('AHR0CDOV')) {
       return isEn
         ? "😏 Nice try—pasting raw encoded gibberish straight in won't work! Decode it first~"
@@ -9905,6 +9910,19 @@
       return isEn
         ? "🕵️ Hmm... that looks like a wild guess! The lock didn't even budge."
         : '🕵️ 嗯…這看起來像是隨手猜的密碼，鎖頭完全沒有動靜呢！';
+    }
+    if (
+      /(好帥|超帥|最帥|很帥|真帥|大帥哥|帥哥|好美|超美|最美|很美|真美|大美女|美女|好漂亮|超漂亮|很漂亮|最漂亮|好可愛|超可愛|最可愛|好正|超正|男神|女神|天生一對|好登對|超登對|郎才女貌|神仙眷侶|HANDSOME|BEAUTIFUL|GORGEOUS|STUNNING|PRETTY|CUTE|LOVELY|BESTCOUPLE)/.test(
+        normCode
+      ) ||
+      (/(新郎|新娘|董董|董哥|老董|智瑋|羽涵|涵姐|TOM|EUNICE)/.test(normCode) &&
+        /(帥|美|漂亮|正|可愛|讚|棒|優秀|溫柔|聰明|厲害|NICE|COOL|GREAT|AWESOME|AMAZING|SWEET|PERFECT|BEST)/.test(
+          normCode
+        ))
+    ) {
+      return isEn
+        ? '😎 Thanks, we know~ Not the right answer though, try again!'
+        : '😎 謝謝，我知道～但這不是正確答案喔，再猜猜看！';
     }
     if (
       /(新婚快樂|百年好合|永浴愛河|早生貴子|白頭偕老|永遠幸福|恭喜|CONGRATS|CONGRATULATIONS|HAPPY|WEDDING|LOVE|FOREVER|TOM|EUNICE)/.test(
