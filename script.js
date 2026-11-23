@@ -1417,13 +1417,11 @@
     {
       id: 'zone-groom-highschool',
       box: { x: 1126, y: 1584, w: 165, h: 423 },
-      svgPath:
-        'M 1142 1584 L 1275 1584 Q 1291 1584 1291 1600 L 1291 1942 Q 1291 1954 1279 1954 L 1216 1954 Q 1206 1954 1206 1964 L 1206 1995 Q 1206 2007 1194 2007 L 1140 2007 Q 1126 2007 1126 1993 L 1126 1600 Q 1126 1584 1142 1584 Z',
       color: '#dc2626',
       fillColor: 'rgba(220, 38, 38, 0.12)',
       darkColor: '#f87171',
       darkFillColor: 'rgba(248, 113, 113, 0.16)',
-      debugStats: { headcount: 15, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1（大直區自由入座共 15 席，含第 8 排左席）' },
+      debugStats: { headcount: 17, veg: 0, stroller: 0, childSeat: 1, detail: '施傑耀：兒童椅1（大直區自由入座共 17 席：第 1–8 排 16 席＋桌頭 1 席）' },
       name: { zh: '新郎高中區 · 大直（第 11 桌）', en: "Groom's High School · Dazhi (Table 11)" },
       zone: { zh: '外廳左列上方區 · 大直', en: 'Lower Hall Left Col · Upper (Dazhi HS)' },
       guests: [
@@ -1438,22 +1436,17 @@
         { zh: '周駿逸', en: '周駿逸' },
         { zh: '林伯翰', en: '林伯翰' },
         { zh: '蔡宜達', en: '蔡宜達' },
+        { zh: '何秉霖等二人', en: '何秉霖 (2)' },
       ],
       seatPlan: {
         freeSeating: true,
         freeSeatingNote: {
-          zh: '✨ 大直區自由入座（共 15 席：第 1–7 排左右兩側＋第 8 排左側；第 8 排右側為雄女區）',
-          en: '✨ Open seating in Dazhi zone (15 seats: Rows 1–7 both sides + Row 8 Left; Row 8 Right is KGHS)',
+          zh: '✨ 大直區自由入座（共 17 席：上方桌頭 1 席＋第 1–8 排左右兩側 16 席）',
+          en: '✨ Open seating in Dazhi zone (17 seats: 1 head-of-table seat + Rows 1–8 both sides)',
         },
-        freeSeatingLoupe: {
-          cx: 1209,
-          cy: 1965,
-          zoomScale: 1.75,
-          dimNeighborIds: ['zone-bride-highschool'],
-          caption: {
-            zh: '大直區 15 席 ｜ 第 8 排僅左側可入座',
-            en: 'Dazhi 15 seats | Row 8 Left only',
-          },
+        headSeat: {
+          zh: '🪑 桌頭席 · 大直可入座',
+          en: '🪑 Head Seat · Available',
         },
         leftX: 1150,
         rightX: 1267,
@@ -1466,20 +1459,20 @@
           [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
           [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
           [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
-          [{ zh: '大直可入座', en: 'Available' }, { isOtherZone: true, zh: '（雄女區）', en: '(KGHS)' }],
+          [{ zh: '大直可入座', en: 'Available' }, { zh: '大直可入座', en: 'Available' }],
         ],
       },
     },
     {
       id: 'zone-bride-highschool',
-      box: { x: 1126, y: 2010, w: 165, h: 104 },
+      box: { x: 1126, y: 2012, w: 165, h: 152 },
       svgPath:
-        'M 1222 1958 L 1277 1958 Q 1291 1958 1291 1972 L 1291 2098 Q 1291 2110 1279 2110 L 1140 2110 Q 1126 2110 1126 2096 L 1126 2024 Q 1126 2012 1138 2012 L 1200 2012 Q 1210 2012 1210 2002 L 1210 1970 Q 1210 1958 1222 1958 Z',
+        'M 1142 2012 L 1275 2012 Q 1291 2012 1291 2028 L 1291 2100 Q 1291 2112 1279 2112 L 1216 2112 Q 1206 2112 1206 2122 L 1206 2152 Q 1206 2164 1194 2164 L 1140 2164 Q 1126 2164 1126 2150 L 1126 2028 Q 1126 2012 1142 2012 Z',
       color: '#2563eb',
       fillColor: 'rgba(37, 99, 235, 0.12)',
       darkColor: '#60a5fa',
       darkFillColor: 'rgba(96, 165, 250, 0.16)',
-      debugStats: { headcount: 5, veg: 1, stroller: 0, childSeat: 0, detail: '王淑菁：素食1（左上1席供大直區使用，本區共5席）' },
+      debugStats: { headcount: 5, veg: 1, stroller: 0, childSeat: 0, detail: '王淑菁：素食1（第 3 排右側 1 席為瑪黑區，本區共 5 席）' },
       name: { zh: '新娘高中區 · 雄女（第 14 桌）', en: "Bride's High School · KGHS (Table 14)" },
       zone: { zh: '外廳左列中段區 · 雄女', en: 'Lower Hall Left Col · Middle (KGHS)' },
       guests: [
@@ -1491,37 +1484,39 @@
       seatPlan: {
         freeSeating: true,
         freeSeatingNote: {
-          zh: '✨ 雄女區自由入座（共 5 席：第 1 排右側＋第 2–3 排左右兩側；第 1 排左側為大直區）',
-          en: '✨ Open seating in KGHS zone (5 seats: Row 1 Right + Rows 2–3 both sides; Row 1 Left is Dazhi)',
+          zh: '✨ 雄女區自由入座（共 5 席：第 1–2 排左右兩側＋第 3 排左側；第 3 排右側為瑪黑區）',
+          en: '✨ Open seating in KGHS zone (5 seats: Rows 1–2 both sides + Row 3 Left; Row 3 Right is Marais)',
         },
         freeSeatingLoupe: {
           cx: 1209,
-          cy: 2055,
+          cy: 2115,
           zoomScale: 1.85,
-          dimNeighborIds: ['zone-groom-highschool'],
+          dimNeighborIds: ['zone-bride-colleagues'],
           caption: {
-            zh: '雄女區 5 席 ｜ 僅右側第 1 排＋下方 2 排可入座',
-            en: 'KGHS 5 seats | Row 1 Right + 2 rows below',
+            zh: '雄女區 5 席 ｜ 第 3 排僅左側可入座',
+            en: 'KGHS 5 seats | Row 3 Left only',
           },
         },
         leftX: 1150,
         rightX: 1267,
-        rowYs: [1982, 2034, 2086],
+        rowYs: [2034, 2086, 2138],
         rows: [
-          [{ isOtherZone: true, zh: '（大直區）', en: '(Dazhi)' }, { zh: '雄女可入座', en: 'Available' }],
           [{ zh: '雄女可入座', en: 'Available' }, { zh: '雄女可入座', en: 'Available' }],
           [{ zh: '雄女可入座', en: 'Available' }, { zh: '雄女可入座', en: 'Available' }],
+          [{ zh: '雄女可入座', en: 'Available' }, { isOtherZone: true, zh: '（瑪黑區）', en: '(Marais)' }],
         ],
       },
     },
     {
       id: 'zone-bride-colleagues',
       box: { x: 1126, y: 2116, w: 165, h: 210 },
+      svgPath:
+        'M 1222 2116 L 1277 2116 Q 1291 2116 1291 2130 L 1291 2314 Q 1291 2326 1279 2326 L 1140 2326 Q 1126 2326 1126 2312 L 1126 2180 Q 1126 2168 1138 2168 L 1200 2168 Q 1210 2168 1210 2158 L 1210 2128 Q 1210 2116 1222 2116 Z',
       color: '#7c3aed',
       fillColor: 'rgba(124, 58, 237, 0.12)',
       darkColor: '#c084fc',
       darkFillColor: 'rgba(192, 132, 252, 0.16)',
-      debugStats: { headcount: 7, veg: 0, stroller: 0, childSeat: 0 },
+      debugStats: { headcount: 7, veg: 0, stroller: 0, childSeat: 0, detail: '第 1 排左側 1 席為雄女區，本區共 7 席' },
       name: { zh: '新娘同事區 · 瑪黑（第 16 桌）', en: "Bride's Colleagues · Marais (Table 16)" },
       zone: { zh: '外廳左列下方區 · 瑪黑', en: 'Lower Hall Left Col · Lower (Marais)' },
       guests: [
@@ -1532,6 +1527,32 @@
         { zh: '張世瑤 Anny', en: '張世瑤 Anny' },
         { zh: '沈堉綺', en: '沈堉綺' },
       ],
+      seatPlan: {
+        freeSeating: true,
+        freeSeatingNote: {
+          zh: '✨ 瑪黑區自由入座（共 7 席：第 1 排右側＋第 2–4 排左右兩側；第 1 排左側為雄女區）',
+          en: '✨ Open seating in Marais zone (7 seats: Row 1 Right + Rows 2–4 both sides; Row 1 Left is KGHS)',
+        },
+        freeSeatingLoupe: {
+          cx: 1209,
+          cy: 2170,
+          zoomScale: 1.8,
+          dimNeighborIds: ['zone-bride-highschool'],
+          caption: {
+            zh: '瑪黑區 7 席 ｜ 第 1 排僅右側可入座',
+            en: 'Marais 7 seats | Row 1 Right only',
+          },
+        },
+        leftX: 1150,
+        rightX: 1267,
+        rowYs: [2138, 2190, 2242, 2294],
+        rows: [
+          [{ isOtherZone: true, zh: '（雄女區）', en: '(KGHS)' }, { zh: '瑪黑可入座', en: 'Available' }],
+          [{ zh: '瑪黑可入座', en: 'Available' }, { zh: '瑪黑可入座', en: 'Available' }],
+          [{ zh: '瑪黑可入座', en: 'Available' }, { zh: '瑪黑可入座', en: 'Available' }],
+          [{ zh: '瑪黑可入座', en: 'Available' }, { zh: '瑪黑可入座', en: 'Available' }],
+        ],
+      },
     },
     {
       id: 'zone-groom-colleagues',
@@ -4509,6 +4530,19 @@
 
     const rowsBox = document.createElement('div');
     rowsBox.className = 'seating-seatmap-rows';
+
+    if (plan.headSeat) {
+      const headEl = document.createElement('div');
+      headEl.className = `seating-seatmap-cell seating-seatmap-extra${plan.freeSeating ? ' is-free-seat' : ''}`;
+      if (isDebugPage) {
+        headEl.textContent = (currentLang === 'en' ? plan.headSeat.en : plan.headSeat.zh) || plan.headSeat.zh;
+      } else if (plan.freeSeating) {
+        headEl.textContent = currentLang === 'en' ? '🪑 Head Seat · ✓ Available' : '🪑 桌頭席 · ✓ 可入座';
+      } else {
+        headEl.textContent = '○';
+      }
+      rowsBox.append(headEl);
+    }
 
     (plan.rows || []).forEach((pair, rIdx) => {
       if (plan.aisleAfterRow && plan.aisleAfterRow === rIdx) {
