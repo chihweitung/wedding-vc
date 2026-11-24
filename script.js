@@ -860,9 +860,8 @@
     { name: '董素娟', count: 2, group: '新郎爸爸親戚' },
     { name: '陳振揚', count: 1, group: '新郎爸爸親戚' },
     { name: '董素芬', count: 2, group: '新郎爸爸親戚' },
-    // 新郎同學＆老師（6 組／7 人）
+    // 新郎同學＆老師（5 組／5 人）
     { name: '鄭兆珍', count: 1, group: '新郎同學＆老師' },
-    { name: '林品賢', count: 2, group: '新郎同學＆老師' },
     { name: '何弋柏', count: 1, group: '新郎同學＆老師' },
     { name: '周駿逸', count: 1, group: '新郎同學＆老師' },
     { name: 'Allan Sun', count: 1, group: '新郎同學＆老師' },
