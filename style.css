@@ -11,11 +11,12 @@
   --border-highlight: rgba(197, 127, 137, 0.42);
   --text-primary: #27352b;
   --text-secondary: #536557;
-  --text-muted: #7d8c80;
+  --text-muted: #5c6d60;
   --accent: #446c50;
   --accent-soft: #70967b;
   --accent-emerald: #397550;
   --blush: #c57f89;
+  --blush-text: #9e525f;
   --blush-soft: rgba(197, 127, 137, 0.13);
   --blush-border: rgba(197, 127, 137, 0.28);
   --champagne: #c4a47a;
@@ -43,6 +44,7 @@
   --accent-soft: #729e80;
   --accent-emerald: #5cb88a;
   --blush: #dfa0a9;
+  --blush-text: #dfa0a9;
   --blush-soft: rgba(223, 160, 169, 0.14);
   --blush-border: rgba(223, 160, 169, 0.28);
   --champagne: #d8bc96;
@@ -333,7 +335,7 @@ a {
 }
 
 .eyebrow {
-  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', 'Songti TC', 'PMingLiU', serif;
   font-size: clamp(0.82rem, 1.5vw, 0.94rem);
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -341,7 +343,7 @@ a {
 }
 
 .couple-names {
-  font-family: 'Cormorant Garamond', 'Noto Serif TC', Georgia, serif;
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', 'Songti TC', Georgia, serif;
   font-size: clamp(2.7rem, 7vw, 4.9rem);
   font-weight: 600;
   line-height: 1.06;
@@ -365,23 +367,25 @@ a {
 }
 
 .event-title {
-  font-family: 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-family: 'Noto Serif TC', 'Songti TC', 'Cormorant Garamond', 'PMingLiU', serif;
   font-size: clamp(1.04rem, 2.1vw, 1.38rem);
   font-weight: 500;
   letter-spacing: 0.07em;
   line-height: 1.55;
   color: var(--text-secondary);
   padding: 2px 8px;
+  text-wrap: balance;
 }
 
 .target-subtitle {
-  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', 'Songti TC', 'PMingLiU', serif;
   font-size: clamp(0.9rem, 1.6vw, 1.04rem);
   font-weight: 500;
   color: var(--text-muted);
   letter-spacing: 0.04em;
   font-variant-numeric: tabular-nums;
   line-height: 1.55;
+  text-wrap: balance;
 }
 
 /* Countdown Stage Wrap */
@@ -517,7 +521,7 @@ body.is-time-up .countdown-stage-wrap {
 }
 
 .love-story-body {
-  font-family: 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-family: 'Noto Serif TC', 'Songti TC', 'Cormorant Garamond', 'PMingLiU', serif;
   font-size: clamp(0.88rem, 1.5vw, 0.98rem);
   line-height: 1.85;
   color: var(--text-secondary);
@@ -525,7 +529,7 @@ body.is-time-up .countdown-stage-wrap {
 }
 
 .love-story-body strong {
-  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', 'Songti TC', serif;
   font-size: 1.16em;
   font-weight: 700;
   color: var(--accent);
@@ -534,7 +538,7 @@ body.is-time-up .countdown-stage-wrap {
 }
 
 .love-story-body strong.love-days-num {
-  color: var(--blush);
+  color: var(--blush-text);
   font-size: 1.22em;
 }
 
@@ -713,20 +717,21 @@ body.is-time-up .countdown-stage-wrap {
 }
 
 .choice-eyebrow {
-  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', 'Songti TC', serif;
   font-size: 0.85rem;
   font-style: italic;
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: var(--blush);
+  color: var(--blush-text);
 }
 
 .choice-title {
-  font-family: 'Noto Serif TC', 'Cormorant Garamond', serif;
+  font-family: 'Noto Serif TC', 'Songti TC', 'Cormorant Garamond', 'PMingLiU', serif;
   font-size: clamp(1.35rem, 2.4vw, 1.6rem);
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: 0.04em;
+  text-wrap: balance;
 }
 
 .choice-desc {
@@ -6471,4 +6476,46 @@ body.is-subview-active .main-stage {
   background: var(--accent);
   border-color: var(--accent);
   color: #ffffff;
+}
+
+/* Tactile Press Feedback & Balanced Headings */
+.hp-event-title,
+.hp-subtitle {
+  text-wrap: balance;
+}
+
+.primary-btn:active,
+.secondary-btn:active,
+.hub-tab-btn:active,
+.countdown-quick-btn:active,
+.icon-btn:active,
+.hp-header-btn:active,
+.hp-spell-btn:active,
+.countdown-map-link:active {
+  transform: scale(0.97);
+}
+
+/* Mobile Glassmorphism Lightening for Smoother Scrolling */
+@media (max-width: 640px) {
+  .love-story-note,
+  .time-card,
+  .choice-card,
+  .quiz-card,
+  .seating-card,
+  .menu-card {
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+}
+
+/* Respect System Reduced-Motion Accessibility Preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
