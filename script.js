@@ -3073,6 +3073,17 @@
   let quizStartedAtMs = 0;
   let currentQuizStartToken = '';
   let quizStartTokenReqId = 0;
+  let quizStartTokenInFlight = false;
+
+  function fetchWithAbortTimeout(url, options, timeoutMs = 12000) {
+    if (typeof AbortController !== 'function') {
+      return fetch(url, options);
+    }
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+    const merged = Object.assign({}, options || {}, { signal: controller.signal });
+    return fetch(url, merged).finally(() => window.clearTimeout(timer));
+  }
 
   function getMonotonicNowMs() {
     if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
@@ -3081,19 +3092,43 @@
     return Date.now();
   }
 
-  function requestQuizStartToken() {
-    currentQuizStartToken = '';
+  function requestQuizStartToken(attempt = 0, existingReqId = null) {
     if (!LEADERBOARD_ENDPOINT_URL) return;
-    const reqId = ++quizStartTokenReqId;
+    const reqId = existingReqId === null ? ++quizStartTokenReqId : existingReqId;
+    if (existingReqId === null) {
+      currentQuizStartToken = '';
+    }
+    quizStartTokenInFlight = true;
     const sep = LEADERBOARD_ENDPOINT_URL.includes('?') ? '&' : '?';
-    fetch(`${LEADERBOARD_ENDPOINT_URL}${sep}action=start`)
+    fetchWithAbortTimeout(`${LEADERBOARD_ENDPOINT_URL}${sep}action=start`, {}, 8000)
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
-        if (reqId === quizStartTokenReqId && data && data.ok && typeof data.startToken === 'string') {
+        if (reqId !== quizStartTokenReqId) return;
+        if (data && data.ok && typeof data.startToken === 'string') {
           currentQuizStartToken = data.startToken;
+          quizStartTokenInFlight = false;
+          return;
         }
+        throw new Error('bad_start_token');
       })
-      .catch(() => {});
+      .catch(() => {
+        if (reqId !== quizStartTokenReqId) return;
+        if (attempt < 2) {
+          window.setTimeout(() => {
+            if (reqId === quizStartTokenReqId && !currentQuizStartToken) {
+              requestQuizStartToken(attempt + 1, reqId);
+            }
+          }, (attempt + 1) * 1200);
+        } else {
+          quizStartTokenInFlight = false;
+        }
+      });
+  }
+
+  function ensureQuizStartToken() {
+    if (!currentQuizStartToken && !quizStartTokenInFlight) {
+      requestQuizStartToken(0);
+    }
   }
   let lastQuizDurationSec = null;
   let hasSubmittedCurrentQuiz = false;
@@ -8697,11 +8732,15 @@
           }
         }
       }
-      const res = await fetch(LEADERBOARD_ENDPOINT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(enriched),
-      });
+      const res = await fetchWithAbortTimeout(
+        LEADERBOARD_ENDPOINT_URL,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(enriched),
+        },
+        12000
+      );
       if (!res.ok) return { sent: true, ok: false };
       const data = await res.json().catch(() => ({ ok: true }));
       if (data && data.name) {
@@ -8840,11 +8879,15 @@
       loadingP.textContent = '載入排行榜中...';
       body.replaceChildren(loadingP);
       try {
-        const res = await fetch(LEADERBOARD_ENDPOINT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'leaderboard' }),
-        });
+        const res = await fetchWithAbortTimeout(
+          LEADERBOARD_ENDPOINT_URL,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: 'leaderboard' }),
+          },
+          12000
+        );
         const json = await res.json();
         if (!json || !json.ok) {
           throw new Error((json && json.error) || 'bad_response');
@@ -9875,12 +9918,28 @@
               ? '💐 Live leaderboard registration has wrapped up—thank you for playing and celebrating with us!'
               : '💐 婚禮現場排行榜登記已圓滿截止，感謝您的參與與祝福！';
         }
+      } else if (res.error === 'invalid_start_token') {
+        if (elQuizSubmitStatus) {
+          elQuizSubmitStatus.textContent =
+            currentLang === 'en'
+              ? '⚠️ Session token missed or expired (weak signal). Please tap "Play Again" to start a fresh round!'
+              : '⚠️ 剛才開局時網路訊號不穩未取得驗證憑證，請點「再玩一次」重新挑戰即可登記喔！';
+        }
+      } else if (res.error === 'token_already_used') {
+        hasSubmittedCurrentQuiz = true;
+        if (elQuizHighscoreForm) elQuizHighscoreForm.classList.add('hidden');
+        if (elQuizSubmitStatus) {
+          elQuizSubmitStatus.textContent =
+            currentLang === 'en'
+              ? '✅ This round has already been submitted!'
+              : '✅ 這一局的成績已經登記過囉！';
+        }
       } else {
         if (elQuizSubmitStatus) {
           elQuizSubmitStatus.textContent =
             currentLang === 'en'
-              ? '⚠️ Network busy — please tap Submit again to retry.'
-              : '⚠️ 網路忙碌中，尚未寫入排行榜，請再按一次「登記上榜」重試喔！';
+              ? '⚠️ Network busy — please tap Submit Score again to retry.'
+              : '⚠️ 網路忙碌中，尚未寫入排行榜，請再按一次「登記成績」重試喔！';
         }
       }
     });
@@ -10184,6 +10243,7 @@
   }
 
   btnQuizNext.addEventListener('click', () => {
+    ensureQuizStartToken();
     quizIndex += 1;
     renderCurrentQuizQuestion();
   });

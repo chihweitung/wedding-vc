@@ -1,15 +1,16 @@
 'use strict';
 
-const CACHE_NAME = 'te-wedding-20261129-v209';
-const NETWORK_TIMEOUT_MS = 2500;
+const CACHE_NAME = 'te-wedding-20261129-v210';
+const NETWORK_TIMEOUT_MS = 4500;
 
 // 僅預快取公開首頁必要資源（嚴格排除任何隱藏頁或測試頁檔案名稱）
 const PRECACHE_ASSETS = [
   './',
   './index.html',
   './style.css?v=20261122x',
-  './script.js?v=20261124a',
+  './script.js?v=20261125a',
   './seating-chart.jpg?v=20261122m',
+  './video/wedding-video-1-poster.jpg',
   './photos/avatar-tom.jpg',
   './photos/avatar-eunice.jpg',
 ];
@@ -36,6 +37,7 @@ function isCacheablePublicAsset(urlObj) {
     p.endsWith('/style.css') ||
     p.endsWith('/script.js') ||
     p.endsWith('/seating-chart.jpg') ||
+    p.endsWith('/video/wedding-video-1-poster.jpg') ||
     p.endsWith('/photos/avatar-tom.jpg') ||
     p.endsWith('/photos/avatar-eunice.jpg')
   );
@@ -66,24 +68,6 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-function fetchWithTimeout(request, timeoutMs) {
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => {
-      reject(new Error('Network timeout'));
-    }, timeoutMs);
-
-    fetch(request)
-      .then((response) => {
-        clearTimeout(timer);
-        resolve(response);
-      })
-      .catch((err) => {
-        clearTimeout(timer);
-        reject(err);
-      });
-  });
-}
-
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
@@ -95,14 +79,13 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 影音與 Range 請求（例如 iOS Safari 串流 music.m4a / wedding-video-1.mp4）交由瀏覽器原生網路層處理，避免 SW 2.5s 超時或 206 Partial Content 例外
+  // 影音與 Range 請求（例如 iOS Safari 串流 music.m4a / wedding-video-1.mp4）交由瀏覽器原生網路層處理，避免 SW 超時或 206 Partial Content 例外
   if (
     request.headers.has('range') ||
     urlObj.pathname.endsWith('.mp3') ||
     urlObj.pathname.endsWith('.m4a') ||
     urlObj.pathname.endsWith('.mp4') ||
-    urlObj.pathname.includes('/audio/') ||
-    urlObj.pathname.includes('/video/')
+    urlObj.pathname.includes('/audio/')
   ) {
     return;
   }
@@ -111,35 +94,41 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Network-First 策略：有網路時永遠抓取最新版本並更新快取；斷網或逾時才自動退回離線快取
+  // Network-First 策略：有網路時優先抓最新版並更新快取；慢網逾時則立即回傳快取，同時背景完成網路抓檔並更新快取
+  const networkPromise = fetch(request).then((networkResponse) => {
+    if (
+      networkResponse &&
+      (networkResponse.status === 200 || networkResponse.type === 'opaque')
+    ) {
+      const cloned = networkResponse.clone();
+      caches
+        .open(CACHE_NAME)
+        .then((cache) => cache.put(request, cloned))
+        .catch(() => {});
+    }
+    return networkResponse;
+  });
+
+  const timeoutPromise = new Promise((_, reject) => {
+    setTimeout(() => reject(new Error('Network timeout')), NETWORK_TIMEOUT_MS);
+  });
+
+  event.waitUntil(networkPromise.catch(() => {}));
+
   event.respondWith(
-    fetchWithTimeout(request, NETWORK_TIMEOUT_MS)
-      .then((networkResponse) => {
-        if (
-          networkResponse &&
-          (networkResponse.status === 200 || networkResponse.type === 'opaque')
-        ) {
-          const cloned = networkResponse.clone();
-          caches
-            .open(CACHE_NAME)
-            .then((cache) => cache.put(request, cloned))
-            .catch(() => {});
-        }
-        return networkResponse;
-      })
-      .catch(async () => {
-        const cache = await caches.open(CACHE_NAME);
-        const exactMatch = await cache.match(request);
-        if (exactMatch) return exactMatch;
+    Promise.race([networkPromise, timeoutPromise]).catch(async () => {
+      const cache = await caches.open(CACHE_NAME);
+      const exactMatch = await cache.match(request);
+      if (exactMatch) return exactMatch;
 
-        const ignoreSearchMatch = await cache.match(request, { ignoreSearch: true });
-        if (ignoreSearchMatch) return ignoreSearchMatch;
+      const ignoreSearchMatch = await cache.match(request, { ignoreSearch: true });
+      if (ignoreSearchMatch) return ignoreSearchMatch;
 
-        if (request.mode === 'navigate') {
-          const fallbackIndex = await cache.match('./index.html', { ignoreSearch: true });
-          if (fallbackIndex) return fallbackIndex;
-        }
-        throw new Error('Offline and no cached asset available');
-      })
+      if (request.mode === 'navigate') {
+        const fallbackIndex = await cache.match('./index.html', { ignoreSearch: true });
+        if (fallbackIndex) return fallbackIndex;
+      }
+      return networkPromise;
+    })
   );
 });
