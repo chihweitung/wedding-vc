@@ -3924,7 +3924,7 @@ body.carousel-fullscreen-open {
 
 .banquet-dish-item {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 6px 10px;
@@ -3935,6 +3935,21 @@ body.carousel-fullscreen-open {
 .banquet-dish-item:last-child {
   border-bottom: none;
   padding-bottom: 2px;
+}
+
+.banquet-dish-main {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.banquet-dish-icon {
+  width: 1.35em;
+  text-align: center;
+  flex-shrink: 0;
+  font-size: 0.96rem;
+  line-height: 1;
 }
 
 .banquet-dish-name {

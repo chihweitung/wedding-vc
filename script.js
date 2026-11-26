@@ -6602,8 +6602,41 @@
 
   let selectedMenuFilter = 'all';
 
-  function parseMenuDishItem(rawText, lang) {
-    let text = String(rawText || '').replace(/^[•·\-\s]+/, '').trim();
+  function getDishIcon(dishText, stationNum) {
+    const s = String(dishText || '');
+    // 優先以主要食材／肉類直覺標示（方便不吃牛、不吃豬或素食賓客一眼辨識）
+    if (/牛排|骰子牛|牛肉|Steak|Beef/i.test(s)) return '🐮';
+    if (/豬肚|松阪豬|豬肋排|豬腳|火腿|香腸|Pork|Ham|Sausage/i.test(s)) return '🐷';
+    if (/雞肉|辣雞|雞湯|Chicken/i.test(s)) return '🐔';
+    if (/牧羊人派|Shepherd/i.test(s)) return '🐑';
+    if (/貽貝|Mussels/i.test(s)) return '🦪';
+    if (/鮮蝦|海鮮|Prawns|Seafood/i.test(s)) return '🦐';
+    if (/鮭魚|鯛魚|檸檬魚|Salmon|Sea Bream|Lemon Fish/i.test(s)) return '🐟';
+    if (/洋蔥湯|Onion Soup/i.test(s)) return '🧅';
+    if (/蕈菇|野菇|菇菇|Mushroom/i.test(s)) return '🍄';
+    if (/時蔬|Greens/i.test(s)) return '🥬';
+    if (/鮮果|Fruit Salad/i.test(s)) return '🍓';
+    if (/炸物|Fried Platter/i.test(s)) return '🍟';
+    if (/巧克力披薩|Chocolate Pizza/i.test(s)) return '🍫';
+    if (/馬卡龍|Macaron/i.test(s)) return '🧁';
+    if (/千層派|Mille-Feuille/i.test(s)) return '🍰';
+    if (/餅乾|Cookie/i.test(s)) return '🍪';
+    if (/蛋糕|Cake/i.test(s)) return '🎂';
+    if (/現調調酒|Handcrafted Cocktail/i.test(s)) return '🍸';
+    if (/雞尾酒|Outdoor Cocktail/i.test(s)) return '🥂';
+    if (/紅茶|Tea/i.test(s)) return '🫖';
+    if (/咖啡|Americano/i.test(s)) return '☕';
+    if (/蔓越莓|Cranberry/i.test(s)) return '🧃';
+    if (/檸檬水|Lemon Water/i.test(s)) return '🍋';
+    const fallbackByStation = ['🥗', '🍝', '🍽️', '🍲', '🍕', '🍰', '🍸'];
+    return fallbackByStation[(stationNum || 1) - 1] || '🍽️';
+  }
+
+  function parseMenuDishItem(rawText, lang, stationNum) {
+    let text = String(rawText || '')
+      .replace(/^[•·\-\s]+/, '')
+      .replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\uFE0F\s]+/u, '')
+      .trim();
     const badges = [];
     let isVeg = false;
 
@@ -6641,11 +6674,11 @@
     if (isSignature) {
       badges.unshift({
         type: 'signature',
-        label: lang === 'en' ? "★ Signature" : '★ 主廚招牌',
+        label: lang === 'en' ? '★ Signature' : '★ 主廚招牌',
       });
     }
 
-    return { text, badges, isVeg, isSignature };
+    return { icon: getDishIcon(text, stationNum), text, badges, isVeg, isSignature };
   }
 
   function renderBanquetMenuSection() {
@@ -6732,7 +6765,7 @@
       const parsedDishes = rawDesc
         .split('\n')
         .flatMap((line) => line.split(/\s*[／/]\s*/))
-        .map((part) => parseMenuDishItem(part, currentLang))
+        .map((part) => parseMenuDishItem(part, currentLang, stationNum))
         .filter((d) => d.text.length > 0);
 
       // For veg filter: keep veg dishes + Station 1 fruit salad & Station 7 drinks
@@ -6798,10 +6831,20 @@
         const li = document.createElement('li');
         li.className = `banquet-dish-item${dish.isSignature ? ' is-signature' : ''}`;
 
+        const mainSpan = document.createElement('span');
+        mainSpan.className = 'banquet-dish-main';
+
+        const iconSpan = document.createElement('span');
+        iconSpan.className = 'banquet-dish-icon';
+        iconSpan.setAttribute('aria-hidden', 'true');
+        iconSpan.textContent = dish.icon;
+
         const nameSpan = document.createElement('span');
         nameSpan.className = 'banquet-dish-name';
         nameSpan.textContent = dish.text;
-        li.append(nameSpan);
+
+        mainSpan.append(iconSpan, nameSpan);
+        li.append(mainSpan);
 
         if (dish.badges.length > 0) {
           const badgeWrap = document.createElement('span');
