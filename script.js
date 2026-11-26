@@ -6874,13 +6874,47 @@
     elBanquetCoursesList.replaceChildren(controlsWrap, cardsGrid, footerOrnament);
   }
 
+  let timelineLastActiveIdx = -1;
+
+  function isMilestoneFootprint(item, idx, total) {
+    if (idx === 0 || idx === total - 1) return true;
+    const text = `${item.dateTag || ''} ${item.place && item.place.zh ? item.place.zh : ''} ${
+      item.distanceLabel && item.distanceLabel.zh ? item.distanceLabel.zh : ''
+    } ${item.desc && item.desc.zh ? item.desc.zh : ''}`;
+    return /02\.14|最遠距離|柏林|諾丁漢|買房|新家|求婚|登記|婚禮|美軍俱樂部/i.test(text);
+  }
+
+  function getFootprintDistanceMood(labelText) {
+    const s = String(labelText || '');
+    if (/^0\s*km\b/i.test(s)) return 'reunion';
+    const m = s.match(/([\d,]+)\s*km/i);
+    if (m) {
+      const km = Number(m[1].replace(/,/g, ''));
+      if (Number.isFinite(km) && km >= 1000) return 'long-distance';
+    }
+    return 'local';
+  }
+
+  function syncActiveTimelineCard(activeIdx) {
+    if (!elFootprintTimelineList) return;
+    if (activeIdx === timelineLastActiveIdx) return;
+    timelineLastActiveIdx = activeIdx;
+    const cards = elFootprintTimelineList.querySelectorAll('.timeline-item[data-stop-idx]');
+    cards.forEach((card) => {
+      const idx = Number(card.dataset.stopIdx);
+      card.classList.toggle('is-current', idx === activeIdx);
+    });
+  }
+
   function renderFootprintsSection() {
     if (!elFootprintYearBar || !elFootprintTimelineList) return;
     const dict = t();
+    const isEn = currentLang === 'en';
     const uniqueYears = Array.from(new Set(LOVE_FOOTPRINTS_DATA.map((d) => d.year)));
-    const yearOptions = [{ id: 'all', label: dict.yearAll }].concat(
-      uniqueYears.map((yr) => ({ id: yr, label: yr }))
-    );
+    const yearOptions = [
+      { id: 'all', label: dict.yearAll },
+      { id: 'milestones', label: isEn ? '✨ Milestones' : '✨ 精選里程碑' },
+    ].concat(uniqueYears.map((yr) => ({ id: yr, label: yr })));
 
     const yearButtons = yearOptions.map((yrObj) => {
       const btn = document.createElement('button');
@@ -6889,7 +6923,7 @@
       btn.textContent = yrObj.label;
       btn.addEventListener('click', () => {
         selectedFootprintYear = yrObj.id;
-        if (yrObj.id !== 'all') {
+        if (yrObj.id !== 'all' && yrObj.id !== 'milestones') {
           const firstIdx = LOVE_FOOTPRINTS_DATA.findIndex((d) => d.year === yrObj.id);
           if (firstIdx >= 0 && LOVE_FOOTPRINTS_DATA.length > 1) {
             timelinePlaying = false;
@@ -6904,16 +6938,57 @@
     });
     elFootprintYearBar.replaceChildren(...yearButtons);
 
+    const totalStops = LOVE_FOOTPRINTS_DATA.length;
     const filteredFootprints = LOVE_FOOTPRINTS_DATA.map((item, globalIdx) => ({
       item,
       globalIdx,
-    })).filter(({ item }) => selectedFootprintYear === 'all' || item.year === selectedFootprintYear);
+    })).filter(({ item, globalIdx }) => {
+      if (selectedFootprintYear === 'all') return true;
+      if (selectedFootprintYear === 'milestones') {
+        return isMilestoneFootprint(item, globalIdx, totalStops);
+      }
+      return item.year === selectedFootprintYear;
+    });
 
-    const timelineNodes = filteredFootprints.map(({ item, globalIdx }) => {
+    const YEAR_SUBTITLES = {
+      2014: { zh: '故事起點', en: 'Where It Began' },
+      2015: { zh: '跨越太平洋', en: 'Across the Pacific' },
+      2016: { zh: '思念與重逢', en: 'Miles & Reunions' },
+      2017: { zh: '四季同行', en: 'Through the Seasons' },
+      2018: { zh: '世界探索', en: 'Exploring Together' },
+      2019: { zh: '雙城與遠行', en: 'Journeys Afar' },
+      2020: { zh: '相守日常', en: 'Side by Side' },
+      2021: { zh: '並肩前行', en: 'Growing Closer' },
+      2022: { zh: '新的篇章', en: 'New Horizons' },
+      2023: { zh: '築夢時刻', en: 'Building Dreams' },
+      2024: { zh: '十週年記憶', en: 'A Decade Together' },
+      2025: { zh: '攜手成家', en: 'Forever Begins' },
+      2026: { zh: '步入禮堂', en: 'The Wedding Day' },
+    };
+
+    const renderedNodes = [];
+    let lastRenderedYear = '';
+
+    filteredFootprints.forEach(({ item, globalIdx }) => {
+      if (item.year && item.year !== lastRenderedYear) {
+        lastRenderedYear = item.year;
+        const chapter = document.createElement('div');
+        chapter.className = 'timeline-chapter-divider';
+        const yrText = document.createElement('span');
+        yrText.className = 'timeline-chapter-year';
+        const sub = YEAR_SUBTITLES[item.year];
+        yrText.textContent = sub
+          ? `${item.year} · ${isEn ? sub.en : sub.zh}`
+          : String(item.year);
+        chapter.append(yrText);
+        renderedNodes.push(chapter);
+      }
+
       const node = document.createElement('div');
       node.className = 'timeline-item';
+      node.dataset.stopIdx = String(globalIdx);
       node.style.cursor = 'pointer';
-      node.title = currentLang === 'zh' ? '點擊在上方地圖聚焦此時間點' : 'Click to focus this moment on the map';
+      node.title = isEn ? 'Click to focus this moment on the map' : '點擊在上方地圖聚焦此時間點';
       node.addEventListener('click', (ev) => {
         if (ev.target && ev.target.closest('a')) return;
         if (LOVE_FOOTPRINTS_DATA.length > 1) {
@@ -6931,18 +7006,34 @@
       const header = document.createElement('div');
       header.className = 'timeline-header';
 
+      const headerLeft = document.createElement('div');
+      headerLeft.className = 'timeline-header-left';
+
       const yearBadge = document.createElement('span');
       yearBadge.className = 'timeline-year-badge';
       yearBadge.textContent = item.dateTag || item.year;
 
-      const distBadge = document.createElement('span');
-      distBadge.className = 'timeline-distance-badge';
-      distBadge.textContent =
+      const stopTag = document.createElement('span');
+      stopTag.className = 'timeline-stop-num';
+      stopTag.textContent = `#${globalIdx + 1}/${totalStops}`;
+
+      headerLeft.append(yearBadge, stopTag);
+
+      const distText =
         item.distanceLabel && typeof item.distanceLabel === 'object'
           ? item.distanceLabel[currentLang]
           : item.distanceLabel;
+      const distMood = getFootprintDistanceMood(distText);
+      const distBadge = document.createElement('span');
+      distBadge.className = `timeline-distance-badge is-${distMood}`;
+      distBadge.textContent =
+        distMood === 'long-distance'
+          ? `✈️ ${distText}`
+          : distMood === 'reunion'
+            ? `♥ ${distText}`
+            : `📍 ${distText}`;
 
-      header.append(yearBadge, distBadge);
+      header.append(headerLeft, distBadge);
 
       if (item.tom && item.eunice) {
         const pairRow = document.createElement('div');
@@ -6971,10 +7062,11 @@
       descEl.textContent = item.desc[currentLang];
 
       node.append(titleEl, descEl);
-      return node;
+      renderedNodes.push(node);
     });
 
-    elFootprintTimelineList.replaceChildren(...timelineNodes);
+    elFootprintTimelineList.replaceChildren(...renderedNodes);
+    timelineLastActiveIdx = -1;
     drawTimelineVideoFrame(timelineProgress);
   }
 
@@ -8325,6 +8417,17 @@
         timelineLastScrubberPct = pct;
         elTimelineScrubberFill.style.width = `${pct}%`;
       }
+    }
+
+    if (LOVE_FOOTPRINTS_DATA.length > 1) {
+      const activeIdx = Math.max(
+        0,
+        Math.min(
+          LOVE_FOOTPRINTS_DATA.length - 1,
+          Math.round(progress * (LOVE_FOOTPRINTS_DATA.length - 1))
+        )
+      );
+      syncActiveTimelineCard(activeIdx);
     }
   }
 
