@@ -3672,6 +3672,23 @@ body.carousel-fullscreen-open {
   font-size: 0.75rem;
 }
 
+/* Fine-Dining Editorial Wedding Banquet Menu */
+#banquet-menu-section .feature-card-wide {
+  position: relative;
+  background: var(--surface-note);
+  border: 1px solid var(--blush-border);
+  box-shadow: var(--shadow-card);
+}
+
+#banquet-menu-section .feature-card-wide::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--champagne) 36%, transparent);
+  pointer-events: none;
+}
+
 .banquet-menu-note {
   padding: 12px 16px;
   margin-bottom: 14px;
@@ -3686,80 +3703,309 @@ body.carousel-fullscreen-open {
 }
 
 .banquet-courses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.banquet-controls-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.banquet-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.banquet-filter-pill {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-card);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.14s ease, background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.banquet-filter-pill:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.banquet-filter-pill.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.banquet-filter-pill:active {
+  transform: scale(0.97);
+}
+
+.banquet-jump-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.banquet-jump-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.banquet-jump-pill {
+  flex: 0 0 auto;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--champagne) 38%, var(--border-subtle));
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Cormorant Garamond', 'Noto Sans TC', serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.16s ease, color 0.16s ease, background 0.16s ease;
+}
+
+.banquet-jump-pill:hover {
+  border-color: var(--blush-text);
+  color: var(--blush-text);
+  background: var(--blush-soft);
+}
+
+.banquet-courses-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
-  gap: 14px;
+  gap: 16px;
   align-items: stretch;
 }
 
 .banquet-course-card {
-  padding: 16px 18px;
-  border-radius: 16px;
-  background: var(--surface-pill);
+  position: relative;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: var(--surface-card);
   border: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   text-align: left;
-  transition: border-color 0.2s ease;
+  scroll-margin-top: 24px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .banquet-course-card:hover {
   border-color: var(--border-highlight);
 }
 
-@media (min-width: 760px) {
-  .banquet-course-card:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
-  }
+.banquet-course-card.is-hero-station {
+  grid-column: 1 / -1;
+  background: linear-gradient(
+    180deg,
+    var(--surface-card) 0%,
+    color-mix(in srgb, var(--blush-soft) 55%, var(--surface-card)) 100%
+  );
+  border-color: var(--blush-border);
 }
 
-.event-subtitle,
-.feature-section h3,
-.seating-table-card h4 {
-  text-wrap: balance;
+.banquet-course-card.is-bar-station {
+  grid-column: 1 / -1;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 11%, var(--surface-card)) 0%,
+    color-mix(in srgb, var(--champagne) 16%, var(--surface-card)) 100%
+  );
+  border-color: color-mix(in srgb, var(--champagne) 52%, var(--border-subtle));
+}
+
+.banquet-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.banquet-card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.banquet-roman-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--champagne) 55%, var(--border-subtle));
+  background: var(--surface-subtle);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--blush-text);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
 }
 
 .banquet-course-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
+  font-family: 'Cormorant Garamond', 'JetBrains Mono', serif;
+  font-size: 0.74rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--accent);
-  margin-bottom: 4px;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
 }
 
 .banquet-course-tag {
-  align-self: flex-start;
-  font-family: 'JetBrains Mono', 'Noto Sans TC', monospace;
-  font-size: 0.72rem;
+  font-family: 'Noto Sans TC', 'Inter', sans-serif;
+  font-size: 0.73rem;
   font-weight: 600;
   color: var(--accent);
   background: var(--surface-subtle);
   border: 1px solid var(--border-subtle);
   padding: 3px 10px;
   border-radius: 999px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 
 .banquet-course-title {
-  font-family: 'Noto Serif TC', 'Cormorant Garamond', serif;
-  font-size: 1.05rem;
+  font-family: 'Noto Serif TC', 'Songti TC', 'Cormorant Garamond', serif;
+  font-size: 1.08rem;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.42;
   color: var(--text-primary);
-  margin: 0 0 6px;
+  margin: 0;
+  text-wrap: balance;
   overflow-wrap: anywhere;
 }
 
-.banquet-course-desc {
-  font-size: 0.86rem;
-  color: var(--text-secondary);
-  line-height: 1.68;
-  white-space: pre-line;
-  overflow-wrap: anywhere;
+.banquet-editorial-divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--champagne) 55%, transparent) 0%,
+    var(--border-subtle) 55%,
+    transparent 100%
+  );
+  margin: 2px 0;
+}
+
+.banquet-dish-list {
+  list-style: none;
   margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+@media (min-width: 720px) {
+  .banquet-dish-list.is-two-col {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+  }
+}
+
+.banquet-dish-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding: 6px 0;
+  border-bottom: 1px dotted color-mix(in srgb, var(--border-subtle) 85%, transparent);
+}
+
+.banquet-dish-item:last-child {
+  border-bottom: none;
+  padding-bottom: 2px;
+}
+
+.banquet-dish-name {
+  font-family: 'Noto Serif TC', 'Songti TC', 'Noto Sans TC', serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--text-primary);
+}
+
+.banquet-dish-item.is-signature .banquet-dish-name {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.banquet-dish-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.banquet-diet-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.banquet-diet-badge.is-veg {
+  background: var(--success-bg);
+  color: var(--accent-emerald);
+  border: 1px solid color-mix(in srgb, var(--accent-emerald) 30%, transparent);
+}
+
+.banquet-diet-badge.is-spicy {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid color-mix(in srgb, var(--danger) 28%, transparent);
+}
+
+.banquet-diet-badge.is-alcohol {
+  background: color-mix(in srgb, var(--champagne) 18%, transparent);
+  color: var(--blush-text);
+  border: 1px solid color-mix(in srgb, var(--champagne) 45%, transparent);
+}
+
+.banquet-diet-badge.is-signature {
+  background: var(--blush-soft);
+  color: var(--blush-text);
+  border: 1px solid var(--blush-border);
+}
+
+.banquet-editorial-footer {
+  margin: 4px 0 0;
+  text-align: center;
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-size: 0.84rem;
+  font-style: italic;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.event-subtitle,
+.feature-section h3,
+.seating-table-card h4 {
+  text-wrap: balance;
 }
 
 /* Love Footprints & Google Maps Timeline */

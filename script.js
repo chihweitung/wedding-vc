@@ -6600,9 +6600,58 @@
     showHubView('seating');
   };
 
+  let selectedMenuFilter = 'all';
+
+  function parseMenuDishItem(rawText, lang) {
+    let text = String(rawText || '').replace(/^[•·\-\s]+/, '').trim();
+    const badges = [];
+    let isVeg = false;
+
+    const rules = [
+      {
+        re: /[（(]蛋奶素[）)]|\(Ovo-Lacto Veg\)/gi,
+        badge: { type: 'veg', label: lang === 'en' ? '🌿 Ovo-Lacto Veg' : '🌿 蛋奶素' },
+        veg: true,
+      },
+      {
+        re: /[（(]素[）)]|\(Veg\)/gi,
+        badge: { type: 'veg', label: lang === 'en' ? '🌿 Veg' : '🌿 素食' },
+        veg: true,
+      },
+      {
+        re: /[（(]微辣[）)]|\(Mildly Spicy\)/gi,
+        badge: { type: 'spicy', label: lang === 'en' ? '🌶️ Mildly Spicy' : '🌶️ 微辣' },
+      },
+      {
+        re: /[（(]含酒精[）)]|\(Contains Alcohol\)/gi,
+        badge: { type: 'alcohol', label: lang === 'en' ? '🥃 Alcohol' : '🥃 含酒精' },
+      },
+    ];
+
+    rules.forEach((rule) => {
+      if (rule.re.test(text)) {
+        text = text.replace(rule.re, '').trim();
+        badges.push(rule.badge);
+        if (rule.veg) isVeg = true;
+      }
+    });
+
+    const isSignature =
+      /曼哈頓牛排|Manhattan Steak|Bartender 現調調酒|Bartender Handcrafted Cocktail/i.test(text);
+    if (isSignature) {
+      badges.unshift({
+        type: 'signature',
+        label: lang === 'en' ? "★ Signature" : '★ 主廚招牌',
+      });
+    }
+
+    return { text, badges, isVeg, isSignature };
+  }
+
   function renderBanquetMenuSection() {
     if (!elBanquetCoursesList) return;
     const dict = t();
+    const isEn = currentLang === 'en';
 
     renderEmbeddedPhotoStage(
       elMenuPhotoStage,
@@ -6612,34 +6661,174 @@
       dict.menuPanelTitle
     );
 
-    const courseCards = WEDDING_MENU_COURSES.map((course) => {
-      const card = document.createElement('article');
-      card.className = 'banquet-course-card';
+    const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+    const JUMP_LABELS = isEn
+      ? ['Salads', 'Pasta & Rice', 'Carving & Entrées', 'Soups', 'Savory Bites', 'Desserts', 'Cocktails & Bar']
+      : ['沙拉冷盤', '經典主食', '海陸主菜', '暖心湯品', '派對鹹點', '法式甜點', '現調調酒'];
 
-      const left = document.createElement('div');
+    const FILTERS = [
+      { id: 'all', label: isEn ? '✦ Full Menu' : '✦ 全部佳餚' },
+      { id: 'veg', label: isEn ? '🌿 Vegetarian Friendly' : '🌿 素食友善' },
+      { id: 'savory', label: isEn ? '🥩 Entrées & Bites' : '🥩 主菜＆鹹點' },
+      { id: 'sweets', label: isEn ? '🍸 Sweets & Cocktails' : '🍸 甜點＆調酒' },
+    ];
+
+    // Top editorial controls (filter pills + quick station jump bar)
+    const controlsWrap = document.createElement('div');
+    controlsWrap.className = 'banquet-controls-wrap';
+
+    const filterBar = document.createElement('div');
+    filterBar.className = 'banquet-filter-bar';
+    filterBar.setAttribute('role', 'tablist');
+    FILTERS.forEach((f) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `banquet-filter-pill${selectedMenuFilter === f.id ? ' is-active' : ''}`;
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-selected', String(selectedMenuFilter === f.id));
+      btn.textContent = f.label;
+      btn.addEventListener('click', () => {
+        selectedMenuFilter = f.id;
+        renderBanquetMenuSection();
+      });
+      filterBar.append(btn);
+    });
+    controlsWrap.append(filterBar);
+
+    if (selectedMenuFilter === 'all') {
+      const jumpBar = document.createElement('nav');
+      jumpBar.className = 'banquet-jump-bar';
+      jumpBar.setAttribute('aria-label', isEn ? 'Jump to station' : '快速跳轉餐檯');
+      WEDDING_MENU_COURSES.forEach((_course, idx) => {
+        const jBtn = document.createElement('button');
+        jBtn.type = 'button';
+        jBtn.className = 'banquet-jump-pill';
+        jBtn.textContent = `${ROMAN[idx] || idx + 1} · ${JUMP_LABELS[idx] || ''}`;
+        jBtn.addEventListener('click', () => {
+          const targetEl = document.getElementById(`banquet-station-${idx + 1}`);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+        jumpBar.append(jBtn);
+      });
+      controlsWrap.append(jumpBar);
+    }
+
+    const cardsGrid = document.createElement('div');
+    cardsGrid.className = 'banquet-courses-grid';
+
+    let visibleCount = 0;
+
+    WEDDING_MENU_COURSES.forEach((course, idx) => {
+      const stationNum = idx + 1;
+      const isHero = stationNum === 3;
+      const isBar = stationNum === 7;
+
+      if (selectedMenuFilter === 'savory' && stationNum > 5) return;
+      if (selectedMenuFilter === 'sweets' && stationNum < 6) return;
+
+      const rawDesc = course.desc[currentLang] || course.desc.zh;
+      const parsedDishes = rawDesc
+        .split('\n')
+        .flatMap((line) => line.split(/\s*[／/]\s*/))
+        .map((part) => parseMenuDishItem(part, currentLang))
+        .filter((d) => d.text.length > 0);
+
+      // For veg filter: keep veg dishes + Station 1 fruit salad & Station 7 drinks
+      let displayDishes = parsedDishes;
+      if (selectedMenuFilter === 'veg') {
+        if (isBar) {
+          displayDishes = parsedDishes;
+        } else {
+          displayDishes = parsedDishes.filter(
+            (d) => d.isVeg || /鮮果沙拉|Fruit Salad/i.test(d.text)
+          );
+        }
+        if (displayDishes.length === 0) return;
+      }
+
+      visibleCount += 1;
+
+      const card = document.createElement('article');
+      card.id = `banquet-station-${stationNum}`;
+      card.className = 'banquet-course-card';
+      if (isHero) card.classList.add('is-hero-station');
+      if (isBar) card.classList.add('is-bar-station');
+
+      const headerRow = document.createElement('div');
+      headerRow.className = 'banquet-card-header';
+
+      const headerLeft = document.createElement('div');
+      headerLeft.className = 'banquet-card-header-left';
+
+      const romanEl = document.createElement('span');
+      romanEl.className = 'banquet-roman-num';
+      romanEl.textContent = ROMAN[idx] || String(stationNum);
+
       const numEl = document.createElement('div');
       numEl.className = 'banquet-course-num';
       numEl.textContent = course.courseNo;
+
+      headerLeft.append(romanEl, numEl);
+
+      const tagEl = document.createElement('span');
+      tagEl.className = 'banquet-course-tag';
+      tagEl.textContent =
+        selectedMenuFilter === 'veg' && !isBar
+          ? isEn
+            ? `🌿 ${displayDishes.length} Veg Options`
+            : `🌿 素食可享 (${displayDishes.length} 品)`
+          : course.tag[currentLang] || course.tag.zh;
+
+      headerRow.append(headerLeft, tagEl);
 
       const titleEl = document.createElement('h4');
       titleEl.className = 'banquet-course-title';
       titleEl.textContent = course.title[currentLang] || course.title.zh;
 
-      const descEl = document.createElement('p');
-      descEl.className = 'banquet-course-desc';
-      descEl.textContent = course.desc[currentLang] || course.desc.zh;
+      const divider = document.createElement('div');
+      divider.className = 'banquet-editorial-divider';
+      divider.setAttribute('aria-hidden', 'true');
 
-      left.append(numEl, titleEl, descEl);
+      const ul = document.createElement('ul');
+      ul.className = `banquet-dish-list${isHero && displayDishes.length >= 6 ? ' is-two-col' : ''}`;
 
-      const tagEl = document.createElement('span');
-      tagEl.className = 'banquet-course-tag';
-      tagEl.textContent = course.tag[currentLang] || course.tag.zh;
+      displayDishes.forEach((dish) => {
+        const li = document.createElement('li');
+        li.className = `banquet-dish-item${dish.isSignature ? ' is-signature' : ''}`;
 
-      card.append(left, tagEl);
-      return card;
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'banquet-dish-name';
+        nameSpan.textContent = dish.text;
+        li.append(nameSpan);
+
+        if (dish.badges.length > 0) {
+          const badgeWrap = document.createElement('span');
+          badgeWrap.className = 'banquet-dish-badges';
+          dish.badges.forEach((b) => {
+            const bEl = document.createElement('span');
+            bEl.className = `banquet-diet-badge is-${b.type}`;
+            bEl.textContent = b.label;
+            badgeWrap.append(bEl);
+          });
+          li.append(badgeWrap);
+        }
+
+        ul.append(li);
+      });
+
+      card.append(headerRow, titleEl, divider, ul);
+      cardsGrid.append(card);
     });
 
-    elBanquetCoursesList.replaceChildren(...courseCards);
+    const footerOrnament = document.createElement('p');
+    footerOrnament.className = 'banquet-editorial-footer';
+    footerOrnament.textContent = isEn
+      ? '❦  BON APPÉTIT · BRICK YARD 33 1/3 · 2026.11.29  ❦'
+      : '❦  BON APPÉTIT · 陽明山美軍俱樂部 33⅓ · 敬祝用餐愉快  ❦';
+
+    elBanquetCoursesList.replaceChildren(controlsWrap, cardsGrid, footerOrnament);
   }
 
   function renderFootprintsSection() {
