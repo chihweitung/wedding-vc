@@ -7773,41 +7773,98 @@
     );
   }
 
+  const TAOYUAN_AIRPORT_NODE = { lat: 25.0777, lng: 121.2328 };
+
+  function isTaiwanGeoNode(node) {
+    if (!node) return false;
+    return node.lat >= 21.5 && node.lat <= 25.6 && node.lng >= 119.5 && node.lng <= 122.5;
+  }
+
+  function isReturningFromAbroadToTaiwan(startNode, endNode) {
+    if (!startNode || !endNode) return false;
+    if (isTaiwanGeoNode(startNode) || !isTaiwanGeoNode(endNode)) return false;
+    const dLat = endNode.lat - TAOYUAN_AIRPORT_NODE.lat;
+    const dLng = unwrapNear(endNode.lng, TAOYUAN_AIRPORT_NODE.lng) - TAOYUAN_AIRPORT_NODE.lng;
+    return Math.hypot(dLat, dLng) > 0.08;
+  }
+
   function sampleRolePathLatLng(sA, sB, t, liftSign) {
     const startNode = sB.from || sA;
-    if (sB.via) {
-      const endLng = sB.lng;
-      const viaLng = unwrapNear(sB.via.lng, endLng);
-      const startLng = unwrapNear(startNode.lng, viaLng);
-      if (t <= 0.55) {
-        const u = t / 0.55;
-        const { midLat, midLng } = getGeoArcControl(startNode.lat, startLng, sB.via.lat, viaLng, liftSign);
-        return {
-          lat: (1 - u) * (1 - u) * startNode.lat + 2 * (1 - u) * u * midLat + u * u * sB.via.lat,
-          lng: (1 - u) * (1 - u) * startLng + 2 * (1 - u) * u * midLng + u * u * viaLng,
-        };
-      }
-      const u = (t - 0.55) / 0.45;
-      const { midLat, midLng } = getGeoArcControl(sB.via.lat, viaLng, sB.lat, endLng, liftSign);
-      return {
-        lat: (1 - u) * (1 - u) * sB.via.lat + 2 * (1 - u) * u * midLat + u * u * sB.lat,
-        lng: (1 - u) * (1 - u) * viaLng + 2 * (1 - u) * u * midLng + u * u * endLng,
+    const viaTpe = isReturningFromAbroadToTaiwan(startNode, sB);
+
+    // 建構多段航點（支援海外轉機點 via + 返台先降落桃園機場 TPE 再轉往台北／台中／高雄）
+    const nodes = [startNode];
+    if (sB.via) nodes.push(sB.via);
+    if (viaTpe) nodes.push(TAOYUAN_AIRPORT_NODE);
+    nodes.push(sB);
+
+    // 由終點往回連續 unwrap 經度，避免跨國際換日線跳線
+    const unwrapped = new Array(nodes.length);
+    unwrapped[nodes.length - 1] = { lat: nodes[nodes.length - 1].lat, lng: nodes[nodes.length - 1].lng };
+    for (let i = nodes.length - 2; i >= 0; i--) {
+      unwrapped[i] = {
+        lat: nodes[i].lat,
+        lng: unwrapNear(nodes[i].lng, unwrapped[i + 1].lng),
       };
     }
-    const endLng = sB.lng;
-    const startLng = unwrapNear(startNode.lng, endLng);
-    const { midLat, midLng } = getGeoArcControl(startNode.lat, startLng, sB.lat, endLng, liftSign);
-    return {
-      lat: (1 - t) * (1 - t) * startNode.lat + 2 * (1 - t) * t * midLat + t * t * sB.lat,
-      lng: (1 - t) * (1 - t) * startLng + 2 * (1 - t) * t * midLng + t * t * endLng,
-    };
+
+    if (unwrapped.length === 2) {
+      const a = unwrapped[0];
+      const b = unwrapped[1];
+      const { midLat, midLng } = getGeoArcControl(a.lat, a.lng, b.lat, b.lng, liftSign);
+      return {
+        lat: (1 - t) * (1 - t) * a.lat + 2 * (1 - t) * t * midLat + t * t * b.lat,
+        lng: (1 - t) * (1 - t) * a.lng + 2 * (1 - t) * t * midLng + t * t * b.lng,
+      };
+    }
+
+    // 多段時間權重：若最後一段是桃園機場 -> 台灣其他城市，給予固定 20% 讓國內段清晰可見
+    const segCount = unwrapped.length - 1;
+    let weights;
+    if (segCount === 2 && viaTpe) {
+      weights = [0.8, 0.2];
+    } else if (segCount === 2) {
+      weights = [0.55, 0.45];
+    } else if (segCount === 3 && viaTpe) {
+      weights = [0.44, 0.36, 0.2];
+    } else {
+      weights = Array.from({ length: segCount }, () => 1 / segCount);
+    }
+
+    let acc = 0;
+    for (let i = 0; i < segCount; i++) {
+      const w = weights[i];
+      const nextAcc = i === segCount - 1 ? 1 : acc + w;
+      if (t <= nextAcc || i === segCount - 1) {
+        const u = w > 0 ? Math.max(0, Math.min(1, (t - acc) / w)) : 1;
+        const a = unwrapped[i];
+        const b = unwrapped[i + 1];
+        const isDomesticFinal = viaTpe && i === segCount - 1;
+        // 國內段（桃園 -> 台北／台中／高雄）使用較輕柔弧度，看起來像高鐵／接駁移動
+        if (isDomesticFinal) {
+          const midLat = (a.lat + b.lat) / 2;
+          const midLng = (a.lng + b.lng) / 2 + liftSign * 0.08;
+          return {
+            lat: (1 - u) * (1 - u) * a.lat + 2 * (1 - u) * u * midLat + u * u * b.lat,
+            lng: (1 - u) * (1 - u) * a.lng + 2 * (1 - u) * u * midLng + u * u * b.lng,
+          };
+        }
+        const { midLat, midLng } = getGeoArcControl(a.lat, a.lng, b.lat, b.lng, liftSign);
+        return {
+          lat: (1 - u) * (1 - u) * a.lat + 2 * (1 - u) * u * midLat + u * u * b.lat,
+          lng: (1 - u) * (1 - u) * a.lng + 2 * (1 - u) * u * midLng + u * u * b.lng,
+        };
+      }
+      acc = nextAcc;
+    }
+    return unwrapped[unwrapped.length - 1];
   }
 
   function getTimelineTrajectoryCache(totalSegs) {
     if (timelineTrajectoryCache && timelineTrajectoryCache.totalSegs === totalSegs) {
       return timelineTrajectoryCache;
     }
-    const steps = 16;
+    const steps = 24;
     const buildRole = (roleKey, liftSign) => {
       const segs = [];
       for (let i = 0; i < totalSegs; i++) {
@@ -8051,6 +8108,7 @@
     if (cam.spanLng <= 20) {
       const twRefCities = [
         { name: currentLang === 'zh' ? '台北' : 'Taipei', lat: 25.047, lng: 121.517 },
+        { name: currentLang === 'zh' ? '桃園機場' : 'Taoyuan (TPE)', lat: 25.0777, lng: 121.2328 },
         { name: currentLang === 'zh' ? '新竹' : 'Hsinchu', lat: 24.787, lng: 120.997 },
         { name: currentLang === 'zh' ? '台中' : 'Taichung', lat: 24.147, lng: 120.673 },
         { name: currentLang === 'zh' ? '彰化' : 'Changhua', lat: 24.051, lng: 120.516 },
@@ -8184,6 +8242,20 @@
           ctx2d.fillStyle = strokeActive;
           ctx2d.beginPath();
           ctx2d.arc(vPt.x, vPt.y, 3.5, 0, Math.PI * 2);
+          ctx2d.fill();
+        }
+        // 若從國外返台且已落地桃園機場 (TPE)，標示柔和落地點
+        if (isReturningFromAbroadToTaiwan(seg.sB.from || seg.sA, seg.sB) && tMax >= 0.8) {
+          const tpePt = projectWithCamera(
+            TAOYUAN_AIRPORT_NODE.lat,
+            unwrapNear(TAOYUAN_AIRPORT_NODE.lng, cam.centerLng),
+            cam,
+            w,
+            h
+          );
+          ctx2d.fillStyle = '#fde68a';
+          ctx2d.beginPath();
+          ctx2d.arc(tpePt.x, tpePt.y, 3.2, 0, Math.PI * 2);
           ctx2d.fill();
         }
       }
