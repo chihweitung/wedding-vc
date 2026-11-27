@@ -1308,14 +1308,14 @@
       fillColor: 'rgba(5, 150, 105, 0.12)',
       darkColor: '#34d399',
       darkFillColor: 'rgba(52, 211, 153, 0.16)',
-      debugStats: { headcount: 32, veg: 1, stroller: 0, childSeat: 1, detail: '徐玲明：素食1；卓鈞恩：兒童椅1' },
+      debugStats: { headcount: 31, veg: 1, stroller: 0, childSeat: 1, detail: '徐玲明：素食1；卓鈞恩：兒童椅1' },
       name: { zh: '新郎媽媽親戚區 · 徐家（第 9–10 桌）', en: "Groom's Mother's Relatives · Hsu (Tables 9–10)" },
       zone: { zh: '主廳右側 · 徐家親戚', en: 'Main Hall Right · Hsu Family Relatives' },
       guests: [
         { zh: '徐玲明等五人', en: '徐玲明 (5)' },
         { zh: '徐和志、許嵐音等二人', en: '徐和志 & 許嵐音 (2)' },
         { zh: '徐平志', en: '徐平志' },
-        { zh: '林哲正等二人', en: '林哲正 (2)' },
+        { zh: '林哲正', en: '林哲正' },
         { zh: '徐慧明', en: '徐慧明' },
         { zh: '徐宇光等二人', en: '徐宇光 (2)' },
         { zh: '徐明志等五人', en: '徐明志 (5)' },
@@ -1389,15 +1389,15 @@
               '陳哲雅',
             ],
             freeSeatingNote: {
-              zh: '✨ 第 10 桌（徐家右桌）自由入座（共 16 席）',
-              en: '✨ Open seating at Table 10 · Hsu Right (16 seats)',
+              zh: '✨ 第 10 桌（徐家右桌）自由入座（共 15 席）',
+              en: '✨ Open seating at Table 10 · Hsu Right (15 seats)',
             },
             leftX: 1655,
             rightX: 1766,
             rowYs: [815, 857, 900, 957, 999, 1043, 1095, 1138, 1181],
             rows: [
               [{ zh: '徐家右桌', en: 'Hsu Right' }, null],
-              [{ zh: '徐家右桌', en: 'Hsu Right' }, { zh: '徐家右桌', en: 'Hsu Right' }],
+              [{ zh: '徐家右桌', en: 'Hsu Right' }, null],
               [{ zh: '徐家右桌', en: 'Hsu Right' }, null],
               [{ zh: '徐家右桌', en: 'Hsu Right' }, { zh: '徐家右桌', en: 'Hsu Right' }],
               [{ zh: '徐家右桌', en: 'Hsu Right' }, { zh: '徐家右桌', en: 'Hsu Right' }],
@@ -1458,28 +1458,29 @@
     },
     {
       id: 'zone-groom-moz',
-      box: { x: 1126, y: 2062, w: 165, h: 50 },
+      box: { x: 1214, y: 2010, w: 77, h: 102 },
       color: '#0891b2',
       fillColor: 'rgba(8, 145, 178, 0.12)',
       darkColor: '#22d3ee',
       darkFillColor: 'rgba(34, 211, 238, 0.16)',
       debugStats: { headcount: 2, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎 MOZ 區 · 謀智（第 14 桌）', en: 'Groom · MOZ / Mozilla (Table 14)' },
-      zone: { zh: '外廳左列中段區 · 謀智', en: 'Lower Hall Left Col · Middle (MOZ)' },
+      zone: { zh: '外廳左列中段右側 · 謀智', en: 'Lower Hall Left Col · Middle Right (MOZ)' },
       guests: [
         { zh: 'Shawn Huang等二人', en: 'Shawn Huang (2)' },
       ],
       seatPlan: {
         freeSeating: true,
         freeSeatingNote: {
-          zh: '✨ MOZ 區自由入座（共 2 席）',
-          en: '✨ Open seating in MOZ zone (2 seats)',
+          zh: '✨ MOZ 區自由入座（共 2 席：第 9–10 排右側同側並肩）',
+          en: '✨ Open seating in MOZ zone (2 seats: Rows 9–10 Right, side-by-side)',
         },
         leftX: 1150,
         rightX: 1267,
-        rowYs: [2086],
+        rowYs: [2034, 2086],
         rows: [
-          [{ zh: 'MOZ 可入座', en: 'Available' }, { zh: 'MOZ 可入座', en: 'Available' }],
+          [null, { zh: 'MOZ 可入座', en: 'Available' }],
+          [null, { zh: 'MOZ 可入座', en: 'Available' }],
         ],
       },
     },
@@ -12050,7 +12051,7 @@
   // =========================================================================
   // Boutique Guest Touches: Add to Calendar (.ics), Weather Tip, Native Share & Scroll Reveal
   // =========================================================================
-  var editorialRevealObserver = null;
+  var editorialRevealObserver;
   function observeEditorialReveal(container, selector) {
     if (!container) return;
     const prefersReduced =
@@ -12088,7 +12089,7 @@
     });
   }
 
-  function downloadWeddingCalendarIcs() {
+  function getWeddingCalendarEventDetails() {
     const isEn = currentLang === 'en';
     const summary = isEn
       ? 'Tom & Eunice Wedding Banquet · Brick Yard 33 1/3'
@@ -12096,9 +12097,44 @@
     const location = isEn
       ? 'Brick Yard 33 1/3, No. 49, Kaixuan Rd., Shilin Dist., Taipei City'
       : '陽明山美軍俱樂部 Brick Yard 33 1/3（台北市士林區凱旋路 49 號）';
-    const description = isEn
-      ? '11:30 Outdoor Cocktail Reception | 12:30 Wedding Banquet.\\nShuttle bus (prior reservation required): departs promptly at 11:00 AM from MRT Jiantan Station Exit 2 (Jihe Rd.).\\nYangmingshan can be breezy—please bring a light jacket or shawl.\\nWedding Site: https://chihweitung.github.io/wedding-vc/'
-      : '11:30 戶外雞尾酒迎賓｜12:30 午宴正式開席。\\n接駁小巴（需事前預約）：11:00 準時從捷運劍潭站 2 號出口（基河路）發車。\\n陽明山山區微涼，建議攜帶薄外套或披肩。\\n婚禮網站：https://chihweitung.github.io/wedding-vc/';
+    const descriptionLines = isEn
+      ? [
+          '11:30 Outdoor Cocktail Reception | 12:30 Wedding Banquet.',
+          'Shuttle bus (prior reservation required): departs promptly at 11:00 AM from MRT Jiantan Station Exit 2 (Jihe Rd.).',
+          'Yangmingshan can be breezy—please bring a light jacket or shawl.',
+          'Wedding Site: https://chihweitung.github.io/wedding-vc/',
+        ]
+      : [
+          '11:30 戶外雞尾酒迎賓｜12:30 午宴正式開席。',
+          '接駁小巴（需事前預約）：11:00 準時從捷運劍潭站 2 號出口（基河路）發車。',
+          '陽明山山區微涼，建議攜帶薄外套或披肩。',
+          '婚禮網站：https://chihweitung.github.io/wedding-vc/',
+        ];
+    return {
+      summary,
+      location,
+      descriptionText: descriptionLines.join('\n'),
+      descriptionIcs: descriptionLines.join('\\n'),
+      startUtc: '20261129T033000Z',
+      endUtc: '20261129T073000Z',
+    };
+  }
+
+  function buildGoogleCalendarUrl() {
+    const ev = getWeddingCalendarEventDetails();
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: ev.summary,
+      dates: `${ev.startUtc}/${ev.endUtc}`,
+      location: ev.location,
+      details: ev.descriptionText,
+      ctz: 'Asia/Taipei',
+    });
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  }
+
+  function downloadWeddingCalendarIcs() {
+    const ev = getWeddingCalendarEventDetails();
     const icsLines = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
@@ -12108,11 +12144,11 @@
       'BEGIN:VEVENT',
       'UID:tom-eunice-wedding-20261129@wedding-vc',
       'DTSTAMP:20261127T080000Z',
-      'DTSTART:20261129T033000Z',
-      'DTEND:20261129T073000Z',
-      `SUMMARY:${summary}`,
-      `LOCATION:${location}`,
-      `DESCRIPTION:${description}`,
+      `DTSTART:${ev.startUtc}`,
+      `DTEND:${ev.endUtc}`,
+      `SUMMARY:${ev.summary}`,
+      `LOCATION:${ev.location}`,
+      `DESCRIPTION:${ev.descriptionIcs}`,
       'BEGIN:VALARM',
       'ACTION:DISPLAY',
       'DESCRIPTION:Tom & Eunice Wedding Reminder',
@@ -12188,10 +12224,21 @@
     }
   }
 
-  var elWeatherTipText = null;
-  var elAddCalendarBtn = null;
-  var elSeatingShareBtn = null;
-  var elMenuShareBtn = null;
+  var elWeatherTipText;
+  var elAddCalendarBtn;
+  var elCalendarMenu;
+  var elCalendarGoogleLink;
+  var elCalendarIcsBtn;
+  var elSeatingShareBtn;
+  var elMenuShareBtn;
+
+  function setCalendarMenuOpen(isOpen) {
+    const menu = elCalendarMenu || document.getElementById('countdown-calendar-menu');
+    const btn = elAddCalendarBtn || document.getElementById('countdown-add-calendar-btn');
+    if (!menu || !btn) return;
+    menu.classList.toggle('hidden', !isOpen);
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
 
   function ensureBoutiqueExtrasMounted() {
     const transitCard = document.getElementById('countdown-transit-card');
@@ -12203,13 +12250,60 @@
       elWeatherTipText = document.createElement('p');
       elWeatherTipText.className = 'countdown-weather-tip';
 
+      const calWrap = document.createElement('div');
+      calWrap.id = 'countdown-calendar-wrap';
+      calWrap.className = 'countdown-calendar-wrap';
+
       elAddCalendarBtn = document.createElement('button');
       elAddCalendarBtn.type = 'button';
       elAddCalendarBtn.id = 'countdown-add-calendar-btn';
       elAddCalendarBtn.className = 'countdown-calendar-btn';
-      elAddCalendarBtn.addEventListener('click', downloadWeddingCalendarIcs);
+      elAddCalendarBtn.setAttribute('aria-haspopup', 'menu');
+      elAddCalendarBtn.setAttribute('aria-expanded', 'false');
+      elAddCalendarBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const willOpen = elCalendarMenu && elCalendarMenu.classList.contains('hidden');
+        setCalendarMenuOpen(Boolean(willOpen));
+      });
 
-      footerStrip.append(elWeatherTipText, elAddCalendarBtn);
+      elCalendarMenu = document.createElement('div');
+      elCalendarMenu.id = 'countdown-calendar-menu';
+      elCalendarMenu.className = 'countdown-calendar-menu hidden';
+      elCalendarMenu.setAttribute('role', 'menu');
+
+      elCalendarGoogleLink = document.createElement('a');
+      elCalendarGoogleLink.id = 'countdown-cal-google';
+      elCalendarGoogleLink.className = 'countdown-calendar-option';
+      elCalendarGoogleLink.setAttribute('role', 'menuitem');
+      elCalendarGoogleLink.target = '_blank';
+      elCalendarGoogleLink.rel = 'noopener noreferrer';
+      elCalendarGoogleLink.addEventListener('click', () => setCalendarMenuOpen(false));
+
+      elCalendarIcsBtn = document.createElement('button');
+      elCalendarIcsBtn.type = 'button';
+      elCalendarIcsBtn.id = 'countdown-cal-ics';
+      elCalendarIcsBtn.className = 'countdown-calendar-option';
+      elCalendarIcsBtn.setAttribute('role', 'menuitem');
+      elCalendarIcsBtn.addEventListener('click', () => {
+        setCalendarMenuOpen(false);
+        downloadWeddingCalendarIcs();
+      });
+
+      elCalendarMenu.append(elCalendarGoogleLink, elCalendarIcsBtn);
+      calWrap.append(elAddCalendarBtn, elCalendarMenu);
+
+      document.addEventListener('click', (e) => {
+        if (elCalendarMenu && !elCalendarMenu.classList.contains('hidden') && !calWrap.contains(e.target)) {
+          setCalendarMenuOpen(false);
+        }
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && elCalendarMenu && !elCalendarMenu.classList.contains('hidden')) {
+          setCalendarMenuOpen(false);
+        }
+      });
+
+      footerStrip.append(elWeatherTipText, calWrap);
       transitCard.append(footerStrip);
     }
 
@@ -12254,7 +12348,14 @@
         : '🧥 陽明山山區微涼，戶外迎賓時段建議攜帶薄外套或披肩';
     }
     if (elAddCalendarBtn) {
-      elAddCalendarBtn.textContent = isEn ? '📅 Add to Calendar (.ics)' : '📅 加入行事曆';
+      elAddCalendarBtn.textContent = isEn ? '📅 Add to Calendar ▾' : '📅 加入行事曆 ▾';
+    }
+    if (elCalendarGoogleLink) {
+      elCalendarGoogleLink.href = buildGoogleCalendarUrl();
+      elCalendarGoogleLink.textContent = isEn ? '📆 Google Calendar' : '📆 Google 日曆（直接開啟）';
+    }
+    if (elCalendarIcsBtn) {
+      elCalendarIcsBtn.textContent = isEn ? '🍎 Apple / Outlook (.ics)' : '🍎 Apple / Outlook（.ics）';
     }
     if (elSeatingShareBtn) {
       elSeatingShareBtn.textContent = isEn ? '🔗 Share' : '🔗 分享連結';

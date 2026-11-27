@@ -7832,6 +7832,16 @@ body.wg-modal-open .back-to-top-btn {
   flex: 1 1 220px;
 }
 
+.countdown-transit-card {
+  overflow: visible;
+}
+
+.countdown-calendar-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
 .countdown-calendar-btn {
   display: inline-flex;
   align-items: center;
@@ -7858,6 +7868,67 @@ body.wg-modal-open .back-to-top-btn {
 
 .countdown-calendar-btn:active {
   transform: scale(0.97);
+}
+
+.countdown-calendar-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 45;
+  min-width: 224px;
+  padding: 6px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--champagne) 52%, var(--border-subtle));
+  background: var(--card-bg, #ffffff);
+  box-shadow: 0 12px 28px rgba(32, 26, 20, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.countdown-calendar-menu.hidden {
+  display: none;
+}
+
+.countdown-calendar-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+
+.countdown-calendar-option:hover,
+.countdown-calendar-option:focus-visible {
+  background: var(--blush-soft);
+  color: var(--blush-text);
+  outline: none;
+}
+
+[data-theme="dark"] .countdown-calendar-menu {
+  background: #1b241e;
+  border-color: rgba(212, 184, 150, 0.28);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 520px) {
+  .countdown-calendar-menu {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
 }
 
 .section-top-actions {
