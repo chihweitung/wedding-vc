@@ -822,9 +822,8 @@
    */
   // 小巴接駁名單（11:00 劍潭站發車，僅於 staff.html / debug.html 顯示，不與座位綁定）
   const SHUTTLE_PASSENGERS = [
-    // 新郎爸媽朋友（23 組／31 人）
+    // 新郎爸媽朋友（22 組／30 人）
     { name: '楊文', count: 1, group: '新郎爸媽朋友' },
-    { name: '張愛卿', count: 1, group: '新郎爸媽朋友' },
     { name: '林鳳姿', count: 1, group: '新郎爸媽朋友' },
     { name: '李素幸', count: 1, group: '新郎爸媽朋友' },
     { name: '李旻貞', count: 1, group: '新郎爸媽朋友' },
