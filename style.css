@@ -7401,7 +7401,7 @@ body.wg-modal-open {
 .wg-puzzle-wrap {
   position: relative;
   width: 100%;
-  max-width: 312px;
+  max-width: 420px;
   margin: 0 auto;
   padding: 10px;
   border-radius: 18px;
@@ -7414,7 +7414,7 @@ body.wg-modal-open {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 4px;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 3 / 2;
   transition: gap 0.35s ease;
 }
 
