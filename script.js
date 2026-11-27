@@ -86,8 +86,8 @@
   ];
 
   // 婚宴座位表與菜單的 Google Photos / 圖片連結（若填入圖片網址會直接顯示於頁面頂部，填入分享連結會顯示開啟按鈕）
-  const SEATING_CHART_IMAGE_URL = 'seating-chart.jpg?v=20261122m';
-  const SEATING_CHART_LINK_URL = 'seating-chart.jpg?v=20261122m';
+  const SEATING_CHART_IMAGE_URL = 'seating-chart.jpg?v=20261127r';
+  const SEATING_CHART_LINK_URL = 'seating-chart.jpg?v=20261127r';
   const WEDDING_MENU_IMAGE_URL = '';
   const WEDDING_MENU_LINK_URL = '';
 
@@ -1344,7 +1344,9 @@
               '徐宇光',
               '鍾燕玲',
               '徐若謙',
+              '徐晨泰',
               '徐天泰',
+              '睦哲',
               '徐乙芹',
             ],
             freeSeatingNote: {
@@ -1372,6 +1374,7 @@
               '徐玲明',
               '卓鈞恩',
               '卓辰陽',
+              '如鴈',
               'Roxy',
               '卓恆毅',
               '林哲正',
@@ -1490,7 +1493,7 @@
       darkColor: '#c084fc',
       darkFillColor: 'rgba(192, 132, 252, 0.16)',
       debugStats: { headcount: 7, veg: 0, stroller: 0, childSeat: 0 },
-      name: { zh: '新娘同事區 · 瑪黑（第 16 桌）', en: "Bride's Colleagues · Marais (Table 16)" },
+      name: { zh: '新娘同事區 · 瑪黑（第 14 桌）', en: "Bride's Colleagues · Marais (Table 14)" },
       zone: { zh: '外廳左列下方區 · 瑪黑', en: 'Lower Hall Left Col · Lower (Marais)' },
       guests: [
         { zh: '吳宥蓁', en: '吳宥蓁' },
@@ -1525,7 +1528,7 @@
       darkColor: '#fb923c',
       darkFillColor: 'rgba(251, 146, 60, 0.16)',
       debugStats: { headcount: 23, veg: 0, stroller: 0, childSeat: 0 },
-      name: { zh: '新郎同事區 · Google（第 12、17 桌）', en: "Groom's Colleagues · Google (Tables 12 & 17)" },
+      name: { zh: '新郎同事區 · Google（第 12、15 桌）', en: "Groom's Colleagues · Google (Tables 12 & 15)" },
       zone: { zh: '外廳中列長桌區 · Google', en: 'Lower Hall Center Col · Google' },
       guests: [
         { zh: 'Rock Tsai', en: 'Rock Tsai' },
@@ -1569,7 +1572,7 @@
           },
           {
             freeSeating: true,
-            title: { zh: '第 17 桌 · Google 下桌', en: 'Table 17 · Google Lower' },
+            title: { zh: '第 15 桌 · Google 下桌', en: 'Table 15 · Google Lower' },
             groupMatch: ['rock', 'anh', '張均銘', 'jimmy chang', '沈昊平', 'michael', 'gpgpgp', 'medicine', 'ray', 'mark', '葛家聿'],
             freeSeatingNote: {
               zh: '✨ Google 下桌自由入座（共 11 席）',
@@ -1618,7 +1621,7 @@
       darkColor: '#60a5fa',
       darkFillColor: 'rgba(96, 165, 250, 0.16)',
       debugStats: { headcount: 5, veg: 1, stroller: 0, childSeat: 0, detail: '王淑菁：素食1' },
-      name: { zh: '新娘高中區 · 雄女（第 15 桌）', en: "Bride's High School · KGHS (Table 15)" },
+      name: { zh: '新娘高中區 · 雄女（第 16 桌）', en: "Bride's High School · KGHS (Table 16)" },
       zone: { zh: '外廳右列中段區 · 雄女', en: 'Lower Hall Right Col · Middle (KGHS)' },
       guests: [
         { zh: '張恬恬', en: '張恬恬' },
@@ -1635,7 +1638,7 @@
       darkColor: '#f472b6',
       darkFillColor: 'rgba(244, 114, 182, 0.16)',
       debugStats: { headcount: 6, veg: 0, stroller: 0, childSeat: 0 },
-      name: { zh: '新娘大學區 · 北藝（第 18 桌）', en: "Bride's College · TNUA (Table 18)" },
+      name: { zh: '新娘大學區 · 北藝（第 17 桌）', en: "Bride's College · TNUA (Table 17)" },
       zone: { zh: '外廳右列下方區 · 北藝', en: 'Lower Hall Right Col · Lower (TNUA)' },
       guests: [
         { zh: '陳品心', en: '陳品心' },
