@@ -993,7 +993,7 @@
       fillColor: 'rgba(101, 163, 13, 0.11)',
       darkColor: '#a3e635',
       darkFillColor: 'rgba(163, 230, 53, 0.15)',
-      debugStats: { headcount: 74, veg: 0, stroller: 0, childSeat: 0 },
+      debugStats: { headcount: 73, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎爸媽朋友區（第 1–6 桌）', en: "Groom's Parents' Friends (Tables 1–6)" },
       zone: { zh: '主廳上方 · 新郎爸媽朋友', en: "Main Hall North · Groom's Parents' Friends" },
       guests: [
@@ -1045,7 +1045,7 @@
         { zh: '梁志遠等二人', en: '梁志遠 (2)' },
         { zh: '康裕傑等二人', en: '康裕傑 (2)' },
         { zh: '高增堯&張淑貞等二人', en: '高增堯 & 張淑貞 (2)' },
-        { zh: '蕭金柱等二人', en: '蕭金柱 (2)' },
+        { zh: '張榮欽', en: '張榮欽' },
       ],
       seatPlan: {
         subTables: [
@@ -1053,7 +1053,7 @@
             title: { zh: '第 1 桌（最左）', en: 'Table 1 (Far Left)' },
             leftX: 699,
             rightX: 811,
-            rowYs: [224, 267, 310, 363, 406, 449],
+            rowYs: [224, 267, 310, 363, 406, 449, 490],
             rows: [
               [
                 { key: '梁光華_韋雪華', zh: '梁光華', en: '梁光華', match: '梁光華 韋雪華' },
@@ -1078,6 +1078,10 @@
               [
                 { key: '夏正德', zh: '夏正德', en: '夏正德', match: '夏正德' },
                 { key: '廖惠生_林碧華', zh: '林碧華', en: '林碧華', match: '廖惠生 林碧華 碧華' },
+              ],
+              [
+                { key: '張榮欽', zh: '張榮欽', en: '張榮欽', match: '張榮欽' },
+                null,
               ],
             ],
           },
@@ -1149,7 +1153,7 @@
             title: { zh: '第 4 桌', en: 'Table 4' },
             leftX: 1267,
             rightX: 1384,
-            rowYs: [224, 267, 310, 363, 406, 449, 490],
+            rowYs: [224, 267, 310, 363, 406, 449],
             rows: [
               [
                 { key: '吳逸楓', zh: '吳逸楓', en: '吳逸楓', match: '吳逸楓' },
@@ -1158,10 +1162,6 @@
               [
                 { key: '高增堯_張淑貞', zh: '高增堯', en: '高增堯', match: '高增堯 張淑貞' },
                 { key: '高增堯_張淑貞', zh: '張淑貞', en: '張淑貞', match: '高增堯 張淑貞' },
-              ],
-              [
-                { key: '蕭金柱', zh: '蕭金柱', en: '蕭金柱', match: '蕭金柱' },
-                { key: '蕭金柱', zh: '蕭金柱', en: '蕭金柱', match: '蕭金柱' },
               ],
               [
                 { key: '劉子經_林貞吟', zh: '劉子經', en: '劉子經', match: '劉子經 林貞吟' },
@@ -1413,6 +1413,7 @@
     {
       id: 'zone-groom-highschool',
       box: { x: 1126, y: 1584, w: 165, h: 474 },
+      svgPath: 'M 1142 1584 H 1275 Q 1291 1584 1291 1600 V 1986 Q 1291 2002 1275 2002 H 1222 Q 1206 2002 1206 2018 V 2042 Q 1206 2058 1190 2058 H 1142 Q 1126 2058 1126 2042 V 1600 Q 1126 1584 1142 1584 Z',
       color: '#dc2626',
       fillColor: 'rgba(220, 38, 38, 0.12)',
       darkColor: '#f87171',
