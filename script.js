@@ -4680,13 +4680,29 @@
         if (oldVenueMapLink) oldVenueMapLink.remove();
 
         let zoomBtn = document.getElementById('seating-zoom-map-btn');
+        const seatingTopRow = elSeatingExternalLink.closest('.section-top-row') || elSeatingExternalLink.parentNode;
+        let actionsGroup = document.getElementById('seating-top-actions');
+        if (!actionsGroup && seatingTopRow) {
+          actionsGroup = document.createElement('div');
+          actionsGroup.id = 'seating-top-actions';
+          actionsGroup.className = 'section-top-actions';
+          seatingTopRow.appendChild(actionsGroup);
+        }
         if (!zoomBtn && safeImg) {
           zoomBtn = document.createElement('button');
           zoomBtn.type = 'button';
           zoomBtn.id = 'seating-zoom-map-btn';
           zoomBtn.className = elSeatingExternalLink.className.replace(/\bhidden\b/g, '').trim();
           zoomBtn.addEventListener('click', () => openSeatingZoomLightbox(safeImg));
-          elSeatingExternalLink.parentNode.insertBefore(zoomBtn, elSeatingExternalLink.nextSibling);
+        }
+        if (zoomBtn && actionsGroup) {
+          if (zoomBtn.parentNode !== actionsGroup) {
+            actionsGroup.insertBefore(zoomBtn, actionsGroup.firstChild);
+          }
+          const shareBtn = document.getElementById('seating-share-link-btn');
+          if (shareBtn && shareBtn.parentNode !== actionsGroup) {
+            actionsGroup.appendChild(shareBtn);
+          }
         }
         if (zoomBtn) {
           zoomBtn.textContent =
@@ -12034,7 +12050,7 @@
   // =========================================================================
   // Boutique Guest Touches: Add to Calendar (.ics), Weather Tip, Native Share & Scroll Reveal
   // =========================================================================
-  let editorialRevealObserver = null;
+  var editorialRevealObserver = null;
   function observeEditorialReveal(container, selector) {
     if (!container) return;
     const prefersReduced =
@@ -12172,10 +12188,10 @@
     }
   }
 
-  let elWeatherTipText = null;
-  let elAddCalendarBtn = null;
-  let elSeatingShareBtn = null;
-  let elMenuShareBtn = null;
+  var elWeatherTipText = null;
+  var elAddCalendarBtn = null;
+  var elSeatingShareBtn = null;
+  var elMenuShareBtn = null;
 
   function ensureBoutiqueExtrasMounted() {
     const transitCard = document.getElementById('countdown-transit-card');
@@ -12204,7 +12220,18 @@
       elSeatingShareBtn.id = 'seating-share-link-btn';
       elSeatingShareBtn.className = 'secondary-btn sm-btn section-share-btn';
       elSeatingShareBtn.addEventListener('click', () => shareWeddingSectionLink('seating', elSeatingShareBtn));
-      seatingTop.append(elSeatingShareBtn);
+      let actionsGroup = document.getElementById('seating-top-actions');
+      if (!actionsGroup) {
+        actionsGroup = document.createElement('div');
+        actionsGroup.id = 'seating-top-actions';
+        actionsGroup.className = 'section-top-actions';
+        seatingTop.appendChild(actionsGroup);
+      }
+      const existingZoomBtn = document.getElementById('seating-zoom-map-btn');
+      if (existingZoomBtn && existingZoomBtn.parentNode !== actionsGroup) {
+        actionsGroup.insertBefore(existingZoomBtn, actionsGroup.firstChild);
+      }
+      actionsGroup.appendChild(elSeatingShareBtn);
     }
 
     const menuTop = document.querySelector('#banquet-menu-section .section-top-row');
