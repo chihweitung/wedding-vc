@@ -4888,18 +4888,23 @@ body.hp-secret-theme {
   inset: 0;
   pointer-events: none;
   z-index: 15;
-  opacity: 0;
-  transition: opacity 0.35s ease;
+  opacity: 1;
+  transition: opacity 0.45s ease, background 0.45s ease;
   background: radial-gradient(
-    320px circle at var(--lumos-x, 50%) var(--lumos-y, 40%),
-    rgba(255, 243, 176, 0.38) 0%,
-    rgba(251, 191, 36, 0.16) 40%,
-    rgba(8, 6, 16, 0.52) 100%
+    240px circle at var(--lumos-x, 50%) var(--lumos-y, 48%),
+    rgba(255, 243, 176, 0.12) 0%,
+    rgba(12, 8, 22, 0.22) 48%,
+    rgba(6, 4, 14, 0.72) 100%
   );
 }
 
 body.hp-lumos-on .hp-lumos-overlay {
-  opacity: 1;
+  background: radial-gradient(
+    460px circle at var(--lumos-x, 50%) var(--lumos-y, 48%),
+    rgba(255, 246, 196, 0.28) 0%,
+    rgba(251, 191, 36, 0.1) 48%,
+    rgba(10, 8, 18, 0.04) 100%
+  );
 }
 
 .hp-corner-decor {
@@ -5195,9 +5200,9 @@ body.hp-lumos-on .hp-lumos-overlay {
 .hp-parchment-card {
   position: relative;
   width: 100%;
-  max-width: 760px;
-  margin: 8px auto 0;
-  padding: 42px 36px 30px;
+  max-width: 740px;
+  margin: 12px auto 0;
+  padding: 48px 40px 34px;
   border-radius: 18px;
   background:
     radial-gradient(circle at 18% 15%, rgba(255, 250, 238, 0.68), transparent 55%),
@@ -5214,7 +5219,7 @@ body.hp-lumos-on .hp-lumos-overlay {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  gap: 20px;
   transition: box-shadow 0.35s ease, transform 0.35s ease;
 }
 
@@ -5310,11 +5315,11 @@ body.hp-lumos-on .hp-parchment-card,
 /* Marauder's Map × Jianghu Ink Bootsteps Ribbon */
 .hp-marauder-ribbon {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 12px 16px;
+  gap: 12px;
+  padding: 12px 18px;
   border-radius: 12px;
   background: rgba(127, 29, 29, 0.06);
   border: 1px dashed rgba(127, 29, 29, 0.36);
@@ -5328,6 +5333,14 @@ body.hp-lumos-on .hp-parchment-card,
   align-items: center;
   gap: 7px;
   font-weight: 600;
+}
+
+.hp-track-left {
+  justify-content: flex-start;
+}
+
+.hp-track-right {
+  justify-content: flex-end;
 }
 
 .hp-footprints-icons {
@@ -5384,10 +5397,13 @@ body.hp-lumos-on .hp-parchment-card,
 
 .hp-parchment-body {
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
-  font-size: 0.98rem;
-  line-height: 1.82;
+  font-size: 0.99rem;
+  line-height: 1.94;
+  letter-spacing: 0.03em;
   color: #3b2614;
-  max-width: 640px;
+  max-width: 540px;
+  padding: 2px 4px;
+  text-wrap: pretty;
 }
 
 .hp-parchment-body strong {
@@ -5538,16 +5554,60 @@ body.hp-lumos-on .hp-parchment-card,
 /* Common Room Secret Passcode Scroll */
 .hp-secret-decree {
   width: 100%;
-  padding: 20px 22px;
+  margin-top: 4px;
+  padding: 24px 24px 22px;
   border-radius: 16px;
   background: linear-gradient(145deg, #23150d 0%, #3a1f12 100%);
-  border: 2px solid #d4af37;
+  border: 1.5px solid #d4af37;
   color: #fef3c7;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.36),
+    inset 0 0 0 4px rgba(35, 21, 13, 0.72),
+    inset 0 0 0 5px rgba(212, 175, 55, 0.34);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  transition: box-shadow 0.45s ease, border-color 0.45s ease;
+}
+
+.hp-secret-decree.is-sealed .hp-decree-code {
+  filter: blur(8px);
+  opacity: 0.28;
+  user-select: none;
+  pointer-events: none;
+  transition: filter 0.65s ease, opacity 0.65s ease;
+}
+
+.hp-secret-decree.is-revealed .hp-decree-code {
+  filter: blur(0);
+  opacity: 1;
+  transition: filter 0.65s ease, opacity 0.65s ease;
+}
+
+.hp-secret-decree.is-sealed .hp-decree-actions {
+  display: none;
+}
+
+.hp-secret-decree.is-flashing {
+  animation: lumosInkFlash 0.75s ease;
+}
+
+.hp-decree-sealed-hint {
+  margin: 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(212, 175, 55, 0.14);
+  border: 1px dashed rgba(253, 224, 71, 0.45);
+  color: #fde68a;
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  text-wrap: balance;
+}
+
+.hp-decree-sealed-hint.hidden {
+  display: none;
 }
 
 .hp-decree-eyebrow {
@@ -7367,13 +7427,13 @@ body.wg-modal-open {
    Quiet Luxury Unified Editorial System (Hero · Choice TOC · Floating Nav)
    ============================================================================ */
 
-/* 1. Editorial Masthead & Stationery Countdown Cards */
-.top-bar {
+/* 1. Editorial Masthead & Stationery Countdown Cards (Main Wedding Theme Only) */
+body:not(.hp-secret-theme) .top-bar {
   padding-bottom: 10px;
   border-bottom: 1px solid color-mix(in srgb, var(--champagne) 24%, transparent);
 }
 
-.timezone-pill {
+body:not(.hp-secret-theme) .timezone-pill {
   box-shadow: none;
   border-color: color-mix(in srgb, var(--champagne) 36%, var(--border-subtle));
 }
@@ -7575,7 +7635,7 @@ body.wg-modal-open .back-to-top-btn {
     mask-image: linear-gradient(90deg, #000 0%, #000 86%, transparent 100%);
     padding-right: 22px;
   }
-  .bottom-bar {
+  body:not(.hp-secret-theme) .bottom-bar {
     padding-bottom: 52px;
   }
 }

@@ -2864,7 +2864,7 @@
         btnRiddleLumos.textContent =
           currentLang === 'en'
             ? '✨ Cast Lumos (Reveal Hidden Clue)'
-            : '✨ 施展路摸思 Lumos（照亮暗記提示）';
+            : '✨ 施展路摸思（照亮暗記提示）';
         btnRiddleLumos.classList.remove('hidden');
       }
     }
@@ -2948,12 +2948,62 @@
     elSpellFeedback.classList.add('is-popping');
   }
 
+  const elSecretDecree = document.querySelector('.hp-secret-decree');
+  let isDecreeRevealed = false;
+  let elDecreeSealedHint = null;
+  if (elSecretDecree) {
+    elSecretDecree.classList.add('is-sealed');
+    elDecreeSealedHint = document.createElement('p');
+    elDecreeSealedHint.className = 'hp-decree-sealed-hint';
+    elSecretDecree.insertBefore(elDecreeSealedHint, elSecretDecree.querySelector('.hp-decree-code'));
+  }
+
+  function syncDecreeSealedUi() {
+    if (!elSecretDecree) return;
+    elSecretDecree.classList.toggle('is-sealed', !isDecreeRevealed);
+    elSecretDecree.classList.toggle('is-revealed', isDecreeRevealed);
+    if (elDecreeSealedHint) {
+      elDecreeSealedHint.textContent =
+        currentLang === 'en'
+          ? '🕯️ Sealed in invisible ink — cast Lumos or Marauder’s Map above to reveal'
+          : '🕯️ 密語已由隱形墨水封存 — 施展上方「螢光閃爍」或「活點地圖」即可顯影';
+      elDecreeSealedHint.classList.toggle('hidden', isDecreeRevealed);
+    }
+  }
+
   function pulseInvisibleInk() {
-    if (!elInvisibleInk) return;
-    elInvisibleInk.classList.add('is-revealed');
-    elInvisibleInk.classList.remove('is-flashing');
-    void elInvisibleInk.offsetWidth;
-    elInvisibleInk.classList.add('is-flashing');
+    if (elInvisibleInk) {
+      elInvisibleInk.classList.add('is-revealed');
+      elInvisibleInk.classList.remove('is-flashing');
+      void elInvisibleInk.offsetWidth;
+      elInvisibleInk.classList.add('is-flashing');
+    }
+    if (elSecretDecree) {
+      const wasSealed = !isDecreeRevealed;
+      isDecreeRevealed = true;
+      syncDecreeSealedUi();
+      if (wasSealed) {
+        elSecretDecree.classList.remove('is-flashing');
+        void elSecretDecree.offsetWidth;
+        elSecretDecree.classList.add('is-flashing');
+      }
+    }
+  }
+
+  function formatEggButtonLabel(raw, lang) {
+    const text = String(raw || '').trim();
+    if (!text) return '';
+    if (lang === 'zh') {
+      // 中文模式下統一按鈕為純中文，移除夾雜的英文咒語或括號英文，避免有的中英混排、有的純中文
+      const cleaned = text
+        .replace(/[（(]\s*[A-Za-z0-9\s!'.:-]+\s*[）)]/g, '')
+        .replace(/\s*[·•|/／-]+\s*[A-Za-z][A-Za-z0-9\s!'.:-]*/g, '')
+        .replace(/[A-Za-z][A-Za-z0-9\s!'.:-]*/g, '')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+      return cleaned || text;
+    }
+    return text;
   }
 
   function applyEggLanguage() {
@@ -2969,9 +3019,12 @@
     if (elPlatformText) elPlatformText.textContent = dict.platformText;
     syncChamberBgmUi();
     if (btnLumosHeader) {
-      btnLumosHeader.textContent = lumosActive ? dict.lumosOnBtn : dict.lumosOffBtn;
+      btnLumosHeader.textContent = formatEggButtonLabel(
+        lumosActive ? dict.lumosOnBtn : dict.lumosOffBtn,
+        currentLang
+      );
     }
-    if (elBackBtn) elBackBtn.textContent = dict.backBtn;
+    if (elBackBtn) elBackBtn.textContent = formatEggButtonLabel(dict.backBtn, currentLang);
     if (elEventTitle) elEventTitle.textContent = dict.eventTitle;
     if (elSubtitle) elSubtitle.textContent = dict.subtitle;
     if (btnSnitch) btnSnitch.setAttribute('title', dict.snitchTitle);
@@ -2991,13 +3044,25 @@
     if (elTrackTom) elTrackTom.textContent = dict.trackTom;
     if (elCastleBadge) elCastleBadge.textContent = dict.castleBadge;
     if (elTrackEunice) elTrackEunice.textContent = dict.trackEunice;
-    if (elParchmentBody) elParchmentBody.textContent = dict.parchmentBody;
+    if (elParchmentBody) {
+      elParchmentBody.textContent = String(dict.parchmentBody || '').replace(
+        /亦封存了一句專屬於今日喜宴的密語——願與知音共飲此杯，同賀良辰。/,
+        '亦於下方封存了一組專屬於今日喜宴的通關密語。願與知音共飲此杯，同賀良辰！'
+      );
+    }
     if (elVowSignature) elVowSignature.textContent = dict.vowSignature || '';
     if (btnSpellLumos) {
-      btnSpellLumos.textContent = lumosActive ? dict.lumosOnBtn : dict.spellLumos;
+      btnSpellLumos.textContent = formatEggButtonLabel(
+        lumosActive ? dict.lumosOnBtn : dict.spellLumos,
+        currentLang
+      );
     }
-    if (btnSpellMarauder) btnSpellMarauder.textContent = dict.spellMarauder;
-    if (btnSpellCelebrate) btnSpellCelebrate.textContent = dict.spellCelebrate;
+    if (btnSpellMarauder) {
+      btnSpellMarauder.textContent = formatEggButtonLabel(dict.spellMarauder, currentLang);
+    }
+    if (btnSpellCelebrate) {
+      btnSpellCelebrate.textContent = formatEggButtonLabel(dict.spellCelebrate, currentLang);
+    }
     if (lastFeedbackKey && elSpellFeedback && !elSpellFeedback.classList.contains('hidden')) {
       elSpellFeedback.textContent = dict[lastFeedbackKey] || '';
     }
@@ -3011,10 +3076,11 @@
     renderRiddleCipherSequence(Boolean(elRiddleModal && !elRiddleModal.classList.contains('hidden')));
     if (elRiddleModalMid) elRiddleModalMid.textContent = dict.riddleMid;
     syncRiddleLumosVisibility();
-    if (btnRiddleClose) btnRiddleClose.textContent = dict.riddleCloseBtn;
+    if (btnRiddleClose) btnRiddleClose.textContent = formatEggButtonLabel(dict.riddleCloseBtn, currentLang);
     if (elDecreeEyebrow) elDecreeEyebrow.textContent = dict.decreeEyebrow;
     if (elSecretCodeText) elSecretCodeText.textContent = dict.secretCode;
-    if (btnCopySpell) btnCopySpell.textContent = dict.copyBtnIdle;
+    syncDecreeSealedUi();
+    if (btnCopySpell) btnCopySpell.textContent = formatEggButtonLabel(dict.copyBtnIdle, currentLang);
     if (linkDecreeReturn) {
       linkDecreeReturn.textContent =
         currentLang === 'en' ? 'Return to Register Passcode ↗' : '回主頁登記密語 ↗';
@@ -3048,11 +3114,17 @@
     const dict = HP_I18N[currentLang];
     if (btnLumosHeader) {
       btnLumosHeader.setAttribute('aria-pressed', String(lumosActive));
-      btnLumosHeader.textContent = lumosActive ? dict.lumosOnBtn : dict.lumosOffBtn;
+      btnLumosHeader.textContent = formatEggButtonLabel(
+        lumosActive ? dict.lumosOnBtn : dict.lumosOffBtn,
+        currentLang
+      );
     }
     if (btnSpellLumos) {
       btnSpellLumos.classList.toggle('is-active', lumosActive);
-      btnSpellLumos.textContent = lumosActive ? dict.lumosOnBtn : dict.spellLumos;
+      btnSpellLumos.textContent = formatEggButtonLabel(
+        lumosActive ? dict.lumosOnBtn : dict.spellLumos,
+        currentLang
+      );
     }
     syncRiddleLumosVisibility();
     syncLumosChamberMusic();
@@ -3221,7 +3293,7 @@
         const rect = btnCopySpell.getBoundingClientRect();
         spawnSpellBurst(rect.left + rect.width / 2, rect.top, ['#ffd700', '#fef08a', '#34d399'], 48);
         setTimeout(() => {
-          btnCopySpell.textContent = HP_I18N[currentLang].copyBtnIdle;
+          btnCopySpell.textContent = formatEggButtonLabel(HP_I18N[currentLang].copyBtnIdle, currentLang);
         }, 2800);
       } catch (_err) {
         btnCopySpell.textContent = dict.copyBtnFallback;
