@@ -61,6 +61,9 @@
     zh: {
       entryTitle: '暖身小遊戲',
       entrySub: '婚紗翻牌・接住捧花・3×3 婚紗拼圖',
+      cardEyebrow: 'WEDDING MINI-GAMES · 3 GAMES',
+      cardDesc: '婚紗照翻牌記憶、20 秒接住捧花挑戰與 3×3 婚紗拼圖，等上菜一起同樂！',
+      cardCta: '開啟暖身小遊戲 →',
       footerBtn: '🎮 小遊戲',
       modalEyebrow: 'WEDDING MINI-GAMES · 暖身同樂',
       modalTitle: '婚禮暖身小遊戲',
@@ -102,6 +105,9 @@
     en: {
       entryTitle: 'Wedding Mini-Games',
       entrySub: 'Photo Match · Catch Bouquet · 3×3 Puzzle',
+      cardEyebrow: 'WEDDING MINI-GAMES · 3 GAMES',
+      cardDesc: 'Photo memory match, 20s bouquet catch challenge, and 3×3 wedding photo puzzle!',
+      cardCta: 'Play Mini-Games →',
       footerBtn: '🎮 Mini-Games',
       modalEyebrow: 'WEDDING MINI-GAMES · WARM-UP PLAY',
       modalTitle: 'Wedding Mini-Games',
@@ -170,9 +176,17 @@
     const tEl = document.getElementById('countdown-games-title');
     const sEl = document.getElementById('countdown-games-sub');
     const fEl = document.getElementById('footer-games-btn');
+    const ceEl = document.getElementById('games-card-eyebrow');
+    const ctEl = document.getElementById('games-card-title');
+    const cdEl = document.getElementById('games-card-desc');
+    const ccEl = document.getElementById('games-card-cta');
     if (tEl) tEl.textContent = c.entryTitle;
     if (sEl) sEl.textContent = c.entrySub;
     if (fEl) fEl.textContent = c.footerBtn;
+    if (ceEl) ceEl.textContent = c.cardEyebrow;
+    if (ctEl) ctEl.textContent = c.entryTitle;
+    if (cdEl) cdEl.textContent = c.cardDesc;
+    if (ccEl) ccEl.textContent = c.cardCta;
     if (modalEyebrowEl) modalEyebrowEl.textContent = c.modalEyebrow;
     if (modalTitleEl) modalTitleEl.textContent = c.modalTitle;
     if (modalCloseBtn) modalCloseBtn.setAttribute('aria-label', c.modalCloseAria);
@@ -1049,9 +1063,13 @@
 
   function initWeddingGames() {
     const countdownBtn = document.getElementById('countdown-games-btn');
+    const hubCardBtn = document.getElementById('choose-games-card');
     const footerBtn = document.getElementById('footer-games-btn');
     if (countdownBtn) {
       countdownBtn.addEventListener('click', () => openModal(activeGame));
+    }
+    if (hubCardBtn) {
+      hubCardBtn.addEventListener('click', () => openModal(activeGame));
     }
     if (footerBtn) {
       footerBtn.addEventListener('click', () => openModal(activeGame));

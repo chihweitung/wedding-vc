@@ -71,7 +71,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   transition: background-color 0.35s ease, color 0.35s ease;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -6564,8 +6564,11 @@ body.is-subview-active .main-stage {
 
 .seating-zoom-img {
   display: block;
-  width: min(100%, 860px);
+  width: auto;
+  max-width: min(100%, 860px);
+  max-height: 82dvh;
   height: auto;
+  object-fit: contain;
   border-radius: 12px;
   background: #ffffff;
   touch-action: pinch-zoom pan-x pan-y;
@@ -6901,7 +6904,7 @@ body.wg-modal-open {
 .wg-modal {
   position: fixed;
   inset: 0;
-  z-index: 95;
+  z-index: 960;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7390,7 +7393,7 @@ body.wg-modal-open {
 
 .countdown-quick-btn {
   position: relative;
-  padding-right: 40px;
+  padding-right: 46px;
 }
 
 .countdown-quick-btn::before {
@@ -7405,7 +7408,7 @@ body.wg-modal-open {
 .countdown-quick-btn::after {
   content: '→';
   position: absolute;
-  right: 16px;
+  right: 20px;
   top: 50%;
   transform: translateY(-50%);
   font-family: 'Cormorant Garamond', Georgia, serif;
@@ -7434,6 +7437,8 @@ body.wg-modal-open {
 .choice-cards-grid > .choice-card:nth-child(4) { animation-delay: 135ms; }
 .choice-cards-grid > .choice-card:nth-child(5) { animation-delay: 180ms; }
 .choice-cards-grid > .choice-card:nth-child(6) { animation-delay: 225ms; }
+.choice-cards-grid > .choice-card:nth-child(7) { animation-delay: 270ms; }
+.choice-cards-grid > .choice-card:nth-child(8) { animation-delay: 315ms; }
 
 .choice-cards-grid > .choice-card::after {
   content: '0' counter(toc-card);
@@ -7524,6 +7529,65 @@ body.wg-modal-open {
   color: #ffffff;
   border-color: var(--accent);
   box-shadow: 0 4px 12px -4px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+/* Dark Mode Crisp Contrast for Active Pills & Footer Buttons */
+[data-theme="dark"] .hub-tab-pill.active,
+[data-theme="dark"] .banquet-filter-pill.is-active,
+[data-theme="dark"] .wg-tab-btn.is-active,
+[data-theme="dark"] .era-pill.active {
+  color: #121b15;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .text-btn.petal-btn,
+[data-theme="dark"] #footer-games-btn {
+  color: var(--text-primary);
+  border-color: var(--border-highlight);
+  background: var(--surface-pill);
+}
+
+/* Hide Floating Back-to-Top When Mini-Games Modal Is Open */
+body.wg-modal-open .back-to-top-btn {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Mobile Polish: Compact Sticky Nav, Scrollable Jump Fade, Footer Clearance, Short Screens */
+@media (max-width: 640px) {
+  .hub-nav-bar {
+    padding: 6px 10px;
+    gap: 6px;
+    border-radius: 20px;
+  }
+  .hub-tab-btn {
+    min-height: 34px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+  }
+  .hub-tab-pill {
+    min-height: 34px;
+    padding: 5px 11px;
+    font-size: 0.8rem;
+  }
+  .banquet-jump-bar {
+    -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 86%, transparent 100%);
+    mask-image: linear-gradient(90deg, #000 0%, #000 86%, transparent 100%);
+    padding-right: 22px;
+  }
+  .bottom-bar {
+    padding-bottom: 52px;
+  }
+}
+
+@media (max-height: 700px) {
+  .wg-puzzle-wrap {
+    max-width: 248px;
+    padding: 8px;
+  }
+  .wg-catch-wrap {
+    max-width: 280px;
+  }
 }
 
 /* Respect System Reduced-Motion Accessibility Preference */
