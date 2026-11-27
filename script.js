@@ -847,8 +847,7 @@
     { name: '楊哲彰/余鳳琴', count: 2, group: '新郎爸媽朋友' },
     { name: '劉園德/張金鳳', count: 2, group: '新郎爸媽朋友' },
     { name: '高增堯/張淑貞', count: 2, group: '新郎爸媽朋友' },
-    // 新郎媽媽親戚（8 組／18 人）
-    { name: '徐玲明', count: 5, group: '新郎媽媽親戚' },
+    // 新郎媽媽親戚（7 組／13 人）
     { name: '徐和志、許嵐音', count: 2, group: '新郎媽媽親戚' },
     { name: '徐平志', count: 1, group: '新郎媽媽親戚' },
     { name: '徐慧明', count: 1, group: '新郎媽媽親戚' },
@@ -856,9 +855,8 @@
     { name: '徐雪櫻', count: 2, group: '新郎媽媽親戚' },
     { name: '徐紫櫻 王展浩', count: 2, group: '新郎媽媽親戚' },
     { name: '房滋寧/韓治瀾', count: 2, group: '新郎媽媽親戚' },
-    // 新郎爸爸親戚（3 組／5 人）
-    { name: '董素娟', count: 2, group: '新郎爸爸親戚' },
-    { name: '陳振揚', count: 1, group: '新郎爸爸親戚' },
+    // 新郎爸爸親戚（2 組／4 人）
+    { name: '陳思樺', count: 2, group: '新郎爸爸親戚' },
     { name: '董素芬', count: 2, group: '新郎爸爸親戚' },
     // 新郎同學＆老師（5 組／5 人）
     { name: '鄭兆珍', count: 1, group: '新郎同學＆老師' },
@@ -1459,29 +1457,30 @@
     },
     {
       id: 'zone-groom-moz',
-      box: { x: 1214, y: 2010, w: 77, h: 102 },
+      box: { x: 1126, y: 2010, w: 165, h: 102 },
+      svgPath: 'M 1228 2010 H 1277 Q 1291 2010 1291 2024 V 2098 Q 1291 2112 1277 2112 H 1140 Q 1126 2112 1126 2098 V 2080 Q 1126 2066 1140 2066 H 1200 Q 1214 2066 1214 2052 V 2024 Q 1214 2010 1228 2010 Z',
       color: '#0891b2',
       fillColor: 'rgba(8, 145, 178, 0.12)',
       darkColor: '#22d3ee',
       darkFillColor: 'rgba(34, 211, 238, 0.16)',
       debugStats: { headcount: 2, veg: 0, stroller: 0, childSeat: 0 },
       name: { zh: '新郎 MOZ 區 · 謀智（第 14 桌）', en: 'Groom · MOZ / Mozilla (Table 14)' },
-      zone: { zh: '外廳左列中段右側 · 謀智', en: 'Lower Hall Left Col · Middle Right (MOZ)' },
+      zone: { zh: '外廳左列中段區 · 謀智', en: 'Lower Hall Left Col · Middle (MOZ)' },
       guests: [
         { zh: 'Shawn Huang等二人', en: 'Shawn Huang (2)' },
       ],
       seatPlan: {
         freeSeating: true,
         freeSeatingNote: {
-          zh: '✨ MOZ 區自由入座（共 2 席：第 9–10 排右側同側並肩）',
-          en: '✨ Open seating in MOZ zone (2 seats: Rows 9–10 Right, side-by-side)',
+          zh: '✨ MOZ 區自由入座（2 位貴賓，第 9 排右側＋第 10 排共 3 席可任選並肩）',
+          en: '✨ Open seating in MOZ zone (2 guests; 3 seats across Row 9 Right & Row 10)',
         },
         leftX: 1150,
         rightX: 1267,
         rowYs: [2034, 2086],
         rows: [
           [null, { zh: 'MOZ 可入座', en: 'Available' }],
-          [null, { zh: 'MOZ 可入座', en: 'Available' }],
+          [{ zh: 'MOZ 可入座', en: 'Available' }, { zh: 'MOZ 可入座', en: 'Available' }],
         ],
       },
     },
@@ -12280,14 +12279,13 @@
       elCalendarGoogleLink.rel = 'noopener noreferrer';
       elCalendarGoogleLink.addEventListener('click', () => setCalendarMenuOpen(false));
 
-      elCalendarIcsBtn = document.createElement('button');
-      elCalendarIcsBtn.type = 'button';
+      elCalendarIcsBtn = document.createElement('a');
       elCalendarIcsBtn.id = 'countdown-cal-ics';
       elCalendarIcsBtn.className = 'countdown-calendar-option';
       elCalendarIcsBtn.setAttribute('role', 'menuitem');
+      elCalendarIcsBtn.href = './wedding-20261129.ics';
       elCalendarIcsBtn.addEventListener('click', () => {
         setCalendarMenuOpen(false);
-        downloadWeddingCalendarIcs();
       });
 
       elCalendarMenu.append(elCalendarGoogleLink, elCalendarIcsBtn);
@@ -12356,7 +12354,8 @@
       elCalendarGoogleLink.textContent = isEn ? '📆 Google Calendar' : '📆 Google 日曆（直接開啟）';
     }
     if (elCalendarIcsBtn) {
-      elCalendarIcsBtn.textContent = isEn ? '🍎 Apple / Outlook (.ics)' : '🍎 Apple / Outlook（.ics）';
+      elCalendarIcsBtn.href = isEn ? './wedding-20261129-en.ics' : './wedding-20261129.ics';
+      elCalendarIcsBtn.textContent = isEn ? '🍎 Apple / Outlook (.ics)' : '🍎 Apple / Outlook 行事曆';
     }
     if (elSeatingShareBtn) {
       elSeatingShareBtn.textContent = isEn ? '🔗 Share' : '🔗 分享連結';
