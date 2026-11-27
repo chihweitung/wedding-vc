@@ -5690,105 +5690,143 @@ body.hp-lumos-on .hp-parchment-card,
   position: relative;
   display: flex;
   flex-direction: column;
-  width: calc(100% - 28px);
-  max-width: 600px;
-  max-height: calc(100vh - 56px);
-  max-height: calc(100dvh - 56px);
-  padding: 36px 30px 28px;
-  border-radius: 6px;
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(234, 179, 8, 0.16), transparent 58%),
-    radial-gradient(ellipse at 0% 50%, rgba(120, 53, 15, 0.34), transparent 32%),
-    radial-gradient(ellipse at 100% 50%, rgba(120, 53, 15, 0.34), transparent 32%),
-    linear-gradient(180deg, #2b1d10 0%, #1a120a 14%, #25190e 50%, #191109 86%, #2b1d10 100%);
-  border-left: 2px solid rgba(180, 130, 52, 0.58);
-  border-right: 2px solid rgba(180, 130, 52, 0.58);
-  border-top: none;
-  border-bottom: none;
+  width: calc(100% - 36px);
+  max-width: 590px;
+  max-height: calc(100vh - 64px);
+  max-height: calc(100dvh - 64px);
+  padding: 40px 34px 30px;
+  border-radius: 2px;
+  background-color: transparent;
+  /* Real weathered, torn-edge, scorched & creased remnant parchment (殘卷) */
+  background-image:
+    /* 1. Jagged torn-paper & scorched-notch SVG overlay along all 4 edges + fold creases + ink specks */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 720' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cfilter id='burn'%3E%3CfeGaussianBlur stdDeviation='3'/%3E%3C/filter%3E%3C/defs%3E%3C!-- Top singed/torn fringe peeking below top roller --%3E%3Cpath d='M0,0 L600,0 L600,12 L548,18 L496,9 L435,20 L382,11 L322,16 L264,8 L208,19 L146,10 L92,18 L38,11 L0,15 Z' fill='%233d1b06' opacity='0.48' filter='url(%23burn)'/%3E%3Cpath d='M146,10 L158,34 L172,26' fill='none' stroke='%234a2008' stroke-width='1.3' opacity='0.5'/%3E%3Cpath d='M435,20 L424,42 L438,52' fill='none' stroke='%234a2008' stroke-width='1.2' opacity='0.46'/%3E%3C!-- Bottom singed/torn fringe above bottom roller --%3E%3Cpath d='M0,720 L600,720 L600,706 L544,700 L488,711 L426,698 L368,709 L304,701 L242,712 L182,699 L124,710 L62,702 L0,708 Z' fill='%233d1b06' opacity='0.52' filter='url(%23burn)'/%3E%3Cpath d='M182,699 L194,674 L184,662' fill='none' stroke='%234a2008' stroke-width='1.3' opacity='0.48'/%3E%3Cpath d='M426,698 L412,672 L426,660' fill='none' stroke='%234a2008' stroke-width='1.3' opacity='0.46'/%3E%3C!-- Left jagged tear & charred notches --%3E%3Cpath d='M0,0 L10,0 L4,48 L14,82 L3,115 L18,162 L6,195 L22,238 L8,268 L15,310 L2,355 L19,405 L5,442 L26,488 L9,522 L16,568 L4,615 L18,668 L8,720 L0,720 Z' fill='%230c0705'/%3E%3Cpath d='M10,0 L15,0 L9,48 L19,82 L8,115 L23,162 L11,195 L27,238 L13,268 L20,310 L7,355 L24,405 L10,442 L31,488 L14,522 L21,568 L9,615 L23,668 L13,720 L8,720 Z' fill='%234a2008' opacity='0.55' filter='url(%23burn)'/%3E%3C!-- Right jagged tear & deep burned notch --%3E%3Cpath d='M600,0 L590,0 L595,55 L584,96 L596,138 L576,184 L592,226 L572,272 L589,312 L597,360 L578,412 L593,454 L574,504 L590,548 L581,602 L596,654 L586,720 L600,720 Z' fill='%230c0705'/%3E%3Cpath d='M590,0 L585,0 L590,55 L579,96 L591,138 L571,184 L587,226 L567,272 L584,312 L592,360 L573,412 L588,454 L569,504 L585,548 L576,602 L591,654 L581,720 L586,720 Z' fill='%234a2008' opacity='0.58' filter='url(%23burn)'/%3E%3C!-- Ancient diagonal & horizontal fold creases --%3E%3Cpath d='M16,198 L584,212' stroke='%235a2d0c' stroke-width='1.4' opacity='0.24'/%3E%3Cpath d='M14,200 L586,214' stroke='%23fff4d4' stroke-width='1' opacity='0.28'/%3E%3Cpath d='M22,506 L578,492' stroke='%235a2d0c' stroke-width='1.5' opacity='0.22'/%3E%3Cpath d='M20,508 L580,494' stroke='%23fff4d4' stroke-width='1' opacity='0.24'/%3E%3Cpath d='M120,18 L86,700' stroke='%234c2408' stroke-width='1' opacity='0.11'/%3E%3Cpath d='M488,22 L512,698' stroke='%234c2408' stroke-width='1' opacity='0.11'/%3E%3C!-- Subtle crack & wormhole specks --%3E%3Cpath d='M18,162 L44,174 L60,168' fill='none' stroke='%234a2008' stroke-width='1.3' opacity='0.52'/%3E%3Cpath d='M576,184 L548,196 L532,190' fill='none' stroke='%234a2008' stroke-width='1.3' opacity='0.5'/%3E%3Cpath d='M574,504 L544,495 L526,503' fill='none' stroke='%234a2008' stroke-width='1.4' opacity='0.52'/%3E%3Ccircle cx='58' cy='112' r='2.5' fill='%233d1b06' opacity='0.45'/%3E%3Ccircle cx='536' cy='612' r='3' fill='%233d1b06' opacity='0.38'/%3E%3Ccircle cx='78' cy='588' r='2' fill='%233d1b06' opacity='0.4'/%3E%3C/svg%3E"),
+    /* 2. Fibrous vellum paper grain */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.18'/%3E%3C/svg%3E"),
+    /* 3. Scorched corners & aged tea/water stains */
+    radial-gradient(ellipse at 12% 16%, rgba(112, 52, 14, 0.34) 0%, transparent 40%),
+    radial-gradient(ellipse at 88% 80%, rgba(96, 40, 10, 0.38) 0%, transparent 44%),
+    radial-gradient(circle at 82% 22%, rgba(140, 74, 22, 0.22) 0%, transparent 30%),
+    radial-gradient(circle at 20% 84%, rgba(84, 34, 8, 0.28) 0%, transparent 34%),
+    /* 4. Charred side shading + base aged vellum */
+    linear-gradient(
+      90deg,
+      rgba(52, 22, 5, 0.56) 0%,
+      rgba(242, 224, 184, 0.18) 9%,
+      rgba(248, 236, 204, 0.08) 50%,
+      rgba(242, 224, 184, 0.18) 91%,
+      rgba(52, 22, 5, 0.58) 100%
+    ),
+    linear-gradient(180deg, #a6783c 0%, #e4ca93 8%, #ecd7a8 48%, #d9b87a 92%, #9a6c32 100%);
+  background-size: 100% 100%, 220px 220px, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  border: none;
   box-shadow:
-    0 28px 72px rgba(0, 0, 0, 0.88),
-    0 0 42px rgba(212, 175, 55, 0.2),
-    inset 0 18px 26px -14px rgba(0, 0, 0, 0.72),
-    inset 0 -18px 26px -14px rgba(0, 0, 0, 0.72),
-    inset 10px 0 0 -8px rgba(212, 175, 55, 0.32),
-    inset -10px 0 0 -8px rgba(212, 175, 55, 0.32);
-  color: #f6e8c8;
+    0 32px 84px rgba(0, 0, 0, 0.9),
+    inset 0 26px 28px -10px rgba(42, 18, 4, 0.68),
+    inset 0 -26px 28px -10px rgba(42, 18, 4, 0.68),
+    inset 0 0 46px rgba(78, 34, 8, 0.42);
+  color: #2b1709;
   text-align: center;
   overflow: visible;
   animation: hpRiddleCardRise 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Ancient Wooden & Gold Scroll Rollers (Top & Bottom) */
+/* Realistic Rolled Parchment Cylinder + Aged Walnut & Tarnished Brass Spindles (Top & Bottom) */
 .hp-riddle-dialog::before,
 .hp-riddle-dialog::after {
   content: '';
   position: absolute;
-  left: -14px;
-  right: -14px;
-  height: 18px;
-  border-radius: 999px;
+  left: -20px;
+  right: -20px;
+  height: 26px;
+  border-radius: 13px;
   pointer-events: none;
   z-index: 4;
   background:
+    /* Subtle wood/parchment grain */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='26'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.06 0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)' opacity='0.22'/%3E%3C/svg%3E"),
+    /* Cylindrical 3D specular highlight & deep underside roll shadow */
+    linear-gradient(
+      180deg,
+      rgba(255, 246, 214, 0.45) 0%,
+      rgba(255, 232, 178, 0.16) 24%,
+      rgba(0, 0, 0, 0.05) 50%,
+      rgba(20, 8, 2, 0.56) 82%,
+      rgba(8, 3, 1, 0.82) 100%
+    ),
+    /* Turned brass finials -> dark walnut wood -> coiled parchment wrap -> walnut -> brass finials */
     linear-gradient(
       90deg,
-      #8a6116 0%,
-      #f6d57a 4%,
-      #9a6b1b 7%,
-      #3b2210 8.5%,
-      #5b361a 50%,
-      #3b2210 91.5%,
-      #9a6b1b 93%,
-      #f6d57a 96%,
-      #8a6116 100%
+      #4a2f08 0%,
+      #d8ab4c 2.2%,
+      #8b5e18 4.4%,
+      #271408 5.2%,
+      #593115 6.8%,
+      #341a0a 8.2%,
+      #9c7138 8.8%,
+      #dfbe82 11.5%,
+      #e9d1a0 28%,
+      #cfa768 50%,
+      #e6cc98 74%,
+      #d6b272 88.5%,
+      #9c7138 91.2%,
+      #341a0a 91.8%,
+      #593115 93.2%,
+      #271408 94.8%,
+      #8b5e18 95.6%,
+      #d8ab4c 97.8%,
+      #4a2f08 100%
     );
-  border: 1px solid rgba(246, 213, 122, 0.65);
+  border-top: 1px solid rgba(255, 238, 192, 0.35);
+  border-bottom: 1px solid rgba(24, 10, 3, 0.85);
   box-shadow:
-    0 6px 16px rgba(0, 0, 0, 0.75),
-    inset 0 3px 5px rgba(255, 243, 196, 0.32),
-    inset 0 -4px 6px rgba(15, 8, 3, 0.75);
+    0 12px 24px rgba(0, 0, 0, 0.82),
+    0 3px 8px rgba(42, 18, 4, 0.72),
+    inset 0 2px 3px rgba(255, 244, 212, 0.25);
 }
 
 .hp-riddle-dialog::before {
-  top: -10px;
+  top: -15px;
+  transform: rotate(-0.35deg);
 }
 
 .hp-riddle-dialog::after {
-  bottom: -10px;
+  bottom: -15px;
+  transform: rotate(0.4deg);
 }
 
 .hp-riddle-top-close {
   position: absolute;
-  top: 16px;
+  top: 18px;
   right: 16px;
   z-index: 5;
   width: 34px;
   height: 34px;
   border-radius: 999px;
-  border: 1px solid rgba(212, 175, 55, 0.55);
-  background: rgba(24, 17, 10, 0.88);
-  color: #fde68a;
-  font-size: 0.95rem;
+  border: 1.5px solid #e5c158;
+  background: radial-gradient(circle at 34% 28%, #c82424 0%, #861515 62%, #520a0a 100%);
+  color: #fef3c7;
+  font-size: 0.9rem;
   font-weight: 700;
   line-height: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  box-shadow: 0 4px 10px rgba(45, 12, 6, 0.45), inset 0 1px 3px rgba(255, 236, 200, 0.35);
+  transition: transform 0.18s ease, filter 0.18s ease;
 }
 
 .hp-riddle-top-close:hover,
 .hp-riddle-top-close:active {
-  background: rgba(180, 83, 9, 0.55);
-  border-color: #fde047;
+  filter: brightness(1.12);
   transform: scale(1.06);
 }
 
 .hp-riddle-header {
   flex-shrink: 0;
-  padding-right: 24px;
-  padding-left: 24px;
+  padding-right: 28px;
+  padding-left: 28px;
 }
 
 @keyframes hpRiddleCardRise {
@@ -5804,26 +5842,26 @@ body.hp-lumos-on .hp-parchment-card,
 
 .hp-riddle-eyebrow {
   display: inline-block;
-  padding: 4px 14px;
-  border-radius: 999px;
-  background: rgba(212, 175, 55, 0.14);
-  border: 1px solid rgba(212, 175, 55, 0.42);
+  padding: 3px 13px;
+  border-radius: 4px;
+  background: rgba(124, 29, 18, 0.08);
+  border: 1.5px solid rgba(124, 29, 18, 0.46);
   font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.14em;
-  color: #fde68a;
+  color: #7c1d12;
   margin-bottom: 10px;
 }
 
 .hp-riddle-title {
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
-  font-size: clamp(1.2rem, 2.8vw, 1.56rem);
+  font-size: clamp(1.24rem, 2.8vw, 1.6rem);
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: #fff3c4;
-  text-shadow: 0 2px 14px rgba(212, 175, 55, 0.45);
-  margin: 0 0 14px;
+  color: #261306;
+  text-shadow: 0 1px 0 rgba(255, 246, 218, 0.6);
+  margin: 0 0 12px;
 }
 
 .hp-riddle-scroll-body {
@@ -5832,15 +5870,18 @@ body.hp-lumos-on .hp-parchment-card,
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  padding: 16px 18px;
-  border-radius: 14px;
-  background: rgba(10, 7, 4, 0.62);
-  border: 1px dashed rgba(212, 175, 55, 0.42);
+  padding: 16px 14px;
+  border-radius: 0;
+  background: transparent;
+  border-top: 1px solid rgba(92, 46, 14, 0.32);
+  border-bottom: 1px solid rgba(92, 46, 14, 0.32);
+  border-left: none;
+  border-right: none;
   text-align: left;
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', 'Cormorant Garamond', serif;
-  line-height: 1.92;
-  font-size: 0.98rem;
-  color: #f5e6c8;
+  line-height: 1.94;
+  font-size: 0.99rem;
+  color: #2d180a;
   margin-bottom: 16px;
 }
 
@@ -5849,7 +5890,7 @@ body.hp-lumos-on .hp-parchment-card,
 }
 
 .hp-riddle-scroll-body::-webkit-scrollbar-thumb {
-  background: rgba(212, 175, 55, 0.45);
+  background: rgba(120, 62, 20, 0.42);
   border-radius: 999px;
 }
 
@@ -5864,12 +5905,13 @@ body.hp-lumos-on .hp-parchment-card,
 
 .hp-riddle-lumos-paragraph {
   padding: 12px 14px;
-  border-radius: 10px;
-  background: radial-gradient(circle at 50% 30%, rgba(254, 240, 138, 0.2), rgba(212, 175, 55, 0.08));
-  border: 1px dashed rgba(253, 224, 71, 0.65);
-  color: #fef9c3;
-  text-shadow: 0 0 10px rgba(253, 224, 71, 0.45);
-  box-shadow: 0 0 18px rgba(250, 204, 21, 0.18), inset 0 0 14px rgba(250, 204, 21, 0.1);
+  border-radius: 8px;
+  background: radial-gradient(circle at 50% 30%, rgba(254, 249, 195, 0.72), rgba(217, 119, 6, 0.16));
+  border: 1px dashed rgba(180, 83, 9, 0.65);
+  color: #5c2408;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.55);
+  box-shadow: 0 0 18px rgba(234, 179, 8, 0.28), inset 0 0 14px rgba(254, 240, 138, 0.35);
   animation: hpLumosParagraphReveal 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -5893,21 +5935,23 @@ body.hp-lumos-on .hp-parchment-card,
 .hp-riddle-cipher-box {
   margin: 14px 0;
   padding: 12px 18px;
-  border-radius: 10px;
-  background: linear-gradient(90deg, rgba(127, 29, 29, 0.36), rgba(212, 175, 55, 0.18), rgba(127, 29, 29, 0.36));
-  border-left: 3px solid #fbbf24;
-  border-right: 3px solid #fbbf24;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(124, 29, 18, 0.08), rgba(180, 83, 9, 0.14), rgba(124, 29, 18, 0.08));
+  border-left: 3px solid #8b1e14;
+  border-right: 3px solid #8b1e14;
+  border-top: 1px dashed rgba(124, 29, 18, 0.32);
+  border-bottom: 1px dashed rgba(124, 29, 18, 0.32);
   text-align: center;
   font-family: 'Cormorant Garamond', 'LXGW WenKai TC', 'Noto Serif TC', serif;
   font-variant-numeric: tabular-nums;
-  font-size: clamp(0.9rem, 3.6vw, 1.05rem);
+  font-size: clamp(0.92rem, 3.6vw, 1.08rem);
   font-weight: 700;
   line-height: 1.75;
   letter-spacing: 0.04em;
   white-space: pre-line;
   overflow-wrap: anywhere;
-  color: #fde047;
-  text-shadow: 0 0 12px rgba(250, 204, 21, 0.45);
+  color: #7c1d12;
+  text-shadow: 0 1px 0 rgba(255, 248, 224, 0.5);
   user-select: all;
 }
 
@@ -5925,6 +5969,11 @@ body.hp-lumos-on .hp-parchment-card,
   filter: blur(0);
 }
 
+.hp-cipher-token.is-num {
+  color: #7f120c;
+  font-weight: 800;
+}
+
 .hp-cipher-token.is-num.is-popping-in {
   animation: hpCipherNumPopIn 0.46s cubic-bezier(0.22, 1.35, 0.36, 1) forwards;
 }
@@ -5938,22 +5987,22 @@ body.hp-lumos-on .hp-parchment-card,
     opacity: 0;
     transform: translateY(11px) scale(0.55);
     filter: blur(5px);
-    color: #fffbeb;
-    text-shadow: 0 0 0 rgba(254, 240, 138, 0);
+    color: #b91c1c;
+    text-shadow: 0 0 0 rgba(185, 28, 28, 0);
   }
   56% {
     opacity: 1;
     transform: translateY(-4px) scale(1.26);
     filter: blur(0);
-    color: #fffbeb;
-    text-shadow: 0 0 20px #fffbeb, 0 0 32px rgba(250, 204, 21, 0.95);
+    color: #b91c1c;
+    text-shadow: 0 0 14px rgba(254, 240, 138, 0.9), 0 0 22px rgba(185, 28, 28, 0.55);
   }
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0);
-    color: #fde047;
-    text-shadow: 0 0 12px rgba(250, 204, 21, 0.45);
+    color: #7f120c;
+    text-shadow: 0 1px 0 rgba(255, 248, 224, 0.65);
   }
 }
 
@@ -5962,22 +6011,22 @@ body.hp-lumos-on .hp-parchment-card,
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0);
-    color: #fde047;
-    text-shadow: 0 0 12px rgba(250, 204, 21, 0.45);
+    color: #7f120c;
+    text-shadow: 0 1px 0 rgba(255, 248, 224, 0.65);
   }
   32% {
     opacity: 1;
     transform: translateY(-3px) scale(1.14);
     filter: blur(0);
-    color: #fffbeb;
-    text-shadow: 0 0 16px #fffbeb, 0 0 24px rgba(250, 204, 21, 0.8);
+    color: #b91c1c;
+    text-shadow: 0 0 12px rgba(254, 240, 138, 0.85), 0 0 18px rgba(185, 28, 28, 0.5);
   }
   100% {
     opacity: 0;
     transform: translateY(10px) scale(0.52);
     filter: blur(5px);
-    color: #fde047;
-    text-shadow: 0 0 0 rgba(254, 240, 138, 0);
+    color: #7f120c;
+    text-shadow: 0 0 0 rgba(185, 28, 28, 0);
   }
 }
 
