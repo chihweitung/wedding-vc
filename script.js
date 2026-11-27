@@ -3287,7 +3287,7 @@
       elCountdownVenueNotice.textContent =
         currentLang === 'en'
           ? '🚗 Heading directly to the wedding venue (No. 49, Kaixuan Rd., Shilin Dist., Taipei)'
-          : '🚗 自行前往婚宴會場（台北市士林區凱旋路 49 號）';
+          : '🚗 自行前往婚宴會場\n（台北市士林區凱旋路 49 號）';
     }
     if (elCountdownVenueMapLink) {
       elCountdownVenueMapLink.textContent =

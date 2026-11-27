@@ -7738,6 +7738,66 @@ body.wg-modal-open .back-to-top-btn {
   }
 }
 
+/* Final Layout Polish: Desktop 3-Col Quick Links, Clean Address Breaks, Mobile Single-Row Masthead */
+.countdown-transit-text {
+  white-space: pre-line;
+}
+
+.target-subtitle {
+  word-break: keep-all;
+}
+
+.love-story-signoff {
+  flex-wrap: nowrap;
+}
+
+.love-signature {
+  white-space: nowrap;
+  font-size: clamp(1.06rem, 4.3vw, 1.52rem);
+}
+
+@media (min-width: 760px) {
+  .countdown-quick-links {
+    max-width: 820px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .countdown-quick-btn.is-full-span {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 540px) {
+  body:not(.hp-secret-theme) .top-bar {
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+  body:not(.hp-secret-theme) .timezone-pill {
+    font-size: 0.72rem;
+    padding: 5px 9px;
+    gap: 6px;
+    white-space: nowrap;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  body:not(.hp-secret-theme) .monogram-seal {
+    width: 22px;
+    height: 22px;
+    font-size: 0.62rem;
+    flex-shrink: 0;
+  }
+  body:not(.hp-secret-theme) .actions-group {
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  body:not(.hp-secret-theme) .icon-btn {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    font-size: 0.78rem;
+  }
+}
+
 /* Respect System Reduced-Motion Accessibility Preference */
 @media (prefers-reduced-motion: reduce) {
   *,
