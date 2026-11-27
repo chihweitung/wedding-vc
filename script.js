@@ -7463,9 +7463,12 @@
     const camA = getRawCameraForStep(LOVE_FOOTPRINTS_DATA[i]);
     const camB = getRawCameraForStep(LOVE_FOOTPRINTS_DATA[nextIdx]);
 
-    // 對數縮放插值，完全移除會造成中間晃動扭曲的 midFlightBoost
-    const logSpanLng = Math.log(camA.spanLng) * (1 - moveT) + Math.log(camB.spanLng) * moveT;
-    const spanLng = Math.max(15.0, Math.min(280.0, Math.exp(logSpanLng)));
+    // 對數縮放插值 + 跨城／跨洲柔順拉遠運鏡 (sin² 曲線，平滑無晃動、嚴格維持長寬比)
+    const targetLngB = unwrapNear(camB.centerLng, camA.centerLng);
+    const hopDist = Math.hypot(camB.centerLat - camA.centerLat, targetLngB - camA.centerLng);
+    const arcLiftFactor = hopDist > 10 ? Math.min(0.18, (hopDist - 10) / 260) * Math.pow(Math.sin(Math.PI * moveT), 2) : 0;
+    const logSpanLng = Math.log(camA.spanLng) * (1 - moveT) + Math.log(camB.spanLng) * moveT + arcLiftFactor;
+    const spanLng = Math.max(15.0, Math.min(270.0, Math.exp(logSpanLng)));
     // 嚴格保持長寬比，杜絕任何縱橫拉伸變形
     const spanLat = spanLng / CAMERA_ASPECT;
 
@@ -7475,7 +7478,6 @@
     const weightB = denom > 1e-6 ? (moveT * camA.spanLng) / denom : moveT;
 
     let centerLat = camA.centerLat + (camB.centerLat - camA.centerLat) * weightB;
-    const targetLngB = unwrapNear(camB.centerLng, camA.centerLng);
     const centerLng = camA.centerLng + (targetLngB - camA.centerLng) * weightB;
     centerLat = Math.max(-52 + spanLat / 2, Math.min(74 - spanLat / 2, centerLat));
 
@@ -7717,19 +7719,20 @@
     if (timelineGradientsCache && timelineGradientsCache.key === key) {
       return timelineGradientsCache;
     }
+    // Quiet Luxury 精品墨綠金配色：與全站象牙白／墨森林綠／香檳金視覺統一
     const bgGrad = ctx2d.createLinearGradient(0, 0, w, h);
-    bgGrad.addColorStop(0, '#162c22');
-    bgGrad.addColorStop(0.55, '#214132');
-    bgGrad.addColorStop(1, '#14261e');
+    bgGrad.addColorStop(0, '#121e18');
+    bgGrad.addColorStop(0.55, '#192a21');
+    bgGrad.addColorStop(1, '#0f1914');
 
     const sunGlow = ctx2d.createRadialGradient(w * 0.16, h * 0.14, 10, w * 0.16, h * 0.14, w * 0.55);
-    sunGlow.addColorStop(0, 'rgba(255, 226, 148, 0.14)');
-    sunGlow.addColorStop(1, 'rgba(255, 226, 148, 0)');
+    sunGlow.addColorStop(0, 'rgba(232, 204, 148, 0.12)');
+    sunGlow.addColorStop(1, 'rgba(232, 204, 148, 0)');
 
     const seaGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapRight, mapBottom);
-    seaGrad.addColorStop(0, '#163f48');
-    seaGrad.addColorStop(0.5, '#1f545a');
-    seaGrad.addColorStop(1, '#13323b');
+    seaGrad.addColorStop(0, '#132722');
+    seaGrad.addColorStop(0.5, '#1b352e');
+    seaGrad.addColorStop(1, '#10211d');
 
     const seaSheen = ctx2d.createRadialGradient(
       mapLeft + mapW * 0.35,
@@ -7739,17 +7742,17 @@
       mapTop + mapH * 0.25,
       mapW * 0.65
     );
-    seaSheen.addColorStop(0, 'rgba(255, 234, 174, 0.11)');
-    seaSheen.addColorStop(1, 'rgba(255, 234, 174, 0)');
+    seaSheen.addColorStop(0, 'rgba(238, 214, 162, 0.09)');
+    seaSheen.addColorStop(1, 'rgba(238, 214, 162, 0)');
 
     const landGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapLeft, mapBottom);
-    landGrad.addColorStop(0, 'rgba(148, 212, 146, 0.56)');
-    landGrad.addColorStop(0.55, 'rgba(116, 184, 124, 0.52)');
-    landGrad.addColorStop(1, 'rgba(84, 148, 102, 0.50)');
+    landGrad.addColorStop(0, 'rgba(92, 126, 104, 0.72)');
+    landGrad.addColorStop(0.55, 'rgba(72, 104, 84, 0.70)');
+    landGrad.addColorStop(1, 'rgba(56, 84, 68, 0.68)');
 
     const taiwanGrad = ctx2d.createLinearGradient(mapLeft, mapTop, mapLeft, mapBottom);
-    taiwanGrad.addColorStop(0, 'rgba(176, 235, 160, 0.78)');
-    taiwanGrad.addColorStop(1, 'rgba(116, 198, 132, 0.72)');
+    taiwanGrad.addColorStop(0, 'rgba(154, 194, 152, 0.88)');
+    taiwanGrad.addColorStop(1, 'rgba(106, 150, 118, 0.84)');
 
     timelineGradientsCache = { key, bgGrad, sunGlow, seaGrad, seaSheen, landGrad, taiwanGrad };
     return timelineGradientsCache;
@@ -7914,9 +7917,9 @@
     }
     ctx2d.restore();
 
-    // 2. 動態經緯度網格
+    // 2. 動態經緯度網格（香檳金細線）
     const gridStep = cam.spanLng <= 18 ? 2 : cam.spanLng <= 48 ? 5 : cam.spanLng <= 115 ? 15 : 30;
-    ctx2d.strokeStyle = 'rgba(167, 206, 178, 0.08)';
+    ctx2d.strokeStyle = 'rgba(226, 204, 160, 0.075)';
     ctx2d.lineWidth = 1;
 
     const startLon = Math.floor((cam.centerLng - cam.spanLng) / gridStep) * gridStep;
@@ -7981,18 +7984,18 @@
 
         // 淺海海岸線柔光暈（手機端僅保留台灣亮點光暈，減少全地圖雙倍 stroke 負擔）
         if (!isMobile || poly.isHighlight) {
-          ctx2d.strokeStyle = poly.isHighlight ? 'rgba(255, 226, 138, 0.24)' : 'rgba(116, 214, 198, 0.14)';
+          ctx2d.strokeStyle = poly.isHighlight ? 'rgba(242, 214, 156, 0.26)' : 'rgba(168, 202, 184, 0.10)';
           ctx2d.lineWidth = poly.isHighlight ? 11 : 8;
           ctx2d.stroke();
         }
 
         if (poly.isHighlight) {
           ctx2d.fillStyle = grads.taiwanGrad;
-          ctx2d.strokeStyle = 'rgba(253, 244, 214, 0.96)';
+          ctx2d.strokeStyle = 'rgba(248, 232, 192, 0.96)';
           ctx2d.lineWidth = cam.spanLng <= 20 ? 2.6 : 1.9;
         } else {
           ctx2d.fillStyle = grads.landGrad;
-          ctx2d.strokeStyle = 'rgba(244, 234, 204, 0.74)';
+          ctx2d.strokeStyle = 'rgba(232, 216, 182, 0.62)';
           ctx2d.lineWidth = cam.spanLng <= 40 ? 1.8 : 1.3;
         }
         ctx2d.fill();
@@ -8128,6 +8131,53 @@
         }
         ctx2d.stroke();
 
+        // Flighty 風格流光飛行尾跡 (Comet Trail) 與飛行方向箭頭
+        if (isCurrentLeg && segFrac > 0.03 && segFrac < 0.99 && !seg.isStatic) {
+          const trailSteps = 6;
+          const trailSpan = 0.16;
+          ctx2d.save();
+          ctx2d.lineCap = 'round';
+          let prevPt = null;
+          let lastAngle = 0;
+          for (let k = 0; k <= trailSteps; k++) {
+            const frac = k / trailSteps;
+            const tt = Math.max(0, segFrac - trailSpan * (1 - frac));
+            const gg = sampleRolePathLatLng(seg.sA, seg.sB, tt, liftSign);
+            const pt = projectWithCamera(gg.lat, gg.lng + shiftLng, cam, w, h);
+            if (prevPt) {
+              ctx2d.strokeStyle =
+                roleKey === 'tom'
+                  ? `rgba(186, 230, 253, ${(0.18 + frac * 0.78).toFixed(2)})`
+                  : `rgba(251, 207, 232, ${(0.18 + frac * 0.78).toFixed(2)})`;
+              ctx2d.lineWidth = 1.6 + frac * 4.4;
+              ctx2d.beginPath();
+              ctx2d.moveTo(prevPt.x, prevPt.y);
+              ctx2d.lineTo(pt.x, pt.y);
+              ctx2d.stroke();
+              const dx = pt.x - prevPt.x;
+              const dy = pt.y - prevPt.y;
+              if (Math.hypot(dx, dy) > 0.8) {
+                lastAngle = Math.atan2(dy, dx);
+              }
+            }
+            prevPt = pt;
+          }
+          // 飛行方向小紙飛機／星芒箭頭
+          if (prevPt) {
+            ctx2d.translate(prevPt.x, prevPt.y);
+            ctx2d.rotate(lastAngle);
+            ctx2d.fillStyle = '#fef3c7';
+            ctx2d.beginPath();
+            ctx2d.moveTo(10, 0);
+            ctx2d.lineTo(-5, -4.5);
+            ctx2d.lineTo(-2.5, 0);
+            ctx2d.lineTo(-5, 4.5);
+            ctx2d.closePath();
+            ctx2d.fill();
+          }
+          ctx2d.restore();
+        }
+
         // 若有美西/杜拜轉機節點且已飛過轉機點，標示一個小轉機圓點
         if (seg.sB.via && tMax >= 0.55) {
           const vPt = projectWithCamera(seg.sB.via.lat, unwrapNear(seg.sB.via.lng, cam.centerLng), cam, w, h);
@@ -8222,7 +8272,45 @@
       tomDrawY = midY;
       euniceDrawX = midX + 19;
       euniceDrawY = midY;
+
+      // Polarsteps 風格：重逢／求婚／婚禮暖香檳金微光綻放 (Reunion Bloom)
+      const prevStepDistKm = calcDistanceKm(stepA.tom.lat, stepA.tom.lng, stepA.eunice.lat, stepA.eunice.lng);
+      const isReunionOrFinale = prevStepDistKm > 80 || activeIdx >= LOVE_FOOTPRINTS_DATA.length - 2;
+      const pulsePhase = (progress * 18) % 1;
+      ctx2d.save();
+      const bloomR = isReunionOrFinale ? 36 + Math.sin(progress * Math.PI * 10) * 6 : 26;
+      const bloomGrad = ctx2d.createRadialGradient(midX, midY, 4, midX, midY, bloomR);
+      bloomGrad.addColorStop(0, isReunionOrFinale ? 'rgba(255, 224, 140, 0.42)' : 'rgba(255, 224, 140, 0.22)');
+      bloomGrad.addColorStop(1, 'rgba(255, 224, 140, 0)');
+      ctx2d.fillStyle = bloomGrad;
+      ctx2d.beginPath();
+      ctx2d.arc(midX, midY, bloomR, 0, Math.PI * 2);
+      ctx2d.fill();
+
+      // 柔和擴散光環漣漪 (Arrival / Reunion Ripple)
+      ctx2d.strokeStyle = `rgba(255, 224, 140, ${((1 - pulsePhase) * (isReunionOrFinale ? 0.58 : 0.32)).toFixed(2)})`;
+      ctx2d.lineWidth = isReunionOrFinale ? 2 : 1.4;
+      ctx2d.beginPath();
+      ctx2d.arc(midX, midY, 18 + pulsePhase * (isReunionOrFinale ? 34 : 20), 0, Math.PI * 2);
+      ctx2d.stroke();
+      ctx2d.restore();
     } else {
+      // 遠距離飛行抵達光暈漣漪 (Arrival Ripple)
+      if (segFrac >= 0.85 || rawSegFrac <= 0.25) {
+        const rip = segFrac >= 0.85 ? (segFrac - 0.85) / 0.15 : rawSegFrac / 0.25;
+        ctx2d.save();
+        [
+          { x: tomDrawX, y: tomDrawY, col: `rgba(125, 211, 252, ${((1 - rip) * 0.48).toFixed(2)})` },
+          { x: euniceDrawX, y: euniceDrawY, col: `rgba(249, 168, 212, ${((1 - rip) * 0.48).toFixed(2)})` },
+        ].forEach((pt) => {
+          ctx2d.strokeStyle = pt.col;
+          ctx2d.lineWidth = 1.6;
+          ctx2d.beginPath();
+          ctx2d.arc(pt.x, pt.y, 14 + rip * 22, 0, Math.PI * 2);
+          ctx2d.stroke();
+        });
+        ctx2d.restore();
+      }
       ctx2d.save();
       ctx2d.strokeStyle = '#ffd166';
       ctx2d.lineWidth = 2.6;
@@ -8298,6 +8386,41 @@
     drawGhibliSootSprite(ctx2d, mapRight - 34, mapTop + 32 + Math.sin(progress * Math.PI * 6) * 4, 8.5, progress * 6);
     drawGhibliSootSprite(ctx2d, mapRight - 56, mapTop + 44 + Math.cos(progress * Math.PI * 6) * 3, 6.2, progress * 5 + 1);
     drawGhibliCompassRose(ctx2d, mapLeft + 44, mapBottom - 44, 22);
+
+    // Polarsteps 風格：右下角即時累計飛行里程儀表 (Cumulative Journey Distance HUD)
+    let cumKm = 0;
+    for (let i = 0; i < totalSegs; i++) {
+      if (i > segIdx) break;
+      const frac = i < segIdx ? 1 : segFrac;
+      const a = LOVE_FOOTPRINTS_DATA[i];
+      const b = LOVE_FOOTPRINTS_DATA[i + 1];
+      const dTom = calcDistanceKm((b.tom.from || a.tom).lat, (b.tom.from || a.tom).lng, b.tom.lat, b.tom.lng);
+      const dEun = calcDistanceKm((b.eunice.from || a.eunice).lat, (b.eunice.from || a.eunice).lng, b.eunice.lat, b.eunice.lng);
+      cumKm += (dTom + dEun) * frac;
+    }
+    const cumKmRounded = Math.round(cumKm);
+    const hudText =
+      currentLang === 'zh'
+        ? `✈ 累計里程 ${numberFormatter.format(cumKmRounded)} km`
+        : `✈ ${numberFormatter.format(cumKmRounded)} km Traveled`;
+    ctx2d.save();
+    ctx2d.font = '600 12.5px "JetBrains Mono", "Noto Sans TC", sans-serif';
+    const hudW = ctx2d.measureText(hudText).width + 22;
+    const hudH = 26;
+    const hudX = mapRight - hudW - 14;
+    const hudY = mapBottom - hudH - 14;
+    ctx2d.fillStyle = 'rgba(18, 30, 24, 0.84)';
+    ctx2d.strokeStyle = 'rgba(232, 206, 152, 0.36)';
+    ctx2d.lineWidth = 1.2;
+    ctx2d.beginPath();
+    ctx2d.roundRect(hudX, hudY, hudW, hudH, 999);
+    ctx2d.fill();
+    ctx2d.stroke();
+    ctx2d.fillStyle = '#f0dec0';
+    ctx2d.textAlign = 'center';
+    ctx2d.textBaseline = 'middle';
+    ctx2d.fillText(hudText, hudX + hudW / 2, hudY + hudH / 2 + 0.5);
+    ctx2d.restore();
 
     // 結束地圖裁切區並畫上精緻邊框
     ctx2d.restore();
