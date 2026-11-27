@@ -7678,7 +7678,8 @@ body:not(.hp-secret-theme) .timezone-pill {
   box-shadow: 0 4px 12px -4px color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
-/* Dark Mode Crisp Contrast for Active Pills & Footer Buttons */
+/* Dark Mode Crisp Contrast for Active Pills, Primary Buttons & Footer Buttons */
+[data-theme="dark"] .primary-btn,
 [data-theme="dark"] .hub-tab-pill.active,
 [data-theme="dark"] .banquet-filter-pill.is-active,
 [data-theme="dark"] .wg-tab-btn.is-active,
