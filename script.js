@@ -3274,8 +3274,11 @@
     if (elCountdownShuttleNotice) {
       elCountdownShuttleNotice.textContent =
         currentLang === 'en'
-          ? '🚌 Reserved the shuttle bus? Departs promptly at 11:00 AM from MRT Jiantan Station Exit 2 (Jihe Rd.).'
-          : '🚌 若您有預約接駁小巴：11:00 準時從捷運劍潭站 2 號出口（基河路）發車';
+          ? '🚌 Pre-reserved shuttle bus only: departs promptly at 11:00 AM from MRT Jiantan Station Exit 2 (Jihe Rd.).'
+          : '🚌 若您有事前預約接駁小巴：11:00 準時從捷運劍潭站 2 號出口（基河路）發車';
+    }
+    if (typeof syncBoutiqueExtrasUi === 'function') {
+      syncBoutiqueExtrasUi();
     }
     if (elCountdownShuttleMapLink) {
       elCountdownShuttleMapLink.textContent =
@@ -6842,6 +6845,7 @@
       : '❦  BON APPÉTIT · 陽明山美軍俱樂部 33⅓ · 敬祝用餐愉快  ❦';
 
     elBanquetCoursesList.replaceChildren(controlsWrap, cardsGrid, footerOrnament);
+    observeEditorialReveal(cardsGrid, '.banquet-course-card');
   }
 
   let timelineLastActiveIdx = -1;
@@ -7036,6 +7040,7 @@
     });
 
     elFootprintTimelineList.replaceChildren(...renderedNodes);
+    observeEditorialReveal(elFootprintTimelineList, '.timeline-item');
     timelineLastActiveIdx = -1;
     drawTimelineVideoFrame(timelineProgress);
   }
@@ -12026,4 +12031,211 @@
       navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).catch(() => {});
     });
   }
+  // =========================================================================
+  // Boutique Guest Touches: Add to Calendar (.ics), Weather Tip, Native Share & Scroll Reveal
+  // =========================================================================
+  let editorialRevealObserver = null;
+  function observeEditorialReveal(container, selector) {
+    if (!container) return;
+    const prefersReduced =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced || typeof IntersectionObserver !== 'function') return;
+
+    const nodes = Array.from(container.querySelectorAll(selector));
+    if (!nodes.length) return;
+
+    if (!editorialRevealObserver) {
+      editorialRevealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              editorialRevealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: '0px 0px -24px 0px', threshold: 0.06 }
+      );
+    }
+
+    const vh = window.innerHeight || 800;
+    nodes.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < vh * 0.96) {
+        el.classList.remove('editorial-reveal');
+        el.classList.add('is-revealed');
+      } else {
+        el.classList.add('editorial-reveal');
+        editorialRevealObserver.observe(el);
+      }
+    });
+  }
+
+  function downloadWeddingCalendarIcs() {
+    const isEn = currentLang === 'en';
+    const summary = isEn
+      ? 'Tom & Eunice Wedding Banquet · Brick Yard 33 1/3'
+      : 'Tom & Eunice 婚禮午宴 · 陽明山美軍俱樂部 Brick Yard 33 1/3';
+    const location = isEn
+      ? 'Brick Yard 33 1/3, No. 49, Kaixuan Rd., Shilin Dist., Taipei City'
+      : '陽明山美軍俱樂部 Brick Yard 33 1/3（台北市士林區凱旋路 49 號）';
+    const description = isEn
+      ? '11:30 Outdoor Cocktail Reception | 12:30 Wedding Banquet.\\nShuttle bus (prior reservation required): departs promptly at 11:00 AM from MRT Jiantan Station Exit 2 (Jihe Rd.).\\nYangmingshan can be breezy—please bring a light jacket or shawl.\\nWedding Site: https://chihweitung.github.io/wedding-vc/'
+      : '11:30 戶外雞尾酒迎賓｜12:30 午宴正式開席。\\n接駁小巴（需事前預約）：11:00 準時從捷運劍潭站 2 號出口（基河路）發車。\\n陽明山山區微涼，建議攜帶薄外套或披肩。\\n婚禮網站：https://chihweitung.github.io/wedding-vc/';
+    const icsLines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Tom and Eunice Wedding//20261129//ZH',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      'UID:tom-eunice-wedding-20261129@wedding-vc',
+      'DTSTAMP:20261127T080000Z',
+      'DTSTART:20261129T033000Z',
+      'DTEND:20261129T073000Z',
+      `SUMMARY:${summary}`,
+      `LOCATION:${location}`,
+      `DESCRIPTION:${description}`,
+      'BEGIN:VALARM',
+      'ACTION:DISPLAY',
+      'DESCRIPTION:Tom & Eunice Wedding Reminder',
+      'TRIGGER:-PT60M',
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR',
+    ];
+    const blob = new Blob([icsLines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Tom-and-Eunice-Wedding-20261129.ics';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1500);
+  }
+
+  async function shareWeddingSectionLink(hash, btnEl) {
+    const isEn = currentLang === 'en';
+    const baseUrl = `${window.location.origin}${window.location.pathname}`;
+    const shareUrl = `${baseUrl}#${hash}`;
+    const title =
+      hash === 'menu'
+        ? isEn
+          ? 'Tom & Eunice · Wedding Banquet Menu'
+          : 'Tom & Eunice · 婚宴佳餚與調酒菜單'
+        : isEn
+          ? 'Tom & Eunice · Wedding Seating Chart'
+          : 'Tom & Eunice · 婚宴座位表查詢';
+    const text =
+      hash === 'menu'
+        ? isEn
+          ? 'Check out the Brick Yard 33 1/3 buffet menu & cocktails!'
+          : '一起看看 11/29 陽明山美軍俱樂部婚宴菜單與調酒！'
+        : isEn
+          ? 'Search your table & view the Brick Yard 33 1/3 seating chart!'
+          : '快速搜尋 11/29 Tom & Eunice 婚宴桌次與座位圖！';
+
+    if (navigator && typeof navigator.share === 'function') {
+      try {
+        await navigator.share({ title, text, url: shareUrl });
+        return;
+      } catch (_err) {
+        // User cancelled or share unavailable; fall through only if not AbortError
+        if (_err && _err.name === 'AbortError') return;
+      }
+    }
+
+    try {
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = shareUrl;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      if (btnEl) {
+        const orig = btnEl.textContent;
+        btnEl.textContent = isEn ? '✅ Link Copied' : '✅ 已複製連結';
+        window.setTimeout(() => {
+          btnEl.textContent = isEn ? '🔗 Share' : '🔗 分享連結';
+        }, 2000);
+      }
+    } catch (_e) {
+      // Ignore clipboard failure
+    }
+  }
+
+  let elWeatherTipText = null;
+  let elAddCalendarBtn = null;
+  let elSeatingShareBtn = null;
+  let elMenuShareBtn = null;
+
+  function ensureBoutiqueExtrasMounted() {
+    const transitCard = document.getElementById('countdown-transit-card');
+    if (transitCard && !document.getElementById('countdown-transit-footer')) {
+      const footerStrip = document.createElement('div');
+      footerStrip.id = 'countdown-transit-footer';
+      footerStrip.className = 'countdown-transit-footer';
+
+      elWeatherTipText = document.createElement('p');
+      elWeatherTipText.className = 'countdown-weather-tip';
+
+      elAddCalendarBtn = document.createElement('button');
+      elAddCalendarBtn.type = 'button';
+      elAddCalendarBtn.id = 'countdown-add-calendar-btn';
+      elAddCalendarBtn.className = 'countdown-calendar-btn';
+      elAddCalendarBtn.addEventListener('click', downloadWeddingCalendarIcs);
+
+      footerStrip.append(elWeatherTipText, elAddCalendarBtn);
+      transitCard.append(footerStrip);
+    }
+
+    const seatingTop = document.querySelector('#seating-section .section-top-row');
+    if (seatingTop && !document.getElementById('seating-share-link-btn')) {
+      elSeatingShareBtn = document.createElement('button');
+      elSeatingShareBtn.type = 'button';
+      elSeatingShareBtn.id = 'seating-share-link-btn';
+      elSeatingShareBtn.className = 'secondary-btn sm-btn section-share-btn';
+      elSeatingShareBtn.addEventListener('click', () => shareWeddingSectionLink('seating', elSeatingShareBtn));
+      seatingTop.append(elSeatingShareBtn);
+    }
+
+    const menuTop = document.querySelector('#banquet-menu-section .section-top-row');
+    if (menuTop && !document.getElementById('menu-share-link-btn')) {
+      elMenuShareBtn = document.createElement('button');
+      elMenuShareBtn.type = 'button';
+      elMenuShareBtn.id = 'menu-share-link-btn';
+      elMenuShareBtn.className = 'secondary-btn sm-btn section-share-btn';
+      elMenuShareBtn.addEventListener('click', () => shareWeddingSectionLink('menu', elMenuShareBtn));
+      menuTop.append(elMenuShareBtn);
+    }
+  }
+
+  function syncBoutiqueExtrasUi() {
+    ensureBoutiqueExtrasMounted();
+    const isEn = currentLang === 'en';
+    if (elWeatherTipText) {
+      elWeatherTipText.textContent = isEn
+        ? '🧥 Yangmingshan can be breezy—we recommend a light jacket or shawl for the outdoor cocktail hour.'
+        : '🧥 陽明山山區微涼，戶外迎賓時段建議攜帶薄外套或披肩';
+    }
+    if (elAddCalendarBtn) {
+      elAddCalendarBtn.textContent = isEn ? '📅 Add to Calendar (.ics)' : '📅 加入行事曆';
+    }
+    if (elSeatingShareBtn) {
+      elSeatingShareBtn.textContent = isEn ? '🔗 Share' : '🔗 分享連結';
+    }
+    if (elMenuShareBtn) {
+      elMenuShareBtn.textContent = isEn ? '🔗 Share' : '🔗 分享連結';
+    }
+  }
+
+  syncBoutiqueExtrasUi();
 })();

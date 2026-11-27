@@ -7798,6 +7798,86 @@ body.wg-modal-open .back-to-top-btn {
   }
 }
 
+/* Boutique Guest Touches: Calendar Strip, Weather Tip, Share Button & Scroll Reveal */
+.countdown-transit-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 14px;
+  padding-top: 12px;
+  margin-top: 2px;
+  border-top: 1px dashed color-mix(in srgb, var(--champagne) 42%, var(--border-subtle));
+}
+
+.countdown-weather-tip {
+  margin: 0;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  text-align: left;
+  flex: 1 1 220px;
+}
+
+.countdown-calendar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--blush-border);
+  background: var(--blush-soft);
+  color: var(--blush-text);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.14s ease, background 0.16s ease, border-color 0.16s ease;
+}
+
+.countdown-calendar-btn:hover {
+  border-color: var(--blush-text);
+  background: color-mix(in srgb, var(--blush-soft) 140%, transparent);
+}
+
+.countdown-calendar-btn:active {
+  transform: scale(0.97);
+}
+
+.section-share-btn {
+  flex-shrink: 0;
+  min-height: 36px;
+  padding: 6px 13px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.editorial-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.editorial-reveal.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .countdown-transit-footer {
+    justify-content: center;
+    text-align: center;
+  }
+  .countdown-weather-tip {
+    text-align: center;
+    flex-basis: 100%;
+  }
+}
+
 /* Respect System Reduced-Motion Accessibility Preference */
 @media (prefers-reduced-motion: reduce) {
   *,
