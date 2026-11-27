@@ -10128,8 +10128,8 @@
       if (elSummarySealCode) {
         elSummarySealCode.textContent =
           currentLang === 'en'
-            ? '🪄 Muggles cannot view the secret Easter Egg · Score 6+ to lift the charm!'
-            : '🪄 麻瓜不能看彩蛋喔！（需答對 6 題以上才能解除麻瓜驅逐咒）';
+            ? '🪄 Muggles cannot view the secret Easter Egg!'
+            : '🪄 麻瓜不能看彩蛋喔！';
       }
     }
 
