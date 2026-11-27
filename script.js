@@ -822,7 +822,7 @@
    */
   // 小巴接駁名單（11:00 劍潭站發車，僅於 staff.html / debug.html 顯示，不與座位綁定）
   const SHUTTLE_PASSENGERS = [
-    // 新郎爸媽朋友（22 組／30 人）
+    // 新郎爸媽朋友（21 組／29 人）
     { name: '楊文', count: 1, group: '新郎爸媽朋友' },
     { name: '林鳳姿', count: 1, group: '新郎爸媽朋友' },
     { name: '李素幸', count: 1, group: '新郎爸媽朋友' },
@@ -836,7 +836,6 @@
     { name: '劉東皋', count: 1, group: '新郎爸媽朋友' },
     { name: '高栢鈴', count: 2, group: '新郎爸媽朋友' },
     { name: '王仲瑛', count: 2, group: '新郎爸媽朋友' },
-    { name: '蕭文瑜', count: 1, group: '新郎爸媽朋友' },
     { name: '陳兆伸', count: 1, group: '新郎爸媽朋友' },
     { name: '吳逸楓', count: 1, group: '新郎爸媽朋友' },
     { name: '廖美鸞', count: 1, group: '新郎爸媽朋友' },
@@ -1411,8 +1410,8 @@
     },
     {
       id: 'zone-groom-highschool',
-      box: { x: 1126, y: 1584, w: 165, h: 474 },
-      svgPath: 'M 1142 1584 H 1275 Q 1291 1584 1291 1600 V 1986 Q 1291 2002 1275 2002 H 1222 Q 1206 2002 1206 2018 V 2042 Q 1206 2058 1190 2058 H 1142 Q 1126 2058 1126 2042 V 1600 Q 1126 1584 1142 1584 Z',
+      box: { x: 1126, y: 1584, w: 165, h: 473 },
+      svgPath: 'M 1140 1584 H 1277 Q 1291 1584 1291 1598 V 1991 Q 1291 2005 1277 2005 H 1213 Q 1205 2005 1205 2013 V 2043 Q 1205 2057 1191 2057 H 1140 Q 1126 2057 1126 2043 V 1598 Q 1126 1584 1140 1584 Z',
       color: '#dc2626',
       fillColor: 'rgba(220, 38, 38, 0.12)',
       darkColor: '#f87171',
@@ -1458,14 +1457,14 @@
     },
     {
       id: 'zone-groom-moz',
-      box: { x: 1126, y: 2010, w: 165, h: 102 },
-      svgPath: 'M 1228 2010 H 1277 Q 1291 2010 1291 2024 V 2098 Q 1291 2112 1277 2112 H 1140 Q 1126 2112 1126 2098 V 2080 Q 1126 2066 1140 2066 H 1200 Q 1214 2066 1214 2052 V 2024 Q 1214 2010 1228 2010 Z',
+      box: { x: 1126, y: 2011, w: 165, h: 98 },
+      svgPath: 'M 1226 2011 H 1277 Q 1291 2011 1291 2025 V 2095 Q 1291 2109 1277 2109 H 1140 Q 1126 2109 1126 2095 V 2077 Q 1126 2063 1140 2063 H 1204 Q 1212 2063 1212 2055 V 2025 Q 1212 2011 1226 2011 Z',
       color: '#0891b2',
       fillColor: 'rgba(8, 145, 178, 0.12)',
       darkColor: '#22d3ee',
       darkFillColor: 'rgba(34, 211, 238, 0.16)',
       debugStats: { headcount: 2, veg: 0, stroller: 0, childSeat: 0 },
-      name: { zh: '新郎 MOZ 區 · 謀智（第 14 桌）', en: 'Groom · MOZ / Mozilla (Table 14)' },
+      name: { zh: '新郎 MOZ 區 · 謀智（第 14 桌 · 上段）', en: 'Groom · MOZ / Mozilla (Table 14 · Upper)' },
       zone: { zh: '外廳左列中段區 · 謀智', en: 'Lower Hall Left Col · Middle (MOZ)' },
       guests: [
         { zh: 'Shawn Huang等二人', en: 'Shawn Huang (2)' },
@@ -1487,13 +1486,13 @@
     },
     {
       id: 'zone-bride-colleagues',
-      box: { x: 1126, y: 2116, w: 165, h: 210 },
+      box: { x: 1126, y: 2115, w: 165, h: 211 },
       color: '#7c3aed',
       fillColor: 'rgba(124, 58, 237, 0.12)',
       darkColor: '#c084fc',
       darkFillColor: 'rgba(192, 132, 252, 0.16)',
       debugStats: { headcount: 7, veg: 0, stroller: 0, childSeat: 0 },
-      name: { zh: '新娘同事區 · 瑪黑（第 14 桌）', en: "Bride's Colleagues · Marais (Table 14)" },
+      name: { zh: '新娘同事區 · 瑪黑（第 14 桌 · 下段）', en: "Bride's Colleagues · Marais (Table 14 · Lower)" },
       zone: { zh: '外廳左列下方區 · 瑪黑', en: 'Lower Hall Left Col · Lower (Marais)' },
       guests: [
         { zh: '吳宥蓁', en: '吳宥蓁' },
@@ -12102,12 +12101,14 @@
       ? [
           '11:30 Outdoor Cocktail Reception | 12:30 Wedding Banquet.',
           'Shuttle bus (prior reservation required): departs promptly at 11:00 AM from MRT Jiantan Station Exit 2 (Jihe Rd.).',
+          'Dress Code: Milk Tea & Earth Tones (beige, oat, camel, warm brown).',
           'Yangmingshan can be breezy—please bring a light jacket or shawl.',
           'Wedding Site: https://chihweitung.github.io/wedding-vc/',
         ]
       : [
           '11:30 戶外雞尾酒迎賓｜12:30 午宴正式開席。',
           '接駁小巴（需事前預約）：11:00 準時從捷運劍潭站 2 號出口（基河路）發車。',
+          'Dress Code：奶茶色系 & 大地色系（米白、燕麥、奶茶、暖棕）。',
           '陽明山山區微涼，建議攜帶薄外套或披肩。',
           '婚禮網站：https://chihweitung.github.io/wedding-vc/',
         ];
@@ -12225,6 +12226,7 @@
     }
   }
 
+  var elDressCodeText;
   var elWeatherTipText;
   var elAddCalendarBtn;
   var elCalendarMenu;
@@ -12248,8 +12250,27 @@
       footerStrip.id = 'countdown-transit-footer';
       footerStrip.className = 'countdown-transit-footer';
 
+      const tipsStack = document.createElement('div');
+      tipsStack.className = 'countdown-tips-stack';
+
+      const dressRow = document.createElement('div');
+      dressRow.className = 'countdown-dresscode-row';
+      elDressCodeText = document.createElement('span');
+      elDressCodeText.className = 'countdown-dresscode-text';
+      const swatches = document.createElement('span');
+      swatches.className = 'countdown-dresscode-swatches';
+      swatches.setAttribute('aria-hidden', 'true');
+      ['#efe7dc', '#d6c3ab', '#b58e6b', '#7c5a43'].forEach((hex) => {
+        const dot = document.createElement('span');
+        dot.className = 'countdown-dresscode-swatch';
+        dot.style.backgroundColor = hex;
+        swatches.appendChild(dot);
+      });
+      dressRow.append(elDressCodeText, swatches);
+
       elWeatherTipText = document.createElement('p');
       elWeatherTipText.className = 'countdown-weather-tip';
+      tipsStack.append(dressRow, elWeatherTipText);
 
       const calWrap = document.createElement('div');
       calWrap.id = 'countdown-calendar-wrap';
@@ -12303,7 +12324,7 @@
         }
       });
 
-      footerStrip.append(elWeatherTipText, calWrap);
+      footerStrip.append(tipsStack, calWrap);
       transitCard.append(footerStrip);
     }
 
@@ -12342,6 +12363,11 @@
   function syncBoutiqueExtrasUi() {
     ensureBoutiqueExtrasMounted();
     const isEn = currentLang === 'en';
+    if (elDressCodeText) {
+      elDressCodeText.textContent = isEn
+        ? '👗 Dress Code: Milk Tea & Earth Tones'
+        : '👗 Dress Code：奶茶色系 & 大地色系';
+    }
     if (elWeatherTipText) {
       elWeatherTipText.textContent = isEn
         ? '🧥 Yangmingshan can be breezy—we recommend a light jacket or shawl for the outdoor cocktail hour.'
