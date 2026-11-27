@@ -2860,13 +2860,7 @@
     } else {
       elRiddleModalLumos.textContent = '';
       elRiddleModalLumos.classList.add('hidden');
-      if (btnRiddleLumos) {
-        btnRiddleLumos.textContent =
-          currentLang === 'en'
-            ? '✨ Cast Lumos (Reveal Hidden Clue)'
-            : '✨ 施展路摸思（照亮暗記提示）';
-        btnRiddleLumos.classList.remove('hidden');
-      }
+      if (btnRiddleLumos) btnRiddleLumos.classList.add('hidden');
     }
   }
 
@@ -2965,8 +2959,8 @@
     if (elDecreeSealedHint) {
       elDecreeSealedHint.textContent =
         currentLang === 'en'
-          ? '🕯️ Sealed in invisible ink — cast Lumos or Marauder’s Map above to reveal'
-          : '🕯️ 密語已由隱形墨水封存 — 施展上方「螢光閃爍」或「活點地圖」即可顯影';
+          ? '🕯️ Sealed in invisible ink'
+          : '🕯️ 密語已由隱形墨水封存';
       elDecreeSealedHint.classList.toggle('hidden', isDecreeRevealed);
     }
   }
