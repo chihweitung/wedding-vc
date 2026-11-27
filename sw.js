@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'te-wedding-20261129-v235';
+const CACHE_NAME = 'te-wedding-20261129-v236';
 const NETWORK_TIMEOUT_MS = 4500;
 
 // 僅預快取公開首頁必要資源（嚴格排除任何隱藏頁或測試頁檔案名稱）
