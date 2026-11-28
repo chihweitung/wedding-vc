@@ -2443,11 +2443,29 @@
     },
     {
       year: '2026',
+      dateTag: '2026.10',
+      tom: { lat: 25.041, lng: 121.544, city: { zh: '返抵台北 Taipei', en: 'Back Home in Taipei' } },
+      eunice: { lat: 25.041, lng: 121.544, city: { zh: '返抵台北 Taipei', en: 'Back Home in Taipei' } },
+      lat: 25.041,
+      lng: 121.544,
+      place: {
+        zh: '2026.10 · 帶著奧地利回憶回到台灣 · 倒數籌備婚禮',
+        en: 'Oct 2026 · Back Home in Taiwan — Final Countdown to the Wedding',
+      },
+      distanceLabel: { zh: '0 km · 台北籌備婚禮 💕', en: '0 km · Wedding Prep in Taipei 💕' },
+      desc: {
+        zh: '帶著奧地利的滿滿回憶飛回台灣，在台北一邊倒數、一邊用心準備迎接最珍惜的每一位親友。',
+        en: 'Flew home to Taiwan with a heart full of Austrian memories, counting down the final weeks in Taipei to welcome everyone we love.',
+      },
+      mapQuery: 'Taipei,Taiwan',
+    },
+    {
+      year: '2026',
       dateTag: '2026.11.29',
-      tom: { lat: 25.047, lng: 121.532, city: { zh: '陽明山美軍俱樂部', en: 'Brick Yard 33 1/3' } },
-      eunice: { lat: 25.047, lng: 121.532, city: { zh: '陽明山美軍俱樂部', en: 'Brick Yard 33 1/3' } },
-      lat: 25.047,
-      lng: 121.532,
+      tom: { lat: 25.137, lng: 121.546, city: { zh: '陽明山美軍俱樂部', en: 'Brick Yard 33 1/3' } },
+      eunice: { lat: 25.137, lng: 121.546, city: { zh: '陽明山美軍俱樂部', en: 'Brick Yard 33 1/3' } },
+      lat: 25.137,
+      lng: 121.546,
       place: {
         zh: '2026.11.29 · 陽明山美軍俱樂部，我們結婚了 💍🥂',
         en: '2026.11.29 · Married at Brick Yard 33 1/3, Yangmingshan 💍🥂',
@@ -3145,16 +3163,20 @@
   let timelineAnimId = null;
   let timelineLastTs = 0;
   let timelineSpeedMultiplier = 1.0; // 支援 0.5x / 1.0x / 1.5x / 2.0x 調整播放速度
-  const TIMELINE_DURATION_MS = 145000; // 145 秒（2014–2026 雙人軌跡＋奧地利蜜月加長停留 3 秒＋最後 6 秒停留陽明山美軍俱樂部）
-  const TIMELINE_FINALE_HOLD_RATIO = 6 / 145; // 最後約 6 秒停留在陽明山美軍俱樂部終點
+  const TIMELINE_DURATION_MS = 150000; // 150 秒（2014–2026 雙人軌跡＋奧地利蜜月加長停留＋最後 10 秒停留陽明山美軍俱樂部）
+  const TIMELINE_FINALE_HOLD_RATIO = 10 / 150; // 最後約 10 秒停留在陽明山美軍俱樂部終點
   const TIMELINE_HONEYMOON_SEG_WEIGHT = 1.8; // 奧地利蜜月（倒數第二站）加長停留約 3 秒
 
   function mapJourneyProgressToExactStep(journeyProgress, totalSegs) {
-    if (totalSegs <= 1) return Math.max(0, Math.min(totalSegs, journeyProgress * totalSegs));
+    if (totalSegs <= 2) return Math.max(0, Math.min(totalSegs, journeyProgress * totalSegs));
+    const hmIdx = totalSegs - 2; // 奧地利蜜月 (2026.09) -> 返台 (2026.10) 這段加長停留
     const totalWeight = (totalSegs - 1) + TIMELINE_HONEYMOON_SEG_WEIGHT;
     const wPos = Math.max(0, Math.min(totalWeight, journeyProgress * totalWeight));
-    if (wPos <= totalSegs - 1) return wPos;
-    return (totalSegs - 1) + (wPos - (totalSegs - 1)) / TIMELINE_HONEYMOON_SEG_WEIGHT;
+    if (wPos <= hmIdx) return wPos;
+    if (wPos <= hmIdx + TIMELINE_HONEYMOON_SEG_WEIGHT) {
+      return hmIdx + (wPos - hmIdx) / TIMELINE_HONEYMOON_SEG_WEIGHT;
+    }
+    return (hmIdx + 1) + (wPos - (hmIdx + TIMELINE_HONEYMOON_SEG_WEIGHT));
   }
 
   // Formatters
@@ -9018,9 +9040,44 @@
   }
 
   const FOOTPRINT_BGM_SRC = 'audio/music.m4a';
+  const FOOTPRINT_BGM_BASE_VOL = 0.7;
   let footprintGhibliEnabled = false;
   let footprintGhibliPlaying = false;
   let footprintAudioEl = null;
+  let footprintAudioBlobUrl = null;
+  let footprintAudioBlobPromise = null;
+
+  function ensureFootprintAudioBlob() {
+    if (footprintAudioBlobUrl) return Promise.resolve(footprintAudioBlobUrl);
+    if (footprintAudioBlobPromise) return footprintAudioBlobPromise;
+    footprintAudioBlobPromise = fetch(FOOTPRINT_BGM_SRC)
+      .then((res) => (res.ok ? res.blob() : null))
+      .then((blob) => {
+        if (!blob) return null;
+        footprintAudioBlobUrl = URL.createObjectURL(blob);
+        if (footprintAudioEl && footprintAudioEl.src !== footprintAudioBlobUrl) {
+          const wasPlaying = !footprintAudioEl.paused;
+          const targetSec = timelineProgress * (TIMELINE_DURATION_MS / 1000);
+          footprintAudioEl.src = footprintAudioBlobUrl;
+          footprintAudioEl.load();
+          const onReady = () => {
+            try {
+              footprintAudioEl.currentTime = targetSec;
+              footprintAudioEl.playbackRate = timelineSpeedMultiplier;
+              if (wasPlaying && footprintGhibliEnabled && timelinePlaying) {
+                footprintAudioEl.play().catch(() => {});
+              }
+            } catch (_e) {
+              // ignore
+            }
+          };
+          footprintAudioEl.addEventListener('loadedmetadata', onReady, { once: true });
+        }
+        return footprintAudioBlobUrl;
+      })
+      .catch(() => null);
+    return footprintAudioBlobPromise;
+  }
 
   function syncFootprintBgmUi() {
     if (!btnTimelineBgm) return;
@@ -9036,8 +9093,6 @@
     }
   }
 
-  const FOOTPRINT_BGM_BASE_VOL = 0.7;
-
   function syncFootprintBgmToProgress(progress, forceSeek = false) {
     if (!footprintAudioEl) return;
     const clamped = Math.max(0, Math.min(1, Number(progress) || 0));
@@ -9047,14 +9102,14 @@
         ? footprintAudioEl.duration
         : 0;
       const mappedSec = dur > 0 ? targetSec % dur : targetSec;
-      // 僅在明確跳轉且音訊區段可 seek 時才設定 currentTime，避免連續播放時反覆 seek 導致斷音
       if (forceSeek) {
         if (mappedSec <= 0.1) {
           footprintAudioEl.currentTime = 0;
         } else if (
-          footprintAudioEl.seekable &&
-          footprintAudioEl.seekable.length > 0 &&
-          mappedSec <= footprintAudioEl.seekable.end(footprintAudioEl.seekable.length - 1)
+          footprintAudioBlobUrl ||
+          (footprintAudioEl.seekable &&
+            footprintAudioEl.seekable.length > 0 &&
+            mappedSec <= footprintAudioEl.seekable.end(footprintAudioEl.seekable.length - 1))
         ) {
           footprintAudioEl.currentTime = mappedSec;
         }
@@ -9078,8 +9133,9 @@
     if (bgmPlaying && typeof toggleBgm === 'function') {
       toggleBgm();
     }
+    ensureFootprintAudioBlob();
     if (!footprintAudioEl) {
-      const audio = new Audio(FOOTPRINT_BGM_SRC);
+      const audio = new Audio(footprintAudioBlobUrl || FOOTPRINT_BGM_SRC);
       audio.loop = true;
       audio.preload = 'auto';
       audio.volume = FOOTPRINT_BGM_BASE_VOL;
@@ -9114,7 +9170,17 @@
     const dt = ts - timelineLastTs;
     timelineLastTs = ts;
 
-    timelineProgress += (dt * timelineSpeedMultiplier) / TIMELINE_DURATION_MS;
+    if (
+      footprintGhibliPlaying &&
+      footprintAudioBlobUrl &&
+      footprintAudioEl &&
+      !footprintAudioEl.paused &&
+      footprintAudioEl.readyState >= 2
+    ) {
+      timelineProgress = Math.max(0, footprintAudioEl.currentTime / (TIMELINE_DURATION_MS / 1000));
+    } else {
+      timelineProgress += (dt * timelineSpeedMultiplier) / TIMELINE_DURATION_MS;
+    }
     if (timelineProgress >= 1) {
       timelineProgress = 1;
       timelinePlaying = false;
@@ -9388,28 +9454,31 @@
       drawTimelineVideoFrame(timelineProgress);
     };
     let isScrubbing = false;
+    let wasPlayingBeforeScrub = false;
     elScrubberWrap.addEventListener('pointerdown', (ev) => {
       isScrubbing = true;
+      wasPlayingBeforeScrub = timelinePlaying;
       timelinePlaying = false;
       stopFootprintGhibliBgm();
       if (timelineAnimId) cancelAnimationFrame(timelineAnimId);
       if (btnTimelinePlay) btnTimelinePlay.textContent = t().timelinePlayBtn;
+      ensureFootprintAudioBlob();
       seekFromPointer(ev);
     });
     window.addEventListener('pointermove', (ev) => {
       if (!isScrubbing) return;
       seekFromPointer(ev);
     });
-    window.addEventListener('pointerup', () => {
+    const finishScrub = () => {
       if (!isScrubbing) return;
       isScrubbing = false;
       syncFootprintBgmToProgress(timelineProgress, true);
-    });
-    window.addEventListener('pointercancel', () => {
-      if (!isScrubbing) return;
-      isScrubbing = false;
-      syncFootprintBgmToProgress(timelineProgress, true);
-    });
+      if (wasPlayingBeforeScrub && timelineProgress < 0.995) {
+        togglePlayTimeline();
+      }
+    };
+    window.addEventListener('pointerup', finishScrub);
+    window.addEventListener('pointercancel', finishScrub);
   }
 
   // ============================================================================
