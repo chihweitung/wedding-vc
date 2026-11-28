@@ -7993,6 +7993,139 @@ body.wg-modal-open .back-to-top-btn {
   white-space: nowrap;
 }
 
+/* Footprints Editorial Upgrade: 12-Year KPI Strip, Magazine Chapter Dividers & Map Sync Cues */
+.footprint-kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0 12px;
+  padding: 14px 12px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface-note) 75%, var(--surface-card));
+  border: 1px solid color-mix(in srgb, var(--champagne) 42%, var(--border-subtle));
+}
+
+.footprint-kpi-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 3px;
+  padding: 2px 6px;
+  position: relative;
+}
+
+.footprint-kpi-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 18%;
+  bottom: 18%;
+  width: 1px;
+  background: color-mix(in srgb, var(--champagne) 38%, var(--border-subtle));
+}
+
+.footprint-kpi-num {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', Georgia, serif;
+  font-size: clamp(1.38rem, 2.5vw, 1.82rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
+}
+
+.footprint-kpi-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+@media (max-width: 640px) {
+  .footprint-kpi-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 10px;
+    padding: 12px 10px;
+  }
+  .footprint-kpi-item:not(:last-child)::after {
+    display: none;
+  }
+}
+
+.timeline-chapter-year {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.timeline-chapter-yr-num {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 1.42rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.timeline-chapter-yr-sub {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.timeline-item.is-milestone {
+  border-left: 3px solid var(--champagne);
+  background: color-mix(in srgb, var(--surface-note) 42%, var(--surface-card));
+}
+
+.timeline-item.is-milestone::before {
+  background: var(--champagne);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--champagne) 28%, transparent);
+}
+
+.timeline-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed color-mix(in srgb, var(--border-subtle) 80%, transparent);
+}
+
+.timeline-map-cue {
+  font-size: 0.73rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.timeline-map-cue.is-idle {
+  color: var(--text-muted);
+  opacity: 0.78;
+  transition: opacity 0.16s ease, color 0.16s ease;
+}
+
+.timeline-item:hover .timeline-map-cue.is-idle {
+  color: var(--blush-text);
+  opacity: 1;
+}
+
+.timeline-map-cue.is-live {
+  display: none;
+  color: var(--blush-text);
+}
+
+.timeline-item.is-current .timeline-map-cue.is-idle {
+  display: none;
+}
+
+.timeline-item.is-current .timeline-map-cue.is-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .editorial-reveal {
   opacity: 0;
   transform: translateY(14px);

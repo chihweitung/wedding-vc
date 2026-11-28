@@ -6901,6 +6901,46 @@
     if (!elFootprintYearBar || !elFootprintTimelineList) return;
     const dict = t();
     const isEn = currentLang === 'en';
+
+    // 12 年旅程精選數字帶 (Polarsteps / Editorial KPI Strip)
+    const footprintsCard = elFootprintYearBar.parentElement;
+    if (footprintsCard) {
+      let kpiStrip = document.getElementById('footprint-kpi-strip');
+      if (!kpiStrip) {
+        kpiStrip = document.createElement('div');
+        kpiStrip.id = 'footprint-kpi-strip';
+        kpiStrip.className = 'footprint-kpi-strip';
+        footprintsCard.insertBefore(kpiStrip, elFootprintYearBar);
+      }
+      let totalJourneyKm = 0;
+      for (let i = 0; i < LOVE_FOOTPRINTS_DATA.length - 1; i++) {
+        const a = LOVE_FOOTPRINTS_DATA[i];
+        const b = LOVE_FOOTPRINTS_DATA[i + 1];
+        totalJourneyKm += calcDistanceKm((b.tom.from || a.tom).lat, (b.tom.from || a.tom).lng, b.tom.lat, b.tom.lng);
+        totalJourneyKm += calcDistanceKm((b.eunice.from || a.eunice).lat, (b.eunice.from || a.eunice).lng, b.eunice.lat, b.eunice.lng);
+      }
+      const kpiItems = [
+        { num: '12', label: isEn ? 'Years Together · 2014–2026' : '年相伴 · 2014–2026' },
+        { num: String(LOVE_FOOTPRINTS_DATA.length), label: isEn ? 'Shared Chapters' : '段重要章節' },
+        { num: numberFormatter.format(Math.round(totalJourneyKm)), label: isEn ? 'km Traveled Together' : 'km 累計飛行里程' },
+        { num: '7', label: isEn ? 'Countries · TW JP US CA UK DE AT' : '跨足國家 · 台日美加英德奧' },
+      ];
+      kpiStrip.replaceChildren(
+        ...kpiItems.map((k) => {
+          const cell = document.createElement('div');
+          cell.className = 'footprint-kpi-item';
+          const numEl = document.createElement('span');
+          numEl.className = 'footprint-kpi-num';
+          numEl.textContent = k.num;
+          const lblEl = document.createElement('span');
+          lblEl.className = 'footprint-kpi-label';
+          lblEl.textContent = k.label;
+          cell.append(numEl, lblEl);
+          return cell;
+        })
+      );
+    }
+
     const uniqueYears = Array.from(new Set(LOVE_FOOTPRINTS_DATA.map((d) => d.year)));
     const yearOptions = [
       { id: 'all', label: dict.yearAll },
@@ -6967,16 +7007,24 @@
         chapter.className = 'timeline-chapter-divider';
         const yrText = document.createElement('span');
         yrText.className = 'timeline-chapter-year';
+        const yrNum = document.createElement('span');
+        yrNum.className = 'timeline-chapter-yr-num';
+        yrNum.textContent = String(item.year);
+        yrText.append(yrNum);
         const sub = YEAR_SUBTITLES[item.year];
-        yrText.textContent = sub
-          ? `${item.year} · ${isEn ? sub.en : sub.zh}`
-          : String(item.year);
+        if (sub) {
+          const yrSub = document.createElement('span');
+          yrSub.className = 'timeline-chapter-yr-sub';
+          yrSub.textContent = isEn ? sub.en : sub.zh;
+          yrText.append(yrSub);
+        }
         chapter.append(yrText);
         renderedNodes.push(chapter);
       }
 
+      const isMilestone = isMilestoneFootprint(item, globalIdx, totalStops);
       const node = document.createElement('div');
-      node.className = 'timeline-item';
+      node.className = `timeline-item${isMilestone ? ' is-milestone' : ''}`;
       node.dataset.stopIdx = String(globalIdx);
       node.style.cursor = 'pointer';
       node.title = isEn ? 'Click to focus this moment on the map' : '點擊在上方地圖聚焦此時間點';
@@ -7052,7 +7100,17 @@
       descEl.className = 'timeline-place-desc';
       descEl.textContent = item.desc[currentLang];
 
-      node.append(titleEl, descEl);
+      const cardFooter = document.createElement('div');
+      cardFooter.className = 'timeline-card-footer';
+      const cueIdle = document.createElement('span');
+      cueIdle.className = 'timeline-map-cue is-idle';
+      cueIdle.textContent = isEn ? '📍 Focus on map →' : '📍 點擊於地圖定位 →';
+      const cueLive = document.createElement('span');
+      cueLive.className = 'timeline-map-cue is-live';
+      cueLive.textContent = isEn ? '● Playing on map' : '● 地圖播放中';
+      cardFooter.append(cueIdle, cueLive);
+
+      node.append(titleEl, descEl, cardFooter);
       renderedNodes.push(node);
     });
 
