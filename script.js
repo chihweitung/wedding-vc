@@ -3107,7 +3107,7 @@
   let timelineAnimId = null;
   let timelineLastTs = 0;
   let timelineSpeedMultiplier = 1.0; // 支援 0.5x / 1.0x / 1.5x / 2.0x 調整播放速度
-  const TIMELINE_DURATION_MS = 72000; // 72 秒流暢播放 2014–2026 雙人軌跡與每站停留聚焦 (每站約 2.18 秒)
+  const TIMELINE_DURATION_MS = 108000; // 108 秒從容播放 2014–2026 雙人軌跡、羽毛筆章節書寫與飛行聚焦 (每站約 3.2 秒)
 
   // Formatters
   const twFormatter = new Intl.DateTimeFormat('zh-TW', {
@@ -4709,6 +4709,9 @@
           zoomBtn.textContent =
             currentLang === 'en' ? '🔍 Zoom Seating Map' : '🔍 放大檢視座位圖';
         }
+        if (typeof ensureBoutiqueExtrasMounted === 'function') {
+          ensureBoutiqueExtrasMounted();
+        }
       }
     }
 
@@ -6282,10 +6285,16 @@
       highlightedIds.add(BUFFET_ZONE_ID);
     }
 
+    const isMarauderSpellQuery = Boolean(query && isMarauderSpellText(query));
     if (
+      isMarauderSpellQuery ||
       matchesFacility(['接待桌', '接待', '簽到', '收禮', '迎賓', '禮金', 'reception', 'checkin', 'desk'])
     ) {
       highlightedIds.add(RECEPTION_ZONE_ID);
+    }
+    const marauderStage = document.getElementById('seating-photo-stage');
+    if (marauderStage) {
+      marauderStage.classList.toggle('is-marauder-revealed', isMarauderSpellQuery);
     }
 
     if (matchesFacility(['廚房', '備餐', 'kitchen'], ['廚'])) {
@@ -7482,7 +7491,7 @@
    * - 後 56% 時間 (0.44 ~ 1.00)：以 Smoothstep 緩動平滑飛往下一站
    */
   function getDwellGlideFrac(rawFrac) {
-    const dwellRatio = 0.44;
+    const dwellRatio = 0.56;
     if (rawFrac <= dwellRatio) return 0;
     const t = Math.max(0, Math.min(1, (rawFrac - dwellRatio) / (1 - dwellRatio)));
     return t * t * (3 - 2 * t);
@@ -8546,6 +8555,190 @@
     drawGhibliSootSprite(ctx2d, mapRight - 34, mapTop + 32 + Math.sin(progress * Math.PI * 6) * 4, 8.5, progress * 6);
     drawGhibliSootSprite(ctx2d, mapRight - 56, mapTop + 44 + Math.cos(progress * Math.PI * 6) * 3, 6.2, progress * 5 + 1);
     drawGhibliCompassRose(ctx2d, mapLeft + 44, mapBottom - 44, 22);
+
+    // 電影章節卡風格：羽毛筆於地圖正中央緩緩書寫「即將前往的事件」（0.04~0.68 完整從容節奏）
+    if (exactStep < totalSegs - 0.001 && stepB && stepB.place && rawSegFrac >= 0.04 && rawSegFrac <= 0.68) {
+      let bannerAlpha = 1;
+      if (rawSegFrac < 0.10) {
+        bannerAlpha = (rawSegFrac - 0.04) / 0.06;
+      } else if (rawSegFrac > 0.56) {
+        bannerAlpha = 1 - (rawSegFrac - 0.56) / 0.12;
+      }
+      bannerAlpha = Math.max(0, Math.min(1, bannerAlpha));
+      const easeAlpha = bannerAlpha * bannerAlpha * (3 - 2 * bannerAlpha);
+
+      // 緩慢從容的書寫進度（0.07 ~ 0.47，佔整段 40% 時間，寫完再停留 0.47 ~ 0.56 供閱讀）
+      const rawWrite = Math.max(0, Math.min(1, (rawSegFrac - 0.07) / 0.40));
+      // 略帶手寫頓挫感的溫柔緩動
+      const writeFrac = rawWrite < 1 ? rawWrite * 0.88 + Math.sin(rawWrite * Math.PI * 0.5) * 0.12 : 1;
+      const flourishFrac = Math.max(0, Math.min(1, (rawSegFrac - 0.44) / 0.09));
+      const isWriting = rawSegFrac >= 0.07 && rawSegFrac <= 0.475;
+
+      const dateLabel = stepB.dateTag || stepB.year || '';
+      const rawTitle = (stepB.place[currentLang] || stepB.place.zh || '').trim();
+      const chapterNo = String(Math.min(LOVE_FOOTPRINTS_DATA.length, segIdx + 2)).padStart(2, '0');
+      const eyebrowText =
+        currentLang === 'zh'
+          ? `CHAPTER ${chapterNo}  ·  ${dateLabel || '即將啟程'}`
+          : `CHAPTER ${chapterNo}  ·  ${dateLabel || 'NEXT JOURNEY'}`;
+      // 若標題開頭已含日期前綴則去掉，讓主標題更像電影章節名
+      let cleanTitle = rawTitle;
+      if (dateLabel && cleanTitle.startsWith(String(dateLabel))) {
+        cleanTitle = cleanTitle.slice(String(dateLabel).length).replace(/^[\s·•—\-:：]+/, '').trim() || rawTitle;
+      }
+
+      ctx2d.save();
+
+      // 1. 柔和電影暗角襯底，讓地圖中央的手寫章節卡更聚焦立體
+      ctx2d.fillStyle = `rgba(10, 18, 14, ${(0.34 * easeAlpha).toFixed(3)})`;
+      ctx2d.fillRect(mapLeft, mapTop, mapW, mapH);
+
+      ctx2d.globalAlpha = easeAlpha;
+      const quillTitleFont =
+        currentLang === 'en'
+          ? 'italic 600 27px "Cormorant Garamond", "Great Vibes", Georgia, serif'
+          : 'italic 500 24px "Cormorant Garamond", "Kaiti TC", "STKaiti", "DFKai-SB", "Noto Serif TC", serif';
+      ctx2d.font = quillTitleFont;
+      const maxCardW = Math.min(mapW - 140, 800);
+      let displayEventText = cleanTitle;
+      while (ctx2d.measureText(displayEventText).width > maxCardW - 96 && displayEventText.length > 8) {
+        displayEventText = `${displayEventText.slice(0, -2)}…`;
+      }
+      const textW = ctx2d.measureText(displayEventText).width;
+      const cardW = Math.min(maxCardW, Math.max(330, textW + 112));
+      const cardH = 98;
+      const cardX = mapLeft + (mapW - cardW) / 2;
+      const cardY = mapTop + (mapH - cardH) / 2;
+
+      // 2. 中央典雅羊皮紙章節卡（雙層香檳金框＋細緻四角裝飾點）
+      const cardGrad = ctx2d.createLinearGradient(cardX, cardY, cardX, cardY + cardH);
+      cardGrad.addColorStop(0, 'rgba(253, 249, 239, 0.96)');
+      cardGrad.addColorStop(1, 'rgba(244, 234, 212, 0.96)');
+      ctx2d.fillStyle = cardGrad;
+      ctx2d.strokeStyle = 'rgba(176, 136, 78, 0.84)';
+      ctx2d.lineWidth = 1.8;
+      ctx2d.beginPath();
+      ctx2d.roundRect(cardX, cardY, cardW, cardH, 16);
+      ctx2d.fill();
+      ctx2d.stroke();
+
+      ctx2d.strokeStyle = 'rgba(198, 160, 102, 0.42)';
+      ctx2d.lineWidth = 1;
+      ctx2d.beginPath();
+      ctx2d.roundRect(cardX + 6, cardY + 6, cardW - 12, cardH - 12, 11);
+      ctx2d.stroke();
+
+      // 上方優雅斜體眉標 (CHAPTER XX · YEAR)
+      ctx2d.font = 'italic 600 13.5px "Cormorant Garamond", Georgia, serif';
+      ctx2d.fillStyle = '#9a7239';
+      ctx2d.textAlign = 'center';
+      ctx2d.textBaseline = 'middle';
+      ctx2d.fillText(eyebrowText, cardX + cardW / 2, cardY + 24);
+
+      // 3. 主標題：優雅手寫楷體／斜體襯線隨羽毛筆筆尖緩緩浮現墨跡
+      ctx2d.font = quillTitleFont;
+      const textStartX = cardX + (cardW - textW) / 2;
+      const textCenterY = cardY + 58;
+      const revealW = textW * writeFrac;
+
+      ctx2d.save();
+      ctx2d.beginPath();
+      ctx2d.rect(textStartX - 8, cardY + 34, revealW + 10, 46);
+      ctx2d.clip();
+      ctx2d.fillStyle = '#3d2412';
+      ctx2d.textAlign = 'left';
+      ctx2d.textBaseline = 'middle';
+      ctx2d.fillText(displayEventText, textStartX, textCenterY);
+      ctx2d.restore();
+
+      // 4. 寫完後優雅一筆帶過的香檳金底線裝飾 (Calligraphy Flourish)
+      if (flourishFrac > 0) {
+        const lineW = Math.min(textW * 0.72, 260) * flourishFrac;
+        const lineY = cardY + 80;
+        const midX = cardX + cardW / 2;
+        ctx2d.strokeStyle = 'rgba(186, 144, 78, 0.65)';
+        ctx2d.lineWidth = 1.25;
+        ctx2d.beginPath();
+        ctx2d.moveTo(midX - lineW / 2, lineY);
+        ctx2d.lineTo(midX + lineW / 2, lineY);
+        ctx2d.stroke();
+      }
+
+      // 5. 手繪象牙香檳金羽毛筆 (Quill Pen) 隨墨跡優雅書寫，寫完輕輕抬筆
+      const nibX = textStartX + revealW;
+      const liftAfterDone = isWriting ? 0 : Math.min(1, (rawSegFrac - 0.47) / 0.08);
+      const writeBounceY = isWriting
+        ? Math.sin(writeFrac * Math.PI * 18) * 2.8
+        : -9 * liftAfterDone;
+      const nibY = textCenterY + 7 + writeBounceY;
+      const quillTilt = isWriting
+        ? -0.36 + Math.sin(writeFrac * Math.PI * 18) * 0.075
+        : -0.56 - liftAfterDone * 0.1;
+
+      if (isWriting) {
+        for (let sp = 0; sp < 4; sp++) {
+          const sx = nibX - 5 - sp * 8;
+          const sy = nibY - 2 + Math.sin(writeFrac * 34 + sp * 1.9) * 4.5;
+          ctx2d.fillStyle = `rgba(212, 162, 74, ${(0.76 - sp * 0.18).toFixed(2)})`;
+          ctx2d.beginPath();
+          ctx2d.arc(sx, sy, 2.4 - sp * 0.4, 0, Math.PI * 2);
+          ctx2d.fill();
+        }
+      }
+
+      ctx2d.save();
+      ctx2d.translate(nibX, nibY);
+      ctx2d.rotate(quillTilt);
+      ctx2d.scale(1.22, 1.22);
+
+      // 金屬筆尖
+      ctx2d.fillStyle = '#5c3b18';
+      ctx2d.beginPath();
+      ctx2d.moveTo(0, 0);
+      ctx2d.lineTo(5.5, -9);
+      ctx2d.lineTo(11, -5.5);
+      ctx2d.closePath();
+      ctx2d.fill();
+
+      // 羽軸
+      ctx2d.strokeStyle = '#c6974c';
+      ctx2d.lineWidth = 2.1;
+      ctx2d.beginPath();
+      ctx2d.moveTo(6.5, -6.5);
+      ctx2d.quadraticCurveTo(24, -22, 46, -39);
+      ctx2d.stroke();
+
+      // 象牙金羽片
+      const featherGrad = ctx2d.createLinearGradient(8, -8, 48, -40);
+      featherGrad.addColorStop(0, '#f0d8af');
+      featherGrad.addColorStop(0.52, '#fffaf0');
+      featherGrad.addColorStop(1, '#d4a95f');
+      ctx2d.fillStyle = featherGrad;
+      ctx2d.strokeStyle = 'rgba(150, 108, 48, 0.78)';
+      ctx2d.lineWidth = 1;
+      ctx2d.beginPath();
+      ctx2d.moveTo(10, -10);
+      ctx2d.quadraticCurveTo(18, -31, 47, -40);
+      ctx2d.quadraticCurveTo(37, -17, 12, -7.5);
+      ctx2d.closePath();
+      ctx2d.fill();
+      ctx2d.stroke();
+
+      // 羽毛紋路細線
+      ctx2d.strokeStyle = 'rgba(150, 108, 48, 0.48)';
+      ctx2d.lineWidth = 0.85;
+      ctx2d.beginPath();
+      ctx2d.moveTo(20, -19);
+      ctx2d.lineTo(25, -27);
+      ctx2d.moveTo(29, -26);
+      ctx2d.lineTo(34, -33);
+      ctx2d.moveTo(36, -31);
+      ctx2d.lineTo(40, -37);
+      ctx2d.stroke();
+
+      ctx2d.restore();
+      ctx2d.restore();
+    }
 
     // Polarsteps 風格：右下角即時累計飛行里程儀表 (Cumulative Journey Distance HUD)
     let cumKm = 0;
@@ -12517,6 +12710,12 @@
   var elCalendarIcsBtn;
   var elSeatingShareBtn;
   var elMenuShareBtn;
+
+  function isMarauderSpellText(text) {
+    return /莊嚴宣誓|沒幹好事|不幹好事|劫盜地圖|惡作劇完畢|solemnly\s*swear|up\s*to\s*no\s*good|marauder|mischief\s*managed/i.test(
+      String(text || '')
+    );
+  }
 
   function setCalendarMenuOpen(isOpen) {
     const menu = elCalendarMenu || document.getElementById('countdown-calendar-menu');

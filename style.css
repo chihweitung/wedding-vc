@@ -7993,6 +7993,43 @@ body.wg-modal-open .back-to-top-btn {
   white-space: nowrap;
 }
 
+#seating-photo-stage .seating-chart-img,
+#seating-photo-stage .seating-map-img,
+#seating-photo-stage img {
+  transition: filter 0.45s ease;
+}
+
+#seating-photo-stage.is-marauder-revealed img {
+  filter: brightness(0.34) sepia(0.32) contrast(1.1);
+}
+
+#seating-photo-stage.is-marauder-revealed .seating-zone-hotspot:not(.seating-reception-hotspot),
+#seating-photo-stage.is-marauder-revealed .seating-restroom-group,
+#seating-photo-stage.is-marauder-revealed .seating-kitchen-group,
+#seating-photo-stage.is-marauder-revealed .seating-bar-group,
+#seating-photo-stage.is-marauder-revealed .seating-buffet-group,
+#seating-photo-stage.is-marauder-revealed .seating-entrance-group {
+  opacity: 0.14 !important;
+  transition: opacity 0.4s ease;
+}
+
+#seating-photo-stage.is-marauder-revealed .seating-reception-group {
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 18px rgba(253, 224, 71, 0.95)) drop-shadow(0 0 36px rgba(212, 162, 74, 0.75));
+}
+
+#seating-photo-stage.is-marauder-revealed .seating-reception-hotspot {
+  stroke: #fde047 !important;
+  stroke-width: 12px !important;
+  fill: rgba(250, 204, 21, 0.48) !important;
+  animation: marauderRevealGlow 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes marauderRevealGlow {
+  from { opacity: 0.72; }
+  to { opacity: 1; }
+}
+
 /* Footprints Editorial Upgrade: 12-Year KPI Strip, Magazine Chapter Dividers & Map Sync Cues */
 .footprint-kpi-strip {
   display: grid;
