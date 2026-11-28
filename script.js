@@ -6897,6 +6897,36 @@
     });
   }
 
+  function getFootprintCountryFlag(node) {
+    if (!node) return '';
+    const zh = (node.city && node.city.zh) || '';
+    const en = (node.city && node.city.en) || '';
+    const txt = `${zh} ${en}`;
+    const lat = Number(node.lat);
+    const lng = Number(node.lng);
+    if (lat >= 21.5 && lat <= 25.6 && lng >= 119.5 && lng <= 122.5) return '🇹🇼';
+    if (lat >= 30 && lat <= 46 && lng >= 129 && lng <= 146) return '🇯🇵';
+    if (/溫哥華|多倫多|尼加拉|Whistler|Toronto|Vancouver/i.test(txt)) return '🇨🇦';
+    if ((lng >= 230 && lng <= 295) || (lng <= -65 && lng >= -130)) return '🇺🇸';
+    if (lat >= 49.5 && lat <= 59 && lng >= -8 && lng <= 2) return '🇬🇧';
+    if (/巴黎|Paris/i.test(txt)) return '🇫🇷';
+    if (/阿姆斯特丹|Amsterdam/i.test(txt)) return '🇳🇱';
+    if (/布拉格|Prague/i.test(txt)) return '🇨🇿';
+    if (/奧地利|Austria/i.test(txt)) return '🇦🇹';
+    if (lat >= 47 && lat <= 55.5 && lng >= 5.5 && lng <= 15.5) return '🇩🇪';
+    return '';
+  }
+
+  function formatFootprintCityWithFlag(node, lang) {
+    if (!node || !node.city) return '';
+    const base = String(node.city[lang] || node.city.zh || '').trim();
+    if (!base) return '';
+    // Avoid duplicating flag if city text already ends with or contains a regional-indicator flag
+    if (/[\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF]/.test(base)) return base;
+    const flag = getFootprintCountryFlag(node);
+    return flag ? `${base} ${flag}` : base;
+  }
+
   function renderFootprintsSection() {
     if (!elFootprintYearBar || !elFootprintTimelineList) return;
     const dict = t();
@@ -6923,7 +6953,7 @@
         { num: '12', label: isEn ? 'Years Together · 2014–2026' : '年相伴 · 2014–2026' },
         { num: String(LOVE_FOOTPRINTS_DATA.length), label: isEn ? 'Shared Chapters' : '段重要章節' },
         { num: numberFormatter.format(Math.round(totalJourneyKm)), label: isEn ? 'km Traveled Together' : 'km 累計飛行里程' },
-        { num: '7', label: isEn ? 'Countries · TW JP US CA UK DE AT' : '跨足國家 · 台日美加英德奧' },
+        { num: '11', label: isEn ? 'Countries · Asia, Europe & N. America' : '跨足國家 · 亞歐美 11 國' },
       ];
       kpiStrip.replaceChildren(
         ...kpiItems.map((k) => {
@@ -7080,11 +7110,11 @@
 
         const tomTag = document.createElement('span');
         tomTag.className = 'footprint-role-pill is-tom';
-        setFootprintRolePillContent(tomTag, 'tom', `Tom · ${item.tom.city[currentLang]}`);
+        setFootprintRolePillContent(tomTag, 'tom', `Tom · ${formatFootprintCityWithFlag(item.tom, currentLang)}`);
 
         const euniceTag = document.createElement('span');
         euniceTag.className = 'footprint-role-pill is-eunice';
-        setFootprintRolePillContent(euniceTag, 'eunice', `Eunice · ${item.eunice.city[currentLang]}`);
+        setFootprintRolePillContent(euniceTag, 'eunice', `Eunice · ${formatFootprintCityWithFlag(item.eunice, currentLang)}`);
 
         pairRow.append(tomTag, euniceTag);
         node.append(header, pairRow);
@@ -8379,7 +8409,7 @@
       }
       const projLng = unwrapNear(curLng, cam.centerLng);
       const p = projectWithCamera(curLat, projLng, cam, w, h);
-      const activeCity = (t < 0.5 ? rA : rB).city[currentLang];
+      const activeCity = formatFootprintCityWithFlag(t < 0.5 ? rA : rB, currentLang);
       return { lat: curLat, lng: projLng, x: p.x, y: p.y, city: activeCity };
     };
 
@@ -8624,8 +8654,8 @@
 
     ctx2d.font = '700 15.5px "Noto Sans TC", sans-serif';
     ctx2d.textAlign = 'right';
-    const eCityStr = `Eunice: ${currentItem.eunice.city[currentLang]}`;
-    const tCityStr = `Tom: ${currentItem.tom.city[currentLang]}`;
+    const eCityStr = `Eunice: ${formatFootprintCityWithFlag(currentItem.eunice, currentLang)}`;
+    const tCityStr = `Tom: ${formatFootprintCityWithFlag(currentItem.tom, currentLang)}`;
     const cityCacheKey = `${currentLang}:${activeIdx}`;
     if (timelineCityWidthCache.key !== cityCacheKey) {
       timelineCityWidthCache = {

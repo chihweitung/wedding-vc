@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261128b" />
+  <link rel="stylesheet" href="style.css?v=20261128c" />
   <link rel="stylesheet" href="debug.css?v=20261121ag" />
 </head>
 <body class="debug-locked">
@@ -306,34 +306,8 @@
           </button>
 
           <!-- Card 3: Couple Quiz -->
-          <button type="button" class="choice-card" id="choose-quiz-card">
-            <div class="choice-icon-wrap">
-              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-              </svg>
-            </div>
-            <span class="choice-eyebrow" id="quiz-card-eyebrow">COUPLE QUIZ · WARM-UP + 10 Qs</span>
-            <h2 class="choice-title" id="quiz-card-title">了解新人</h2>
-            <p class="choice-desc" id="quiz-card-desc">挑戰暖身題與 10 道關於新人的趣味問答，看看您對新郎還是新娘最熟悉！</p>
-            <span class="choice-cta" id="quiz-card-cta">開始挑戰問答 →</span>
-          </button>
 
           <!-- Card 4: Wedding Mini-Games -->
-          <button type="button" class="choice-card" id="choose-games-card">
-            <div class="choice-icon-wrap">
-              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="6" width="20" height="12" rx="4"></rect>
-                <line x1="6" y1="12" x2="10" y2="12"></line>
-                <line x1="8" y1="10" x2="8" y2="14"></line>
-                <circle cx="15.5" cy="11" r="0.9" fill="currentColor"></circle>
-                <circle cx="18" cy="13" r="0.9" fill="currentColor"></circle>
-              </svg>
-            </div>
-            <span class="choice-eyebrow" id="games-card-eyebrow">WEDDING MINI-GAMES · 3 GAMES</span>
-            <h2 class="choice-title" id="games-card-title">暖身小遊戲</h2>
-            <p class="choice-desc" id="games-card-desc">婚紗照翻牌記憶、20 秒接住捧花挑戰與 3×3 婚紗拼圖，等上菜一起同樂！</p>
-            <span class="choice-cta" id="games-card-cta">開啟暖身小遊戲 →</span>
-          </button>
 
           <!-- Card 5: Wedding Video -->
           <button type="button" class="choice-card" id="choose-video-card">
@@ -375,6 +349,32 @@
             <h2 class="choice-title" id="footprints-card-title">新人交往軌跡</h2>
             <p class="choice-desc" id="footprints-card-desc">探索 Tom &amp; Eunice 的 Google Maps 戀愛足跡與跨國旅行地圖紀錄</p>
             <span class="choice-cta" id="footprints-card-cta">探索交往軌跡地圖 →</span>
+          </button>
+          <button type="button" class="choice-card" id="choose-quiz-card">
+            <div class="choice-icon-wrap">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </div>
+            <span class="choice-eyebrow" id="quiz-card-eyebrow">COUPLE QUIZ · WARM-UP + 10 Qs</span>
+            <h2 class="choice-title" id="quiz-card-title">了解新人</h2>
+            <p class="choice-desc" id="quiz-card-desc">挑戰暖身題與 10 道關於新人的趣味問答，看看您對新郎還是新娘最熟悉！</p>
+            <span class="choice-cta" id="quiz-card-cta">開始挑戰問答 →</span>
+          </button>
+          <button type="button" class="choice-card" id="choose-games-card">
+            <div class="choice-icon-wrap">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="6" width="20" height="12" rx="4"></rect>
+                <line x1="6" y1="12" x2="10" y2="12"></line>
+                <line x1="8" y1="10" x2="8" y2="14"></line>
+                <circle cx="15.5" cy="11" r="0.9" fill="currentColor"></circle>
+                <circle cx="18" cy="13" r="0.9" fill="currentColor"></circle>
+              </svg>
+            </div>
+            <span class="choice-eyebrow" id="games-card-eyebrow">WEDDING MINI-GAMES · 3 GAMES</span>
+            <h2 class="choice-title" id="games-card-title">暖身小遊戲</h2>
+            <p class="choice-desc" id="games-card-desc">婚紗照翻牌記憶、20 秒接住捧花挑戰與 3×3 婚紗拼圖，等上菜一起同樂！</p>
+            <span class="choice-cta" id="games-card-cta">開啟暖身小遊戲 →</span>
           </button>
 
           <!-- Card 8: Share Photos (Google Photos) -->
@@ -466,10 +466,10 @@
           <div class="hub-tabs-group">
             <button type="button" class="hub-tab-pill" id="tab-seating-btn">🪑 座位表</button>
             <button type="button" class="hub-tab-pill" id="tab-menu-btn">🍽️ 婚宴餐點</button>
-            <button type="button" class="hub-tab-pill" id="tab-quiz-btn">🌿 了解新人</button>
             <button type="button" class="hub-tab-pill" id="tab-video-btn">🎬 新人影片</button>
             <button type="button" class="hub-tab-pill" id="tab-gallery-btn">🎞️ 過去照片</button>
             <button type="button" class="hub-tab-pill" id="tab-footprints-btn">🗺️ 交往軌跡</button>
+            <button type="button" class="hub-tab-pill" id="tab-quiz-btn">🌿 了解新人</button>
             <button type="button" class="hub-tab-pill" id="tab-share-photos-btn">📸 分享照片</button>
           </div>
         </div>
@@ -848,7 +848,7 @@
   </div>
 
   <script src="staff.js?v=20261122a"></script>
-  <script src="script.js?v=20261128b"></script>
+  <script src="script.js?v=20261128c"></script>
   <script src="games.js?v=20261127a"></script>
 </body>
 </html>
