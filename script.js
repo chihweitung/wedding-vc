@@ -2197,16 +2197,36 @@
     },
     {
       year: '2019',
+      dateTag: '2019.07',
+      tom: { lat: 52.52, lng: 13.405, city: { zh: '德國柏林 Berlin', en: 'Berlin, DE' } },
+      eunice: { lat: 22.627, lng: 120.301, city: { zh: '台灣高雄（準備赴英）', en: 'Kaohsiung, TW (Pre-UK)' } },
+      lat: 22.627,
+      lng: 120.301,
+      place: {
+        zh: '2019.07 · 返回柏林與台灣 · Eunice 返台打包準備赴英留學',
+        en: 'Jul 2019 · Back to Berlin & Taiwan — Packing for the UK Move',
+      },
+      distanceLabel: { zh: '9,100 km · 柏林 ↔ 高雄', en: '9,100 km · Berlin ↔ Kaohsiung' },
+      desc: {
+        zh: '惠斯勒重逢後，Tom 返回柏林工作，Eunice 先飛回台灣與家人道別、打包行囊，準備展開英國留學生活。',
+        en: 'After reuniting in Whistler, Tom returned to Berlin while Eunice flew home to Taiwan to pack and prepare for her studies in the UK.',
+      },
+      mapQuery: 'Kaohsiung,Taiwan',
+    },
+    {
+      year: '2019',
       dateTag: '2019.08–09',
       tom: {
         lat: 52.955,
         lng: -1.158,
+        via: { lat: 51.507, lng: -0.127 },
         city: { zh: '倫敦＆諾丁漢 ➔ 住柏林', en: 'London/Nottingham ➔ Berlin' },
       },
       eunice: {
         lat: 52.955,
         lng: -1.158,
-        city: { zh: '英國諾丁漢留學 🇬🇧', en: 'Nottingham, UK 🇬🇧' },
+        via: { lat: 51.507, lng: -0.127 },
+        city: { zh: '經倫敦 ➔ 英國諾丁漢留學 🇬🇧', en: 'Via London ➔ Nottingham, UK 🇬🇧' },
       },
       lat: 52.955,
       lng: -1.158,
@@ -2350,20 +2370,38 @@
       mapQuery: 'Sun+Moon+Lake,Nantou,Taiwan',
     },
     {
+      year: '2020',
+      dateTag: '2020.11',
+      tom: { lat: 52.52, lng: 13.405, city: { zh: '德國柏林 Berlin', en: 'Berlin, DE' } },
+      eunice: { lat: 25.009, lng: 121.459, city: { zh: '新北板橋 Banqiao', en: 'Banqiao, New Taipei' } },
+      lat: 52.52,
+      lng: 13.405,
+      place: {
+        zh: '2020.11 · 最後一段遠距離 · Tom 先返柏林收尾 · Eunice 搬至板橋',
+        en: 'Nov 2020 · One Final Long-Distance Chapter — Tom Back to Berlin, Eunice to Banqiao',
+      },
+      distanceLabel: { zh: '8,980 km · 柏林 ↔ 板橋', en: '8,980 km · Berlin ↔ Banqiao' },
+      desc: {
+        zh: '秋日小旅行結束後，Tom 先飛回柏林完成工作交接與退租打包，Eunice 則在十一月先搬進板橋新家等待團圓。',
+        en: 'After our autumn trip, Tom flew back to Berlin to wrap up work while Eunice moved into our new place in Banqiao.',
+      },
+      mapQuery: 'Berlin,Germany',
+    },
+    {
       year: '2021',
-      dateTag: '2020.11 – 2021.04',
+      dateTag: '2021.04',
       tom: { lat: 25.009, lng: 121.459, city: { zh: '新北板橋 Banqiao', en: 'Banqiao, New Taipei' } },
       eunice: { lat: 25.009, lng: 121.459, city: { zh: '新北板橋 Banqiao', en: 'Banqiao, New Taipei' } },
       lat: 25.009,
       lng: 121.459,
       place: {
-        zh: '2020.11 & 2021.04 · 遠距離正式畫下句點 · 一起定居板橋',
-        en: 'Nov 2020 & Apr 2021 · Long Distance Ended — Home Together in Banqiao',
+        zh: '2021.04 · 遠距離正式畫下句點 · Tom 返台定居板橋',
+        en: 'Apr 2021 · Long Distance Ended — Tom Returned Home to Banqiao',
       },
       distanceLabel: { zh: '0 km · 板橋小家日常 💕', en: '0 km · Everyday Life in Banqiao 💕' },
       desc: {
-        zh: 'Eunice 先在十一月搬來板橋，隔年四月 Tom 正式返台定居——多年跨洲與南北奔波，終於變成每天一起吃晚餐。',
-        en: 'Eunice moved to Banqiao in Nov 2020 and Tom returned for good in Apr 2021 — turning airport farewells into everyday dinners.',
+        zh: '四月 Tom 正式從柏林飛回台灣定居板橋——多年跨洲與南北奔波，終於變成每天一起吃晚餐的日常。',
+        en: 'In April 2021, Tom flew home from Berlin for good — turning years of airport farewells into everyday dinners in Banqiao.',
       },
       mapQuery: 'Banqiao,New+Taipei,Taiwan',
     },
@@ -3107,7 +3145,17 @@
   let timelineAnimId = null;
   let timelineLastTs = 0;
   let timelineSpeedMultiplier = 1.0; // 支援 0.5x / 1.0x / 1.5x / 2.0x 調整播放速度
-  const TIMELINE_DURATION_MS = 108000; // 108 秒從容播放 2014–2026 雙人軌跡、羽毛筆章節書寫與飛行聚焦 (每站約 3.2 秒)
+  const TIMELINE_DURATION_MS = 145000; // 145 秒（2014–2026 雙人軌跡＋奧地利蜜月加長停留 3 秒＋最後 6 秒停留陽明山美軍俱樂部）
+  const TIMELINE_FINALE_HOLD_RATIO = 6 / 145; // 最後約 6 秒停留在陽明山美軍俱樂部終點
+  const TIMELINE_HONEYMOON_SEG_WEIGHT = 1.8; // 奧地利蜜月（倒數第二站）加長停留約 3 秒
+
+  function mapJourneyProgressToExactStep(journeyProgress, totalSegs) {
+    if (totalSegs <= 1) return Math.max(0, Math.min(totalSegs, journeyProgress * totalSegs));
+    const totalWeight = (totalSegs - 1) + TIMELINE_HONEYMOON_SEG_WEIGHT;
+    const wPos = Math.max(0, Math.min(totalWeight, journeyProgress * totalWeight));
+    if (wPos <= totalSegs - 1) return wPos;
+    return (totalSegs - 1) + (wPos - (totalSegs - 1)) / TIMELINE_HONEYMOON_SEG_WEIGHT;
+  }
 
   // Formatters
   const twFormatter = new Intl.DateTimeFormat('zh-TW', {
@@ -5425,6 +5473,72 @@
       `seating-zone-hotspot seating-reception-hotspot${isReceptionHighlighted ? ' is-highlighted' : ''}`
     );
     receptionGroup.append(rRect);
+
+    // 劫盜地圖隱藏彩蛋：輸入咒語時於接待桌旁顯現發光古書圖示（平時完全隱藏）
+    const bookGroup = document.createElementNS(svgNS, 'g');
+    bookGroup.setAttribute('class', 'seating-marauder-book');
+    bookGroup.setAttribute('aria-hidden', 'true');
+
+    // 指向接待桌的細緻金色小箭頭
+    const bookArrow = document.createElementNS(svgNS, 'path');
+    bookArrow.setAttribute('d', 'M 1198 2668 L 1166 2668 M 1176 2658 L 1164 2668 L 1176 2678');
+    bookArrow.setAttribute('fill', 'none');
+    bookArrow.setAttribute('stroke', '#fde047');
+    bookArrow.setAttribute('stroke-width', '5');
+    bookArrow.setAttribute('stroke-linecap', 'round');
+    bookArrow.setAttribute('stroke-linejoin', 'round');
+
+    // 圓形暖金羊皮紙底徽章
+    const bookHalo = document.createElementNS(svgNS, 'circle');
+    bookHalo.setAttribute('cx', '1266');
+    bookHalo.setAttribute('cy', '2668');
+    bookHalo.setAttribute('r', '56');
+    bookHalo.setAttribute('fill', 'rgba(34, 22, 12, 0.9)');
+    bookHalo.setAttribute('stroke', '#fde047');
+    bookHalo.setAttribute('stroke-width', '4.5');
+
+    // 手繪展開的精裝魔法古書 (Open Book SVG)
+    const bookCover = document.createElementNS(svgNS, 'path');
+    bookCover.setAttribute(
+      'd',
+      'M 1226 2648 Q 1246 2642 1266 2652 Q 1286 2642 1306 2648 L 1306 2690 Q 1286 2684 1266 2694 Q 1246 2684 1226 2690 Z'
+    );
+    bookCover.setAttribute('fill', '#7f1d1d');
+    bookCover.setAttribute('stroke', '#f5c542');
+    bookCover.setAttribute('stroke-width', '3');
+    bookCover.setAttribute('stroke-linejoin', 'round');
+
+    const bookPages = document.createElementNS(svgNS, 'path');
+    bookPages.setAttribute(
+      'd',
+      'M 1232 2644 Q 1249 2639 1266 2649 Q 1283 2639 1300 2644 L 1300 2684 Q 1283 2679 1266 2689 Q 1249 2679 1232 2684 Z'
+    );
+    bookPages.setAttribute('fill', '#fef9e7');
+    bookPages.setAttribute('stroke', '#d4a24a');
+    bookPages.setAttribute('stroke-width', '2.5');
+    bookPages.setAttribute('stroke-linejoin', 'round');
+
+    const bookSpine = document.createElementNS(svgNS, 'path');
+    bookSpine.setAttribute(
+      'd',
+      'M 1266 2649 L 1266 2689 M 1239 2656 Q 1250 2654 1259 2659 M 1239 2666 Q 1250 2664 1259 2669 M 1239 2675 Q 1250 2673 1259 2678 M 1273 2659 Q 1282 2654 1293 2656 M 1273 2669 Q 1282 2664 1293 2666 M 1273 2678 Q 1282 2673 1293 2675'
+    );
+    bookSpine.setAttribute('fill', 'none');
+    bookSpine.setAttribute('stroke', '#9a6b2f');
+    bookSpine.setAttribute('stroke-width', '2.4');
+    bookSpine.setAttribute('stroke-linecap', 'round');
+
+    // 書本上方閃爍金星
+    const bookStars = document.createElementNS(svgNS, 'path');
+    bookStars.setAttribute(
+      'd',
+      'M 1266 2622 L 1269 2629 L 1276 2632 L 1269 2635 L 1266 2642 L 1263 2635 L 1256 2632 L 1263 2629 Z'
+    );
+    bookStars.setAttribute('fill', '#fde047');
+
+    bookGroup.append(bookArrow, bookHalo, bookCover, bookPages, bookSpine, bookStars);
+    receptionGroup.append(bookGroup);
+
     receptionGroup.addEventListener('click', (e) => toggleFacilityZone(RECEPTION_ZONE_ID, e));
     svg.append(receptionGroup);
 
@@ -7071,9 +7185,11 @@
         if (ev.target && ev.target.closest('a')) return;
         if (LOVE_FOOTPRINTS_DATA.length > 1) {
           timelinePlaying = false;
+          stopFootprintGhibliBgm();
           if (timelineAnimId) cancelAnimationFrame(timelineAnimId);
           if (btnTimelinePlay) btnTimelinePlay.textContent = t().timelinePlayBtn;
-          timelineProgress = globalIdx / (LOVE_FOOTPRINTS_DATA.length - 1);
+          timelineProgress = (globalIdx / (LOVE_FOOTPRINTS_DATA.length - 1)) * (1 - TIMELINE_FINALE_HOLD_RATIO);
+          syncFootprintBgmToProgress(timelineProgress, true);
           drawTimelineVideoFrame(timelineProgress);
           if (elTimelineVideoCanvas) {
             elTimelineVideoCanvas.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -7491,7 +7607,7 @@
    * - 後 56% 時間 (0.44 ~ 1.00)：以 Smoothstep 緩動平滑飛往下一站
    */
   function getDwellGlideFrac(rawFrac) {
-    const dwellRatio = 0.56;
+    const dwellRatio = 0.58;
     if (rawFrac <= dwellRatio) return 0;
     const t = Math.max(0, Math.min(1, (rawFrac - dwellRatio) / (1 - dwellRatio)));
     return t * t * (3 - 2 * t);
@@ -8014,7 +8130,10 @@
     ctx2d.setTransform(renderScale, 0, 0, renderScale, 0, 0);
 
     const totalSegs = Math.max(1, LOVE_FOOTPRINTS_DATA.length - 1);
-    const exactStep = Math.max(0, Math.min(totalSegs, progress * totalSegs));
+    // 最後 6 秒停留在陽明山美軍俱樂部終點，奧地利蜜月站亦加長停留約 3 秒
+    const journeyEndRatio = 1 - TIMELINE_FINALE_HOLD_RATIO;
+    const journeyProgress = Math.max(0, Math.min(1, progress / journeyEndRatio));
+    const exactStep = mapJourneyProgressToExactStep(journeyProgress, totalSegs);
     const segIdx = Math.min(totalSegs - 1, Math.floor(exactStep));
     const rawSegFrac = exactStep - segIdx;
     // 套用每站停留 44% 再平滑飛行的節奏，讓畫面從容不匆忙
@@ -8556,23 +8675,22 @@
     drawGhibliSootSprite(ctx2d, mapRight - 56, mapTop + 44 + Math.cos(progress * Math.PI * 6) * 3, 6.2, progress * 5 + 1);
     drawGhibliCompassRose(ctx2d, mapLeft + 44, mapBottom - 44, 22);
 
-    // 電影章節卡風格：羽毛筆於地圖正中央緩緩書寫「即將前往的事件」（0.04~0.68 完整從容節奏）
-    if (exactStep < totalSegs - 0.001 && stepB && stepB.place && rawSegFrac >= 0.04 && rawSegFrac <= 0.68) {
+    // 電影章節卡風格：羽毛筆於地圖正中央緩緩書寫 → 停留閱讀 → 完全淡出後，軌跡才於 0.58 起飛！
+    if (exactStep < totalSegs - 0.001 && stepB && stepB.place && rawSegFrac >= 0.03 && rawSegFrac <= 0.565) {
       let bannerAlpha = 1;
-      if (rawSegFrac < 0.10) {
-        bannerAlpha = (rawSegFrac - 0.04) / 0.06;
-      } else if (rawSegFrac > 0.56) {
-        bannerAlpha = 1 - (rawSegFrac - 0.56) / 0.12;
+      if (rawSegFrac < 0.08) {
+        bannerAlpha = (rawSegFrac - 0.03) / 0.05;
+      } else if (rawSegFrac > 0.48) {
+        bannerAlpha = 1 - (rawSegFrac - 0.48) / 0.085;
       }
       bannerAlpha = Math.max(0, Math.min(1, bannerAlpha));
       const easeAlpha = bannerAlpha * bannerAlpha * (3 - 2 * bannerAlpha);
 
-      // 緩慢從容的書寫進度（0.07 ~ 0.47，佔整段 40% 時間，寫完再停留 0.47 ~ 0.56 供閱讀）
-      const rawWrite = Math.max(0, Math.min(1, (rawSegFrac - 0.07) / 0.40));
-      // 略帶手寫頓挫感的溫柔緩動
+      // 緩慢從容書寫 (0.06 ~ 0.38) → 停留閱讀 (0.38 ~ 0.48) → 淡出完畢 (0.48 ~ 0.565) → 軌跡於 0.58 起飛
+      const rawWrite = Math.max(0, Math.min(1, (rawSegFrac - 0.06) / 0.32));
       const writeFrac = rawWrite < 1 ? rawWrite * 0.88 + Math.sin(rawWrite * Math.PI * 0.5) * 0.12 : 1;
-      const flourishFrac = Math.max(0, Math.min(1, (rawSegFrac - 0.44) / 0.09));
-      const isWriting = rawSegFrac >= 0.07 && rawSegFrac <= 0.475;
+      const flourishFrac = Math.max(0, Math.min(1, (rawSegFrac - 0.36) / 0.07));
+      const isWriting = rawSegFrac >= 0.06 && rawSegFrac <= 0.385;
 
       const dateLabel = stepB.dateTag || stepB.year || '';
       const rawTitle = (stepB.place[currentLang] || stepB.place.zh || '').trim();
@@ -8666,7 +8784,7 @@
 
       // 5. 手繪象牙香檳金羽毛筆 (Quill Pen) 隨墨跡優雅書寫，寫完輕輕抬筆
       const nibX = textStartX + revealW;
-      const liftAfterDone = isWriting ? 0 : Math.min(1, (rawSegFrac - 0.47) / 0.08);
+      const liftAfterDone = isWriting ? 0 : Math.min(1, (rawSegFrac - 0.38) / 0.07);
       const writeBounceY = isWriting
         ? Math.sin(writeFrac * Math.PI * 18) * 2.8
         : -9 * liftAfterDone;
@@ -8918,6 +9036,43 @@
     }
   }
 
+  const FOOTPRINT_BGM_BASE_VOL = 0.7;
+
+  function syncFootprintBgmToProgress(progress, forceSeek = false) {
+    if (!footprintAudioEl) return;
+    const clamped = Math.max(0, Math.min(1, Number(progress) || 0));
+    const targetSec = clamped * (TIMELINE_DURATION_MS / 1000);
+    try {
+      const dur = Number.isFinite(footprintAudioEl.duration) && footprintAudioEl.duration > 0
+        ? footprintAudioEl.duration
+        : 0;
+      const mappedSec = dur > 0 ? targetSec % dur : targetSec;
+      // 僅在明確跳轉且音訊區段可 seek 時才設定 currentTime，避免連續播放時反覆 seek 導致斷音
+      if (forceSeek) {
+        if (mappedSec <= 0.1) {
+          footprintAudioEl.currentTime = 0;
+        } else if (
+          footprintAudioEl.seekable &&
+          footprintAudioEl.seekable.length > 0 &&
+          mappedSec <= footprintAudioEl.seekable.end(footprintAudioEl.seekable.length - 1)
+        ) {
+          footprintAudioEl.currentTime = mappedSec;
+        }
+      }
+      if ('preservesPitch' in footprintAudioEl) footprintAudioEl.preservesPitch = true;
+      if ('webkitPreservesPitch' in footprintAudioEl) footprintAudioEl.webkitPreservesPitch = true;
+      if (Math.abs(footprintAudioEl.playbackRate - timelineSpeedMultiplier) > 0.01) {
+        footprintAudioEl.playbackRate = timelineSpeedMultiplier;
+      }
+      // 抵達陽明山美軍俱樂部後先維持完整音量約 3 秒，最後約 3 秒再柔順淡出配樂
+      const fadeStart = 0.978;
+      const volScale = clamped >= fadeStart ? Math.max(0, 1 - (clamped - fadeStart) / (1 - fadeStart)) : 1;
+      footprintAudioEl.volume = Number((FOOTPRINT_BGM_BASE_VOL * volScale).toFixed(3));
+    } catch (_e) {
+      // Ignore seek errors before metadata loads
+    }
+  }
+
   function startFootprintGhibliBgm() {
     if (!footprintGhibliEnabled || footprintGhibliPlaying) return;
     if (bgmPlaying && typeof toggleBgm === 'function') {
@@ -8927,9 +9082,13 @@
       const audio = new Audio(FOOTPRINT_BGM_SRC);
       audio.loop = true;
       audio.preload = 'auto';
-      audio.volume = 0.7;
+      audio.volume = FOOTPRINT_BGM_BASE_VOL;
+      audio.addEventListener('loadedmetadata', () => {
+        syncFootprintBgmToProgress(timelineProgress, true);
+      });
       footprintAudioEl = audio;
     }
+    syncFootprintBgmToProgress(timelineProgress, true);
     const playPromise = footprintAudioEl.play();
     if (playPromise && typeof playPromise.catch === 'function') {
       playPromise.catch(() => {
@@ -8970,6 +9129,9 @@
     if (!timelineLastDrawTs || ts - timelineLastDrawTs >= minFrameMs) {
       timelineLastDrawTs = ts;
       drawTimelineVideoFrame(timelineProgress);
+      if (footprintGhibliPlaying) {
+        syncFootprintBgmToProgress(timelineProgress, false);
+      }
     }
     timelineAnimId = requestAnimationFrame(stepTimelineAnimation);
   }
@@ -9004,6 +9166,8 @@
     if (timelineAnimId) cancelAnimationFrame(timelineAnimId);
     if (btnTimelinePlay) btnTimelinePlay.textContent = t().timelinePlayBtn;
     timelineProgress = targetIdx / totalSegs;
+    stopFootprintGhibliBgm();
+    syncFootprintBgmToProgress(timelineProgress, true);
     drawTimelineVideoFrame(timelineProgress);
   }
 
@@ -9014,11 +9178,14 @@
     if (btnTimelineSpeed) {
       btnTimelineSpeed.textContent = `⏱️ ${timelineSpeedMultiplier.toFixed(timelineSpeedMultiplier === 0.75 ? 2 : 1)}x`;
     }
+    syncFootprintBgmToProgress(timelineProgress, false);
   }
 
   function replayTimeline() {
     timelineProgress = 0;
     timelinePlaying = false;
+    stopFootprintGhibliBgm();
+    syncFootprintBgmToProgress(0, true);
     if (timelineAnimId) cancelAnimationFrame(timelineAnimId);
     togglePlayTimeline();
   }
@@ -9224,6 +9391,7 @@
     elScrubberWrap.addEventListener('pointerdown', (ev) => {
       isScrubbing = true;
       timelinePlaying = false;
+      stopFootprintGhibliBgm();
       if (timelineAnimId) cancelAnimationFrame(timelineAnimId);
       if (btnTimelinePlay) btnTimelinePlay.textContent = t().timelinePlayBtn;
       seekFromPointer(ev);
@@ -9233,10 +9401,14 @@
       seekFromPointer(ev);
     });
     window.addEventListener('pointerup', () => {
+      if (!isScrubbing) return;
       isScrubbing = false;
+      syncFootprintBgmToProgress(timelineProgress, true);
     });
     window.addEventListener('pointercancel', () => {
+      if (!isScrubbing) return;
       isScrubbing = false;
+      syncFootprintBgmToProgress(timelineProgress, true);
     });
   }
 

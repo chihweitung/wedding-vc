@@ -8025,6 +8025,22 @@ body.wg-modal-open .back-to-top-btn {
   animation: marauderRevealGlow 0.9s ease-in-out infinite alternate;
 }
 
+.seating-marauder-book {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+#seating-photo-stage.is-marauder-revealed .seating-marauder-book {
+  opacity: 1;
+  animation: marauderBookFloat 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes marauderBookFloat {
+  from { transform: translateY(0); }
+  to { transform: translateY(-7px); }
+}
+
 @keyframes marauderRevealGlow {
   from { opacity: 0.72; }
   to { opacity: 1; }
